@@ -1,5 +1,12 @@
 class DeviceCommunicatorController < ApplicationController
 
+  def index
+  end
+  
+  def fetch_string
+    render :text => "Hello"
+  end  
+  
   def return_object
 
     @object = "return"

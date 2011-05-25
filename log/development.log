@@ -1,1 +1,65 @@
 
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2011-05-24 23:20:06) [GET]
+
+ActionController::RoutingError (No route matches "/devicecommunicator/return_object" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2011-05-24 23:20:19) [GET]
+
+ActionController::RoutingError (No route matches "/DeviceCommunicator/return_object" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2011-05-24 23:21:12) [GET]
+
+ActionController::RoutingError (No route matches "/Devicecommunicator/return_object" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2011-05-24 23:21:16) [GET]
+
+ActionController::RoutingError (No route matches "/DeviceCommunicator/return_object" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2011-05-24 23:22:03) [GET]
+
+ActionController::RoutingError (No route matches "/DeviceCommunicator/return_object" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2011-05-24 23:22:18) [GET]
+
+ActionController::RoutingError (No route matches "/DeviceCommunicator/" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2011-05-24 23:22:31) [GET]
+
+ActionController::RoutingError (No route matches "/DeviceCommunicator/" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing DeviceCommunicatorController#return_object (for 127.0.0.1 at 2011-05-24 23:23:29) [GET]
+Completed in 2ms (View: 0, DB: 0) | 200 OK [http://localhost/device_communicator/return_object]
+
+
+Processing DeviceCommunicatorController#fetch_string (for 127.0.0.1 at 2011-05-24 23:25:28) [GET]
+Completed in 2ms (View: 0, DB: 0) | 200 OK [http://localhost/device_communicator/fetch_string]
