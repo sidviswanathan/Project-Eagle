@@ -7,20 +7,17 @@ class DeviceCommunicatorController < ApplicationController
     render :text => "Hello"
   end  
   
-  def return_object
-
+  def fetch_object
     @object = "return"
     respond_to do |format|
-
-      if request.get?
-        format.json { render :json => @object }
-      else
-        format.html
-        format.xml { render :xml => @object }
-      end
-
+      format.json { render :json => @object }
     end
+  end
 
+  # Post send_object
+  def send_object
+    @object = params
+    puts @object
   end
 
 end

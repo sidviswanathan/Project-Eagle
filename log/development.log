@@ -63,3 +63,72 @@ Completed in 2ms (View: 0, DB: 0) | 200 OK [http://localhost/device_communicator
 
 Processing DeviceCommunicatorController#fetch_string (for 127.0.0.1 at 2011-05-24 23:25:28) [GET]
 Completed in 2ms (View: 0, DB: 0) | 200 OK [http://localhost/device_communicator/fetch_string]
+
+
+Processing DeviceCommunicatorController#return_object (for 127.0.0.1 at 2011-06-03 09:46:36) [GET]
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/return_object]
+
+
+Processing DeviceCommunicatorController#return_string (for 127.0.0.1 at 2011-06-03 09:46:42) [GET]
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/return_string]
+
+
+Processing DeviceCommunicatorController#fetch_object (for 127.0.0.1 at 2011-06-03 09:46:58) [GET]
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/fetch_object]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2011-06-03 09:53:37) [GET]
+
+ActionController::RoutingError (No route matches "/POST" with {:method=>:get}):
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendering rescues/layout (not_found)
+
+
+Processing DeviceCommunicatorController#return_object (for 127.0.0.1 at 2011-06-03 10:24:08) [POST]
+  Parameters: {"max"=>"50", "q"=>"ruby"}
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (97.4ms)
+Rendered rescues/_request_and_response (1.4ms)
+Rendering rescues/layout (unprocessable_entity)
+
+
+Processing DeviceCommunicatorController#return_object (for 127.0.0.1 at 2011-06-03 10:26:51) [GET]
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/return_object]
+
+
+Processing DeviceCommunicatorController#return_string (for 127.0.0.1 at 2011-06-03 10:27:23) [GET]
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/return_string]
+
+
+Processing DeviceCommunicatorController#return_string (for 127.0.0.1 at 2011-06-03 10:28:46) [GET]
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/return_string]
+
+
+Processing DeviceCommunicatorController#return_string (for 127.0.0.1 at 2011-06-03 10:57:58) [GET]
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/return_string]
+
+
+Processing DeviceCommunicatorController#return_string (for 127.0.0.1 at 2011-06-03 10:58:30) [GET]
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/return_string]
