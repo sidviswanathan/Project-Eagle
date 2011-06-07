@@ -2,7 +2,7 @@ class CreateReservations < ActiveRecord::Migration
   def self.up
     create_table :reservations do |t|
       t.date :date
-      t.boolean :availability, :default => "true"
+      t.boolean :availability, :default => "false"
       t.integer :player_count
       t.string :"0630"
       t.string :"0637"

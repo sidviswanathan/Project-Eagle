@@ -18,7 +18,8 @@ class DeviceCommunicatorController < ApplicationController
   def send_object
     @object = params
     puts @object
-    render :text => "Received Post"
+    render :text => "Anush"
+    render :text => @object
   end
 
 end
