@@ -1,0 +1,134 @@
+
+
+Processing ApplicationController#fetch_object (for 127.0.0.1 at 2011-06-08 20:23:37) [GET]
+
+SyntaxError (/Users/Anush/Eagle/Project-Eagle/app/controllers/device_communicator_controller.rb:24: syntax error, unexpected kELSE, expecting kEND
+/Users/Anush/Eagle/Project-Eagle/app/controllers/device_communicator_controller.rb:28: syntax error, unexpected $end, expecting kEND):
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (51.0ms)
+Rendered rescues/_request_and_response (278.8ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#fetch_object (for 127.0.0.1 at 2011-06-08 20:24:19) [GET]
+
+SyntaxError (/Users/Anush/Eagle/Project-Eagle/app/controllers/device_communicator_controller.rb:29: syntax error, unexpected $end, expecting kEND):
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (95.4ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#fetch_object (for 127.0.0.1 at 2011-06-08 20:24:51) [GET]
+
+SyntaxError (/Users/Anush/Eagle/Project-Eagle/app/controllers/device_communicator_controller.rb:27: syntax error, unexpected $end, expecting kEND):
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (41.9ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#fetch_object (for 127.0.0.1 at 2011-06-08 20:25:06) [GET]
+
+SyntaxError (/Users/Anush/Eagle/Project-Eagle/app/controllers/device_communicator_controller.rb:28: syntax error, unexpected $end, expecting kEND):
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (45.2ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing DeviceCommunicatorController#fetch_object (for 127.0.0.1 at 2011-06-08 20:26:51) [GET]
+Completed in 73ms (View: 71, DB: 0) | 200 OK [http://localhost/device_communicator/fetch_object]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:27:06) [GET]
+  Parameters: {"username"=>"Anush"}
+
+ActionView::MissingTemplate (Missing template device_communicator/send_object.erb in view path app/views):
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /Users/Anush/.rvm/rubies/ruby-1.8.7-p334/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:28:09) [GET]
+  Parameters: {"username"=>"Amar"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Amar]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:28:37) [GET]
+  Parameters: {"username"=>"Amar"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Amar]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:31:10) [GET]
+  Parameters: {"username"=>"Amar"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Amar]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:31:15) [GET]
+  Parameters: {"username"=>"Amar"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Amar]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:31:36) [GET]
+  Parameters: {"username"=>"Amar"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Amar]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:31:53) [GET]
+  Parameters: {"username"=>"Amar"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Amar]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:32:03) [GET]
+  Parameters: {"username"=>"Anush"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Anush]

@@ -18,10 +18,12 @@ class DeviceCommunicatorController < ApplicationController
   def send_object
     @object = params[:username]
     puts @object
-    #render :text => "Anush"
-    #render :text => @object
-    respond_to do |format|
-      format.json { render :json => @object }
+    if @object == "Amar"
+      respond_to do |format|
+        format.json { render :json => TEE_TIME_SLOTS }
+      end
+    else
+      render :text => "Access denied"
     end
   end
 
