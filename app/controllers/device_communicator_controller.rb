@@ -16,14 +16,20 @@ class DeviceCommunicatorController < ApplicationController
 
   # Post send_object
   def send_object
-    @object = params[:username]
-    puts @object
-    if @object == "Amar"
+    @uName = params[:email]
+    @fName = params[:fName]
+    @lName = params[:lName]
+    @dateRequest = params[:date]
+    @teeTimeSlotRequest = params[:teeTimeSlot]
+    @numGolfers = params[:golfers]
+    puts @uName
+    puts @fName
+    if @uName != nil
       respond_to do |format|
         format.json { render :json => TEE_TIME_SLOTS }
       end
     else
-      render :text => "Access denied"
+      render :text => "Enter valid email id"
     end
   end
 

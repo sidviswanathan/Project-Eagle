@@ -132,3 +132,53 @@ Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator
 Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-08 20:32:03) [GET]
   Parameters: {"username"=>"Anush"}
 Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Anush]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 00:43:25) [GET]
+  Parameters: {"email"=>"a"}
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?email=a]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 00:43:51) [GET]
+  Parameters: {"email"=>"a"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?email=a]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 00:44:12) [GET]
+  Parameters: {"fName"=>"Amar", "email"=>"a"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?email=a&fName=Amar]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 00:44:54) [GET]
+  Parameters: {"email"=>""}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?email=]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 00:44:58) [GET]
+  Parameters: {"email"=>nil}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?email]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 00:45:18) [GET]
+  Parameters: {"email"=>nil}
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?email]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 00:47:37) [POST]
+  Parameters: {"uName"=>"Amar", "email"=>"Amar@xxx.com"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 00:50:37) [POST]
+  Parameters: {"uName"=>"Amar", "email"=>"Amar@xxx.com"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 19:24:53) [POST]
+  Parameters: {"uName"=>"Amar", "email"=>"Amar@xxx.com"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-10 19:29:39) [POST]
+  Parameters: {"uName"=>"Amar", "email"=>"Amar@xxx.com"}
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object]
