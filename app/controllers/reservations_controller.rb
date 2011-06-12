@@ -34,10 +34,10 @@ class ReservationsController < ApplicationController
     puts request_tee_slot
     puts request_golfers
 
-    if request_user.nil?
+    if request_user.blank?
       puts "No Username received"
       #send_object(@@unknown_user)
-      break
+      #break
     else
       puts "Find user by email"
       puts request_user
@@ -70,6 +70,7 @@ class ReservationsController < ApplicationController
         free_tee_slots = show_available_tee_slots_for_date(@tee_slots_booked_for_date)
         puts "----- These are the free slots for request date ----"
         puts free_tee_slots
+        #send_object(free_tee_slots)
       end
     end
   end
