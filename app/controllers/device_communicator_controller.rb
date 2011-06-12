@@ -26,7 +26,7 @@ class DeviceCommunicatorController < ApplicationController
     puts @fName
     if @uName != nil
       respond_to do |format|
-        format.json { render :json => TEE_TIME_SLOTS }
+        format.json { render :json => TEE_TIME_SLOTS_DEEP_CLIFF }
       end
     else
       render :text => "Enter valid email id"
