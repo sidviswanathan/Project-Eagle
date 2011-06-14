@@ -7,4 +7,11 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+
+  # Post send_object
+  def post_response(post_data)
+    respond_to do |format|
+      format.json { render :json => post_data }
+    end
+  end
 end
