@@ -42,22 +42,23 @@ $course_id = 1
     case request_cause
       when '1'
       ## Requesting for tee slot for given date
-        puts "Inside switch case"
         puts "--- Show slots for date ---"
         puts request_cause
         tee_time_slots = show_available_tee_slots_for_date(request_date, course_id)
       when '2'
       ## Requesting for tee slot for given date and hour
-        puts "Inside switch case"
         puts "--- Show slots for hour and date ---"
         tee_time_slots = show_available_tee_slots_for_hour(request_date, request_tee_slot, course_id)
       when '3'
-        puts "Inside switch case"
+      ## Verifying user and making a reservation
         puts "--- Book Reservation ---"
         check_res_result = check_for_reservation(request_date, request_tee_slot, course_id)
         if check_res_result == "success"
           puts "Creating Reservation"
           create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id)
+
+          ## Returning same tee slot as requested by user when reservation has been done successfully
+          tee_time_slots = request_tee_slot
         else
           puts "Slot already reserved"
           tee_time_slots = show_available_tee_slots_for_hour(request_date, request_tee_slot, course_id)
@@ -65,7 +66,6 @@ $course_id = 1
       else
       ## Else Case is case 1
       ## Requesting for tee slot for given date
-        puts "Inside switch case"
         puts "--- Show slots for date ---"
         puts request_cause
         tee_time_slots = show_available_tee_slots_for_date(request_date, course_id)
@@ -76,7 +76,6 @@ $course_id = 1
       puts tee_time_slots
       post_response(tee_time_slots)
     end
-
   end
 
 
@@ -154,8 +153,7 @@ $course_id = 1
     puts "--- Calculating free tee slots for give date ---"
     @all_tee_slots = $tee_slots
     free_slots_for_date = @all_tee_slots - @tee_slots_booked_for_date
-    #puts "free_slots_for_date"
-    #puts free_slots_for_date
+    puts free_slots_for_date
 
     return free_slots_for_date
   end
@@ -173,6 +171,7 @@ $course_id = 1
     end
     puts "--- Calculating free tee slots for give date and hour ---"
     puts @tee_slots_for_hour
+
     return @tee_slots_for_hour
   end
 
@@ -185,5 +184,7 @@ $course_id = 1
       instance_variable_set("@#{var}", eval(var, binding))
     end
   end
+
+
 
 end
