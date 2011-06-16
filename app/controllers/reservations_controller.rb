@@ -101,19 +101,20 @@ $course_id = 1
 
       if user.blank?
         puts "Cannot find user -- Creating User"
-        user_id = create_user(user_email, uname)
+        uid = create_user(user_email, uname)
         puts "User id:"
-        puts user_id
+        puts uid
       else
         puts "Found User"
         puts "User id:"
-        user_id=user.id
-        puts user_id
+        uid=user.id
+        puts uid
+        puts date
       end
     end
 
     create = Reservation.new
-    create.user_id=id
+    create.user_id=uid
     create.date=date
     create.tee_slot=tee_time_slot
     create.golfers=golfers
@@ -160,6 +161,8 @@ $course_id = 1
 
 
   def show_available_tee_slots_for_hour(date, tee_slot_hour, course)
+  puts "def show_available_tee_slots_for_hour(date, tee_slot_hour, course)"
+  puts tee_slot_hour
     tee_slots_for_date = show_available_tee_slots_for_date(date, course)
     hour_slot = /\d{2}/.match(tee_slot_hour)
 
