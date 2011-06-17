@@ -55,10 +55,13 @@ $course_id = 1
         check_res_result = check_for_reservation(request_date, request_tee_slot, course_id)
         if check_res_result == "success"
           puts "Creating Reservation"
-          create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id)
-
-          ## Returning same tee slot as requested by user when reservation has been done successfully
-          tee_time_slots = request_tee_slot
+          res = create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id)
+          if res == "Unknown_user"
+            tee_time_slots = "Unknown_user"
+          else
+            ## Returning same tee slot as requested by user when reservation has been done successfully
+            tee_time_slots = request_tee_slot
+          end
         else
           puts "Slot already reserved"
           tee_time_slots = show_available_tee_slots_for_hour(request_date, request_tee_slot, course_id)
@@ -94,6 +97,7 @@ $course_id = 1
   def create_reservation(user_email, uname, date, tee_time_slot, golfers, course)
     if user_email.blank?
       puts "No Username received"
+      return "Unknown_user"
     else
       puts "Find user by email"
       puts user_email
