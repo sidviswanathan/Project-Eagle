@@ -2,8 +2,6 @@ class ReservationsController < ApplicationController
 
 $tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
 $course_id = 1
-@@unknown_user = "Unknown"
-@@date = Date.today
 
   def book_reservation
     @available_tee_slots = $tee_slots
@@ -42,12 +40,12 @@ $course_id = 1
     case request_cause
       when '1'
       ## Requesting for tee slot for given date
-        puts "--- Show slots for date ---"
+        puts "--- Show slots for date #{request_date} ---"
         puts request_cause
         tee_time_slots = show_available_tee_slots_for_date(request_date, course_id)
       when '2'
       ## Requesting for tee slot for given date and hour
-        puts "--- Show slots for hour and date ---"
+        puts "--- Show slots for hour #{request_tee_slot} and date #{request_date} ---"
         tee_time_slots = show_available_tee_slots_for_hour(request_date, request_tee_slot, course_id)
       when '3'
       ## Verifying user and making a reservation
@@ -55,12 +53,12 @@ $course_id = 1
         check_res_result = check_for_reservation(request_date, request_tee_slot, course_id)
         if check_res_result == "success"
           puts "Creating Reservation"
-          res = create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id)
-          if res == "Unknown_user"
+          create_res = create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id)
+          if create_res == "Unknown_user"
             tee_time_slots = "Unknown_user"
           else
             ## Returning same tee slot as requested by user when reservation has been done successfully
-            tee_time_slots = request_tee_slot
+            tee_time_slots = create_res
           end
         else
           puts "Slot already reserved"
@@ -69,7 +67,7 @@ $course_id = 1
       else
       ## Else Case is case 1
       ## Requesting for tee slot for given date
-        puts "--- Show slots for date ---"
+        puts "--- Show slots for date #{request_date} ---"
         puts request_cause
         tee_time_slots = show_available_tee_slots_for_date(request_date, course_id)
     end
@@ -88,8 +86,9 @@ $course_id = 1
     create.email=username 
     create.f_name=name
     create.save
-    puts "User saved"
     user = User.find_by_email(username)
+
+    puts "User saved -- #{user}"
     return user.id
   end
 
@@ -117,6 +116,7 @@ $course_id = 1
       end
     end
 
+    @saved_tee_slot = []
     create = Reservation.new
     create.user_id=uid
     create.date=date
@@ -125,7 +125,10 @@ $course_id = 1
     create.course_id=course
     create.save
 
-    puts "Reservation recorded"
+    @saved_tee_slot << tee_time_slot
+    return @saved_tee_slot
+
+    puts "Reservation recorded -- #{tee_time_slot}"
     puts "----- Congratulations you have successfully reserved a tee slot -----"
     puts "Please wait for confirmation"
   end
@@ -133,8 +136,7 @@ $course_id = 1
 
   def check_for_reservation(date, tee_slot, course)
     if Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot}).nil?
-      puts "--- Requested Tee slot not found for date ---"
-      puts "Success"
+      puts "--- Requested Tee slot #{tee_slot} is free for date #{date} ---"
       return "success"
     else
       return "fail"
@@ -143,7 +145,7 @@ $course_id = 1
 
 
   def show_available_tee_slots_for_date(date, course)
-    puts "--- Calculating tee slots on given date ---"
+    puts "--- Calculating tee slots on given date #{date} ---"
     puts "--- Checking for free Tee Slots ---"
     @tee_slots_for_date = Reservation.find_all_by_date(date)
     @tee_slots_booked_for_date = []
@@ -152,10 +154,10 @@ $course_id = 1
       @tee_slots_booked_for_date << record.tee_slot
     end
 
-    puts "--- All tee slots booked for given date ---"
+    puts "--- All tee slots reserved for given date #{date} ---"
     puts @tee_slots_booked_for_date
 
-    puts "--- Calculating free tee slots for give date ---"
+    puts "--- Calculating free tee slots for given date #{date} ---"
     @all_tee_slots = $tee_slots
     free_slots_for_date = @all_tee_slots - @tee_slots_booked_for_date
     puts free_slots_for_date
@@ -165,8 +167,6 @@ $course_id = 1
 
 
   def show_available_tee_slots_for_hour(date, tee_slot_hour, course)
-  puts "def show_available_tee_slots_for_hour(date, tee_slot_hour, course)"
-  puts tee_slot_hour
     tee_slots_for_date = show_available_tee_slots_for_date(date, course)
     hour_slot = /\d{2}/.match(tee_slot_hour)
 
@@ -176,7 +176,7 @@ $course_id = 1
         @tee_slots_for_hour << t
       end
     end
-    puts "--- Calculating free tee slots for give date and hour ---"
+    puts "--- Calculating free tee slots for given date #{date} and hour #{tee_slot_hour} ---"
     puts @tee_slots_for_hour
 
     return @tee_slots_for_hour
@@ -191,7 +191,6 @@ $course_id = 1
       instance_variable_set("@#{var}", eval(var, binding))
     end
   end
-
 
 
 end
