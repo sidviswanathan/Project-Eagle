@@ -22,7 +22,6 @@ GEM
       systemu (>= 1.2.0)
     builder (3.0.0)
     fattr (2.2.0)
-    hpricot (0.6)
     main (4.4.0)
       arrayfields (>= 4.7.4)
       fattr (>= 2.1.0)
@@ -49,6 +48,5 @@ PLATFORMS
 DEPENDENCIES
   aws-s3
   bj
-  hpricot
   rails (~> 2.3.5)
   sqlite3-ruby
