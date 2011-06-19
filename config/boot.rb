@@ -33,13 +33,6 @@ module Rails
     end
   end
 
-  class Boot
-    def run
-      load_initializer
-      Rails::Initializer.run(:set_load_path)
-    end
-  end
-
   class Rails::Boot
     def run
       load_initializer
