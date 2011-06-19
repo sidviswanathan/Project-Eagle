@@ -1,12 +1,13 @@
 source 'http://rubygems.org'
 
-gem 'rails', '2.3.5'
+#gem 'rails', '2.3.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem "rails", "~> 2.3.5"
 gem "bj"
-gem "hpricot", '0.6'
+gem "hpricot"
 gem "sqlite3-ruby"
 gem "aws-s3"
 
