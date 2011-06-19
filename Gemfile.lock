@@ -48,5 +48,6 @@ PLATFORMS
 DEPENDENCIES
   aws-s3
   bj
+  rack (~> 1.0.0)
   rails (~> 2.3.5)
   sqlite3-ruby

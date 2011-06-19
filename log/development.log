@@ -1083,3 +1083,17 @@ Migrating to CreateCourses (20110604005139)
   [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("courses")[0m
   [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("reservations")[0m
   [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("users")[0m
+
+
+Processing DeviceCommunicatorController#fetch_object (for 127.0.0.1 at 2011-06-18 18:54:43) [GET]
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/fetch_object]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-18 18:55:01) [GET]
+  Parameters: {"username"=>"Amar"}
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?username=Amar]
+
+
+Processing DeviceCommunicatorController#send_object (for 127.0.0.1 at 2011-06-18 18:55:11) [GET]
+  Parameters: {"email"=>"Amar"}
+Completed in 82ms (View: 2, DB: 0) | 200 OK [http://localhost/device_communicator/send_object?email=Amar]

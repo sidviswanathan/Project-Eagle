@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source :gemcutter
 
 #gem 'rails', '2.3.5'
 
@@ -6,6 +6,7 @@ source 'http://rubygems.org'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem "rails", "~> 2.3.5"
+gem "rack", "~> 1.0.0"
 gem "bj"
 #gem "hpricot" -- ERROR
 gem "sqlite3-ruby"
