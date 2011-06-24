@@ -15,25 +15,32 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
+  ## User create function ##
   def create_user(username, name)
     puts "Inside create_user"
-    create = User.new
-    create.email=username 
-    create.f_name=name
-    if create.save
-      user = User.find_by_email(username)
-      puts "User saved -- #{username}"
-      return user.id
-    else
-      respond_to do |format|
-        format.json  { render :json => create.errors, :status => :unprocessable_entity }
+    if User.find_by_email(username).blank?    
+      create = User.new
+      create.email=username
+      create.f_name=name
+      if create.save
+        user = User.find_by_email(username)
+        puts "User saved -- #{username}"
+        return user.id
+      else
+        puts "Error in creating user"
+        post_response(create.errors)
+#        respond_to do |format|
+#          format.json  { render :json => create.errors, :status => :unprocessable_entity }
+#        end
       end
-      puts "Error in creating user"
+    else
+      puts "User exists"
+      post_response("User exists")
     end
   end
 
 
+  ## Reservation create function ##
   def create_reservation(user_email, uname, date, tee_time_slot, golfers, course)
     if user_email.blank?
       puts "No Username received"
@@ -42,7 +49,6 @@ class ApplicationController < ActionController::Base
       puts "Find user by email"
       puts user_email
       user = User.find_by_email(user_email)
-
       if user.blank?
         puts "Cannot find user -- Creating User"
         uid = create_user(user_email, uname)
