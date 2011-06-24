@@ -16,10 +16,10 @@ class ApplicationController < ActionController::Base
   end
 
   ## User login form ##
-  def user_sign_in(request_params)
+  def user_sign_in
     request_user = params[:email]
     request_uname = params[:fName]
-    create_user(request_user, request_uname)
+    user_id = create_user(request_user, request_uname)
   end
 
 
@@ -32,8 +32,9 @@ class ApplicationController < ActionController::Base
       create.f_name=name
       if create.save
         user = User.find_by_email(username)
-        puts "User saved -- #{username}"
-        return user.id
+        puts "User saved -- #{username} -- #{user.id}"
+        post_response("User successfully created")
+        return user.id 
       else
         puts "Error in creating user"
         post_response(create.errors)
