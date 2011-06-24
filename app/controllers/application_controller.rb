@@ -15,6 +15,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  ## User login form ##
+  def user_sign_in(request_params)
+    request_user = params[:email]
+    request_uname = params[:fName]
+    create_user(request_user, request_uname)
+  end
+
+
   ## User create function ##
   def create_user(username, name)
     puts "Inside create_user"
@@ -34,8 +42,8 @@ class ApplicationController < ActionController::Base
 #        end
       end
     else
-      puts "User exists"
-      post_response("User exists")
+      puts "User already exists"
+      post_response("User already exists")
     end
   end
 
