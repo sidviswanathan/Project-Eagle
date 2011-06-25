@@ -19,7 +19,8 @@ class ApplicationController < ActionController::Base
   def user_sign_in
     request_user = params[:email]
     request_uname = params[:fName]
-    user_id = create_user(request_user, request_uname)
+    create_user(request_user, request_uname)
+    post_response("User successfully created")
   end
 
 
@@ -33,7 +34,6 @@ class ApplicationController < ActionController::Base
       if create.save
         user = User.find_by_email(username)
         puts "User saved -- #{username} -- #{user.id}"
-        post_response("User successfully created")
         return user.id 
       else
         puts "Error in creating user"
