@@ -102,37 +102,57 @@ class ApplicationController < ActionController::Base
 
 
   def show_available_tee_slots_for_date(date, course)
-    puts "--- Calculating tee slots on given date #{date} ---"
-    puts "--- Checking for free Tee Slots ---"
-    @tee_slots_for_date = Reservation.find_all_by_date(date)
-    @tee_slots_booked_for_date = []
+    @tee_slots_booked_for_date = {}
+    @all_tee_slots = $tee_slots
 
+    ## Getting all tee slots for date
+    puts "--- Calculating tee slots on given date #{date} ---"
+    @tee_slots_for_date = Reservation.find_all_by_date(date)
+
+    ## Creating an hash for all times with available tee slots
+    puts "--- All tee slots reserved for given date #{date} ---"
     @tee_slots_for_date.each do |record|
-      @tee_slots_booked_for_date << record.tee_slot
+      if !@tee_slots_booked_for_date.has_key?(record.tee_slot)
+        @tee_slots_booked_for_date[record.tee_slot] = record.golfers
+      else
+        @tee_slots_booked_for_date[record.tee_slot] = @tee_slots_booked_for_date[record.tee_slot] + record.golfers
+      end
     end
 
-    puts "--- All tee slots reserved for given date #{date} ---"
-    puts @tee_slots_booked_for_date
-
-    puts "--- Calculating free tee slots for given date #{date} ---"
-    @all_tee_slots = $tee_slots
-    free_slots_for_date = @all_tee_slots - @tee_slots_booked_for_date
+    ## Comparing with available times and their tee slots
+    free_slots_for_date = @all_tee_slots.merge(@tee_slots_booked_for_date) {|key, old, new| old-new}
+    puts "--- Printing all free tee slots ---"
     puts free_slots_for_date
-
     return free_slots_for_date
+
   end
 
 
   def show_available_tee_slots_for_hour(date, tee_slot_hour, course)
-    tee_slots_for_date = show_available_tee_slots_for_date(date, course)
-    hour_slot = /\d{2}/.match(tee_slot_hour)
+    @hour_slots = []
+    @all_tee_slots = []
+    @tee_slots_for_date = {}
+    @tee_slots_for_hour = {}
 
-    @tee_slots_for_hour = []
-    tee_slots_for_date.each do |t|
-      if /#{hour_slot}:\d{2}/.match(t)
-        @tee_slots_for_hour << t
+    ## Function call to get all available tee slots for that specific date
+    @tee_slots_for_date = show_available_tee_slots_for_date(date, course)
+
+    ## Getting hour slot requested by user
+    hour = /\d{2}/.match(tee_slot_hour)
+
+    ## Collecting all hour slots
+    @total_tee_slots = $tee_slots.keys
+    @total_tee_slots.each do |t|
+      if /#{hour}:\d{2}/.match(t)
+        @hour_slots << t
       end
     end
+
+    ## Making hash for post response
+    @hour_slots.each do |t|
+        @tee_slots_for_hour[t] = @tee_slots_for_date[t]
+    end
+
     puts "--- Calculating free tee slots for given date #{date} and hour #{tee_slot_hour} ---"
     puts @tee_slots_for_hour
 
