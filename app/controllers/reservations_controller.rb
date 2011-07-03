@@ -1,3 +1,8 @@
+require 'logger'
+require 'lib/twilio/twilio.rb'
+
+include Twilio
+
 class ReservationsController < ApplicationController
 
 $tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
