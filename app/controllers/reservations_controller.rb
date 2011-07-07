@@ -13,7 +13,7 @@ $course_id = 1
     @request_params = params
     puts params
     status = check_reservations(@request_params)
-    puts status
+    puts "Twilio data -- #{status}"
   end
 
 
@@ -27,6 +27,7 @@ $course_id = 1
 
     request_user = params[:email]
     request_uname = params[:fName]
+    request_lname = params[:lname]
     request_date = params[:date]
     request_tee_slot = params[:tee_slot]
     request_golfers = params[:golfers]
@@ -37,6 +38,7 @@ $course_id = 1
     puts "--- Printing Details of User request ---"
     puts request_user
     puts request_uname
+    puts request_lname
     puts request_date
     puts request_tee_slot
     puts request_golfers
@@ -65,6 +67,8 @@ $course_id = 1
           else
             ## Returning same tee slot as requested by user when reservation has been done successfully
             tee_time_slots = create_res
+            ## Make response for twilio
+            twilio_data = {'email' => request_user, 'fname' => request_uname, 'lname' => request_lname, 'date' => request_date, 'tee_slot' => request_tee_slot, 'golfers' => request_golfers}
           end
         else
           puts "Slot already reserved"
@@ -82,6 +86,7 @@ $course_id = 1
       puts "--- Sending Post response ---"
       puts tee_time_slots
       post_response(tee_time_slots)
+      return twilio_data
     end
   end
   
