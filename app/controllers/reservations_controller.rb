@@ -5,8 +5,10 @@ include Twilio
 
 class ReservationsController < ApplicationController
 
-$tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
-$course_id = 1
+  protect_from_forgery :except => :create 
+
+  $tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
+  $course_id = 1
 
   def book_reservation
     @available_tee_slots = $tee_slots
