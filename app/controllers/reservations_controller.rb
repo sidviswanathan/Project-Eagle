@@ -84,11 +84,18 @@ $course_id = 1
     end
   end
   
-  def make_twilio_call
-    
+  def initiate_twilio_call
+    make_twilio_call
+    render :nothing => true
   end  
 
-
+  def initiate_automated_call
+    @r = Twilio::Response.new
+    @r.append(Twilio::Say.new("Hello World", :voice => "man", :loop => "10"))
+    @r.append(Twilio::Dial.new("4155551212", :timeLimit => "45"))
+    puts @r.respond
+    render :nothing => true
+  end
 
   ## Private Methods ##
   private
