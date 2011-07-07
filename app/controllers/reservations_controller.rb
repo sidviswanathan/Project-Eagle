@@ -7,7 +7,8 @@ $course_id = 1
     @available_tee_slots = $tee_slots
     @request_params = params
     puts params
-    check_reservations(@request_params)
+    status = check_reservations(@request_params)
+    puts status
   end
 
 
