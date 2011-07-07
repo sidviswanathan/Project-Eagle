@@ -14,7 +14,7 @@ module Twilio
   ACCOUNT_TOKEN = '8fcabbf06e89b828c7d5b59fb583e38a'
 
   # Outgoing Caller ID previously validated with Twilio
-  CALLER_ID = '301-806-3772'
+  CALLER_ID = '510-304-1372'
   
   def make_twilio_call
 
@@ -27,7 +27,7 @@ module Twilio
     
     d = {
         'From' => CALLER_ID,
-        'To' => '510-304-1372',
+        'To' => '301-8-6-3772',
         'Url' => 'http://projecteagle.heroku.com/place_automated_call',
         }
     resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
