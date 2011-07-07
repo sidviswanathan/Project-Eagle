@@ -103,6 +103,7 @@ class ApplicationController < ActionController::Base
 
   def show_available_tee_slots_for_date(date, course)
     @tee_slots_booked_for_date = {}
+    @free_slots_for_date = {}
     @all_tee_slots = $tee_slots
 
     ## Getting all tee slots for date
@@ -119,11 +120,12 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    puts "@tee_slots_booked_for_date = #{@tee_slots_booked_for_date}"
     ## Comparing with available times and their tee slots
-    free_slots_for_date = @all_tee_slots.merge(@tee_slots_booked_for_date) {|key, old, new| old-new}
+    @free_slots_for_date = @all_tee_slots.merge(@tee_slots_booked_for_date) {|key, old, new| old-new}
     puts "--- Printing all free tee slots ---"
-    puts free_slots_for_date
-    return free_slots_for_date
+    puts @free_slots_for_date
+    return @free_slots_for_date
 
   end
 
