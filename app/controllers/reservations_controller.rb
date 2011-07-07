@@ -87,7 +87,7 @@ $course_id = 1
   
   def initiate_twilio_call
     make_twilio_call
-    #render :nothing => true
+    render :nothing => true
   end  
 
   def place_automated_call
