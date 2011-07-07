@@ -27,7 +27,7 @@ module Twilio
     
     d = {
         'From' => CALLER_ID,
-        'To' => '301-8-6-3772',
+        'To' => '301-806-3772',
         'Url' => 'http://projecteagle.heroku.com/place_automated_call',
         }
     resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
