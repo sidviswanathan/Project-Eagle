@@ -5,7 +5,7 @@ include Twilio
 
 class ReservationsController < ApplicationController
 
-  protect_from_forgery :except => :create 
+  protect_from_forgery :except => [:initiate_twilio_call, :place_automated_call]   
 
   $tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
   $course_id = 1
