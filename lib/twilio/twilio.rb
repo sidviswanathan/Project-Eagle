@@ -31,7 +31,7 @@ module Twilio
         'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call',
         }
     resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
-        'POST', d)
+        'GET', d)
     resp.error! unless resp.kind_of? Net::HTTPSuccess
     puts "code: %s\nbody: %s" % [resp.code, resp.body]
     

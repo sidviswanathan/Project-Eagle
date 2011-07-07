@@ -97,7 +97,7 @@ $course_id = 1
 
   def place_automated_call
     @r = Twilio::Response.new
-    @r.append(Twilio::Say.new("Hello World", :voice => "man", :loop => "10"))
+    @r.append(Twilio::Say.new("Hello World, this is an automated phone call test", :voice => "man", :loop => "10"))
     #@r.append(Twilio::Dial.new("4155551212", :timeLimit => "45"))
     puts @r.respond
     #render :nothing => true
