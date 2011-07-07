@@ -1,3 +1,8 @@
+require 'logger'
+require 'lib/twilio/twilio.rb'
+
+include Twilio
+
 class ReservationsController < ApplicationController
 
 $tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
@@ -7,7 +12,8 @@ $course_id = 1
     @available_tee_slots = $tee_slots
     @request_params = params
     puts params
-    check_reservations(@request_params)
+    status = check_reservations(@request_params)
+    puts status
   end
 
 
@@ -78,8 +84,19 @@ $course_id = 1
       post_response(tee_time_slots)
     end
   end
+  
+  def initiate_twilio_call
+    make_twilio_call
+    render :nothing => true
+  end  
 
-
+  def place_automated_call
+    @r = Twilio::Response.new
+    @r.append(Twilio::Say.new("Hello World", :voice => "man", :loop => "10"))
+    #@r.append(Twilio::Dial.new("4155551212", :timeLimit => "45"))
+    puts @r.respond
+    render :nothing => true
+  end
 
   ## Private Methods ##
   private
