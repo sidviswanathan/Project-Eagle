@@ -3,7 +3,7 @@ module Twilio
   require 'twiliolib'
   require 'pp'
   
-  H = { :a => 'ay',
+  H = { :a => 'aayy',
         :b => 'bee',
         :c => 'see',
         :d => 'dee',
@@ -21,7 +21,7 @@ module Twilio
         :p => 'pee',
         :q => 'cue',
         :r => 'are',
-        :s => 'es',
+        :s => 'ess',
         :t => 'tee',
         :u => 'you',
         :v => 'vee',
@@ -55,9 +55,7 @@ module Twilio
     # ===========================================================================
     
     say = create_say_string(params)
-    puts say
-    puts "999999999999"
-    
+  
     d = {
         'From' => CALLER_ID,
         'To' => '301-806-3772',
@@ -75,7 +73,7 @@ module Twilio
     first_name_say = convert_to_letters(params["fName"])
     last_name_say = convert_to_letters(params["lname"])
     date = params["date"].strftime('%A'+' '+'%B'+' '+'%d')
-    say = "This is a tee time reservation on #{date} at #{params["tee_slot"]} for #{params["fName"]} #{params["lname"]} for #{params["golfers"]} golfers, that's #{date} at #{params["tee_slot"]} for #{params["golfers"]} for #{params["fName"]} #{params["lname"]} first name #{first_name_say} last name #{last_name_say}".split(' ').join('+')      
+    say = "This is a tee time reservation on #{date} at #{params["tee_slot"]} for #{params["fName"]} #{params["lname"]} for #{params["golfers"]} golfers, that's #{date} at #{params["tee_slot"]} for #{params["golfers"]} golfers for #{params["fName"]} #{params["lname"]} first name #{first_name_say} last name #{last_name_say}".split(' ').join('.+')      
     return say
   end
   
