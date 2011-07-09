@@ -55,17 +55,17 @@ module Twilio
     # ===========================================================================
     
     say = create_say_string(params)
-        # 
-        # d = {
-        #     'From' => CALLER_ID,
-        #     'To' => '301-806-3772',
-        #     'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call?SAY='+say,
-        #     }
-        # resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
-        #     'POST', d)
-        # resp.error! unless resp.kind_of? Net::HTTPSuccess
-        # puts "code: %s\nbody: %s" % [resp.code, resp.body]
-        # 
+    
+    d = {
+        'From' => CALLER_ID,
+        'To' => '301-806-3772',
+        'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call?SAY='+say,
+        }
+    resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
+        'POST', d)
+    resp.error! unless resp.kind_of? Net::HTTPSuccess
+    puts "code: %s\nbody: %s" % [resp.code, resp.body]
+    
   end  
   
   #IMPLEMENT
