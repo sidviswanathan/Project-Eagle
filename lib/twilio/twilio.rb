@@ -55,7 +55,7 @@ module Twilio
     # ===========================================================================
     
     say = create_say_string(params)
-    say = "tesst time reservation for anush"
+    say = "tesst+time+reservation+for+anush"
     url = "http://projecteagle.heroku.com/reservations/place_automated_call?SAY=#{say}"
     
     d = {
