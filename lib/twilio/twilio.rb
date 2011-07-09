@@ -3,7 +3,7 @@ module Twilio
   require 'twiliolib'
   require 'pp'
   
-  H = { :a => 'aayy',
+  H = { :a => 'ay',
         :b => 'bee',
         :c => 'see',
         :d => 'dee',
@@ -21,7 +21,7 @@ module Twilio
         :p => 'pee',
         :q => 'cue',
         :r => 'are',
-        :s => 'ess',
+        :s => 'es',
         :t => 'tee',
         :u => 'you',
         :v => 'vee',
