@@ -102,7 +102,7 @@ class ReservationsController < ApplicationController
     pp params
     puts "00000000000000000000000000"
     @r = Twilio::Response.new
-    @r.append(Twilio::Say.new(, :voice => "man", :loop => "1"))
+    @r.append(Twilio::Say.new(params["SAY"], :voice => "man", :loop => "1"))
     puts @r.respond
   end
 
