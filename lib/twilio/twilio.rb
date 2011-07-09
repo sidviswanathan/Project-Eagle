@@ -57,7 +57,6 @@ module Twilio
     pp params
     puts "00000000000000000000000000"
     
-    
     # d = {
     #     'From' => CALLER_ID,
     #     'To' => '301-806-3772',
@@ -72,9 +71,22 @@ module Twilio
   
   #IMPLEMENT
   def create_say_string(params)
-    say = ""
+    say = 'This is a tee time reservation for That\'s first name'+fname+' last name'+lname  
     return say
-  end  
+  end
+  
+  def convert_to_letters(string)
+    name = ""
+    for i in 0..string.length-1
+      letter = string[i..i].downcase.to_sym
+      if name == ""
+        name = H[letter]  
+      else
+        name = name+' '+H[letter]  
+      end    
+    end
+    return name
+  end    
   
   #  # ===========================================================================
   #  # 2. Get a list of recent completed calls (i.e. Status = 2)

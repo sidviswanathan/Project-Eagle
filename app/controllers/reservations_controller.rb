@@ -16,8 +16,8 @@ class ReservationsController < ApplicationController
     status = check_reservations(params)
     puts "---------- Twilio data ----------"
     pp status
+    initiate_twilio_call
   end
-
 
   def check_reservations(request_params)
     @reservation_request = request_params
