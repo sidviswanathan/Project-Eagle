@@ -56,11 +56,12 @@ module Twilio
     
     say = create_say_string(params)
     say = "tesst time reservation for anush"
+    url = "http://projecteagle.heroku.com/reservations/place_automated_call?SAY=#{say}"
     
     d = {
         'From' => CALLER_ID,
         'To' => '301-806-3772',
-        'Url' => "http://projecteagle.heroku.com/reservations/place_automated_call?SAY=#{say}"
+        'Url' => url
         }
     resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
         'POST', d)
