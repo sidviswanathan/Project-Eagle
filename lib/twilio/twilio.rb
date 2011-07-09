@@ -53,20 +53,17 @@ module Twilio
     # ===========================================================================
     # Initiate a new outbound call to 301-806-3772
     # ===========================================================================
-    puts "00000000000000000000000000"
-    pp params
-    puts "00000000000000000000000000"
+
+    d = {
+        'From' => CALLER_ID,
+        'To' => '301-806-3772',
+        'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call',
+        }
+    resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
+        'POST', d)
+    resp.error! unless resp.kind_of? Net::HTTPSuccess
+    puts "code: %s\nbody: %s" % [resp.code, resp.body]
     
-    # d = {
-    #     'From' => CALLER_ID,
-    #     'To' => '301-806-3772',
-    #     'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call',
-    #     }
-    # resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
-    #     'POST', d)
-    # resp.error! unless resp.kind_of? Net::HTTPSuccess
-    # puts "code: %s\nbody: %s" % [resp.code, resp.body]
-    # 
   end  
   
   #IMPLEMENT

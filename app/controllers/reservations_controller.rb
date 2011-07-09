@@ -16,7 +16,7 @@ class ReservationsController < ApplicationController
     status = check_reservations(params)
     puts "---------- Twilio data ----------"
     pp status
-    initiate_twilio_call(params)
+    initiate_twilio_call(params) if status != nil
   end
 
   def check_reservations(request_params)
@@ -98,6 +98,9 @@ class ReservationsController < ApplicationController
   end  
 
   def place_automated_call
+    puts "00000000000000000000000000"
+    pp params
+    puts "00000000000000000000000000"
     
     @r = Twilio::Response.new
     @r.append(Twilio::Say.new("Hello World, this is an automated phone call test", :voice => "man", :loop => "2"))
