@@ -90,7 +90,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def check_for_reservation(date, tee_slot, course)
     if Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot}).nil?
       puts "--- Requested Tee slot #{tee_slot} is free for date #{date} ---"

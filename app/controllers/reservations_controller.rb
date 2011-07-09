@@ -14,9 +14,7 @@ class ReservationsController < ApplicationController
   def book_reservation
     @available_tee_slots = $tee_slots
     status = check_reservations(params)
-    puts "---------- Twilio data ----------"
-    pp status
-    initiate_twilio_call(params) if status != nil
+    #initiate_twilio_call(params) if status != nil
   end
 
   def check_reservations(request_params)
@@ -98,9 +96,6 @@ class ReservationsController < ApplicationController
   end  
 
   def place_automated_call
-    puts "00000000000000000000000000"
-    pp params
-    puts "00000000000000000000000000"
     @r = Twilio::Response.new
     @r.append(Twilio::Say.new(params["SAY"], :voice => "man", :loop => "1"))
     puts @r.respond
