@@ -1,3 +1,4 @@
+require 'pp'
 require 'logger'
 require 'lib/twilio/twilio.rb'
 
@@ -12,10 +13,9 @@ class ReservationsController < ApplicationController
 
   def book_reservation
     @available_tee_slots = $tee_slots
-    @request_params = params
-    puts params
-    status = check_reservations(@request_params)
-    puts "Twilio data -- #{status}"
+    status = check_reservations(params)
+    puts "---------- Twilio data ----------"
+    pp status
   end
 
 
