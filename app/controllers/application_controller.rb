@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    if !uid.blank?
+    if !uid.blank? && !tee_time_slot.blank? && !golfers.blank?
       @saved_tee_slot = []
       create = Reservation.new
       create.user_id=uid
@@ -87,6 +87,9 @@ class ApplicationController < ActionController::Base
       puts "Reservation recorded -- #{tee_time_slot}"
       puts "----- Congratulations you have successfully reserved a tee slot -----"
       puts "Please wait for confirmation"
+    else
+      puts "mandatory fied missing"
+      return "Mandatory field missing!"
     end
   end
 
