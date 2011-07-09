@@ -55,13 +55,13 @@ module Twilio
     # ===========================================================================
     
     say = create_say_string(params)
-    say = "tesst+time+reservation+for+anush"
-    url = "http://projecteagle.heroku.com/reservations/place_automated_call?SAY=#{say}"
+    puts say
+    puts "999999999999"
     
     d = {
         'From' => CALLER_ID,
         'To' => '301-806-3772',
-        'Url' => url
+        'Url' => "http://projecteagle.heroku.com/reservations/place_automated_call?SAY=#{say}"
         }
     resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
         'POST', d)
@@ -75,7 +75,7 @@ module Twilio
     first_name_say = convert_to_letters(params["fName"])
     last_name_say = convert_to_letters(params["lname"])
     date = params["date"].strftime('%A'+' '+'%B'+' '+'%d')
-    say = "This is a tee time reservation on #{date} at #{params["tee_slot"]} for #{params["fName"]} #{params["lname"]} for #{params["golfers"]} golfers, that's #{date} at #{params["tee_slot"]} for #{params["golfers"]} for #{params["fName"]} #{params["lname"]} first name #{first_name_say} last name #{last_name_say}"      
+    say = "This is a tee time reservation on #{date} at #{params["tee_slot"]} for #{params["fName"]} #{params["lname"]} for #{params["golfers"]} golfers, that's #{date} at #{params["tee_slot"]} for #{params["golfers"]} for #{params["fName"]} #{params["lname"]} first name #{first_name_say} last name #{last_name_say}".split(' ').join('+')      
     return say
   end
   
@@ -86,7 +86,7 @@ module Twilio
       if name == ""
         name = H[letter]  
       else
-        name = name+' '+H[letter]  
+        name = name+'+'+H[letter]  
       end    
     end
     return name
