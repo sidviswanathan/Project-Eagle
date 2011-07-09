@@ -68,7 +68,7 @@ module Twilio
     
   end  
   
-  #IMPLEMENT
+  #DONE
   def create_say_string(params)    
     first_name_say = convert_to_letters(params["fName"])
     last_name_say = convert_to_letters(params["lname"])
@@ -77,6 +77,7 @@ module Twilio
     return say
   end
   
+  #DONE
   def convert_to_letters(string)
     name = ""
     for i in 0..string.length-1
@@ -84,7 +85,7 @@ module Twilio
       if name == ""
         name = H[letter]  
       else
-        name = name+'+'+H[letter]  
+        name = name+'.+'+H[letter]  
       end    
     end
     return name
