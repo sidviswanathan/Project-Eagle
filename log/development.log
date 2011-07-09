@@ -196,3 +196,434 @@ Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 
   [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
   [4;35;1mReservation Create (0.3ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('08:07', '2011-07-09 06:10:18', '2011-07-09 06:10:18', NULL, '2011-07-09', 't', 1, 1)[0m
 Completed in 29ms (View: 1, DB: 3) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:38:30) [POST]
+  Parameters: {"tee_slot"=>"10:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.3ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+
+TypeError (nil can't be coerced into Fixnum):
+  app/controllers/application_controller.rb:125:in `show_available_tee_slots_for_date'
+  app/controllers/application_controller.rb:125:in `merge'
+  app/controllers/application_controller.rb:125:in `show_available_tee_slots_for_date'
+  app/controllers/application_controller.rb:140:in `show_available_tee_slots_for_hour'
+  app/controllers/reservations_controller.rb:59:in `check_reservations'
+  app/controllers/reservations_controller.rb:16:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (46.6ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateCourses (20110604005139)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mDROP TABLE "courses"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604005139'[0m
+Migrating to CreateReservations (20110604005127)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "reservations"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604005127'[0m
+Migrating to CreateUsers (20110604004217)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "users"[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604004217'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20110604004217)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" text, "f_name" text, "l_name" text, "course_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604004217')[0m
+Migrating to CreateReservations (20110604005127)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "reservations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "date" date, "tee_slot" varchar(255), "availability" boolean DEFAULT 'true', "golfers" integer, "user_id" integer, "course_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604005127')[0m
+Migrating to CreateCourses (20110604005139)
+  [4;35;1mSQL (1.5ms)[0m   [0mCREATE TABLE "courses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "price" decimal(8,2), "description" text, "contact" text, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604005139')[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("courses")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("reservations")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("users")[0m
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:40:01) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Fri, 08 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-08') [0m
+Completed in 34ms (View: 6, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:40:08) [POST]
+  Parameters: {"tee_slot"=>"08:23", "golfers"=>"", "date"=>Sat, 09 Jul 2011, "lname"=>"jayaram", "fName"=>"anush", "cause"=>"3", "email"=>"Anush@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '08:23') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;36;1mUser Load (0.1ms)[0m   [0;1mSELECT "users".id FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mUser Create (0.4ms)[0m   [0mINSERT INTO "users" ("created_at", "updated_at", "f_name", "course_id", "email", "l_name") VALUES('2011-07-09 06:40:08', '2011-07-09 06:40:08', 'anush', NULL, 'Anush@gmail.com', NULL)[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.3ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('08:23', '2011-07-09 06:40:08', '2011-07-09 06:40:08', NULL, '2011-07-09', 't', 1, 1)[0m
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.length):
+  /lib/twilio/twilio.rb:86:in `convert_to_letters'
+  /lib/twilio/twilio.rb:73:in `create_say_string'
+  /lib/twilio/twilio.rb:57:in `make_twilio_call'
+  app/controllers/reservations_controller.rb:96:in `initiate_twilio_call'
+  app/controllers/reservations_controller.rb:19:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (47.3ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:42:20) [POST]
+  Parameters: {"tee_slot"=>"10:00", "date"=>Fri, 08 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.1ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-08') [0m
+Completed in 9ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:42:26) [POST]
+  Parameters: {"tee_slot"=>"10:23", "golfers"=>"", "date"=>Sat, 09 Jul 2011, "lname"=>"jayaram", "fName"=>"anush", "cause"=>"3", "email"=>"Anush@gmail.com"}
+  [4;35;1mReservation Load (0.1ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '10:23') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (2.0ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('10:23', '2011-07-09 06:42:26', '2011-07-09 06:42:26', NULL, '2011-07-09', 't', 1, 1)[0m
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.length):
+  /lib/twilio/twilio.rb:86:in `convert_to_letters'
+  /lib/twilio/twilio.rb:73:in `create_say_string'
+  /lib/twilio/twilio.rb:57:in `make_twilio_call'
+  app/controllers/reservations_controller.rb:96:in `initiate_twilio_call'
+  app/controllers/reservations_controller.rb:19:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (46.5ms)
+Rendered rescues/_request_and_response (0.6ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:45:26) [POST]
+  Parameters: {"tee_slot"=>"10:00", "date"=>Fri, 08 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.1ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-08') [0m
+Completed in 8ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:45:34) [POST]
+  Parameters: {"tee_slot"=>"10:30", "golfers"=>"", "date"=>Sat, 09 Jul 2011, "lname"=>"jayaram", "fName"=>"anush", "cause"=>"3", "email"=>"Anush@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '10:30') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (2.0ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('10:30', '2011-07-09 06:45:34', '2011-07-09 06:45:34', NULL, '2011-07-09', 't', 1, 1)[0m
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.length):
+  /lib/twilio/twilio.rb:86:in `convert_to_letters'
+  /lib/twilio/twilio.rb:73:in `create_say_string'
+  /lib/twilio/twilio.rb:57:in `make_twilio_call'
+  app/controllers/reservations_controller.rb:96:in `initiate_twilio_call'
+  app/controllers/reservations_controller.rb:19:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (137.6ms)
+Rendered rescues/_request_and_response (0.5ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:46:47) [POST]
+  Parameters: {"tee_slot"=>"06:00", "date"=>Fri, 08 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.1ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-08') [0m
+Completed in 9ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:46:50) [POST]
+  Parameters: {"tee_slot"=>"06:23", "golfers"=>"", "date"=>Sat, 09 Jul 2011, "lname"=>"jayaram", "fName"=>"anush", "cause"=>"3", "email"=>"Anush@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '06:23') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (1.4ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('06:23', '2011-07-09 06:46:50', '2011-07-09 06:46:50', NULL, '2011-07-09', 't', 1, 1)[0m
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.length):
+  /lib/twilio/twilio.rb:86:in `convert_to_letters'
+  /lib/twilio/twilio.rb:73:in `create_say_string'
+  /lib/twilio/twilio.rb:57:in `make_twilio_call'
+  app/controllers/reservations_controller.rb:96:in `initiate_twilio_call'
+  app/controllers/reservations_controller.rb:19:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (117.5ms)
+Rendered rescues/_request_and_response (0.5ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#book_reservation (for 127.0.0.1 at 2011-07-08 23:50:46) [POST]
+  Parameters: {"tee_slot"=>"10:00", "date"=>Fri, 08 Jul 2011, "cause"=>"2"}
+
+SyntaxError (./lib/twilio/twilio.rb:58: syntax error, unexpected tCONSTANT, expecting kEND
+    puts "ABOUT TO CALL SAY STRING METHOD!!!"
+               ^
+./lib/twilio/twilio.rb:71: syntax error, unexpected kEND
+  end  
+     ^
+./lib/twilio/twilio.rb:150: syntax error, unexpected $end, expecting kEND):
+  app/controllers/reservations_controller.rb:3
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (123.2ms)
+Rendered rescues/_request_and_response (1.4ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:54:10) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Fri, 08 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-08') [0m
+Completed in 32ms (View: 4, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:54:17) [POST]
+  Parameters: {"tee_slot"=>"08:00", "golfers"=>"", "date"=>Sat, 09 Jul 2011, "lname"=>"jayaram", "fName"=>"anush", "cause"=>"3", "email"=>"Anush@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '08:00') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.4ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('08:00', '2011-07-09 06:54:17', '2011-07-09 06:54:17', NULL, '2011-07-09', 't', 1, 1)[0m
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.length):
+  /lib/twilio/twilio.rb:94:in `convert_to_letters'
+  /lib/twilio/twilio.rb:79:in `create_say_string'
+  /lib/twilio/twilio.rb:59:in `make_twilio_call'
+  app/controllers/reservations_controller.rb:97:in `initiate_twilio_call'
+  app/controllers/reservations_controller.rb:19:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (47.2ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:56:14) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Fri, 08 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-08') [0m
+Completed in 31ms (View: 4, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-08 23:56:18) [POST]
+  Parameters: {"tee_slot"=>"08:15", "golfers"=>"", "date"=>Sat, 09 Jul 2011, "lname"=>"jayaram", "fName"=>"anush", "cause"=>"3", "email"=>"Anush@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '08:15') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.4ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('08:15', '2011-07-09 06:56:18', '2011-07-09 06:56:18', NULL, '2011-07-09', 't', 1, 1)[0m
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.length):
+  /lib/twilio/twilio.rb:94:in `convert_to_letters'
+  /lib/twilio/twilio.rb:80:in `create_say_string'
+  /lib/twilio/twilio.rb:59:in `make_twilio_call'
+  app/controllers/reservations_controller.rb:97:in `initiate_twilio_call'
+  app/controllers/reservations_controller.rb:19:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (46.2ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 00:01:04) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.4ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+
+TypeError (nil can't be coerced into Fixnum):
+  app/controllers/application_controller.rb:125:in `show_available_tee_slots_for_date'
+  app/controllers/application_controller.rb:125:in `merge'
+  app/controllers/application_controller.rb:125:in `show_available_tee_slots_for_date'
+  app/controllers/application_controller.rb:140:in `show_available_tee_slots_for_hour'
+  app/controllers/reservations_controller.rb:59:in `check_reservations'
+  app/controllers/reservations_controller.rb:16:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (137.3ms)
+Rendered rescues/_request_and_response (0.5ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateCourses (20110604005139)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mDROP TABLE "courses"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604005139'[0m
+Migrating to CreateReservations (20110604005127)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "reservations"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604005127'[0m
+Migrating to CreateUsers (20110604004217)
+  [4;35;1mSQL (0.5ms)[0m   [0mDROP TABLE "users"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604004217'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20110604004217)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" text, "f_name" text, "l_name" text, "course_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604004217')[0m
+Migrating to CreateReservations (20110604005127)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "reservations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "date" date, "tee_slot" varchar(255), "availability" boolean DEFAULT 'true', "golfers" integer, "user_id" integer, "course_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604005127')[0m
+Migrating to CreateCourses (20110604005139)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "courses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "price" decimal(8,2), "description" text, "contact" text, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604005139')[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("courses")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("reservations")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("users")[0m
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 00:02:30) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Sun, 10 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-10') [0m
+Completed in 30ms (View: 4, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 00:02:34) [POST]
+  Parameters: {"tee_slot"=>"08:23", "golfers"=>"", "date"=>Sun, 10 Jul 2011, "lname"=>"jayaram", "fName"=>"anush", "cause"=>"3", "email"=>"Anush@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '08:23') AND ("reservations"."date" = '2011-07-10') LIMIT 1[0m
+  [4;36;1mUser Load (0.1ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;36;1mUser Load (0.1ms)[0m   [0;1mSELECT "users".id FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mUser Create (0.4ms)[0m   [0mINSERT INTO "users" ("created_at", "updated_at", "f_name", "course_id", "email", "l_name") VALUES('2011-07-09 07:02:34', '2011-07-09 07:02:34', 'anush', NULL, 'Anush@gmail.com', NULL)[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Anush@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.3ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('08:23', '2011-07-09 07:02:34', '2011-07-09 07:02:34', NULL, '2011-07-10', 't', 1, 1)[0m
+Completed in 27ms (View: 1, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]

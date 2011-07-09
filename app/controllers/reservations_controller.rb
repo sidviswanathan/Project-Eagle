@@ -93,8 +93,8 @@ class ReservationsController < ApplicationController
   end
   
   def initiate_twilio_call(params)
+    puts "INSIDE INITIATE TWILIO CALL"
     make_twilio_call(params)
-    #render :nothing => true
   end  
 
   def place_automated_call
@@ -106,7 +106,6 @@ class ReservationsController < ApplicationController
     @r.append(Twilio::Say.new("Hello World, this is an automated phone call test", :voice => "man", :loop => "2"))
     #@r.append(Twilio::Dial.new("4155551212", :timeLimit => "45"))
     puts @r.respond
-    #render :nothing => true
   end
 
   ## Private Methods ##

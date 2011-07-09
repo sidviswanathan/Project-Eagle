@@ -46,29 +46,34 @@ module Twilio
   CALLER_ID = '510-304-1372'
   
   def make_twilio_call(params)
-
+    
     # Create a Twilio REST account object using your Twilio account ID and token
     account = Twilio::RestAccount.new(ACCOUNT_SID, ACCOUNT_TOKEN)
     
     # ===========================================================================
     # Initiate a new outbound call to 301-806-3772
     # ===========================================================================
-
-    d = {
-        'From' => CALLER_ID,
-        'To' => '301-806-3772',
-        'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call?VARIABLE=-----hello-----',
-        }
-    resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
-        'POST', d)
-    resp.error! unless resp.kind_of? Net::HTTPSuccess
-    puts "code: %s\nbody: %s" % [resp.code, resp.body]
     
+    say = create_say_string(params)
+        # 
+        # d = {
+        #     'From' => CALLER_ID,
+        #     'To' => '301-806-3772',
+        #     'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call?SAY='+say,
+        #     }
+        # resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
+        #     'POST', d)
+        # resp.error! unless resp.kind_of? Net::HTTPSuccess
+        # puts "code: %s\nbody: %s" % [resp.code, resp.body]
+        # 
   end  
   
   #IMPLEMENT
-  def create_say_string(params)
-    say = 'This is a tee time reservation for That\'s first name'+fname+' last name'+lname  
+  def create_say_string(params)    
+    first_name_say = convert_to_letters(params["fName"])
+    last_name_say = convert_to_letters(params["lname"])
+    date = params["date"].strftime('%A'+' '+'%B'+' '+'%d')
+    say = "This is a tee time reservation on #{date} at #{params["tee_slot"]} for #{params["fName"]} #{params["lname"]} for #{params["golfers"]} golfers, that's #{date} at #{params["tee_slot"]} for #{params["golfers"]} for #{params["fName"]} #{params["lname"]} first name #{first_name_say} last name #{last_name_say}"      
     return say
   end
   
