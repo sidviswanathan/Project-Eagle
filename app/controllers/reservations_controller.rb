@@ -102,8 +102,7 @@ class ReservationsController < ApplicationController
     pp params
     puts "00000000000000000000000000"
     @r = Twilio::Response.new
-    @r.append(Twilio::Say.new("Hello World, this is an automated phone call test", :voice => "man", :loop => "2"))
-    #@r.append(Twilio::Dial.new("4155551212", :timeLimit => "45"))
+    @r.append(Twilio::Say.new("Hello World, this is an automated phone call test", :voice => "man", :loop => "1"))
     puts @r.respond
   end
 
