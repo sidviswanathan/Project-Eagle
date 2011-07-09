@@ -94,7 +94,7 @@ class ReservationsController < ApplicationController
   
   def initiate_twilio_call(params)
     make_twilio_call(params)
-    render :nothing => true
+    #render :nothing => true
   end  
 
   def place_automated_call
