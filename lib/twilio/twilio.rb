@@ -55,6 +55,7 @@ module Twilio
     # ===========================================================================
     
     say = create_say_string(params)
+    say = "tesst time reservation for anush"
     
     d = {
         'From' => CALLER_ID,
