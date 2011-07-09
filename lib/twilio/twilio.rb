@@ -1,6 +1,35 @@
 module Twilio
 
   require 'twiliolib'
+  require 'pp'
+  
+  H = { :a => 'ay',
+        :b => 'bee',
+        :c => 'see',
+        :d => 'dee',
+        :e => 'ee',
+        :f => 'ef',
+        :g => 'gee',
+        :h => 'aych',
+        :i => 'eye',
+        :j => 'jay',
+        :k => 'kay',
+        :l => 'el',
+        :m => 'em',
+        :n => 'en',
+        :o => 'oh',
+        :p => 'pee',
+        :q => 'cue',
+        :r => 'are',
+        :s => 'es',
+        :t => 'tee',
+        :u => 'you',
+        :v => 'vee',
+        :w => 'double u',
+        :x => 'ex',
+        :y => 'why',
+        :z => 'zee'
+      }
   
   # ===========================================================================
   # Initiate Twilio keys and variables
@@ -16,7 +45,7 @@ module Twilio
   # Outgoing Caller ID previously validated with Twilio
   CALLER_ID = '510-304-1372'
   
-  def make_twilio_call
+  def make_twilio_call(params)
 
     # Create a Twilio REST account object using your Twilio account ID and token
     account = Twilio::RestAccount.new(ACCOUNT_SID, ACCOUNT_TOKEN)
@@ -24,17 +53,27 @@ module Twilio
     # ===========================================================================
     # Initiate a new outbound call to 301-806-3772
     # ===========================================================================
+    puts "00000000000000000000000000"
+    pp params
+    puts "00000000000000000000000000"
     
-    d = {
-        'From' => CALLER_ID,
-        'To' => '301-806-3772',
-        'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call',
-        }
-    resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
-        'POST', d)
-    resp.error! unless resp.kind_of? Net::HTTPSuccess
-    puts "code: %s\nbody: %s" % [resp.code, resp.body]
     
+    # d = {
+    #     'From' => CALLER_ID,
+    #     'To' => '301-806-3772',
+    #     'Url' => 'http://projecteagle.heroku.com/reservations/place_automated_call',
+    #     }
+    # resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
+    #     'POST', d)
+    # resp.error! unless resp.kind_of? Net::HTTPSuccess
+    # puts "code: %s\nbody: %s" % [resp.code, resp.body]
+    # 
+  end  
+  
+  #IMPLEMENT
+  def create_say_string(params)
+    say = ""
+    return say
   end  
   
   #  # ===========================================================================

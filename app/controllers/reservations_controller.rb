@@ -5,7 +5,7 @@ include Twilio
 
 class ReservationsController < ApplicationController
 
-  protect_from_forgery :except => [:initiate_twilio_call, :place_automated_call]   
+  protect_from_forgery :except => [:initiate_twilio_call,:place_automated_call]   
 
   $tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
   $course_id = 1
@@ -92,14 +92,15 @@ class ReservationsController < ApplicationController
     end
   end
   
-  def initiate_twilio_call
-    make_twilio_call
+  def initiate_twilio_call(params)
+    make_twilio_call(params)
     render :nothing => true
   end  
 
   def place_automated_call
+    
     @r = Twilio::Response.new
-    @r.append(Twilio::Say.new("Hello World, this is an automated phone call test", :voice => "man", :loop => "10"))
+    @r.append(Twilio::Say.new("Hello World, this is an automated phone call test", :voice => "man", :loop => "2"))
     #@r.append(Twilio::Dial.new("4155551212", :timeLimit => "45"))
     puts @r.respond
     #render :nothing => true
