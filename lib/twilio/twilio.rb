@@ -21,7 +21,7 @@ module Twilio
         :p => 'pee',
         :q => 'cue',
         :r => 'are',
-        :s => 'es',
+        :s => 'ess',
         :t => 'tee',
         :u => 'you',
         :v => 'vee',
