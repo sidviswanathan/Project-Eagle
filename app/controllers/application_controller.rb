@@ -96,6 +96,7 @@ class ApplicationController < ActionController::Base
   def check_for_reservation(date, tee_slot, slots, course)
     puts "slots -- #{slots}"
     puts "tee_slot -- #{tee_slot}"
+    slots = slots.to_i
     if Reservation.find_by_date(date, :conditions => ["tee_slot == 'tee_slot'" && "golfers >= 'slots'"]).nil?
       puts "--- Requested Tee slot #{tee_slot} is free for date #{date} ---"
       return "success"
