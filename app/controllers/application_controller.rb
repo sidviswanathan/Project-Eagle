@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   ## User create function ##
   def create_user(username, name)
     puts "Inside create_user"
-    if User.find_by_email(username).blank?    
+    if User.find_by_email(username).blank?
       create = User.new
       create.email=username
       create.f_name=name
@@ -93,11 +93,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def check_for_reservation(date, tee_slot, course)
-    if Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot}).nil?
+  def check_for_reservation(date, tee_slot, slots, course)
+    puts "slots -- #{slots}"
+    puts "tee_slot -- #{tee_slot}"
+    if Reservation.find_by_date(date, :conditions => ["tee_slot == 'tee_slot'" && "golfers >= 'slots'"]).nil?
       puts "--- Requested Tee slot #{tee_slot} is free for date #{date} ---"
       return "success"
     else
+      puts "FAIL"
       return "fail"
     end
   end
