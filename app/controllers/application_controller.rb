@@ -96,12 +96,16 @@ class ApplicationController < ActionController::Base
   def check_for_reservation(date, tee_slot, slots, course)
     puts "slots -- #{slots}"
     puts "tee_slot -- #{tee_slot}"
-    if Reservation.find_by_date(date, :conditions => ["tee_slot == 'tee_slot'" && "golfers >= 'slots'"]).nil?
+    if Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot}).nil?
       puts "--- Requested Tee slot #{tee_slot} is free for date #{date} ---"
       return "success"
     else
-      puts "FAIL"
-      return "fail"
+      record = Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot})
+      if record.golfers <= slots.to_i
+        return "success"
+      else
+        return "fail"
+      end
     end
   end
 
