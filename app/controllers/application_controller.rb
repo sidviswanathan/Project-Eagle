@@ -101,10 +101,11 @@ class ApplicationController < ActionController::Base
       return "success"
     else
       record = Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot})
-      if record.golfers <= slots.to_i
-        return "success"
+      r = record.golfers + slots.to_i
+      if r > 4
+        return "Fail"
       else
-        return "fail"
+        return "success"
       end
     end
   end
