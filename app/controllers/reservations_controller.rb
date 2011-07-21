@@ -14,7 +14,7 @@ class ReservationsController < ApplicationController
   def book_reservation
     @available_tee_slots = $tee_slots
     status = check_reservations(params)
-#    initiate_twilio_call(params) if status != nil
+    initiate_twilio_call(params) if status != nil
   end
 
   def check_reservations(request_params)
