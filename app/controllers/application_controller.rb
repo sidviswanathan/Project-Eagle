@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   ## User create function ##
   def create_user(username, name)
     puts "Inside create_user"
-    if User.find_by_email(username).blank?    
+    if User.find_by_email(username).blank?
       create = User.new
       create.email=username
       create.f_name=name
@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    if !uid.blank?
+    if !uid.blank? && !tee_time_slot.blank? && !golfers.blank?
       @saved_tee_slot = []
       create = Reservation.new
       create.user_id=uid
@@ -87,15 +87,26 @@ class ApplicationController < ActionController::Base
       puts "Reservation recorded -- #{tee_time_slot}"
       puts "----- Congratulations you have successfully reserved a tee slot -----"
       puts "Please wait for confirmation"
+    else
+      puts "mandatory fied missing"
+      return "Mandatory field missing!"
     end
   end
 
-  def check_for_reservation(date, tee_slot, course)
+  def check_for_reservation(date, tee_slot, slots, course)
+    puts "slots -- #{slots}"
+    puts "tee_slot -- #{tee_slot}"
     if Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot}).nil?
       puts "--- Requested Tee slot #{tee_slot} is free for date #{date} ---"
       return "success"
     else
-      return "fail"
+      record = Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot})
+      r = record.golfers + slots.to_i
+      if r > 4
+        return "Fail"
+      else
+        return "success"
+      end
     end
   end
 

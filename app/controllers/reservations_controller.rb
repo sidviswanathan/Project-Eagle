@@ -58,7 +58,7 @@ class ReservationsController < ApplicationController
       when '3'
       ## Verifying user and making a reservation
         puts "--- Book Reservation ---"
-        check_res_result = check_for_reservation(request_date, request_tee_slot, course_id)
+        check_res_result = check_for_reservation(request_date, request_tee_slot, request_golfers, course_id)
         if check_res_result == "success"
           puts "Creating Reservation"
           create_res = create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id)
