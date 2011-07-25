@@ -629,6 +629,7 @@ Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 
 Completed in 27ms (View: 1, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
 
 
+<<<<<<< HEAD
 Processing ReservationWidgetController#index (for 127.0.0.1 at 2011-07-24 13:34:02) [GET]
 Rendering reservation_widget/index
 Completed in 105ms (View: 103, DB: 0) | 200 OK [http://localhost/reservation_widget/index]
@@ -10670,3 +10671,317 @@ Rendering reservation_widget/index
 Rendered reservation_widget/_datePicker (4.7ms)
 Rendered reservation_widget/_teeSlotPicker (0.8ms)
 Completed in 16ms (View: 8, DB: 0) | 200 OK [http://localhost/reservation_widget]
+=======
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:34:28) [POST]
+  Parameters: {"tee_slot"=>"07:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.6ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+Completed in 80ms (View: 6, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:34:48) [POST]
+  Parameters: {"tee_slot"=>"07:07", "golfers"=>"2", "date"=>Sat, 09 Jul 2011, "lname"=>"Ramakrishnan", "fName"=>"Satish", "cause"=>"3", "email"=>"Sat@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '07:07') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;36;1mUser Load (0.1ms)[0m   [0;1mSELECT "users".id FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mUser Create (0.4ms)[0m   [0mINSERT INTO "users" ("created_at", "updated_at", "f_name", "course_id", "email", "l_name") VALUES('2011-07-10 04:34:48', '2011-07-10 04:34:48', 'Satish', NULL, 'Sat@gmail.com', NULL)[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.3ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('07:07', '2011-07-10 04:34:48', '2011-07-10 04:34:48', 2, '2011-07-09', 't', 2, 1)[0m
+Completed in 27ms (View: 1, DB: 2) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:37:13) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.8ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+Completed in 11ms (View: 1, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:37:23) [POST]
+  Parameters: {"tee_slot"=>"08:15", "golfers"=>"2", "date"=>Sat, 09 Jul 2011, "lname"=>"Ramakrishnan", "fName"=>"Satish", "cause"=>"3", "email"=>"Sat@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '08:15') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.3ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('08:15', '2011-07-10 04:37:23', '2011-07-10 04:37:23', 2, '2011-07-09', 't', 2, 1)[0m
+Completed in 30ms (View: 1, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:39:48) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+Completed in 10ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:39:56) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+Completed in 10ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:43:51) [POST]
+  Parameters: {"tee_slot"=>"09:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.3ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+Completed in 49ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:43:59) [POST]
+  Parameters: {"tee_slot"=>"09:00", "golfers"=>"2", "date"=>Sat, 09 Jul 2011, "lname"=>"Ramakrishnan", "fName"=>"Satish", "cause"=>"3", "email"=>"Sat@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '09:00') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.5ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('09:00', '2011-07-10 04:43:59', '2011-07-10 04:43:59', 2, '2011-07-09', 't', 2, 1)[0m
+Completed in 28ms (View: 1, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:45:04) [POST]
+  Parameters: {"tee_slot"=>"06:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.6ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+Completed in 21ms (View: 1, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:45:19) [POST]
+  Parameters: {"tee_slot"=>"06:00", "golfers"=>"2", "date"=>Sat, 09 Jul 2011, "lname"=>"Ramakrishnan", "fName"=>"Satish", "cause"=>"3", "email"=>"Sat@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '06:00') AND ("reservations"."date" = '2011-07-09') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.4ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('06:00', '2011-07-10 04:45:19', '2011-07-10 04:45:19', 2, '2011-07-09', 't', 2, 1)[0m
+Completed in 19ms (View: 1, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:46:21) [POST]
+  Parameters: {"tee_slot"=>"08:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.3ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+Completed in 10ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-09 21:47:48) [POST]
+  Parameters: {"tee_slot"=>"07:00", "date"=>Sat, 09 Jul 2011, "cause"=>"2"}
+  [4;35;1mReservation Load (0.3ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-09') [0m
+Completed in 10ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-10 15:18:57) [POST]
+  Parameters: {"tee_slot"=>"07:00", "date"=>Sun, 10 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.7ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-10') [0m
+
+TypeError (nil can't be coerced into Fixnum):
+  app/controllers/application_controller.rb:124:in `show_available_tee_slots_for_date'
+  app/controllers/application_controller.rb:124:in `merge'
+  app/controllers/application_controller.rb:124:in `show_available_tee_slots_for_date'
+  app/controllers/application_controller.rb:139:in `show_available_tee_slots_for_hour'
+  app/controllers/reservations_controller.rb:57:in `check_reservations'
+  app/controllers/reservations_controller.rb:16:in `book_reservation'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (46.2ms)
+Rendered rescues/_request_and_response (1.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateCourses (20110604005139)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mDROP TABLE "courses"[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604005139'[0m
+Migrating to CreateReservations (20110604005127)
+  [4;35;1mSQL (0.6ms)[0m   [0mDROP TABLE "reservations"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604005127'[0m
+Migrating to CreateUsers (20110604004217)
+  [4;35;1mSQL (0.8ms)[0m   [0mDROP TABLE "users"[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604004217'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20110604004217)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" text, "f_name" text, "l_name" text, "course_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604004217')[0m
+Migrating to CreateReservations (20110604005127)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "reservations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "date" date, "tee_slot" varchar(255), "availability" boolean DEFAULT 'true', "golfers" integer, "user_id" integer, "course_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604005127')[0m
+Migrating to CreateCourses (20110604005139)
+  [4;35;1mSQL (0.4ms)[0m   [0mCREATE TABLE "courses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "price" decimal(8,2), "description" text, "contact" text, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604005139')[0m
+  [4;35;1mSQL (0.6ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("courses")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("reservations")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("users")[0m
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-10 15:20:19) [POST]
+  Parameters: {"tee_slot"=>"07:00", "date"=>Mon, 11 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.8ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-11') [0m
+Completed in 84ms (View: 22, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-10 15:20:25) [POST]
+  Parameters: {"tee_slot"=>"07:07", "golfers"=>"2", "date"=>Mon, 11 Jul 2011, "lname"=>"Ramakrishnan", "fName"=>"Satish", "cause"=>"3", "email"=>"Sat@gmail.com"}
+  [4;35;1mReservation Load (0.1ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '07:07') AND ("reservations"."date" = '2011-07-11') LIMIT 1[0m
+  [4;36;1mUser Load (0.1ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;36;1mUser Load (0.1ms)[0m   [0;1mSELECT "users".id FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mUser Create (0.3ms)[0m   [0mINSERT INTO "users" ("created_at", "updated_at", "f_name", "course_id", "email", "l_name") VALUES('2011-07-10 22:20:25', '2011-07-10 22:20:25', 'Satish', NULL, 'Sat@gmail.com', NULL)[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'Sat@gmail.com') LIMIT 1[0m
+  [4;35;1mReservation Create (0.3ms)[0m   [0mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('07:07', '2011-07-10 22:20:25', '2011-07-10 22:20:25', 2, '2011-07-11', 't', 1, 1)[0m
+Completed in 5292ms (View: 1, DB: 1) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-10 15:21:51) [POST]
+  Parameters: {"tee_slot"=>"07:00", "date"=>Mon, 11 Jul 2011, "cause"=>"2"}
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-11') [0m
+Completed in 27ms (View: 15, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-10 15:22:24) [POST]
+  Parameters: {"tee_slot"=>"07:07", "golfers"=>"2", "date"=>Mon, 11 Jul 2011, "lname"=>"Ramakrishnan", "fName"=>"Satish", "cause"=>"3", "email"=>"sat@gmail.com"}
+  [4;35;1mReservation Load (0.2ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '07:07') AND ("reservations"."date" = '2011-07-11') LIMIT 1[0m
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-11') [0m
+Completed in 15ms (View: 2, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-10 15:24:13) [POST]
+  Parameters: {"tee_slot"=>"06:00", "date"=>Sun, 10 Jul 2011, "cause"=>"2"}
+  [4;35;1mReservation Load (0.1ms)[0m   [0mSELECT * FROM "reservations" WHERE ("reservations"."date" = '2011-07-10') [0m
+Completed in 10ms (View: 1, DB: 0) | 200 OK [http://localhost/reservations/book_reservation]
+
+
+Processing ReservationsController#book_reservation (for 127.0.0.1 at 2011-07-10 15:24:18) [POST]
+  Parameters: {"tee_slot"=>"06:00", "golfers"=>"2", "date"=>Sun, 10 Jul 2011, "lname"=>"Ramakrishnan", "fName"=>"Satish", "cause"=>"3", "email"=>"sat@gmail.com"}
+  [4;36;1mReservation Load (0.2ms)[0m   [0;1mSELECT * FROM "reservations" WHERE ("reservations"."tee_slot" = '06:00') AND ("reservations"."date" = '2011-07-10') LIMIT 1[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."email" = 'sat@gmail.com') LIMIT 1[0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'sat@gmail.com') LIMIT 1[0m
+  [4;35;1mUser Load (0.1ms)[0m   [0mSELECT "users".id FROM "users" WHERE ("users"."email" = 'sat@gmail.com') LIMIT 1[0m
+  [4;36;1mUser Create (2.1ms)[0m   [0;1mINSERT INTO "users" ("created_at", "updated_at", "f_name", "course_id", "email", "l_name") VALUES('2011-07-10 22:24:18', '2011-07-10 22:24:18', 'Satish', NULL, 'sat@gmail.com', NULL)[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."email" = 'sat@gmail.com') LIMIT 1[0m
+  [4;36;1mReservation Create (0.4ms)[0m   [0;1mINSERT INTO "reservations" ("tee_slot", "created_at", "updated_at", "golfers", "date", "availability", "user_id", "course_id") VALUES('06:00', '2011-07-10 22:24:18', '2011-07-10 22:24:18', 2, '2011-07-10', 't', 2, 1)[0m
+Completed in 1186ms (View: 1, DB: 3) | 200 OK [http://localhost/reservations/book_reservation]
+>>>>>>> 1c447d8582cab2865fcd7003230bbee9fda09496
+  [4;36;1mSQL (0.9ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20110604004217)
+Migrating to CreateReservations (20110604005127)
+Migrating to CreateCourses (20110604005139)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("courses")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("reservations")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("users")[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20110604004217)
+Migrating to CreateReservations (20110604005127)
+Migrating to CreateCourses (20110604005139)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("courses")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("reservations")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("users")[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateCourses (20110604005139)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (16.2ms)[0m   [0mDROP TABLE "courses"[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604005139'[0m
+Migrating to CreateReservations (20110604005127)
+  [4;35;1mSQL (0.8ms)[0m   [0mDROP TABLE "reservations"[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604005127'[0m
+Migrating to CreateUsers (20110604004217)
+  [4;35;1mSQL (0.8ms)[0m   [0mDROP TABLE "users"[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20110604004217'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.1ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20110604004217)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" text, "f_name" text, "l_name" text, "course_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604004217')[0m
+Migrating to CreateReservations (20110604005127)
+  [4;35;1mSQL (0.6ms)[0m   [0mCREATE TABLE "reservations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "date" date, "tee_slot" varchar(255), "availability" boolean DEFAULT 'true', "golfers" integer, "user_id" integer, "course_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604005127')[0m
+Migrating to CreateCourses (20110604005139)
+  [4;35;1mSQL (0.6ms)[0m   [0mCREATE TABLE "courses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "price" decimal(8,2), "description" text, "contact" text, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20110604005139')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("courses")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("reservations")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("users")[0m

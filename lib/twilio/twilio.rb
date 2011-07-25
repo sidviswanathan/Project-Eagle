@@ -73,7 +73,7 @@ module Twilio
     first_name_say = convert_to_letters(params["fName"])
     last_name_say = convert_to_letters(params["lname"])
     date = params["date"].strftime('%A'+' '+'%B'+' '+'%d')
-    say = "This is a tee time reservation on #{date} at #{params["tee_slot"]} for #{params["fName"]} #{params["lname"]} for #{params["golfers"]} golfers, that's #{date} at #{params["tee_slot"]} for #{params["golfers"]} golfers for #{params["fName"]} #{params["lname"]} first name #{first_name_say} last name #{last_name_say}".split(' ').join('+')      
+    say = "Hello.. This is a tee time reservation on #{date} at #{params["tee_slot"]} for #{params["fName"]} #{params["lname"]} for #{params["golfers"]} golfers, that's #{date} at #{params["tee_slot"]} for #{params["golfers"]} golfers for #{params["fName"]} #{params["lname"]} first name. #{first_name_say}. last name. #{last_name_say}".split(' ').join('+')      
     return say
   end
   
