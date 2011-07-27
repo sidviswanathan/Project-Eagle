@@ -2,8 +2,12 @@
 <p>Find me in app/views/reservation_widget/index.html.erb</p>
 
 <%= render 'datePicker' %>
+
 <%= label_tag(:golfers_label, "Number Of Golfers") %>
 <% for i in 1..@golfers %>
   <%= radio_button_tag 'player', i %><%= i %>
 <% end %><br />
+
+<div id ="teeSlotsForm">
 <%= render 'teeSlotPicker' %>
+</div>

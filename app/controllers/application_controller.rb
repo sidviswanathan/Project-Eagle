@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  $tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
+
 
   # Post send_object
   def post_response(post_data)
@@ -132,7 +134,11 @@ class ApplicationController < ActionController::Base
 
     puts "@tee_slots_booked_for_date = #{@tee_slots_booked_for_date}"
     ## Comparing with available times and their tee slots
-    @free_slots_for_date = @all_tee_slots.merge(@tee_slots_booked_for_date) {|key, old, new| old-new}
+    if !@tee_slots_booked_for_date.nil?
+      @free_slots_for_date = @all_tee_slots.merge(@tee_slots_booked_for_date) {|key, old, new| old-new}
+    else
+      @free_slots_for_date = @all_tee_slots
+    end
     puts "--- Printing all free tee slots ---"
     puts @free_slots_for_date
     return @free_slots_for_date
