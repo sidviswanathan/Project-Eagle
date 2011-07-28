@@ -5,11 +5,9 @@ class ReservationWidgetController < ApplicationController
   $max_golfers = 4
 
   def index
-    @golfers = $max_golfers
     if @book_dates.nil?
       @book_dates = Array.new
     end
-
     if @book_dates[0] != Date.today
       for i in 0..$book_period
         @book_dates << Date.today + i
@@ -19,11 +17,23 @@ class ReservationWidgetController < ApplicationController
   end
 
   def teeSlotPicker
-    form_datePicker = params[:pick_date]
     @date = Date.today
-    @date = form_datePicker[:pick_date] unless params[:pick_date].nil?
+    @date = params[:pickDate][:pick_date] unless params[:pickDate].nil?
     @tee_slots_for_date = show_available_tee_slots_for_date(@date, $course)
-    puts @tee_slots_for_date 
     @tee_slots_for_date = @tee_slots_for_date.sort
+  end
+
+  def reserveTime
+    @golfers = $max_golfers
+    puts params[:reservation]
+    if !params[:reservation].nil?
+      teeTime = params[:reservation][:teeTime]
+      teeSlots = params[:reservation][:teeSlots]
+      teeDate = params[:reservation][:date]
+      user_email = "reservation@DeepCliff.com"
+      name = "DeepCliff"
+      create_reservation(user_email, name, teeDate, teeTime, teeSlots, $course) 
+    end
+    redirect_to :action => :index
   end
 end

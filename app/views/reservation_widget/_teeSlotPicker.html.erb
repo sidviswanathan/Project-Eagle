@@ -1,6 +1,17 @@
-Available slots for <%= @date %><br />
-<ul>
-  <% @tee_slots_for_date.each do |k,v| %>                                        
-  <li><%= "#{k} has #{v}" %></li>                                                
-  <% end -%>
-</ul>
+<h3>Available slots for <%= @date %></h3><br />
+<div id="TeeSlotsForm">
+<% @tee_slots_for_date.each do |k,v| %>                                        
+  <div id="singleTeeSlotForm">
+  <% if v >= 2 %>
+  <% form_for 'reservation', :url => { :action => :reserveTime } do |t| %>
+    <%= t.label :teetime, k %> has only
+    <%= t.label :slots, v %> slots left
+    <%= t.hidden_field :teeTime, :value => "#{k}" %>
+    <%= t.hidden_field :teeSlots, :value => "#{v}" %>
+    <%= t.hidden_field :date, :value => "#{@date}" %>
+    <%= submit_tag 'Reserve' %><br />
+  <% end %>
+  <% end %>
+  </div>
+<% end %>
+</div>

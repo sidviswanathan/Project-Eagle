@@ -1,12 +1,10 @@
 <h1>ReservationWidget#index</h1>
 <p>Find me in app/views/reservation_widget/index.html.erb</p>
+<%= javascript_include_tag :defaults %>
 
+<div id ="dateForm">
 <%= render 'datePicker' %>
-
-<%= label_tag(:golfers_label, "Number Of Golfers") %>
-<% for i in 1..@golfers %>
-  <%= radio_button_tag 'player', i %><%= i %>
-<% end %><br />
+</div>
 
 <div id ="teeSlotsForm">
 <%= render 'teeSlotPicker' %>

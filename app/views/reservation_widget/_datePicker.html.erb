@@ -1,6 +1,6 @@
 <%= javascript_include_tag :defaults %>
-<% form_for :pick_date, :url => { :action => :index } do |f| %>
+<% form_for 'pickDate', :url => { :action => :index } do |f| %>
 <%= f.label :name, "Book Date" %>
 <%= f.select :pick_date, @book_dates %>
-<%= submit_tag "Show" %>
+<%= submit_tag 'Show' %>
 <% end %>
