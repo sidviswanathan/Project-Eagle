@@ -5,10 +5,16 @@
   <% if v >= 2 %>
   <% form_for 'reservation', :url => { :action => :reserveTime } do |t| %>
     <%= t.label :teetime, k %> has only
-    <%= t.label :slots, v %> slots left
+    <% t.label :slots, v %>
+    <% @j = Array.new %>
+    <% for i in 1..v %>
+      <% @j << i %>
+    <% end %>
+    <%= t.select :golfers, @j, :selected => @j.last %> slots left
     <%= t.hidden_field :teeTime, :value => "#{k}" %>
     <%= t.hidden_field :teeSlots, :value => "#{v}" %>
     <%= t.hidden_field :date, :value => "#{@date}" %>
+
     <%= submit_tag 'Reserve' %><br />
   <% end %>
   <% end %>

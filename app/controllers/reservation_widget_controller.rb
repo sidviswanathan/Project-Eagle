@@ -24,11 +24,9 @@ class ReservationWidgetController < ApplicationController
   end
 
   def reserveTime
-    @golfers = $max_golfers
-    puts params[:reservation]
     if !params[:reservation].nil?
       teeTime = params[:reservation][:teeTime]
-      teeSlots = params[:reservation][:teeSlots]
+      teeSlots = params[:reservation][:golfers]
       teeDate = params[:reservation][:date]
       user_email = "reservation@DeepCliff.com"
       name = "DeepCliff"
