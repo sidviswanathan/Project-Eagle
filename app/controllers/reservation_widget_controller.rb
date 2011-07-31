@@ -2,7 +2,8 @@ class ReservationWidgetController < ApplicationController
 
   $course = 1
   $book_period = 7
-  $max_golfers = 4
+  $user_email = "reservation@DeepCliff.com"
+  $name = "DeepCliff"
 
   def index
     if @book_dates.nil?
@@ -28,10 +29,16 @@ class ReservationWidgetController < ApplicationController
       teeTime = params[:reservation][:teeTime]
       teeSlots = params[:reservation][:golfers]
       teeDate = params[:reservation][:date]
-      user_email = "reservation@DeepCliff.com"
-      name = "DeepCliff"
-      create_reservation(user_email, name, teeDate, teeTime, teeSlots, $course) 
+      create_reservation($user_email, $name, teeDate, teeTime, teeSlots, $course) 
     end
+    flash[:notice] = "Last reservation on #{teeDate} at #{teeTime} for #{teeSlots}"
     redirect_to :action => :index
+  end
+
+  def cancelIndex
+  end
+
+  def cancelReservation
+    cancelReservation($user_email, teeDate, teeTime)
   end
 end

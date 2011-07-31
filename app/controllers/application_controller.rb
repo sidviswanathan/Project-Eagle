@@ -177,4 +177,16 @@ class ApplicationController < ActionController::Base
     return @tee_slots_for_hour
   end
 
+  def cancelReservation(email, date, tee_slot)
+    
+    user = User.find_by_email(email)
+    @tee_slots_for_cancel = Array.new
+    if Reservation.find_by_date(date, :conditions => {:user_id => user, :tee_slot => tee_slot}).nil?
+      @tee_slots_for_cancel << Reservation.find_by_date(date, :conditions => {:user_id => user, :tee_slot => tee_slot})
+      @tee_slots_for_cancel[0].destroy
+    else
+      puts "Cannot find reservation to delete"
+    end
+  end
+
 end

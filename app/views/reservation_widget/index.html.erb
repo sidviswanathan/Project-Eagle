@@ -2,6 +2,13 @@
 <p>Find me in app/views/reservation_widget/index.html.erb</p>
 <%= javascript_include_tag :defaults %>
 
+<% if flash[:notice] %>
+  <div id="notice">
+    <h5><%= flash[:notice] %></h5>
+  </div>
+<% end %>
+
+<br />
 <div id ="dateForm">
 <%= render 'datePicker' %>
 </div>
