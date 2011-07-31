@@ -1,8 +1,8 @@
-<h1>Reservation Widget</h1>
+<h1>Cancellation Widget</h1>
 <%= javascript_include_tag :defaults %>
 
 <br />
-<%= link_to 'Cancellation', :action => :cancelIndex %>
+<%= link_to 'Reservation', :action => :index %>
 <br />
 <% if flash[:notice] %>
   <div id="notice">
@@ -12,9 +12,9 @@
 
 <br />
 <div id ="dateForm">
-<%= render 'datePicker' %>
+<%= render 'cancelDatePicker' %>
 </div>
 
-<div id ="teeSlotsForm">
-<%= render 'teeSlotPicker' %>
+<div id ="CancellationForm">
+<%= render 'showReservations' %>
 </div>

@@ -1,0 +1,15 @@
+<h3>Cancel slots for <%= @date %></h3><br />
+<div id="CancelForm">
+<% @tee_slots_booked_for_date.each do |k,v| %>                                        
+  <div id="singleTeeSlotForm">
+  <% form_for 'cancellation', :url => { :action => :cancelReservation } do |t| %>
+    <%= t.label :teetime, k %>
+    <% t.label :slots, v %>
+    <%= t.hidden_field :teeTime, :value => "#{k}" %>
+    <%= t.hidden_field :teeSlots, :value => "#{v}" %>
+    <%= t.hidden_field :date, :value => "#{@date}" %>
+    <%= submit_tag 'Cancel' %><br />
+  <% end %>
+  </div>
+<% end %>
+</div>

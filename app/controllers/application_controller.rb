@@ -112,17 +112,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
-  def show_available_tee_slots_for_date(date, course)
+  def show_booked_tee_slots_for_date(date, course)
     @tee_slots_booked_for_date = {}
-    @free_slots_for_date = {}
-    @all_tee_slots = $tee_slots
 
     ## Getting all tee slots for date
     puts "--- Calculating tee slots on given date #{date} ---"
     @tee_slots_for_date = Reservation.find_all_by_date(date)
 
-    ## Creating an hash for all times with available tee slots
+    ## Creating an hash for booked times
     puts "--- All tee slots reserved for given date #{date} ---"
     @tee_slots_for_date.each do |record|
       if !@tee_slots_booked_for_date.has_key?(record.tee_slot)
@@ -131,7 +128,16 @@ class ApplicationController < ActionController::Base
         @tee_slots_booked_for_date[record.tee_slot] = @tee_slots_booked_for_date[record.tee_slot] + record.golfers
       end
     end
+    puts "@tee_slots_booked_for_date = #{@tee_slots_booked_for_date}"
+    return @tee_slots_booked_for_date
+  end
 
+
+  def show_available_tee_slots_for_date(date, course)
+    @free_slots_for_date = {}
+    @all_tee_slots = $tee_slots
+
+    @tee_slots_booked_for_date = show_booked_tee_slots_for_date(date, course)
     puts "@tee_slots_booked_for_date = #{@tee_slots_booked_for_date}"
     ## Comparing with available times and their tee slots
     if !@tee_slots_booked_for_date.nil?
@@ -142,7 +148,6 @@ class ApplicationController < ActionController::Base
     puts "--- Printing all free tee slots ---"
     puts @free_slots_for_date
     return @free_slots_for_date
-
   end
 
 
@@ -177,11 +182,13 @@ class ApplicationController < ActionController::Base
     return @tee_slots_for_hour
   end
 
-  def cancelReservation(email, date, tee_slot)
-    
+  def cancel_reservation(email, date, tee_slot)
+    @tee_slots_for_cancel = []
+
     user = User.find_by_email(email)
-    @tee_slots_for_cancel = Array.new
-    if Reservation.find_by_date(date, :conditions => {:user_id => user, :tee_slot => tee_slot}).nil?
+    uid = user.id
+    puts "Info for deletion user_id #{uid} email #{email} date #{date} and tee slot #{tee_slot}"
+    if !Reservation.find_all_by_date(date, :conditions => {:user_id => uid, :tee_slot => tee_slot}).nil?
       @tee_slots_for_cancel << Reservation.find_by_date(date, :conditions => {:user_id => user, :tee_slot => tee_slot})
       @tee_slots_for_cancel[0].destroy
     else

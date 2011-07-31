@@ -1,0 +1,6 @@
+<%= javascript_include_tag :defaults %>
+<% form_for 'pickDate', :url => { :action => :cancelIndex } do |f| %>
+<%= f.label :name, "Book Date" %>
+<%= f.select :pick_date, @book_dates %>
+<%= submit_tag 'Show' %>
+<% end %>
