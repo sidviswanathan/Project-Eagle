@@ -4,7 +4,7 @@ class ListenerController < ApplicationController
   skip_before_filter :verify_authenticity_token
   
   def index
-    logger.info params
+    logger.info params.keys
     # @params = params
     #Make sure request is a post
     # @inbound_email = InboundEmail.new(:text => params["text"],
