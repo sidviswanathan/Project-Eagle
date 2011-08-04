@@ -1,7 +1,8 @@
 require 'logger'
 
 class ListenerController < ApplicationController
-
+  skip_before_filter :verify_authenticity_token
+  
   def index
     logger.info params
     # @params = params
