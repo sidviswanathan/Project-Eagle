@@ -2,7 +2,7 @@ require 'logger'
 
 class ListenerController < ApplicationController
 
-  def receive_email
+  def index
     @params = params
     #Make sure request is a post
     @inbound_email = InboundEmail.new(:text => params["text"],
