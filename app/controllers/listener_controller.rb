@@ -6,7 +6,7 @@ class ListenerController < ApplicationController
   
   def index
     
-    config = YAML::load(File.read(Rails.root.join('config/courses.yml')))[ENV["RAILS_ENV"]] || {} 
+    config = YAML::load(File.read(Rails.root.join('config/course.yml')))[ENV["RAILS_ENV"]] || {} 
     
     logger.info config.keys
     
