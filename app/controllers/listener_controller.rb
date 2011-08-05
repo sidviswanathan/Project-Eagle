@@ -27,7 +27,7 @@ class ListenerController < ApplicationController
     
     #IMPLEMENT
     #Move this into model code, should not be in application controller
-    ApplicationController.create_reservation(config["deep_cliff"]["email"], config["deep_cliff"]["f_name"], date, tee_time, num_golfers, config["deep_cliff"]["course_id"])    
+    create_reservation(config["deep_cliff"]["email"], config["deep_cliff"]["f_name"], date, tee_time, num_golfers, config["deep_cliff"]["course_id"])    
     
     render :nothing => true
     
