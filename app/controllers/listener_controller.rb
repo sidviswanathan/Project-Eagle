@@ -5,26 +5,14 @@ class ListenerController < ApplicationController
   skip_before_filter :verify_authenticity_token
   
   def index
-    logger.info params.keys
-    logger.info '################################'
-    logger.info params["subject"]
-    logger.info params["from"]
-    logger.info params["to"]
-    logger.info '###############################'
     
     logger.info '!!!!!!!!!!!!!!!!!!!!!!!!!!!!' if params["subject"] == 'Reservation Confirmation - Deep Cliff Golf Course'
-    logger.info '00000000000000000000000000000000000000'
-    logger.info '00000000000000000000000000000000000000'
-    logger.info params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]
-    logger.info '00000000000000000000000000000000000000'
-    logger.info '00000000000000000000000000000000000000'
-    logger.info params["text"].split("Number of Players:")[1][1..1]
-    logger.info params["text"].split("Tee Time:")[1].split("Number of Players:")[0]
+    logger.info 'THE TEE DATE IS: '+params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]
+    logger.info 'THE NUM GOLFERS IS IS: '+params["text"].split("Number of Players:")[1][1..1]
+    time = params["text"].split("Tee Time:")[1].split("Number of Players:")[0]
+    logger.info 'THE TEE TIME IS: '+time[1..time.length-2]
     logger.info Chronic.parse("August 30").strftime('%Y-%m-%d')
     logger.info 'DONE WITH ALL PRINT STATEMENTS!!'
-    
-    
-    #[1..time.length-2]
     
     #Reservation.create(:)
     #Reservation(id: integer, date: date, tee_slot: string, availability: boolean, golfers: integer, user_id: integer, course_id: integer, created_at: datetime, updated_at: datetime)
