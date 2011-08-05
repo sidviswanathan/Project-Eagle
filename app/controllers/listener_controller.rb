@@ -5,6 +5,13 @@ class ListenerController < ApplicationController
   
   def index
     logger.info params.keys
+    logger.info '################################'
+    logger.info params["subject"]
+    logger.info["from"]
+    logger.info["to"]
+    logger.info '###############################'
+    logger.info["text"]
+    
     # @params = params
     #Make sure request is a post
     # @inbound_email = InboundEmail.new(:text => params["text"],
