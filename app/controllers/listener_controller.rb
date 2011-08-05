@@ -14,12 +14,12 @@ class ListenerController < ApplicationController
       
       date        = Date.parse(Chronic.parse(params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]).strftime('%Y-%m-%d'))
       num_golfers = params["text"].split("Number of Players:")[1][1..1]
-      time        = Chronic.parse(time[1..time.length-2]).strftime('%H:%M')
+      time        = params["text"].split("Tee Time:")[1].split("Number of Players:")[0]
+      tee_time    = Chronic.parse(time[1..time.length-2]).strftime('%H:%M')
       
       logger.info date.class
       logger.info 'THE TEE DATE IS: '+Chronic.parse(params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]).strftime('%Y-%m-%d')
       logger.info 'THE NUM GOLFERS IS IS: '+params["text"].split("Number of Players:")[1][1..1]
-      time = params["text"].split("Tee Time:")[1].split("Number of Players:")[0]
       logger.info 'THE TEE TIME IS: '+Chronic.parse(time[1..time.length-2]).strftime('%H:%M')
     else
       #Send Admin Email if Subject not recognized  
@@ -27,7 +27,7 @@ class ListenerController < ApplicationController
     
     #IMPLEMENT
     #Move this into model code, should not be in application controller
-    ApplicationController.create_reservation(config["deep_cliff"]["email"], config["deep_cliff"]["f_name"], date, time, num_golfers, config["deep_cliff"]["course_id"])    
+    ApplicationController.create_reservation(config["deep_cliff"]["email"], config["deep_cliff"]["f_name"], date, tee_time, num_golfers, config["deep_cliff"]["course_id"])    
     
     render :nothing => true
     
