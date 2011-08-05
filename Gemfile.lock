@@ -21,6 +21,7 @@ GEM
       orderedhash (>= 0.0.3)
       systemu (>= 1.2.0)
     builder (2.1.2)
+    chronic (0.3.0)
     fattr (2.2.0)
     main (4.4.0)
       arrayfields (>= 4.7.4)
@@ -50,6 +51,7 @@ PLATFORMS
 DEPENDENCIES
   aws-s3
   bj
+  chronic (~> 0.3.0)
   rack (~> 1.0.0)
   rails (~> 2.3.5)
   sqlite3-ruby
