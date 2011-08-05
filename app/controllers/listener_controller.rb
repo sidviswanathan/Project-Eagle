@@ -15,11 +15,11 @@ class ListenerController < ApplicationController
     logger.info '!!!!!!!!!!!!!!!!!!!!!!!!!!!!' if params["subject"] == 'Reservation Confirmation - Deep Cliff Golf Course'
     logger.info '00000000000000000000000000000000000000'
     logger.info '00000000000000000000000000000000000000'
-    logger.info params["text"].split("Tee Date:").split(", ")[1]
+    logger.info params["text"].split("Tee Date:")[1]
     logger.info '00000000000000000000000000000000000000'
     logger.info '00000000000000000000000000000000000000'
     logger.info params["text"].split("Number of Players:")[1][1..1]
-    logger.info params["text"].split("Tee Time:").split("Number of Players:")[0]
+    logger.info params["text"].split("Tee Time:")[1].split("Number of Players:")[0]
     logger.info Chronic.parse("August 30").strftime('%Y-%m-%d')
     
     #[1..time.length-2]
