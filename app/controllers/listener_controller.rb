@@ -6,11 +6,11 @@ class ListenerController < ApplicationController
   
   def index
     
-    config = YAML::load(File.read(Rails.root.join('config/course.yml')))[ENV["RAILS_ENV"]] || {} 
+    config = YAML::load(File.read(Rails.root.join('config/course.yml'))) 
     logger.info config.keys
     
     if params["subject"] == 'Reservation Confirmation - Deep Cliff Golf Course'
-      logger.info 'THE TEE DATE IS: '+Chronic.parse(params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]).to_s
+      logger.info 'THE TEE DATE IS: '+Chronic.parse(params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]).strftime('%Y-%m-%d')
       logger.info 'THE NUM GOLFERS IS IS: '+params["text"].split("Number of Players:")[1][1..1]
       time = params["text"].split("Tee Time:")[1].split("Number of Players:")[0]
       logger.info 'THE TEE TIME IS: '+time[1..time.length-2]
