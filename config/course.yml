@@ -7,7 +7,7 @@ deep_cliff:
   f_name: Carl 
   l_name: Wheatley   
   hours: some_rnage_of_hours
-  tess_slots: ["some_array_of_tee_slots"."07:00","07:07"]
+  tess_slots: ["some_array_of_tee_slots","07:00","07:07"]
   
 some_other_course:
   host: text-1.linkedinlabs.com
