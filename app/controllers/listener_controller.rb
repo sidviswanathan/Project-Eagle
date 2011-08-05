@@ -21,6 +21,8 @@ class ListenerController < ApplicationController
     logger.info params["text"].split("Number of Players:")[1][1..1]
     logger.info params["text"].split("Tee Time:")[1].split("Number of Players:")[0]
     logger.info Chronic.parse("August 30").strftime('%Y-%m-%d')
+    logger.info 'DONE WITH ALL PRINT STATEMENTS!!'
+    
     
     #[1..time.length-2]
     
