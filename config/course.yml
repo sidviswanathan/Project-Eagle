@@ -1,7 +1,7 @@
 # COURSE CONFIGURATIONS
 
 deep_cliff:
-  course_id: "one"
+  course_id: 1
   name: Deep Cliff
   email: admin@deepcliff.com
   f_name: Carl 
