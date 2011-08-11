@@ -102,12 +102,17 @@ class ApplicationController < ActionController::Base
       puts "--- Requested Tee slot #{tee_slot} is free for date #{date} ---"
       return "success"
     else
-      record = Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot})
-      r = record.golfers + slots.to_i
-      if r > 4
-        return "Fail"
+      record = []
+      record << Reservation.find_all_by_date(date, :conditions => {:tee_slot => tee_slot})
+      if record.length < 2
+        r = record[0].golfers + slots.to_i
+        if r > 4
+          return "Fail"
+        else
+          return "success"
+        end
       else
-        return "success"
+        return "Fail"
       end
     end
   end
