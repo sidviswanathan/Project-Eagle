@@ -189,11 +189,14 @@ class ApplicationController < ActionController::Base
   def cancel_reservation(email, date, tee_slot)
     @tee_slots_for_cancel = []
 
-    user = User.find_by_email(email)
-    uid = user.id
-    puts "Info for deletion user_id #{uid} email #{email} date #{date} and tee slot #{tee_slot}"
-    if !Reservation.find_all_by_date(date, :conditions => {:user_id => uid, :tee_slot => tee_slot}).nil?
-      @tee_slots_for_cancel << Reservation.find_by_date(date, :conditions => {:user_id => user, :tee_slot => tee_slot})
+    #user = User.find_by_email(email)
+    #puts "USER IS #{user}"
+    #uid = user.id
+    ## ALLOWING CANCELLATION FOR ANY USER ##
+
+    puts "Info for deletion email #{email} date #{date} and tee slot #{tee_slot}"
+    if !Reservation.find_all_by_date(date, :conditions => {:tee_slot => tee_slot}).nil?
+      @tee_slots_for_cancel << Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot})
       @tee_slots_for_cancel[0].destroy
     else
       puts "Cannot find reservation to delete"
