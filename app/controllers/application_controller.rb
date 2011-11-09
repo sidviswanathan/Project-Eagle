@@ -12,9 +12,11 @@ class ApplicationController < ActionController::Base
 
   # Post send_object
   def post_response(post_data)
-    respond_to do |format|
-      format.json { render :json => post_data }
-    end
+    #respond_to do |format|
+    #  format.json { render :json => post_data }
+    #end
+    render :json => post_data.to_json 
+    return post_data
   end
 
   ## User login form ##
@@ -52,13 +54,14 @@ class ApplicationController < ActionController::Base
 
 
   ## Reservation create function ##
-  def create_reservation(user_email, uname, date, tee_time_slot, golfers, course)
+  def create_reservation(user_email, uname, date, tee_time_slot, golfers, course, user_info)
     if user_email.blank?
       puts "No Username received"
       return "Unknown_user"
     else
       puts "Find user by email"
       puts user_email
+      puts "Device info: #{user_info}"
       user = User.find_by_email(user_email)
       if user.blank?
         puts "Cannot find user -- Creating User"

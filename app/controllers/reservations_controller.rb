@@ -32,6 +32,7 @@ class ReservationsController < ApplicationController
     request_tee_slot = params[:tee_slot]
     request_golfers = params[:golfers]
     request_cause = params[:cause]
+    request_device_info = params[:deviceInfo]
     course_id = $course_id
     tee_time_slots = nil
 
@@ -43,25 +44,32 @@ class ReservationsController < ApplicationController
     puts request_tee_slot
     puts request_golfers
     puts request_cause
+    puts request_device_info
     puts "----------------------------------------"
 
     case request_cause
+
       when '1'
+
       ## Requesting for tee slot for given date
         puts "--- Show slots for date #{request_date} ---"
         puts request_cause
         tee_time_slots = show_available_tee_slots_for_date(request_date, course_id)
+
       when '2'
+
       ## Requesting for tee slot for given date and hour
         puts "--- Show slots for hour #{request_tee_slot} and date #{request_date} ---"
         tee_time_slots = show_available_tee_slots_for_hour(request_date, request_tee_slot, course_id)
+
       when '3'
+
       ## Verifying user and making a reservation
         puts "--- Book Reservation ---"
         check_res_result = check_for_reservation(request_date, request_tee_slot, request_golfers, course_id)
         if check_res_result == "success"
           puts "Creating Reservation"
-          create_res = create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id)
+          create_res = create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id, request_device_info)
           if create_res == "Unknown_user"
             tee_time_slots = "Unknown_user"
           else
@@ -74,8 +82,10 @@ class ReservationsController < ApplicationController
           puts "Slot already reserved"
           tee_time_slots = show_available_tee_slots_for_hour(request_date, request_tee_slot, course_id)
         end
+
       else
       ## Else Case is case 1
+
       ## Requesting for tee slot for given date
         puts "--- Show slots for date #{request_date} ---"
         puts request_cause
