@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(:version => 20110604005139) do
     t.text     "email"
     t.text     "f_name"
     t.text     "l_name"
+    t.text     "device_name"
+    t.text     "os_version"
     t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"

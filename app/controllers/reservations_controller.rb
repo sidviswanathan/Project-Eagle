@@ -32,7 +32,8 @@ class ReservationsController < ApplicationController
     request_tee_slot = params[:tee_slot]
     request_golfers = params[:golfers]
     request_cause = params[:cause]
-    request_device_info = params[:deviceInfo]
+    request_device_name = params[:device_name]
+    request_os_version = params[:os_version]
     course_id = $course_id
     tee_time_slots = nil
 
@@ -44,7 +45,8 @@ class ReservationsController < ApplicationController
     puts request_tee_slot
     puts request_golfers
     puts request_cause
-    puts request_device_info
+    puts request_device_name
+    puts request_os_version
     puts "----------------------------------------"
 
     case request_cause
@@ -69,7 +71,7 @@ class ReservationsController < ApplicationController
         check_res_result = check_for_reservation(request_date, request_tee_slot, request_golfers, course_id)
         if check_res_result == "success"
           puts "Creating Reservation"
-          create_res = create_reservation(request_user, request_uname, request_date, request_tee_slot, request_golfers, course_id, request_device_info)
+          create_res = create_reservation(request_user, request_uname, request_lname, request_date, request_tee_slot, request_golfers, course_id, request_device_name, request_os_version)
           if create_res == "Unknown_user"
             tee_time_slots = "Unknown_user"
           else
