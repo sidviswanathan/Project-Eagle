@@ -4,6 +4,9 @@ class ReservationWidgetController < ApplicationController
   $book_period = 7
   $user_email = "reservation@DeepCliff.com"
   $name = "DeepCliff"
+  $lname = "DeepCliff"
+  $device_info = nil
+  $app_version = 0.0
 
   def index
     datePicker
@@ -56,7 +59,7 @@ class ReservationWidgetController < ApplicationController
       teeTime = params[:reservation][:teeTime]
       teeSlots = params[:reservation][:golfers]
       teeDate = params[:reservation][:date]
-      create_reservation($user_email, $name, teeDate, teeTime, teeSlots, $course) 
+      create_reservation($user_email, $name, $lname, teeDate, teeTime, teeSlots, $course, $device_info, $app_version) 
     end
     flash[:notice] = "Last reservation on #{teeDate} at #{teeTime} for #{teeSlots}"
     redirect_to :action => :index

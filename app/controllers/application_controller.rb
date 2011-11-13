@@ -29,18 +29,20 @@ class ApplicationController < ActionController::Base
 
 
   def decodeDeviceInfo(info)
-    info = info.split(',')
-    tmpArr = Array.new
-    info.each do |tmp|
-      reg = /([A-Za-z0-9.]+)/
-      op = reg.match(tmp)
-      if !op.nil?
-        tmpArr << op[1]
+    if !info.nil?
+      info = info.split(',')
+      tmpArr = Array.new
+      info.each do |tmp|
+        reg = /([A-Za-z0-9.]+)/
+        op = reg.match(tmp)
+        if !op.nil?
+          tmpArr << op[1]
+        end
       end
+      puts "Decoding device info..."
+      puts tmpArr
+      return tmpArr
     end
-    puts "Decoding device info..."
-    puts tmpArr
-    return tmpArr
   end
 
 
@@ -53,8 +55,10 @@ class ApplicationController < ActionController::Base
       create.f_name = uname
       create.l_name = lname
       res = decodeDeviceInfo(device_info)
-      create.device_name = res[1]
-      create.os_version = res[2]
+      if !res.nil?
+        create.device_name = res[1]
+        create.os_version = res[2]
+      end
       create.app_version = app_ver
       if create.save
         user = User.find_by_email(username)
