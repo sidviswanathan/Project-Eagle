@@ -28,16 +28,34 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def decodeDeviceInfo(info)
+    info = info.split(',')
+    tmpArr = Array.new
+    info.each do |tmp|
+      reg = /([A-Za-z0-9.]+)/
+      op = reg.match(tmp)
+      if !op.nil?
+        tmpArr << op[1]
+      end
+    end
+    puts "Decoding device info..."
+    puts tmpArr
+    return tmpArr
+  end
+
+
   ## User create function ##
-  def create_user(username, uname, lname, device, os_ver)
+  def create_user(username, uname, lname, device_info, app_ver)
     puts "Inside create_user"
     if User.find_by_email(username).blank?
       create = User.new
       create.email = username
       create.f_name = uname
       create.l_name = lname
-      create.device_name = device
-      create.os_version = os_ver
+      res = decodeDeviceInfo(device_info)
+      create.device_name = res[1]
+      create.os_version = res[2]
+      create.app_version = app_ver
       if create.save
         user = User.find_by_email(username)
         puts "User saved -- #{username} -- #{user.id}"
@@ -45,9 +63,6 @@ class ApplicationController < ActionController::Base
       else
         puts "Error in creating user"
         post_response(create.errors)
-#        respond_to do |format|
-#          format.json  { render :json => create.errors, :status => :unprocessable_entity }
-#        end
       end
     else
       puts "User already exists"
@@ -57,7 +72,7 @@ class ApplicationController < ActionController::Base
 
 
   ## Reservation create function ##
-  def create_reservation(user_email, uname, lname, date, tee_time_slot, golfers, course, device, os_ver)
+  def create_reservation(user_email, uname, lname, date, tee_time_slot, golfers, course, device_info, app_ver)
     if user_email.blank?
       puts "No Username received"
       return "Unknown_user"
@@ -67,13 +82,13 @@ class ApplicationController < ActionController::Base
       user = User.find_by_email(user_email)
       if user.blank?
         puts "Cannot find user -- Creating User"
-        uid = create_user(user_email, uname, lname, device, os_ver)
+        uid = create_user(user_email, uname, lname, device_info, app_ver)
         puts "User id:"
         puts uid
       else
         puts "Found User"
         puts "User id:"
-        uid=user.id
+        uid = user.id
         puts uid
         puts date
       end
