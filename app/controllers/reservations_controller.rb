@@ -29,7 +29,7 @@ class ReservationsController < ApplicationController
     request_uname = params[:fName]
     request_lname = params[:lname]
     request_date = params[:date]
-    request_tee_slot = params[:tee_slot]
+    request_tee_slot = params[:time]
     request_golfers = params[:golfers]
     request_cause = params[:cause]
     request_device_info = params[:deviceInfo]

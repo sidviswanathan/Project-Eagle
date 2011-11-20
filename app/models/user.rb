@@ -12,11 +12,7 @@ class User < ActiveRecord::Base
   # SUCCESS OUTPUT:  
   # FAILURE OUTPUT:  
   
-  
   def self.login(f_name, l_name, email, device_name, os_version, app_version)    
-    puts f_name
-    puts l_name
-    puts email
     login_info = {:email=>email, :f_name=>f_name, :l_name=>l_name, :device_name=>device_name, :os_version=>os_version, :app_version=>app_version}
     u = User.find_or_create_by_email(login_info)    
     if u; return u else return nil end

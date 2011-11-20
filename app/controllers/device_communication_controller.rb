@@ -49,22 +49,10 @@ class DeviceCommunicationController < ApplicationController
     user = User.login(f_name, l_name, email, device_name, os_version, app_version)
     
     if user
-      
       RESPONSE_OBJECT[:status]     = "success"
       RESPONSE_OBJECT[:statusCode] = 200
-      RESPONSE_OBJECT[:message]    = "The server successfully made the Reservation.book_tee_time() request"
+      RESPONSE_OBJECT[:message]    = "The server successfully created a User record"
       render :json => RESPONSE_OBJECT.to_json
-      
-      # reservation = Reservation.book_tee_time(user, course_id, num_golfers, time, date)
-      # if reservation
-      #   RESPONSE_OBJECT[:status]     = "success"
-      #   RESPONSE_OBJECT[:statusCode] = 200
-      #   RESPONSE_OBJECT[:message]    = "The server successfully made the Reservation.book_tee_time() request"
-      #   render :json => RESPONSE_OBJECT.to_json         
-      # else
-      #   RESPONSE_OBJECT[:message] = "The server failed to make the Reservation.book_tee_time() request"
-      #   render :json => RESPONSE_OBJECT.to_json         
-      # end  
     else
       RESPONSE_OBJECT[:message] = "The server failed to make the User.login() request"
       render :json => RESPONSE_OBJECT.to_json               
@@ -76,10 +64,21 @@ class DeviceCommunicationController < ApplicationController
   # ===================================================================
   
   def check_available_times
-    # Receive all params from post request, store each one individually
-    # Make call to Course model
-    response = Course.get_available_tee_times()
-    return response
+    course_id    = params[:course_id]
+    time         = params[:time]    
+    date         = params[:date]
+    
+    course_times = Course.get_available_tee_times(course_id,time,date)
+    
+    if course_times
+       RESPONSE_OBJECT[:status]     = "success"
+       RESPONSE_OBJECT[:statusCode] = 200
+       RESPONSE_OBJECT[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+       render :json => RESPONSE_OBJECT.to_json         
+     else
+       RESPONSE_OBJECT[:message] = "The server failed to make the Course.get_available_tee_times() request"
+       render :json => RESPONSE_OBJECT.to_json         
+     end
   end
   
   # ===================================================================
@@ -87,10 +86,23 @@ class DeviceCommunicationController < ApplicationController
   # ===================================================================
   
   def book_reservation
-    # Receive all params from post request, store each one individually
-    # Make call to Reservation model
-    reservation = Reservation.book_tee_time(user, course_id, num_golfers, time, date)
-    return response
+    email       = params[:email]
+    course_id   = params[:course_id]
+    golfers     = params[:golfers]
+    time        = params[:time]    
+    date        = params[:date]    
+    
+    reservation = Reservation.book_tee_time(email, course_id, golfers, time, date)
+    
+    if reservation
+      RESPONSE_OBJECT[:status]     = "success"
+      RESPONSE_OBJECT[:statusCode] = 200
+      RESPONSE_OBJECT[:message]    = "The server successfully made the Reservation.book_tee_time() request"
+      render :json => RESPONSE_OBJECT.to_json         
+    else
+      RESPONSE_OBJECT[:message] = "The server failed to make the Reservation.book_tee_time() request"
+      render :json => RESPONSE_OBJECT.to_json         
+    end
   end
   
   def cancel_reservation
