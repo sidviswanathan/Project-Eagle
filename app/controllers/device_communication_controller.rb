@@ -8,11 +8,11 @@ class DeviceCommunicationController < ApplicationController
   # ==========================================
 
   # course_id    => 1                  (Integer)   As defined in the Course model
-  # num_golfers  => 2                  (Integer    Range between 2-4
+  # golfers      => 2                  (Integer    Range between 2-4
   # time         => '07:14'            (String)    24-hour time format
   # date         => '06-05-11'         (String)
-  # f_name        => 'first_name'       (String)
-  # l_name        => 'last_name'        (String)
+  # f_name       => 'first_name'       (String)
+  # l_name       => 'last_name'        (String)
   # email        => 'name@domain.com'  (String)
   # device_name  => 'iPhone'           (String)
   # os_version   => '5.0'              (String)
