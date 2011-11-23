@@ -122,12 +122,12 @@ class ApplicationController < ActionController::Base
   def check_for_reservation(date, tee_slot, slots, course)
     puts "slots -- #{slots}"
     puts "tee_slot -- #{tee_slot}"
-    if Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot}).nil?
+    if Reservation.find_by_date(date, :conditions => {:time => tee_slot}).nil?
       puts "--- Requested Tee slot #{tee_slot} is free for date #{date} ---"
       return "success"
     else
-      if Reservation.find_all_by_date(date, :conditions => {:tee_slot => tee_slot}).count<2
-        record = Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot})
+      if Reservation.find_all_by_date(date, :conditions => {:time => tee_slot}).count<2
+        record = Reservation.find_by_date(date, :conditions => {:time => tee_slot})
         r = record.golfers + slots.to_i
         if r > 4
           return "Fail"
@@ -219,8 +219,8 @@ class ApplicationController < ActionController::Base
     ## ALLOWING CANCELLATION FOR ANY USER ##
 
     puts "Info for deletion email #{email} date #{date} and tee slot #{tee_slot}"
-    if !Reservation.find_all_by_date(date, :conditions => {:tee_slot => tee_slot}).nil?
-      @tee_slots_for_cancel << Reservation.find_by_date(date, :conditions => {:tee_slot => tee_slot})
+    if !Reservation.find_all_by_date(date, :conditions => {:time => tee_slot}).nil?
+      @tee_slots_for_cancel << Reservation.find_by_date(date, :conditions => {:time => tee_slot})
       @tee_slots_for_cancel[0].destroy
     else
       puts "Cannot find reservation to delete"
