@@ -10,7 +10,7 @@ class DeviceCommunicationController < ApplicationController
   # course_id    => 1                  (Integer)   As defined in the Course model
   # golfers      => 2                  (Integer    Range between 2-4
   # time         => '07:14'            (String)    24-hour time format
-  # date         => '06-05-11'         (String)
+  # date         => '2011-05-11'       (String)
   # f_name       => 'first_name'       (String)
   # l_name       => 'last_name'        (String)
   # email        => 'name@domain.com'  (String)
@@ -73,6 +73,7 @@ class DeviceCommunicationController < ApplicationController
     if course_times
        RESPONSE_OBJECT[:status]     = "success"
        RESPONSE_OBJECT[:statusCode] = 200
+       RESPONSE_OBJECT[:response]   = course_times
        RESPONSE_OBJECT[:message]    = "The server successfully made the Course.get_available_tee_times() request"
        render :json => RESPONSE_OBJECT.to_json         
      else

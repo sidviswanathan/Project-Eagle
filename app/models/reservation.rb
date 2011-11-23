@@ -1,3 +1,5 @@
+require 'pp'
+
 class Reservation < ActiveRecord::Base
   belongs_to :course
   belongs_to :user
@@ -9,15 +11,19 @@ class Reservation < ActiveRecord::Base
 
   def self.book_tee_time(email, course_id, golfers, time, date)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date}
+    puts "######################################"
+    pp reservation_info
+    puts "######################################"
     u = User.find_by_email(email)
     if u 
       r = Reservation.create(reservation_info)
       r.user = u
       r.save
     else 
+      logger.info "Did not find a user record with the email #{email}"
       return nil 
     end       
-    if r; return r else return nil end
+    if r.save; return r else return nil end
   end  
   
 end
