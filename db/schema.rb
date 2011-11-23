@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20110604005139) do
 
   create_table "reservations", :force => true do |t|
     t.date     "date"
-    t.string   "tee_slot"
+    t.string   "time"
     t.boolean  "availability", :default => true
     t.integer  "golfers"
     t.integer  "user_id"
