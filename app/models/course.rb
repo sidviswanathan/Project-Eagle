@@ -53,8 +53,8 @@ class Course < ActiveRecord::Base
   end  
   
   # Check booked tee times for course and date, given specific course_id and date 
-  # INPUT: get_booked_tee_slots_for_date(1,"2011-11-22")   
-  # OUTPUT:  
+  # INPUT: get_booked_tee_slots_for_date(1,"2011-11-22")
+  # OUTPUT: {"07:00"=>2, "07:07"=>4 ...}  
   
   def get_booked_tee_slots_for_date(course_id,date)
     booked_tee_times_for_date = {}
@@ -62,7 +62,7 @@ class Course < ActiveRecord::Base
     if booked_tee_times
       booked_tee_times.each do |record|
         if booked_tee_times_for_date.has_key?(record.time)
-          booked_tee_times_for_date[record.time] = booked_tee_times_for_date[record.tee_slot] + record.golfers
+          booked_tee_times_for_date[record.time] = booked_tee_times_for_date[record.time] + record.golfers
         else
           booked_tee_times_for_date[record.time] = record.golfers
         end
