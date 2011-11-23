@@ -60,15 +60,17 @@ class DeviceCommunicationController < ApplicationController
   end  
   
   # ===================================================================
-  # = httpo://presstee.com/device_communication/check_available_times =
+  # = httpo://presstee.com/device_communication/get_available_times ===
   # ===================================================================
   
-  def check_available_times
+  def get_available_times
     course_id    = params[:course_id]
     time         = params[:time]    
     date         = params[:date]
     
     course_times = Course.get_available_tee_times(course_id,time,date)
+    
+    pp course_times
     
     if course_times
        RESPONSE_OBJECT[:status]     = "success"
