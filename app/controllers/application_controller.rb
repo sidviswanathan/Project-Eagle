@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
       create = Reservation.new
       create.user_id=uid
       create.date=date
-      create.tee_slot=tee_time_slot
+      create.time=tee_time_slot
       create.golfers=golfers
       create.course_id=course
       create.save
@@ -150,10 +150,10 @@ class ApplicationController < ActionController::Base
     ## Creating an hash for booked times
     puts "--- All tee slots reserved for given date #{date} ---"
     @tee_slots_for_date.each do |record|
-      if !@tee_slots_booked_for_date.has_key?(record.tee_slot)
-        @tee_slots_booked_for_date[record.tee_slot] = record.golfers
+      if !@tee_slots_booked_for_date.has_key?(record.time)
+        @tee_slots_booked_for_date[record.time] = record.golfers
       else
-        @tee_slots_booked_for_date[record.tee_slot] = @tee_slots_booked_for_date[record.tee_slot] + record.golfers
+        @tee_slots_booked_for_date[record.time] = @tee_slots_booked_for_date[record.time] + record.golfers
       end
     end
     puts "@tee_slots_booked_for_date = #{@tee_slots_booked_for_date}"
