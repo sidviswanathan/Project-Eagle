@@ -24,21 +24,14 @@ class Course < ActiveRecord::Base
   # OUTPUT: {"07:00"=>4, "07:45"=>4, "07:23"=>4, "07:37"=>4, "07:15"=>4, "07:07"=>0, "07:52"=>4, "07:30"=>4}
 
   def self.get_available_tee_times(course_id,time,date)
-    puts course_id
-    puts course_id.class
-    puts time
-    puts date
-    
     available_tee_slots_for_hour = {}
     tee_slots_for_hour = []
     tee_time_hour = /\d{2}/.match(time)
     
     case course_id
     
-    when '1'
+    when DEEP_CLIFF_COURSE_ID
       available_tee_slots_for_date = get_available_tee_slots_for_date(course_id,date)
-      puts "got into the 1 when case"
-      puts available_tee_slots_for_date
       
       tee_slot_hour_keys = available_tee_slots_for_date.keys
       tee_slot_hour_keys.each do |t|
@@ -52,10 +45,10 @@ class Course < ActiveRecord::Base
       end
       return available_tee_slots_for_hour
       
-    when '2'
-   
+    when SOME_OTHER_COURSE_ID
+
     else
-      puts "Did not find a valid course with specified course_id"
+      logger.info "Did not find a valid course with specified course_id in get_available_tee_times function"
     end
   end
   
@@ -74,12 +67,10 @@ class Course < ActiveRecord::Base
       else
         all_available_tee_time_for_date = all_tee_time_slots_for_course
       end
-      puts "--- Printing all free tee slots ---"
-      puts all_available_tee_time_for_date
       return all_available_tee_time_for_date
     when SOME_OTHER_COURSE_ID
     else
-      puts "Did not find a valid course with specified course_id"
+      puts "Did not find a valid course with specified course_id get_available_tee_slots_for_date"
     end
   end  
   

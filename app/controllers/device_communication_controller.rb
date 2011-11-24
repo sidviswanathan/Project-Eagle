@@ -69,9 +69,7 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     course_times = Course.get_available_tee_times(course_id,time,date)
-    
-    pp course_times
-    
+        
     if course_times
        RESPONSE_OBJECT[:status]     = "success"
        RESPONSE_OBJECT[:statusCode] = 200

@@ -6,14 +6,10 @@ class Reservation < ActiveRecord::Base
   
   # Book reservation record, creates a Reservation record, connects to user
   # INPUT:   
-  # SUCCESS OUTPUT:  
-  # FAILURE OUTPUT:  
+  # OUTPUT:  
 
   def self.book_tee_time(email, course_id, golfers, time, date)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date}
-    puts "######################################"
-    pp reservation_info
-    puts "######################################"
     u = User.find_by_email(email)
     if u 
       r = Reservation.create(reservation_info)
