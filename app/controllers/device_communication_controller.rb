@@ -7,9 +7,9 @@ class DeviceCommunicationController < ApplicationController
   # = DEFINE STANDARD PARAMETER FORMATS ======
   # ==========================================
 
-  # course_id    => 1                  (Integer)   As defined in the Course model
-  # golfers      => 2                  (Integer    Range between 2-4
-  # time         => '07:14'            (String)    24-hour time format
+  # course_id    => '1'                (String)   As defined in the Course model
+  # golfers      => '2'                (String)   Range between 2-4
+  # time         => '07:14'            (String)   24-hour time format
   # date         => '2011-05-11'       (String)
   # f_name       => 'first_name'       (String)
   # l_name       => 'last_name'        (String)

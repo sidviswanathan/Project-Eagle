@@ -7,7 +7,6 @@ class CreateUsers < ActiveRecord::Migration
       t.text :device_name
       t.text :os_version
       t.text :app_version
-      t.integer :course_id
       t.timestamps
     end
   end
