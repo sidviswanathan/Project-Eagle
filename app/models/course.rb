@@ -1,3 +1,5 @@
+require 'pp'
+
 class Course < ActiveRecord::Base
   
   has_many :users

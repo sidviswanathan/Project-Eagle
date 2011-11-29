@@ -1,3 +1,5 @@
+require 'pp'
+
 class User < ActiveRecord::Base
   
   has_many :reservations

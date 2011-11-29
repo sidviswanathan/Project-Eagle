@@ -1,3 +1,5 @@
+require 'pp'
+
 class Reservation < ActiveRecord::Base
 
   belongs_to :course
