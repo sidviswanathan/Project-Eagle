@@ -28,11 +28,14 @@ class DeviceCommunicationController < ApplicationController
   #                  :response=>"insert response object here"
   #                 }
   
-  RESPONSE_OBJECT              = {}
-  RESPONSE_OBJECT[:status]     = "failure"
-  RESPONSE_OBJECT[:statusCode] = 500
-  RESPONSE_OBJECT[:response]   = ""
-  RESPONSE_OBJECT[:message]    = "The server encountered an unexpected condition which prevented it from fulfilling the request"
+  def intitieate_response_object    
+    response_object              = Hash.new
+    response_object[:status]     = "failure"
+    response_object[:statusCode] = 500
+    response_object[:response]   = ""
+    response_object[:message]    = "The server encountered an unexpected condition which prevented it from fulfilling the request"
+    return response_object
+  end  
   
   # ===================================================================
   # = http://presstee.com/device_communication/login =================
@@ -46,16 +49,17 @@ class DeviceCommunicationController < ApplicationController
     os_version   = params[:os_version]
     app_version  = params[:app_version]
     
+    response_object = intitieate_response_object
     user = User.login(f_name, l_name, email, device_name, os_version, app_version)
     
     if user
-      RESPONSE_OBJECT[:status]     = "success"
-      RESPONSE_OBJECT[:statusCode] = 200
-      RESPONSE_OBJECT[:message]    = "The server successfully created a User record"
-      render :json => RESPONSE_OBJECT.to_json
+      response_object[:status]     = "success"
+      response_object[:statusCode] = 200
+      response_object[:message]    = "The server successfully created a User record"
+      render :json => response_object.to_json
     else
-      RESPONSE_OBJECT[:message] = "The server failed to make the User.login() request"
-      render :json => RESPONSE_OBJECT.to_json               
+      response_object[:message] = "The server failed to make the User.login() request"
+      render :json => response_object.to_json               
     end    
   end  
   
@@ -63,22 +67,26 @@ class DeviceCommunicationController < ApplicationController
   # = httpo://presstee.com/device_communication/get_available_times ===
   # ===================================================================
   
+  # INPUT: http://www.presstee.com/device_communication/get_available_times?course_id=1&date=2011-12-03&time=08:00
+  # OUTPUT: {"response":{"06:00":4,"06:45":4,"06:23":4,"06:37":4,"06:15":4,"06:07":4,"06:52":4,"06:30":4},"status":"success","message":"The server successfully made the Course.get_available_tee_times() request","statusCode":200}
+  
   def get_available_times
     course_id    = params[:course_id]
     time         = params[:time]    
     date         = params[:date]
     
+    response_object = intitieate_response_object
     course_times = Course.get_available_tee_times(course_id,time,date)
         
     if course_times
-       RESPONSE_OBJECT[:status]     = "success"
-       RESPONSE_OBJECT[:statusCode] = 200
-       RESPONSE_OBJECT[:response]   = course_times
-       RESPONSE_OBJECT[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-       render :json => RESPONSE_OBJECT.to_json         
+       response_object[:status]     = "success"
+       response_object[:statusCode] = 200
+       response_object[:response]   = course_times
+       response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+       render :json => response_object.to_json         
      else
-       RESPONSE_OBJECT[:message] = "The server failed to make the Course.get_available_tee_times() request"
-       render :json => RESPONSE_OBJECT.to_json         
+       response_object[:message] = "The server failed to make the Course.get_available_tee_times() request"
+       render :json => response_object.to_json         
      end
   end
   
@@ -93,16 +101,17 @@ class DeviceCommunicationController < ApplicationController
     time        = params[:time]    
     date        = params[:date]    
     
+    response_object = intitieate_response_object
     reservation = Reservation.book_tee_time(email, course_id, golfers, time, date)
     
     if reservation
-      RESPONSE_OBJECT[:status]     = "success"
-      RESPONSE_OBJECT[:statusCode] = 200
-      RESPONSE_OBJECT[:message]    = "The server successfully made the Reservation.book_tee_time() request"
-      render :json => RESPONSE_OBJECT.to_json         
+      response_object[:status]     = "success"
+      response_object[:statusCode] = 200
+      response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
+      render :json => response_object.to_json         
     else
-      RESPONSE_OBJECT[:message] = "The server failed to make the Reservation.book_tee_time() request"
-      render :json => RESPONSE_OBJECT.to_json         
+      response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"
+      render :json => response_object.to_json         
     end
   end
   
