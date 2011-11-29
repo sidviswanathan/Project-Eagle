@@ -94,6 +94,9 @@ class DeviceCommunicationController < ApplicationController
   # = httpo://presstee.com/device_communication/book_reservation ======
   # ===================================================================
   
+  # INPUT: http://www.presstee.com/device_communication/book_reservation?email=arguer.11@gmail.com&course_id=1&date=2011-12-03&time=08:00&golfers=4
+  # OUTPUT:
+  
   def book_reservation
     email       = params[:email]
     course_id   = params[:course_id]
