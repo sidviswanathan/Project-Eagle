@@ -4,6 +4,8 @@ class Reservation < ActiveRecord::Base
 
   belongs_to :course
   belongs_to :user
+
+  validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
   
   # Book reservation record, creates a Reservation record, connects to user
   # INPUT:   
