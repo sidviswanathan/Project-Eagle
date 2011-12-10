@@ -7,12 +7,14 @@ source :gemcutter
 
 gem "rails", "~> 2.3.5"
 gem "rack", "~> 1.0.0"
+gem "json", "~> 1.6.3"
 gem "bj"
 #gem "hpricot" -- ERROR
 gem "sqlite3-ruby"
 gem "aws-s3"
 gem "twiliolib", "~> 2.0.7"
 gem "chronic", "~> 0.3.0"
+gem "cobravsmongoose"
 
 # Use unicorn as the web server
 # gem 'unicorn'
