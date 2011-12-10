@@ -138,7 +138,7 @@ class DeviceCommunicationController < ApplicationController
     
     pp tee_times_data
     
-    process_data   = Course.process_tee_times_data(course_id,tee_times_data)
+    #process_data   = Course.process_tee_times_data(course_id,tee_times_data)
   end  
   
   
