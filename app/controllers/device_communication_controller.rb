@@ -1,3 +1,5 @@
+require 'pp'
+
 class DeviceCommunicationController < ApplicationController
   
   # These are the clinet API endpoints for all devices communicating witht the Prestee server
@@ -7,16 +9,17 @@ class DeviceCommunicationController < ApplicationController
   # = DEFINE STANDARD PARAMETER FORMATS ======
   # ==========================================
 
-  # course_id    => '1'                (String)   As defined in the Course model
-  # golfers      => '2'                (String)   Range between 2-4
-  # time         => '07:14'            (String)   24-hour time format
-  # date         => '2011-05-11'       (String)
-  # f_name       => 'first_name'       (String)
-  # l_name       => 'last_name'        (String)
-  # email        => 'name@domain.com'  (String)
-  # device_name  => 'iPhone'           (String)
-  # os_version   => '5.0'              (String)
-  # app_version  => '1.0'              (String)
+  # course_id     => '1'                (String)   As defined in the Course model
+  # golfers       => '2'                (String)   Range between 2-4
+  # time          => '07:14'            (String)   24-hour time format
+  # date          => '2011-05-11'       (String)
+  # f_name        => 'first_name'       (String)
+  # l_name        => 'last_name'        (String)
+  # email         => 'name@domain.com'  (String)
+  # device_name   => 'iPhone'           (String)
+  # os_version    => '5.0'              (String)
+  # app_version   => '1.0'              (String)
+  # tee_time_data =>  'XML object'      (String)      
   
   # ==========================================
   # = DEFINE STANDARD RESPONSE OBJECT FORMAT =
@@ -68,6 +71,7 @@ class DeviceCommunicationController < ApplicationController
   # ===================================================================
   
   # INPUT: http://www.presstee.com/device_communication/get_available_times?course_id=1&date=2011-12-03&time=08:00
+  # INPUT: http://localhost:3000/device_communication/get_available_times?course_id=1&date=2011-12-04&time=08:00
   # OUTPUT: {"response":{"06:00":4,"06:45":4,"06:23":4,"06:37":4,"06:15":4,"06:07":4,"06:52":4,"06:30":4},"status":"success","message":"The server successfully made the Course.get_available_tee_times() request","statusCode":200}
   
   def get_available_times
@@ -95,7 +99,7 @@ class DeviceCommunicationController < ApplicationController
   # ===================================================================
   
   # INPUT: http://www.presstee.com/device_communication/book_reservation?email=arguer.11@gmail.com&course_id=1&date=2011-12-03&time=08:00&golfers=4
-  # OUTPUT:
+  # OUTPUT: {"status":"success","message":"The server successfully made the Reservation.book_tee_time() request","response":"","statusCode":200}
   
   def book_reservation
     email       = params[:email]
@@ -117,6 +121,24 @@ class DeviceCommunicationController < ApplicationController
       render :json => response_object.to_json         
     end
   end
+  
+  
+  # ===================================================================
+  # = httpo://presstee.com/device_communication/process_api_request ===
+  # ===================================================================
+  
+  # INPUT: http://www.presstee.com/device_communication/process_api_request
+  # OUTPUT: 
+  
+  def get_available_times
+    course_id      = params[:course_id]
+    tee_times_data = params[:date]    
+    
+    pp tee_times_data
+    
+    process_data   = Course.process_tee_times_data(course_id,tee_times_data)
+  end  
+  
   
   def cancel_reservation
   end      

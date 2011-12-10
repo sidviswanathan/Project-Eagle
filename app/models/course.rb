@@ -43,7 +43,6 @@ class Course < ActiveRecord::Base
       tee_slots_for_hour.each do |t|
         available_tee_slots_for_hour[t] = available_tee_slots_for_date[t]
       end
-      pp available_tee_slots_for_hour
       return available_tee_slots_for_hour
       
     when SOME_OTHER_COURSE_ID
