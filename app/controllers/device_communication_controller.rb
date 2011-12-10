@@ -130,7 +130,7 @@ class DeviceCommunicationController < ApplicationController
   # INPUT: http://www.presstee.com/device_communication/process_api_request
   # OUTPUT: 
   
-  def get_available_times
+  def process_api_request
     course_id      = params[:course_id]
     tee_times_data = params[:date]    
     
