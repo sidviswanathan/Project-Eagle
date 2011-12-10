@@ -2,6 +2,8 @@ require 'pp'
 
 class DeviceCommunicationController < ApplicationController
   
+  skip_before_filter :verify_authenticity_token  
+  
   # These are the clinet API endpoints for all devices communicating witht the Prestee server
   # Below is the expected format for paramters received from all client devices
   
