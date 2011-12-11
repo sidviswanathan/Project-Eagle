@@ -1,3 +1,5 @@
+require "net/http"
+require "net/https"
 require 'pp'
 
 class Reservation < ActiveRecord::Base
@@ -23,6 +25,10 @@ class Reservation < ActiveRecord::Base
       return nil 
     end       
     if r.save; return r else return nil end
-  end  
+  end 
+  
+  
+  
+   
   
 end

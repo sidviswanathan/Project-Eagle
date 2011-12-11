@@ -129,6 +129,7 @@ class DeviceCommunicationController < ApplicationController
   # = httpo://presstee.com/device_communication/process_api_request ===
   # ===================================================================
   
+  # This should be moved into a separate API controller at some point, should not be in device communication controller
   # INPUT: http://www.presstee.com/device_communication/process_api_request
   # OUTPUT: 
   
