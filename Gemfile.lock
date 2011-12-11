@@ -22,7 +22,9 @@ GEM
       systemu (>= 1.2.0)
     builder (2.1.2)
     chronic (0.3.0)
+    cobravsmongoose (0.0.2)
     fattr (2.2.0)
+    json (1.6.3)
     main (4.4.0)
       arrayfields (>= 4.7.4)
       fattr (>= 2.1.0)
@@ -52,6 +54,8 @@ DEPENDENCIES
   aws-s3
   bj
   chronic (~> 0.3.0)
+  cobravsmongoose
+  json (~> 1.6.3)
   rack (~> 1.0.0)
   rails (~> 2.3.5)
   sqlite3-ruby
