@@ -136,6 +136,12 @@ class DeviceCommunicationController < ApplicationController
     course_id      = params[:course_id]
     tee_times_data = params[:date]    
     
+    puts '##################################################'
+    puts '##################################################'
+    puts course_id
+    puts '##################################################'
+    puts '##################################################'
+  
     pp tee_times_data
     #process_data   = Course.process_tee_times_data(course_id,tee_times_data)
     render :nothing => true
