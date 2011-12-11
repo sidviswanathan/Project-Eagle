@@ -137,8 +137,8 @@ class DeviceCommunicationController < ApplicationController
     tee_times_data = params[:date]    
     
     pp tee_times_data
-    
     #process_data   = Course.process_tee_times_data(course_id,tee_times_data)
+    render :nothing => true
   end  
   
   
