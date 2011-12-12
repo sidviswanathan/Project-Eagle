@@ -5,7 +5,7 @@ class CreateEmailReservations < ActiveRecord::Migration
       t.string   :time
       t.integer  :golfers
       t.integer  :course_id
-      t.string   :confimation_code
+      t.string   :confirmation_code
       t.timestamps
     end
   end
