@@ -13,6 +13,19 @@ class ListenerController < ApplicationController
     return text.split(lab)[1].split("\n")[0].strip
   end
   
+  def make_reservation(course_id,num_golfers,tee_time,date)
+    reservation_info = {:course_id=>course_id, :golfers=>num_golfers, :time=>tee_time, :date=>date}
+    u = User.find_by_email(COURSE_EMAILS[course_id])
+    if u
+      r = Reservation.create(reservation_info)
+      logger.info 'Reservation Create '
+      r.user = u
+      r.save
+      return 'Saved:  RESERVATION ID IS: '+r.id.to_s
+    else
+      return "FAILED TO MAKE RESERVATION"
+    end
+  end
   
   
   def index
@@ -31,6 +44,10 @@ class ListenerController < ApplicationController
       logger.info 'THE TEE DATE IS: '+Chronic.parse(params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]).strftime('%Y-%m-%d')
       logger.info 'THE NUM GOLFERS IS IS: '+params["text"].split("Number of Players:")[1][1..1]
       logger.info 'THE TEE TIME IS: '+Chronic.parse(time[1..time.length-2]).strftime('%H:%M')
+      
+      logger.info make_reservation("1",num_golfers,tee_time,date)
+      
+      
     
     elsif params["subject"] == 'Reservation Confirmation - GolfNow.com/San Francisco'
       text = params["text"]
@@ -43,19 +60,11 @@ class ListenerController < ApplicationController
       logger.info 'THE NUM GOLFERS IS: '+num_golfers
       logger.info 'THE TEE TIME IS: '+tee_time
       
+      logger.info make_reservation(course_id,num_golfers,tee_time,date)
       
       
-      reservation_info = {:course_id=>course_id, :golfers=>num_golfers, :time=>tee_time, :date=>date}
-      u = User.find_by_email(COURSE_EMAILS[course_id])
-      if u
-        r = Reservation.create(reservation_info)
-        logger.info 'Reservation Create '
-        r.user = u
-        r.save
-        logger.info 'Saved:  RESERVATION ID IS: '+r.id
-      else
-        logger.info "FAILED TO MAKE RESERVATION"
-      end
+      
+      
       
       
     
