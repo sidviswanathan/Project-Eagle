@@ -58,3 +58,4 @@ DEPENDENCIES
   rails (~> 2.3.5)
   sqlite3-ruby
   twiliolib (~> 2.0.7)
+  xml-simple (~> 1.1.0)
