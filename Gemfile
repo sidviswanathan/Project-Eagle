@@ -14,6 +14,7 @@ gem "sqlite3-ruby"
 gem "aws-s3"
 gem "twiliolib", "~> 2.0.7"
 gem "chronic", "~> 0.3.0"
+gem "xml-simple"~> "1.0.16"
 
 # Use unicorn as the web server
 # gem 'unicorn'
