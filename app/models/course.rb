@@ -117,7 +117,8 @@ class Course < ActiveRecord::Base
       converted_response.store(date,val)
     end
 
-      puts "RESPONSE TO CLIENT => #{converted_response}"
+      puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
+      return converted_response
   end
 
 end
