@@ -129,6 +129,7 @@ class DeviceCommunicationController < ApplicationController
   # = httpo://presstee.com/device_communication/process_api_request ===
   # ===================================================================
   
+  # This should be moved into a separate API controller at some point, should not be in device communication controller
   # INPUT: http://www.presstee.com/device_communication/process_api_request
   # OUTPUT: 
   
@@ -136,9 +137,15 @@ class DeviceCommunicationController < ApplicationController
     course_id      = params[:course_id]
     tee_times_data = params[:date]    
     
+    puts '##################################################'
+    puts '##################################################'
+    puts course_id
+    puts '##################################################'
+    puts '##################################################'
+  
     pp tee_times_data
-    
     #process_data   = Course.process_tee_times_data(course_id,tee_times_data)
+    render :nothing => true
   end  
   
   
