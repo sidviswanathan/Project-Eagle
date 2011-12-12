@@ -14,17 +14,8 @@ class ListenerController < ApplicationController
   end
   
   def make_reservation(course_id,num_golfers,tee_time,date,confirmation)
-    reservation_info = {:course_id=>course_id, :golfers=>num_golfers, :time=>tee_time, :date=>date}
-    u = User.find_by_email(COURSE_EMAILS[course_id])
-    if u
-      r = Reservation.create(reservation_info)
-      logger.info 'Reservation Create '
-      r.user = u
-      r.save
-      return 'Saved:  RESERVATION ID IS: '+r.id.to_s
-    else
-      return "FAILED TO MAKE RESERVATION"
-    end
+    reservation_info = {:course_id=>course_id, :golfers=>num_golfers, :time=>tee_time, :date=>date, :confirmation_code=>confirmation}
+    r = EmailReservation.create(reservation_info)
   end
   
   
@@ -60,11 +51,6 @@ class ListenerController < ApplicationController
       logger.info 'THE TEE TIME IS: '+tee_time
       
       logger.info make_reservation(course_id,num_golfers,tee_time,date,confirmation)
-      
-      
-      
-      
-      
       
     
     else
