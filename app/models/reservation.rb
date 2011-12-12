@@ -40,7 +40,7 @@ class Reservation < ActiveRecord::Base
   # INPUT: http://dump-them.appspot.com/cgi-bin/bk.pl?CourseID=1&Date=2011-12-19&Time=06:08&Email=arjun.vasan@gmail.com&Quantity=2&AffiliateID=029f2fw&Password=eagle  
   # OUTPUT:  
   
-  def book_time_via_api(reservation_info)
+  def self.book_time_via_api(reservation_info)
     
     case course_id
     
