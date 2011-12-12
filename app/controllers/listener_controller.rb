@@ -49,9 +49,10 @@ class ListenerController < ApplicationController
       u = User.find_by_email(COURSE_EMAILS[course_id])
       if u
         r = Reservation.create(reservation_info)
+        logger.info 'Reservation Create '
         r.user = u
         r.save
-        logger.info 'THE RESERVATION ID IS: '+r.id
+        logger.info 'Saved:  RESERVATION ID IS: '+r.id
       else
         logger.info "FAILED TO MAKE RESERVATION"
       end
