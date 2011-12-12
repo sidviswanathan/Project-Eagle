@@ -17,11 +17,14 @@ class Reservation < ActiveRecord::Base
     
     # Make the API reservation call here
     booking = book_time_via_api(reservation_info)
+    #confirmation_code = convert booking to hash and get the confirmation code 
     
     if booking
       u = User.find_by_email(email)
       if u 
         r = Reservation.create(reservation_info)
+        r.booking_type = 'IPhone'
+        r.confirmation_code = '12345'
         r.user = u
         r.save
       else 
@@ -56,6 +59,10 @@ class Reservation < ActiveRecord::Base
   end  
   
   #IMPLEMENT: Move this to a separate module file for all Fore API calls.  Every API should have it's own module
+  #SAMPLE: response = http.post("http://dump-them.appspot.com/cgi-bin/bk.pl?CourseID=1&Date=2011-12-19&Time=06:08&Email=arjun.vasan@gmail.com&Quantity=2&AffiliateID=029f2fw&Password=eagle", headers)
+  
+  
+  
   def book_time_via_fore_reservations_api(reservation_info)
     
     url = URI.parse(Course::DEEP_CLIFF_API_HOST)
