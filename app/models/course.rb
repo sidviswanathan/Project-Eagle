@@ -95,4 +95,21 @@ class Course < ActiveRecord::Base
     return booked_tee_times_for_date
   end  
   
+
+  ## Change format to local use from fore response
+  def format_fore_api(response)
+
+    object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
+    
+    ## Get all dates from response
+    dates = object['avail'].keys
+
+    dates.each do |date|
+      hsh_length = object['avail']['#{date}']['teetime'].length
+      for i in 0..hsh_length-1
+        object['avail']['#{date}']['teetime']['#{i}']
+      end
+    end
+  end
+
 end
