@@ -1,5 +1,5 @@
 require 'pp'
-require 'xmlSimple'
+#require 'xmlSimple'
 
 class Course < ActiveRecord::Base
   
