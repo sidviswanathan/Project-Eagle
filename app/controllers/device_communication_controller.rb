@@ -139,13 +139,14 @@ class DeviceCommunicationController < ApplicationController
   
     pp tee_times_data
     process_data   = Course.process_tee_times_data(response)
-    render :nothing => true
     
     logger.info '######################################'
     logger.info '######################################'
     pp process_data
     logger.info '######################################'
     logger.info '######################################'
+    
+    render :nothing => true
   end  
   
   
