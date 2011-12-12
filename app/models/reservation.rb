@@ -22,7 +22,7 @@ class Reservation < ActiveRecord::Base
     else
       return nil
     end    
-    
+    #
     if booking
       u = User.find_by_email(email)
       if u 
