@@ -6,14 +6,12 @@ class ListenerController < ApplicationController
   
   skip_before_filter :verify_authenticity_token
   
-  COURSE_MAP = {"Deep Cliff Golf Course" => 1}
-  COURSE_EMAILS = {1 => "carlcwheatley@gmail.com"}
+  COURSE_MAP = {"Deep Cliff Golf Course" => "1"}
+  COURSE_EMAILS = {"1" => "carlcwheatley@gmail.com"}
   
   def get_value(lab,text)
     return text.split(lab)[1].split("\n")[0].strip
   end
-  
-  
   
   def index
     
@@ -31,6 +29,11 @@ class ListenerController < ApplicationController
       logger.info 'THE TEE DATE IS: '+Chronic.parse(params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]).strftime('%Y-%m-%d')
       logger.info 'THE NUM GOLFERS IS IS: '+params["text"].split("Number of Players:")[1][1..1]
       logger.info 'THE TEE TIME IS: '+Chronic.parse(time[1..time.length-2]).strftime('%H:%M')
+      
+      r = Reservation.book_tee_time(COURSE_MAP["1"],"1",num_golfers,tee_time,date)
+
+      
+      
     
     elsif params["subject"] == 'Reservation Confirmation - GolfNow.com/San Francisco'
       text = params["text"]
@@ -43,19 +46,9 @@ class ListenerController < ApplicationController
       logger.info 'THE NUM GOLFERS IS: '+num_golfers
       logger.info 'THE TEE TIME IS: '+tee_time
       
-      
-      
-      reservation_info = {:course_id=>course_id, :golfers=>num_golfers, :time=>tee_time, :date=>date}
-      u = User.find_by_email(COURSE_EMAILS[course_id])
-      if u
-        r = Reservation.create(reservation_info)
-        r.user = u
-        r.save
-        logger.info 'THE RESERVATION ID IS: '+r.id
-      else
-        logger.info "FAILED TO MAKE RESERVATION"
-      end
-      
+      r = Reservation.book_tee_time(COURSE_MAP[course_id],course_id,num_golfers,tee_time,date)
+
+
       
     
     else
