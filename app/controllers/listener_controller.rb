@@ -18,7 +18,7 @@ class ListenerController < ApplicationController
   def index
     
     #config = YAML::load(File.read(Rails.root.join('config/course.yml'))) 
-    logger.info config.keys
+    #logger.info config.keys
     
     if params["subject"] == 'Reservation Confirmation - Deep Cliff Golf Course'
       
