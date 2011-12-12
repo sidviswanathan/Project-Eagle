@@ -103,7 +103,7 @@ class Course < ActiveRecord::Base
 
   ## Change format to local use from fore response
 
-  def format_fore_api_response(response)
+  def self.process_tee_times_data(response)
     ## Convert response to hash
     object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
     converted_response = Hash.new
@@ -118,7 +118,7 @@ class Course < ActiveRecord::Base
     end
 
       puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
-      return converted_response
+      return converted_response   
   end
 
 end

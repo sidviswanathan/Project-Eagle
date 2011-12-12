@@ -135,17 +135,17 @@ class DeviceCommunicationController < ApplicationController
   
   def process_api_request
     course_id      = params[:course_id]
-    tee_times_data = params[:date]    
-    
-    puts '##################################################'
-    puts '##################################################'
-    puts course_id
-    puts '##################################################'
-    puts '##################################################'
+    response       = params[:tee_times_data]    
   
     pp tee_times_data
-    #process_data   = Course.process_tee_times_data(course_id,tee_times_data)
+    process_data   = Course.process_tee_times_data(response)
     render :nothing => true
+    
+    logger.info '######################################'
+    logger.info '######################################'
+    pp process_data
+    logger.info '######################################'
+    logger.info '######################################'
   end  
   
   
