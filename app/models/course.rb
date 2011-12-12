@@ -104,20 +104,20 @@ class Course < ActiveRecord::Base
   ## Change format to local use from fore response
 
   def format_fore_api_response(response)
-
     ## Convert response to hash
     object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
+    converted_response = Hash.new
     
     ## Get all dates from response
     dates = object['avail'].keys
 
     dates.each do |date|
       hsh_length = object['avail'][date]['teetime'].length
-      out = object['avail'][date]['teetime']
-      for i in 0..hsh_length-1
-        puts out[i]
-      end
+      val = object['avail'][date]['teetime']
+      converted_response.store(date,val)
     end
+
+      puts "RESPONSE TO CLIENT => #{converted_response}"
   end
 
 end
