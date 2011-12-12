@@ -13,21 +13,6 @@ class ListenerController < ApplicationController
     return text.split(lab)[1].split("\n")[0].strip
   end
   
-  def make_reservation(course_id,num_golfers,tee_time,date)
-    reservation_info = {:course_id=>course_id, :golfers=>num_golfers, :time=>tee_time, :date=>date}
-    u = User.find_by_email(COURSE_EMAILS[course_id])
-    if u
-      r = Reservation.create(reservation_info)
-      logger.info 'Reservation Create '
-      r.user = u
-      r.save
-      return 'Saved:  RESERVATION ID IS: '+r.id.to_s
-    else
-      return "FAILED TO MAKE RESERVATION"
-    end
-  end
-  
-  
   def index
     
     #config = YAML::load(File.read(Rails.root.join('config/course.yml'))) 
@@ -45,7 +30,8 @@ class ListenerController < ApplicationController
       logger.info 'THE NUM GOLFERS IS IS: '+params["text"].split("Number of Players:")[1][1..1]
       logger.info 'THE TEE TIME IS: '+Chronic.parse(time[1..time.length-2]).strftime('%H:%M')
       
-      logger.info make_reservation("1",num_golfers,tee_time,date)
+      r = Reservation.book_tee_time(COURSE_MAP["1"],"1",num_golfers,tee_time,date)
+
       
       
     
@@ -60,12 +46,9 @@ class ListenerController < ApplicationController
       logger.info 'THE NUM GOLFERS IS: '+num_golfers
       logger.info 'THE TEE TIME IS: '+tee_time
       
-      logger.info make_reservation(course_id,num_golfers,tee_time,date)
-      
-      
-      
-      
-      
+      r = Reservation.book_tee_time(COURSE_MAP[course_id],course_id,num_golfers,tee_time,date)
+
+
       
     
     else
