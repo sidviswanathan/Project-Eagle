@@ -8,6 +8,7 @@
 
 u = User.find_by_email('carlcwheatey@gmail.com')
 if u == nil
+  u = User.new
   u.email = 'carlcwheatey@gmail.com'
   u.f_name = 'Carl'
   u.l_name = 'Wheatley'
