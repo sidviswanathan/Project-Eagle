@@ -112,13 +112,39 @@ class Course < ActiveRecord::Base
     dates = object['avail'].keys
 
     dates.each do |date|
-      hsh_length = object['avail'][date]['teetime'].length
       val = object['avail'][date]['teetime']
       converted_response.store(date,val)
     end
 
-      puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
-      return converted_response   
+    if !@@previous_response.nil?
+
+      dates.each do |date|
+        hsh_length_new = converted_response[date].length
+        hsh_length_old = @@previous_response[date].length
+        current_data = converted_response[date]
+        previous_data = @@previous_response[date]
+
+        for i in 0..hsh_length_new-1
+          if previous_data[i]['time'] == current_data[i]['time']
+            converted_response[date][i]['quanity'] = current_data[i]['time'] - previous_data[i]['time']
+          end
+        end
+
+        for i in 0..hsh_length_old-1
+          if previous_data[i]['time'] == current_data[i]['time']
+            converted_response[date][i]['quanity'] = current_data[i]['time'] - previous_data[i]['time']
+          end
+        end
+
+      end
+
+    end
+
+    ## Storing values for next comparison
+    @@previous_response = converted_response
+
+    puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
+    return converted_response   
   end
 
 end
