@@ -117,7 +117,7 @@ class Course < ActiveRecord::Base
     end
 
 
-    =begin
+=begin
     if !@@previous_response.nil?
 
       dates.each do |date|
@@ -142,7 +142,7 @@ class Course < ActiveRecord::Base
       end
 
     end
-    =end
+=end
 
     ## Storing values for next comparison
     @@previous_response = converted_response
