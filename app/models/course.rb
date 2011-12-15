@@ -128,25 +128,25 @@ class Course < ActiveRecord::Base
     if !a
       a = AvailableTeeTimes.new
       a.courseid = course_id
+      a.data = converted_response.to_json
+      a.save
+    else
+      previous_response = JSON.parse(a.data)
+      a.data = converted_response.to_json
+      a.save
+      converted_response.each_pair do |k,v|
+        set_old = previous_response[k].to_set
+        set_new = v.to_set
+        bookings = set_old - set_new
+        cancels = set_new - set_old
+        logger.info '###########BOOKINGS###########################'
+        pp bookings
+        logger.info '###########CANCELS###########################'
+        pp cancels
+        logger.info '############END##########################'
+      end
     end
     
-    previous_response = JSON.parse(a.data)
-    
-    a.data = converted_response.to_json
-    a.save
-    
-    converted_response.each_pair do |k,v|
-      set_old = previous_response[k].to_set
-      set_new = v.to_set
-      bookings = set_old - set_new
-      cancels = set_new - set_old
-      logger.info '###########BOOKINGS###########################'
-      pp bookings
-      logger.info '###########CANCELS###########################'
-      pp cancels
-      logger.info '############END##########################'
-    end
-      
     
   
 
