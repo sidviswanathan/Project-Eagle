@@ -113,9 +113,17 @@ class Course < ActiveRecord::Base
 
     dates.each do |date|
       val = object['avail'][date]['teetime']
+      val.each do |time|
+        time['quantity'] = time['quantity'][0]
+        time['time'] = time['time'][0]
+        time['courseid'] = time['courseid'][0]
+      end
       converted_response.store(date,val)
     end
-
+    
+    a = AvailableTeeTimes.new
+    a.data = converted_response.to_json
+    a.save
     
 
 =begin
