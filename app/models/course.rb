@@ -116,6 +116,7 @@ class Course < ActiveRecord::Base
       converted_response.store(date,val)
     end
 
+    
 
 =begin
     if !@@previous_response.nil?
