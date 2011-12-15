@@ -111,7 +111,7 @@ class Course < ActiveRecord::Base
     
     ## Get all dates from response
     dates = object['avail'].keys
-
+    course_id = "1"
     dates.each do |date|
       val = object['avail'][date]['teetime']
       val.each do |time|
