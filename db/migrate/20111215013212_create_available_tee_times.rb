@@ -3,6 +3,7 @@ class CreateAvailableTeeTimes < ActiveRecord::Migration
     create_table :available_tee_times do |t|
       t.text :data
       t.text :archive
+      t.string :courseid
 
       t.timestamps
     end
