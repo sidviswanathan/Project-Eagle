@@ -130,15 +130,15 @@ class Course < ActiveRecord::Base
     a.save
     
     converted_response.each_pair do |k,v|
-      set_old = previous_response.to_set
+      set_old = previous_response[k].to_set
       set_new = v.to_set
       bookings = set_old - set_new
       cancels = set_new - set_old
-      logger.info '######################################'
+      logger.info '###########BOOKINGS###########################'
       pp bookings
-      logger.info '######################################'
+      logger.info '###########CANCELS###########################'
       pp cancels
-      logger.info '######################################'
+      logger.info '############END##########################'
     end
       
     
