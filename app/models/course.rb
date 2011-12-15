@@ -139,10 +139,19 @@ class Course < ActiveRecord::Base
         set_new = v.to_set
         bookings = set_old - set_new
         cancels = set_new - set_old
+        
+        
         logger.info '###########BOOKINGS###########################'
         pp bookings
-        logger.info '###########CANCELS###########################'
+        bookings.each do |r|
+          reservation_info = {:course_id=>course_id, :golfers=>r['quantity'], :time=>r['time'], :date=>k}
+          r = EmailReservation.create(reservation_info)
+        end
+
+        
+        logger.info '###########CANCELS#######Delete These####################'
         pp cancels
+        
         logger.info '############END##########################'
       end
     end
