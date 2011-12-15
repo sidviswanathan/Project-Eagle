@@ -129,15 +129,16 @@ class Course < ActiveRecord::Base
     a.data = converted_response.to_json
     a.save
     
+    converted_response.each_pair do |k,v|
+      set_old = previous_response.to_set
+      set_new = v.to_set
+      bookings = set_old - set_new
+      cancels = set_new - set_old
+      logger.info bookings.to_s
+      logger.info cancels.to_s
+      
     
-    
-    
-    
-    
-    
-    
-    
-    
+  
 
 =begin
     if !@@previous_response.nil?
