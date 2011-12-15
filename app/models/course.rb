@@ -1,5 +1,6 @@
 require 'pp'
 require 'xmlsimple'
+require 'json'
 
 class Course < ActiveRecord::Base
   
@@ -120,12 +121,12 @@ class Course < ActiveRecord::Base
       end
       converted_response.store(date,val)
     end
-    j = ActiveSupport::JSON
+
     a = AvailableTeeTimes.last
     
-    previous_response = j.decode(a.data)
+    previous_response = JSON.parse(a.data)
     
-    a.data = j.encode(converted_response)
+    a.data = converted_response.to_json
     a.save
     
     
