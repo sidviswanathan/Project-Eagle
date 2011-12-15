@@ -134,8 +134,11 @@ class Course < ActiveRecord::Base
       set_new = v.to_set
       bookings = set_old - set_new
       cancels = set_new - set_old
-      logger.info bookings.to_s
-      logger.info cancels.to_s
+      logger.info '######################################'
+      pp bookings
+      logger.info '######################################'
+      pp cancels
+      logger.info '######################################'
     end
       
     
