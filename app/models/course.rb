@@ -117,15 +117,17 @@ class Course < ActiveRecord::Base
       val.each do |time|
         time['quantity'] = time['quantity'][0]
         time['time'] = time['time'][0]
+        course_id = time['courseid'][0]
         time['courseid'] = time['courseid'][0]
       end
       converted_response.store(date,val)
     end
 
     
-    a = AvailableTeeTimes.last
+    a = AvailableTeeTimes.find_by_courseid(course_id)
     if !a
       a = AvailableTeeTimes.new
+      a.courseid = course_id
     end
     
     previous_response = JSON.parse(a.data)
