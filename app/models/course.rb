@@ -122,7 +122,11 @@ class Course < ActiveRecord::Base
       converted_response.store(date,val)
     end
 
+    
     a = AvailableTeeTimes.last
+    if !a
+      a = AvailableTeeTimes.new
+    end
     
     previous_response = JSON.parse(a.data)
     
