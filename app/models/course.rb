@@ -114,10 +114,10 @@ class Course < ActiveRecord::Base
     course_id = "1"
     dates.each do |date|
       val = object['avail'][date]['teetime']
+      course_id = object['avail'][date]['teetime'][0]['courseid'][0]
       val.each do |time|
         time['quantity'] = time['quantity'][0]
         time['time'] = time['time'][0]
-        course_id = time['courseid'][0]
         time['courseid'] = time['courseid'][0]
       end
       converted_response.store(date,val)
@@ -151,6 +151,15 @@ class Course < ActiveRecord::Base
         
         logger.info '###########CANCELS#######Delete These####################'
         pp cancels
+        
+        # Write Code to Delete cancelled records (To Do)
+        
+        
+        #cancels.each do |r|
+        #  rs = EmailReservation.find_all_by_time_and_date(k,r['time'])
+        #  rs.each do |s|
+            
+        #end
         
         logger.info '############END##########################'
       end
@@ -189,7 +198,7 @@ class Course < ActiveRecord::Base
     ## Storing values for next comparison
     @@previous_response = converted_response
 
-    puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
+    #puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
     return converted_response   
   end
 
