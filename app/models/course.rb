@@ -136,6 +136,7 @@ class Course < ActiveRecord::Base
       cancels = set_new - set_old
       logger.info bookings.to_s
       logger.info cancels.to_s
+    end
       
     
   
