@@ -179,14 +179,16 @@ class Course < ActiveRecord::Base
 
         
         for i in 0..hsh_length_new-1
-          if previous_data[i]['time'] == current_data[i]['time']
-            converted_response[date][i]['quanity'] = current_data[i]['time'] - previous_data[i]['time']
+          if previous_data[i]['time'][0] == current_data[i]['time'][0]
+            converted_response[date][i]['quanity'] = previous_data[i]['quantity'][0].to_i -  current_data[i]['quantity'][0].to_i
+            converted_response[date][i]['quanity'] = converted_response[date][i]['quanity'].to_s
           end
         end
 
         for i in 0..hsh_length_old-1
-          if previous_data[i]['time'] == current_data[i]['time']
-            converted_response[date][i]['quanity'] = current_data[i]['time'] - previous_data[i]['time']
+          if previous_data[i]['time'][0] == current_data[i]['time'][0]
+            converted_response[date][i]['quanity'] = previous_data[i]['quantity'][0].to_i -  current_data[i]['quantity'][0].to_i
+            converted_response[date][i]['quanity'] = converted_response[date][i]['quanity'].to_s
           end
         end
 
