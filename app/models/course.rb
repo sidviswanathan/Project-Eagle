@@ -116,6 +116,8 @@ class Course < ActiveRecord::Base
       converted_response.store(date,val)
     end
 
+
+    =begin
     if !@@previous_response.nil?
 
       dates.each do |date|
@@ -124,6 +126,7 @@ class Course < ActiveRecord::Base
         current_data = converted_response[date]
         previous_data = @@previous_response[date]
 
+        
         for i in 0..hsh_length_new-1
           if previous_data[i]['time'] == current_data[i]['time']
             converted_response[date][i]['quanity'] = current_data[i]['time'] - previous_data[i]['time']
@@ -139,6 +142,7 @@ class Course < ActiveRecord::Base
       end
 
     end
+    =end
 
     ## Storing values for next comparison
     @@previous_response = converted_response
