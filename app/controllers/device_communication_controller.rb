@@ -1,4 +1,5 @@
 require 'pp'
+require 'json'
 
 class DeviceCommunicationController < ApplicationController
   
@@ -85,7 +86,8 @@ class DeviceCommunicationController < ApplicationController
     
     if device_name == 'android'
       a = AvailableTeeTimes.find_by_courseid(course_id)
-      render :json => a.data
+      dates = JSON.parse(a.data)
+      render :json => dates[date].to_json
     
     else
       
@@ -146,7 +148,7 @@ class DeviceCommunicationController < ApplicationController
   def process_api_request
     course_id      = params[:course_id]
     response       = params[:tee_times_data]    
-    pp response
+    #pp response
     process_data   = Course.process_tee_times_data(response)
 =begin
     logger.info '######################################'
