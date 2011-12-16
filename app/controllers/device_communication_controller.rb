@@ -146,7 +146,7 @@ class DeviceCommunicationController < ApplicationController
   def process_api_request
     course_id      = params[:course_id]
     response       = params[:tee_times_data]    
-  
+    pp response
     process_data   = Course.process_tee_times_data(response)
 =begin
     logger.info '######################################'
