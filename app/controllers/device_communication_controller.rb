@@ -91,6 +91,7 @@ class DeviceCommunicationController < ApplicationController
         render :json => dates[date].to_json
       else
         render :json => a.data
+      end
     
     else
       
