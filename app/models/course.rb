@@ -108,7 +108,7 @@ class Course < ActiveRecord::Base
     ## Convert response to hash
     object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
     converted_response = Hash.new
-    
+    pp object
     ## Get all dates from response
     dates = object['avail'].keys
     course_id = "1"
