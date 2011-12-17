@@ -188,7 +188,11 @@ class DeviceCommunicationController < ApplicationController
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server succesfully made the get_reservations() request"
-      response_object[:data]       = reservations
+      reservation_list = []
+      reservations.each do |r|
+        reservation_list.push(r['reservation'])
+      end
+      response_object[:data]       = reservation_list
       render :json => response_object.to_json
       
     else
