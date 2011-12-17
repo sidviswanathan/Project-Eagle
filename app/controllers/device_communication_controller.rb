@@ -166,6 +166,54 @@ class DeviceCommunicationController < ApplicationController
     render :nothing => true
   end  
   
+  
+  # ===================================================================
+  # = httpo://presstee.com/device_communication/get_reservations ===
+  # ===================================================================
+  
+  # This should be moved into a separate API controller at some point, should not be in device communication controller
+  # INPUT: http://www.presstee.com/device_communication/cancel_reservation
+  # OUTPUT:
+  
+  
+  def get_reservations
+    course_id           = params[:course_id]
+    email               = params[:email]
+    response_object = intitiate_response_object
+    
+    user = User.find_by_email(email)
+    
+    if user
+      reservations = Reservation.find_all_by_user_id(user.id.to_s)
+      response_object[:status]     = "success"
+      response_object[:statusCode] = 200
+      response_object[:message]    = "The server succesfully made the get_reservations() request"
+      response_object[:data]       = reservations
+      render :json => response_object.to_json
+      
+    else
+      response_object[:message] = "The server failed to make the get_reservations() request"
+      render :json => response_object.to_json
+    end
+    
+    
+    r = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+    if r
+      r.destroy
+      response_object[:status]     = "success"
+      response_object[:statusCode] = 200
+      response_object[:message]    = "The server destroyed a reservation with course_id="+course_id+" and confirmation_code="+confirmation_code
+      render :json => response_object.to_json
+    else
+      response_object[:message] = "The server failed to make the Reservation.cancel_reservation() request"
+      render :json => response_object.to_json
+    end
+    
+    
+    
+  end
+  
+  
   # ===================================================================
   # = httpo://presstee.com/device_communication/cancel_reservation ===
   # ===================================================================
