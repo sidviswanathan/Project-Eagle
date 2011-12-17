@@ -19,10 +19,12 @@ class Reservation < ActiveRecord::Base
     booking = book_time_via_api(reservation_info)
     if XmlSimple.xml_in(booking.body).has_key?("confirmation")
       confirmation_code = XmlSimple.xml_in(booking.body)["confirmation"][0]
+      logger.info "Confirmation Code: "+confirmation_code 
     else
       return nil
     end    
     #
+    
     if booking
       u = User.find_by_email(email)
       if u 
@@ -52,7 +54,8 @@ class Reservation < ActiveRecord::Base
     case reservation_info[:course_id]
     
     when Course::DEEP_CLIFF_COURSE_ID
-      book_time_via_fore_reservations_api(reservation_info)
+      logger.info "Returning Booking Response"
+      return book_time_via_fore_reservations_api(reservation_info)
     when Course::SOME_OTHER_COURSE_ID 
       # Call function corresponding to the courses API
     else
