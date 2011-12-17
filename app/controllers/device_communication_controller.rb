@@ -1,4 +1,5 @@
 require 'pp'
+require 'json'
 
 class DeviceCommunicationController < ApplicationController
   
@@ -33,7 +34,7 @@ class DeviceCommunicationController < ApplicationController
   #                  :response=>"insert response object here"
   #                 }
   
-  def intitieate_response_object    
+  def intitiate_response_object    
     response_object              = Hash.new
     response_object[:status]     = "failure"
     response_object[:statusCode] = 500
@@ -54,7 +55,7 @@ class DeviceCommunicationController < ApplicationController
     os_version   = params[:os_version]
     app_version  = params[:app_version]
     
-    response_object = intitieate_response_object
+    response_object = intitiate_response_object
     user = User.login(f_name, l_name, email, device_name, os_version, app_version)
     
     if user
@@ -80,20 +81,35 @@ class DeviceCommunicationController < ApplicationController
     course_id    = params[:course_id]
     time         = params[:time]    
     date         = params[:date]
+    device_name  = params[:device_name]
+    response_object = intitiate_response_object
     
-    response_object = intitieate_response_object
-    course_times = Course.get_available_tee_times(course_id,time,date)
-        
-    if course_times
-       response_object[:status]     = "success"
-       response_object[:statusCode] = 200
-       response_object[:response]   = course_times
-       response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-       render :json => response_object.to_json         
-     else
-       response_object[:message] = "The server failed to make the Course.get_available_tee_times() request"
-       render :json => response_object.to_json         
-     end
+    if device_name == 'android'
+      a = AvailableTeeTimes.find_by_courseid(course_id)
+      if date
+        dates = JSON.parse(a.data)
+        render :json => dates[date].to_json
+      else
+        render :json => a.data
+      end
+    
+    else
+      
+      course_times = Course.get_available_tee_times(course_id,time,date)
+
+      if course_times
+         response_object[:status]     = "success"
+         response_object[:statusCode] = 200
+         response_object[:response]   = course_times
+         response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+         render :json => response_object.to_json         
+       else
+         response_object[:message] = "The server failed to make the Course.get_available_tee_times() request"
+         render :json => response_object.to_json         
+       end
+    end
+    
+
   end
   
   # ===================================================================
@@ -110,7 +126,7 @@ class DeviceCommunicationController < ApplicationController
     time        = params[:time]    
     date        = params[:date]    
     
-    response_object = intitieate_response_object
+    response_object = intitiate_response_object
     reservation = Reservation.book_tee_time(email, course_id, golfers, time, date)
     
     if reservation
@@ -136,14 +152,15 @@ class DeviceCommunicationController < ApplicationController
   def process_api_request
     course_id      = params[:course_id]
     response       = params[:tee_times_data]    
-  
+    #pp response
     process_data   = Course.process_tee_times_data(response)
-    
+=begin
     logger.info '######################################'
     logger.info '######################################'
     pp process_data
     logger.info '######################################'
     logger.info '######################################'
+=end
     
     render :nothing => true
   end  

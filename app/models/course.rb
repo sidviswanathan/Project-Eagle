@@ -1,5 +1,6 @@
 require 'pp'
 require 'xmlsimple'
+require 'json'
 
 class Course < ActiveRecord::Base
   
@@ -107,18 +108,101 @@ class Course < ActiveRecord::Base
     ## Convert response to hash
     object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
     converted_response = Hash.new
-    
+    #pp object
     ## Get all dates from response
     dates = object['avail'].keys
-
+    course_id = "1"
     dates.each do |date|
-      hsh_length = object['avail'][date]['teetime'].length
       val = object['avail'][date]['teetime']
+      course_id = object['avail'][date]['teetime'][0]['courseid'][0]
+      val.each do |time|
+        time['quantity'] = time['quantity'][0]
+        time['time'] = time['time'][0]
+        time['courseid'] = time['courseid'][0]
+      end
       converted_response.store(date,val)
     end
 
-      puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
-      return converted_response   
+    
+    a = AvailableTeeTimes.find_by_courseid(course_id)
+    if !a
+      a = AvailableTeeTimes.new
+      a.courseid = course_id
+      a.data = converted_response.to_json
+      a.save
+    else
+      # Note use of JSON.parse rather than the Rails method json.decode.  This is because json.decode converts the string date to a DateTime...
+      previous_response = JSON.parse(a.data)
+      a.data = converted_response.to_json
+      a.save
+      converted_response.each_pair do |k,v|
+        set_old = previous_response[k].to_set
+        set_new = v.to_set
+        bookings = set_old - set_new
+        cancels = set_new - set_old
+        
+        
+        logger.info '###########BOOKINGS###########################'
+        pp bookings
+        bookings.each do |r|
+          reservation_info = {:course_id=>course_id, :golfers=>r['quantity'], :time=>r['time'], :date=>k}
+          r = EmailReservation.create(reservation_info)
+        end
+
+        
+        logger.info '###########CANCELS#######Delete These####################'
+        pp cancels
+        
+        # Write Code to Delete cancelled records (To Do)
+        
+        
+        #cancels.each do |r|
+        #  rs = EmailReservation.find_all_by_time_and_date(k,r['time'])
+        #  rs.each do |s|
+            
+        #end
+        
+        logger.info '############END##########################'
+      end
+    end
+    
+    
+  
+
+=begin
+    if !@@previous_response.nil?
+
+      dates.each do |date|
+        hsh_length_new = converted_response[date].length
+        hsh_length_old = @@previous_response[date].length
+        current_data = converted_response[date]
+        previous_data = @@previous_response[date]
+
+        
+        for i in 0..hsh_length_new-1
+          if previous_data[i]['time'][0] == current_data[i]['time'][0]
+            converted_response[date][i]['quanity'] = previous_data[i]['quantity'][0].to_i -  current_data[i]['quantity'][0].to_i
+            converted_response[date][i]['quanity'] = converted_response[date][i]['quanity'].to_s
+          end
+        end
+
+        for i in 0..hsh_length_old-1
+          if previous_data[i]['time'][0] == current_data[i]['time'][0]
+            converted_response[date][i]['quanity'] = previous_data[i]['quantity'][0].to_i -  current_data[i]['quantity'][0].to_i
+            converted_response[date][i]['quanity'] = converted_response[date][i]['quanity'].to_s
+          end
+        end
+
+      end
+
+    end
+=end
+
+    ## Storing values for next comparison
+    @@previous_response = converted_response
+
+    #puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
+    return converted_response   
   end
 
 end
