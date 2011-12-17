@@ -168,7 +168,7 @@ class DeviceCommunicationController < ApplicationController
   
   
   # ===================================================================
-  # = httpo://presstee.com/device_communication/get_reservations ===
+  # = http://presstee.com/device_communication/get_reservations ===
   # ===================================================================
   
   # This should be moved into a separate API controller at some point, should not be in device communication controller
@@ -195,21 +195,7 @@ class DeviceCommunicationController < ApplicationController
       response_object[:message] = "The server failed to make the get_reservations() request"
       render :json => response_object.to_json
     end
-    
-    
-    r = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
-    if r
-      r.destroy
-      response_object[:status]     = "success"
-      response_object[:statusCode] = 200
-      response_object[:message]    = "The server destroyed a reservation with course_id="+course_id+" and confirmation_code="+confirmation_code
-      render :json => response_object.to_json
-    else
-      response_object[:message] = "The server failed to make the Reservation.cancel_reservation() request"
-      render :json => response_object.to_json
-    end
-    
-    
+
     
   end
   
