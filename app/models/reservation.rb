@@ -28,11 +28,14 @@ class Reservation < ActiveRecord::Base
     if booking
       u = User.find_by_email(email)
       if u 
+        reservation_info[:booking_type] = u.device_name
+        reservation_info[:confirmation_code] = confirmation_code
+        reservation_info[:user] = u
         r = Reservation.create(reservation_info)
-        r.booking_type = u.device_name
-        r.confirmation_code = confirmation_code
-        r.user = u
-        r.save
+        #r.booking_type = u.device_name
+        #r.confirmation_code = confirmation_code
+        #r.user = u
+        #r.save
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 
