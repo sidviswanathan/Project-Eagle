@@ -190,6 +190,7 @@ class DeviceCommunicationController < ApplicationController
       response_object[:message]    = "The server succesfully made the get_reservations() request"
       reservation_list = []
       reservations.each do |r|
+        logger.info r['reservation'].to_json
         reservation_list.push(r['reservation'])
       end
       response_object[:data]       = reservation_list
