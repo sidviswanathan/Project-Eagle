@@ -49,7 +49,7 @@ class Reservation < ActiveRecord::Base
   
   def self.book_time_via_api(reservation_info)
     
-    case course_id
+    case reservation_info[:course_id]
     
     when Course::DEEP_CLIFF_COURSE_ID
       book_time_via_fore_reservations_api(reservation_info)
