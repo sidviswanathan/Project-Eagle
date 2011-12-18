@@ -133,6 +133,9 @@ class Course < ActiveRecord::Base
     else
       # Note use of JSON.parse rather than the Rails method json.decode.  This is because json.decode converts the string date to a DateTime...
       previous_response = JSON.parse(a.data)
+      if course_id == '1'
+        pp converted_response
+      end
       a.data = converted_response.to_json
       a.save
       converted_response.each_pair do |k,v|
