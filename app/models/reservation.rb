@@ -77,7 +77,7 @@ class Reservation < ActiveRecord::Base
     headers = {}
 
     begin
-      response = http.post("#{Course::DEEP_CLIFF_API_URL}?=CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Email=#{reservation_info[:email]}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}", headers)
+      response = http.post("#{Course::DEEP_CLIFF_API_URL}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Email=#{reservation_info[:email]}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}", headers)
     rescue
       return nil
     end
