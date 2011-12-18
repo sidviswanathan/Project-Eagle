@@ -184,7 +184,7 @@ class DeviceCommunicationController < ApplicationController
     user = User.find_by_email(email)
     
     if user
-      reservations = Reservation.find_all_by_user_id(user.id.to_s)
+      reservations = Reservation.find_all_by_user_id(user.id.to_s,:order=>"date","time")
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server succesfully made the get_reservations() request"
