@@ -194,7 +194,7 @@ class DeviceCommunicationController < ApplicationController
         logger.info r['reservation']
         r_list.push(r['reservation'])
       end
-      response_object[:data]       = reservation_list
+      response_object[:data]       = r_list
       render :json => response_object.to_json
       
     else
