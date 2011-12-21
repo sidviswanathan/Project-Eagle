@@ -1,5 +1,6 @@
 require 'pp'
 require 'json'
+require 'apns'
 
 class DeviceCommunicationController < ApplicationController
   
@@ -234,7 +235,23 @@ class DeviceCommunicationController < ApplicationController
     
     
     
-  end      
+  end  
+  
+  # ===================================================================
+  # = httpo://presstee.com/device_communication/push_deal ===
+  # ===================================================================
+  
+  # This should be moved into a separate API controller at some point, should not be in device communication controller
+  # INPUT: http://www.presstee.com/device_communication/push_deal
+  # OUTPUT:
+  
+  
+  def push_deal
+    APNS.pem = '/app/config/apns.pem'
+    APNS.send_notification(params[:token],params[:message])
+  end
+  
+      
   
 end
 
