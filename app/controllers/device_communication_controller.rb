@@ -84,9 +84,7 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     response_object = intitiate_response_object
-
     a = AvailableTeeTimes.find_by_courseid(course_id)
-    
     
     if date
        dates = JSON.parse(a.data)
@@ -94,10 +92,16 @@ class DeviceCommunicationController < ApplicationController
          response_object[:status]     = "success"
          response_object[:statusCode] = 200
          response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-         
           if time
-             response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
-             render :json => response_object.to_json
+             if dates[date]["hours"].has_key(time.split(":")[0].to_i.to_s)
+               response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
+               render :json => response_object.to_json
+             else
+               response_object[:statusCode] = 500
+               response_object[:message]    = "Sorry, please choose an hour between 6:00 and 16:00 (24 hour format)"
+               render :json => response_object.to_json
+             end
+             
           else
              response_object[:response]   = dates[date]["day"]
              render :json => response_object.to_json
