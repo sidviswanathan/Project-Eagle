@@ -93,7 +93,7 @@ class DeviceCommunicationController < ApplicationController
          response_object[:statusCode] = 200
          response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
           if time
-             if dates[date]["hours"].has_key(time.split(":")[0].to_i.to_s)
+             if dates[date]["hours"].has_key?(time.split(":")[0].to_i.to_s)
                response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
                render :json => response_object.to_json
              else
