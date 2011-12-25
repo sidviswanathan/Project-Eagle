@@ -108,7 +108,7 @@ class DeviceCommunicationController < ApplicationController
        end
        
     else
-       render :json => response_object.to_json
+       render :json => a.data
     end
     
 
