@@ -146,9 +146,9 @@ class Course < ActiveRecord::Base
       end
       a.data = converted_response.to_json
       a.save
-      converted_response["day"].each_pair do |k,v|
-        set_old = previous_response["day"][k].to_set
-        set_new = v.to_set
+      converted_response.each_pair do |k,v|
+        set_old = previous_response[k]["day"].to_set
+        set_new = v["day"].to_set
         bookings = set_old - set_new
         cancels = set_new - set_old
         

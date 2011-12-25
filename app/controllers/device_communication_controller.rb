@@ -92,9 +92,14 @@ class DeviceCommunicationController < ApplicationController
     
     if device_name == 'android'
       a = AvailableTeeTimes.find_by_courseid(course_id)
+      
       if date
         dates = JSON.parse(a.data)
-        render :json => dates[date].to_json
+        if time
+          render :json => dates[date]["hours"][time.split(":")[0].to_i].to_json
+        else
+          render :json => dates[date]["day"].to_json
+        end
       else
         render :json => a.data
       end
