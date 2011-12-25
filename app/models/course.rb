@@ -123,7 +123,7 @@ class Course < ActiveRecord::Base
         time.delete("courseid")
         time.delete("quantity")
         time.delete("time")
-        if time['time'].split(":")[0].to_i == current_hour
+        if time['t'].split(":")[0].to_i == current_hour
           hours[current_hour].push(time)
         else
           current_hour += 1
@@ -158,7 +158,7 @@ class Course < ActiveRecord::Base
         logger.info '###########BOOKINGS###########################'
         pp bookings
         bookings.each do |r|
-          reservation_info = {:course_id=>course_id, :golfers=>r['quantity'], :time=>r['time'], :date=>k}
+          reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k}
           r = EmailReservation.create(reservation_info)
         end
 
