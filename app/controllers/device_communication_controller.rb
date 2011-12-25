@@ -82,48 +82,32 @@ class DeviceCommunicationController < ApplicationController
     course_id    = params[:course_id]
     time         = params[:time]    
     date         = params[:date]
-    device_name  = params[:device_name]
-    n            = params[:n]
-
     
     response_object = intitiate_response_object
+
     a = AvailableTeeTimes.find_by_courseid(course_id)
     
     
-    if device_name == 'android'
-       a = AvailableTeeTimes.find_by_courseid(course_id)
-       response_object[:status]     = "success"
-       response_object[:statusCode] = 200
-       
-       response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-      
-      if date
-        dates = JSON.parse(a.data)
-        if time
-           response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
-           render :json => response_object.to_json
-        else
-           response_object[:response]   = dates[date]["day"]
-           render :json => response_object.to_json
-        end
-      else
-         render :json => a.data
-      end
-    
-    else
-      
-      course_times = Course.get_available_tee_times(course_id,time,date)
-
-      if course_times
+    if date
+       dates = JSON.parse(a.data)
+       if dates.has_key?(date)
          response_object[:status]     = "success"
          response_object[:statusCode] = 200
-         response_object[:response]   = course_times
          response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-         render :json => response_object.to_json         
+         
+          if time
+             response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
+             render :json => response_object.to_json
+          else
+             response_object[:response]   = dates[date]["day"]
+             render :json => response_object.to_json
+          end
        else
-         response_object[:message] = "The server failed to make the Course.get_available_tee_times() request"
-         render :json => response_object.to_json         
+         response_object[:message]    = "Sorry, please choose a date within the next 7 days.."
        end
+       
+    else
+       render :json => a.data
     end
     
 
