@@ -115,12 +115,20 @@ class Course < ActiveRecord::Base
     dates.each do |date|
       val = object['avail'][date]['teetime']
       course_id = object['avail'][date]['teetime'][0]['courseid'][0]
+      current_hour = 6
+      hours = {6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[],13=>[],14=>[],15=>[],16=>[],17=>[],18=>[],19=>[]}
       val.each do |time|
         time['quantity'] = time['quantity'][0]
         time['time'] = time['time'][0]
         time['courseid'] = time['courseid'][0]
+        if time['time'].split(":")[0].to_i == current_hour
+          hours[current_hour].push(time)
+        else
+          current_hour += 1
+          hours[current_hour].push(time)
+        end
       end
-      converted_response.store(date,val)
+      converted_response.store(date,{"day"=>val,"hours"=>hours})
     end
 
     
@@ -138,8 +146,8 @@ class Course < ActiveRecord::Base
       end
       a.data = converted_response.to_json
       a.save
-      converted_response.each_pair do |k,v|
-        set_old = previous_response[k].to_set
+      converted_response["day"].each_pair do |k,v|
+        set_old = previous_response["day"][k].to_set
         set_new = v.to_set
         bookings = set_old - set_new
         cancels = set_new - set_old

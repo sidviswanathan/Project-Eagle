@@ -83,7 +83,12 @@ class DeviceCommunicationController < ApplicationController
     time         = params[:time]    
     date         = params[:date]
     device_name  = params[:device_name]
+    n            = params[:n]
+
+    
     response_object = intitiate_response_object
+    a = AvailableTeeTimes.find_by_courseid(course_id)
+    
     
     if device_name == 'android'
       a = AvailableTeeTimes.find_by_courseid(course_id)
