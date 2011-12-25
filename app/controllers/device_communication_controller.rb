@@ -91,17 +91,23 @@ class DeviceCommunicationController < ApplicationController
     
     
     if device_name == 'android'
-      a = AvailableTeeTimes.find_by_courseid(course_id)
+       a = AvailableTeeTimes.find_by_courseid(course_id)
+       response_object[:status]     = "success"
+       response_object[:statusCode] = 200
+       
+       response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
       
       if date
         dates = JSON.parse(a.data)
         if time
-          render :json => dates[date]["hours"][time.split(":")[0].sub("0","")].to_json
+           response_object[:response]   = dates[date]["hours"][time.split(":")[0].sub("0","")]
+           render :json => response_object.to_json
         else
-          render :json => dates[date]["day"].to_json
+           response_object[:response]   = dates[date]["day"]
+           render :json => response_object.to_json
         end
       else
-        render :json => a.data
+         render :json => a.data
       end
     
     else
