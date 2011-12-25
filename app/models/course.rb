@@ -118,9 +118,11 @@ class Course < ActiveRecord::Base
       current_hour = 6
       hours = {6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[],13=>[],14=>[],15=>[],16=>[],17=>[],18=>[],19=>[]}
       val.each do |time|
-        time['quantity'] = time['quantity'][0]
-        time['time'] = time['time'][0]
+        time['q'] = time['quantity'][0]
+        time['t'] = time['time'][0]
         time.delete("courseid")
+        time.delete("quantity")
+        time.delete("time")
         if time['time'].split(":")[0].to_i == current_hour
           hours[current_hour].push(time)
         else
