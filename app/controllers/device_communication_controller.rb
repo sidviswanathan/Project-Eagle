@@ -104,10 +104,11 @@ class DeviceCommunicationController < ApplicationController
           end
        else
          response_object[:message]    = "Sorry, please choose a date within the next 7 days.."
+         render :json => response_object.to_json
        end
        
     else
-       render :json => a.data
+       render :json => response_object.to_json
     end
     
 
