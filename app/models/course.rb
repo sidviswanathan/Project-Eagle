@@ -120,7 +120,7 @@ class Course < ActiveRecord::Base
       val.each do |time|
         time['quantity'] = time['quantity'][0]
         time['time'] = time['time'][0]
-        time['courseid'] = time['courseid'][0]
+        time.delete("courseid")
         if time['time'].split(":")[0].to_i == current_hour
           hours[current_hour].push(time)
         else
