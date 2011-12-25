@@ -100,7 +100,7 @@ class DeviceCommunicationController < ApplicationController
       if date
         dates = JSON.parse(a.data)
         if time
-           response_object[:response]   = dates[date]["hours"][time.split(":")[0].sub("0","")]
+           response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
            render :json => response_object.to_json
         else
            response_object[:response]   = dates[date]["day"]
