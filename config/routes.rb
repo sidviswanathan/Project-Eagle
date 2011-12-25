@@ -41,6 +41,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.connect "/listener", :controller => "listener", :action => "index"
   
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  map.connect ':controller/:action/:id', :conditions => { :method => :any }
+  map.connect ':controller/:action/:id.:format' :conditions => { :method => :any }
 end
