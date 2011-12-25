@@ -98,7 +98,7 @@ class DeviceCommunicationController < ApplicationController
                render :json => response_object.to_json
              else
                response_object[:statusCode] = 500
-               response_object[:message]    = "Sorry, please choose an hour between 6:00 and 16:00 (24 hour format)"
+               response_object[:message]    = "Sorry, please choose an hour between 6:00 and 18:00 (24 hour format)"
                render :json => response_object.to_json
              end
              
