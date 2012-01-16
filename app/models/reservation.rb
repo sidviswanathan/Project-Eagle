@@ -46,7 +46,7 @@ class Reservation < ActiveRecord::Base
     end  
   end 
   
-  # Book reservation through course's reservation system via corresponding API, as defined in COurse model
+  # Book reservation through course's reservation system via corresponding API, as defined in Course model
   # INPUT: http://dump-them.appspot.com/cgi-bin/bk.pl?CourseID=1&Date=2011-12-19&Time=06:08&Email=arjun.vasan@gmail.com&Quantity=2&AffiliateID=029f2fw&Password=eagle  
   # OUTPUT:  
   
@@ -77,7 +77,7 @@ class Reservation < ActiveRecord::Base
     headers = {}
 
     begin
-      response = http.post("#{Course::DEEP_CLIFF_API_URL}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Email=#{reservation_info[:email]}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}", headers)
+      response = http.post("#{Course::DEEP_CLIFF_API_URL}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Email=#{reservation_info[:email]}&FirstName=#{reservation_info[:f_name]}&LastName=#{reservation_info[:l_name]}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}", headers)
     rescue
       return nil
     end
