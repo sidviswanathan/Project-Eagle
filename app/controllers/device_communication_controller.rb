@@ -84,7 +84,7 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     response_object = intitiate_response_object
-    a = Rails.cache.read("LatestAvailableTimes")
+    a = Rails.cache.read("LatestAvailableTimes_"+course_id)
     if a.nil?
       a = AvailableTeeTimes.find_by_courseid(course_id)
     end
