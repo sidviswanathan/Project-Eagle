@@ -86,6 +86,7 @@ class DeviceCommunicationController < ApplicationController
     response_object = intitiate_response_object
     a = Rails.cache.read("LatestAvailableTimes_"+course_id)
     if a.nil?
+      "Puts No Memcached Record!!!"
       a = AvailableTeeTimes.find_by_courseid(course_id)
     end
     
