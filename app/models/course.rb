@@ -178,7 +178,7 @@ class Course < ActiveRecord::Base
         logger.info '############END##########################'
       end
     end
-    
+    Rails.cache.write('LatestAvailableTimes',a)
     
   
 

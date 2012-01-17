@@ -84,7 +84,10 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     response_object = intitiate_response_object
-    a = AvailableTeeTimes.find_by_courseid(course_id)
+    a = Rails.cache.read("LatestAvailableTimes")
+    if a.nil?
+      a = AvailableTeeTimes.find_by_courseid(course_id)
+    end
     
     if date
        dates = JSON.parse(a.data)
