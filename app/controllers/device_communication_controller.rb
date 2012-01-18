@@ -1,5 +1,6 @@
 require 'pp'
 require 'json'
+require 'apns'
 
 class DeviceCommunicationController < ApplicationController
   
@@ -81,32 +82,37 @@ class DeviceCommunicationController < ApplicationController
     course_id    = params[:course_id]
     time         = params[:time]    
     date         = params[:date]
-    device_name  = params[:device_name]
+    
     response_object = intitiate_response_object
+    a = Rails.cache.fetch("LatestAvailableTimes_"+course_id) {AvailableTeeTimes.find_by_courseid(course_id)}
     
-    if device_name == 'android'
-      a = AvailableTeeTimes.find_by_courseid(course_id)
-      if date
-        dates = JSON.parse(a.data)
-        render :json => dates[date].to_json
-      else
-        render :json => a.data
-      end
-    
-    else
-      
-      course_times = Course.get_available_tee_times(course_id,time,date)
-
-      if course_times
+    if date
+       dates = JSON.parse(a.data)
+       if dates.has_key?(date)
          response_object[:status]     = "success"
          response_object[:statusCode] = 200
-         response_object[:response]   = course_times
          response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-         render :json => response_object.to_json         
+          if time
+             if dates[date]["hours"].has_key?(time.split(":")[0].to_i.to_s)
+               response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
+               render :json => response_object.to_json
+             else
+               response_object[:statusCode] = 500
+               response_object[:message]    = "Sorry, please choose an hour between 6:00 and 18:00 (24 hour format)"
+               render :json => response_object.to_json
+             end
+             
+          else
+             response_object[:response]   = dates[date]["day"]
+             render :json => response_object.to_json
+          end
        else
-         response_object[:message] = "The server failed to make the Course.get_available_tee_times() request"
-         render :json => response_object.to_json         
+         response_object[:message]    = "Sorry, please choose a date within the next 7 days.."
+         render :json => response_object.to_json
        end
+       
+    else
+       render :json => a.data
     end
     
 
@@ -133,6 +139,7 @@ class DeviceCommunicationController < ApplicationController
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
+      response_object[:confirmation_code] = reservation.confirmation_code
       render :json => response_object.to_json         
     else
       response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"
@@ -158,8 +165,90 @@ class DeviceCommunicationController < ApplicationController
   end  
   
   
+  # ===================================================================
+  # = http://presstee.com/device_communication/get_reservations ===
+  # ===================================================================
+  
+  # This should be moved into a separate API controller at some point, should not be in device communication controller
+  # INPUT: http://www.presstee.com/device_communication/cancel_reservation
+  # OUTPUT:
+  
+  
+  def get_reservations
+    course_id           = params[:course_id]
+    email               = params[:email]
+    response_object = intitiate_response_object
+    
+    user = User.find_by_email(email)
+    
+    if user
+      reservations = Reservation.find_all_by_user_id_and_course_id(user.id.to_s,course_id,:order=>"date DESC,time DESC")
+      response_object[:status]     = "success"
+      response_object[:statusCode] = 200
+      response_object[:message]    = "The server succesfully made the get_reservations() request"
+      reservation_list = reservations.to_json
+      r_list = []
+      JSON.parse(reservation_list).each do |r|
+        logger.info r['reservation']
+        r_list.push(r['reservation'])
+      end
+      response_object[:data]       = r_list
+      render :json => response_object.to_json
+      
+    else
+      response_object[:message] = "The server failed to make the get_reservations() request"
+      render :json => response_object.to_json
+    end
+
+    
+  end
+  
+  
+  # ===================================================================
+  # = httpo://presstee.com/device_communication/cancel_reservation ===
+  # ===================================================================
+  
+  # This should be moved into a separate API controller at some point, should not be in device communication controller
+  # INPUT: http://www.presstee.com/device_communication/cancel_reservation
+  # OUTPUT:
+  
+  
   def cancel_reservation
-  end      
+    course_id           = params[:course_id]
+    confirmation_code   = params[:confirmation_code]
+    response_object = intitiate_response_object
+    
+    r = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+    if r
+      r.destroy
+      response_object[:status]     = "success"
+      response_object[:statusCode] = 200
+      response_object[:message]    = "The server destroyed a reservation with course_id="+course_id+" and confirmation_code="+confirmation_code
+      render :json => response_object.to_json
+    else
+      response_object[:message] = "The server failed to make the Reservation.cancel_reservation() request"
+      render :json => response_object.to_json
+    end
+    
+    
+    
+  end  
+  
+  # ===================================================================
+  # = httpo://presstee.com/device_communication/push_deal ===
+  # ===================================================================
+  
+  # This should be moved into a separate API controller at some point, should not be in device communication controller
+  # INPUT: http://www.presstee.com/device_communication/push_deal
+  # OUTPUT:
+  
+  
+  def push_deal
+    APNS.pem = '/app/config/apns.pem'
+    APNS.send_notification(params[:token],params[:message])
+  end
+  
+      
   
 end
 

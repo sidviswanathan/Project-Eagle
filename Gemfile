@@ -8,6 +8,7 @@ source :gemcutter
 gem "rails", "~> 2.3.5"
 gem "rack", "~> 1.0.0"
 gem "json", "~> 1.6.3"
+gem "dalli",  "~> 1.0.4"
 gem "bj"
 #gem "hpricot" -- ERROR
 gem "sqlite3-ruby"
@@ -15,6 +16,10 @@ gem "aws-s3"
 gem "twiliolib", "~> 2.0.7"
 gem "chronic", "~> 0.3.0"
 gem "xml-simple", "~> 1.1.0"
+
+gem "apn_on_rails", "~> 0.4.2"
+
+gem "apns", "~> 0.9.0"
 
 # Use unicorn as the web server
 # gem 'unicorn'

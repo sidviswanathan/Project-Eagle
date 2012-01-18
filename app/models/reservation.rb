@@ -19,6 +19,7 @@ class Reservation < ActiveRecord::Base
     booking = book_time_via_api(reservation_info)
     if XmlSimple.xml_in(booking.body).has_key?("confirmation")
       confirmation_code = XmlSimple.xml_in(booking.body)["confirmation"][0]
+      
       logger.info "Confirmation Code: "+confirmation_code 
     else
       return nil
@@ -28,10 +29,7 @@ class Reservation < ActiveRecord::Base
     if booking
       u = User.find_by_email(email)
       if u 
-        reservation_info[:booking_type] = u.device_name
-        reservation_info[:confirmation_code] = confirmation_code
-        reservation_info[:user] = u
-        r = Reservation.create(reservation_info)
+        r = Reservation.create(reservation_info.merge({:booking_type=>u.device_name,:confirmation_code=>confirmation_code,:user=>u}))
         #r.booking_type = u.device_name
         #r.confirmation_code = confirmation_code
         #r.user = u
@@ -48,7 +46,7 @@ class Reservation < ActiveRecord::Base
     end  
   end 
   
-  # Book reservation through course's reservation system via corresponding API, as defined in COurse model
+  # Book reservation through course's reservation system via corresponding API, as defined in Course model
   # INPUT: http://dump-them.appspot.com/cgi-bin/bk.pl?CourseID=1&Date=2011-12-19&Time=06:08&Email=arjun.vasan@gmail.com&Quantity=2&AffiliateID=029f2fw&Password=eagle  
   # OUTPUT:  
   
@@ -79,7 +77,7 @@ class Reservation < ActiveRecord::Base
     headers = {}
 
     begin
-      response = http.post("#{Course::DEEP_CLIFF_API_URL}?=CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Email=#{reservation_info[:email]}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}", headers)
+      response = http.post("#{Course::DEEP_CLIFF_API_URL}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Email=#{reservation_info[:email]}&FirstName=#{reservation_info[:f_name]}&LastName=#{reservation_info[:l_name]}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}", headers)
     rescue
       return nil
     end

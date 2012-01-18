@@ -11,11 +11,11 @@ class Course < ActiveRecord::Base
   # === DEEP CLIFF GOLF COURSE ====
   # ===============================
   
-  Course::DEEP_CLIFF_COURSE_ID         = '1'
+  Course::DEEP_CLIFF_COURSE_ID         = '987654'
   Course::DEEP_CLIFF_COURSE_API        = :fore_reservations
-  Course::DEEP_CLIFF_API_AFFILIATE_ID  = '12345'
-  Course::DEEP_CLIFF_API_PASSWORD      = 'password'
-  Course::DEEP_CLIFF_API_HOST          = 'http://dump-them.appspot.com'
+  Course::DEEP_CLIFF_API_AFFILIATE_ID  = 'PressTee'
+  Course::DEEP_CLIFF_API_PASSWORD      = '4PTee1nc'
+  Course::DEEP_CLIFF_API_HOST          = 'https://www.forereservations.com'
   Course::DEEP_CLIFF_API_URL           = '/cgi-bin/bk.pl'
   DEEP_CLIFF_TIME_SLOTS                = {'06:00' => 4, '06:07' => 4, '06:15' => 4, '06:23' => 4, '06:30' => 4, '06:37' => 4, '06:45' => 4, '06:52' => 4, '07:00' => 4, '07:07' => 4, '07:15' => 4, '07:23' => 4, '07:30' => 4, '07:37' => 4, '07:45' => 4, '07:52' => 4, '08:00' => 4, '08:07' => 4, '08:15' => 4, '08:23' => 4, '08:30' => 4, '08:37' => 4, '08:45' => 4, '08:52' => 4, '09:00' => 4, '09:07' => 4, '09:15' => 4, '09:23' => 4, '09:30' => 4, '09:37' => 4, '09:45' => 4, '09:52' => 4, '10:00' => 4, '10:07' => 4, '10:15' => 4, '10:23' => 4, '10:30' => 4, '10:37' => 4, '10:45' => 4, '10:52' => 4, '11:00' => 4, '11:07' => 4, '11:15' => 4, '11:23' => 4, '11:30' => 4, '11:37' => 4, '11:45' => 4, '11:52' => 4, '12:00' => 4, '12:07' => 4, '12:15' => 4, '12:23' => 4, '12:30' => 4, '12:37' => 4, '12:45' => 4, '12:52'  => 4, '13:00' => 4, '13:07' => 4, '13:15' => 4, '13:23' => 4, '13:30' => 4, '13:37' => 4, '13:45' => 4, '13:52' => 4, '14:00' => 4, '14:07' => 4, '14:15' => 4, '14:23' => 4, '14:30' => 4, '14:37' => 4, '14:45' => 4, '14:52' => 4, '15:00' => 4, '15:07' => 4, '15:15' => 4, '15:23' => 4, '15:30' => 4, '15:37' => 4, '15:45' => 4, '15:52' => 4, '16:00' => 4, '16:07' => 4, '16:15' => 4, '16:23' => 4, '16:30' => 4, '16:37' => 4, '16:45' => 4, '16:52' => 4, '17:00' => 4, '17:07' => 4, '17:15' => 4, '17:23' => 4, '17:30' => 4, '17:37' => 4, '17:45' => 4, '17:52' => 4, '18:00' => 4, '18:07' => 4, '18:15' => 4, '18:23' => 4, '18:30' => 4, '18:37' => 4, '18:45' => 4, '18:52' => 4}
   
@@ -115,12 +115,22 @@ class Course < ActiveRecord::Base
     dates.each do |date|
       val = object['avail'][date]['teetime']
       course_id = object['avail'][date]['teetime'][0]['courseid'][0]
+      current_hour = 6
+      hours = {6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[],13=>[],14=>[],15=>[],16=>[],17=>[],18=>[],19=>[]}
       val.each do |time|
-        time['quantity'] = time['quantity'][0]
-        time['time'] = time['time'][0]
-        time['courseid'] = time['courseid'][0]
+        time['q'] = time['quantity'][0]
+        time['t'] = time['time'][0]
+        time.delete("courseid")
+        time.delete("quantity")
+        time.delete("time")
+        if time['t'].split(":")[0].to_i == current_hour
+          hours[current_hour].push(time)
+        else
+          current_hour += 1
+          hours[current_hour].push(time)
+        end
       end
-      converted_response.store(date,val)
+      converted_response.store(date,{"day"=>val,"hours"=>hours})
     end
 
     
@@ -133,11 +143,14 @@ class Course < ActiveRecord::Base
     else
       # Note use of JSON.parse rather than the Rails method json.decode.  This is because json.decode converts the string date to a DateTime...
       previous_response = JSON.parse(a.data)
+      if course_id == '1'
+        pp converted_response
+      end
       a.data = converted_response.to_json
       a.save
       converted_response.each_pair do |k,v|
-        set_old = previous_response[k].to_set
-        set_new = v.to_set
+        set_old = previous_response[k]["day"].to_set
+        set_new = v["day"].to_set
         bookings = set_old - set_new
         cancels = set_new - set_old
         
@@ -145,7 +158,7 @@ class Course < ActiveRecord::Base
         logger.info '###########BOOKINGS###########################'
         pp bookings
         bookings.each do |r|
-          reservation_info = {:course_id=>course_id, :golfers=>r['quantity'], :time=>r['time'], :date=>k}
+          reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k}
           r = EmailReservation.create(reservation_info)
         end
 
@@ -165,7 +178,7 @@ class Course < ActiveRecord::Base
         logger.info '############END##########################'
       end
     end
-    
+    Rails.cache.write("LatestAvailableTimes_"+course_id,a)
     
   
 
