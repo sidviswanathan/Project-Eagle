@@ -153,15 +153,7 @@ class DeviceCommunicationController < ApplicationController
     course_id      = params[:course_id]
     response       = params[:tee_times_data]    
     #pp response
-    process_data   = Course.process_tee_times_data(response)
-=begin
-    logger.info '######################################'
-    logger.info '######################################'
-    pp process_data
-    logger.info '######################################'
-    logger.info '######################################'
-=end
-    
+    process_data   = Course.process_tee_times_data(response)    
     render :nothing => true
   end  
   
