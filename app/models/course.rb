@@ -114,6 +114,7 @@ class Course < ActiveRecord::Base
     course_id = "1"
     dates.each do |date|
       val = object['avail'][date]['teetime']
+      puts object['avail'][date]
       course_id = object['avail'][date]['teetime'][0]['courseid'][0]
       current_hour = 6
       hours = {6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[],13=>[],14=>[],15=>[],16=>[],17=>[],18=>[],19=>[]}
