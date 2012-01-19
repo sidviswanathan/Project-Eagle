@@ -77,7 +77,7 @@ class Reservation < ActiveRecord::Base
     
     url = URI.parse(Course::DEEP_CLIFF_API_HOST)
     http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = false
+    http.use_ssl = true
     headers = {}
 
     begin
