@@ -90,7 +90,7 @@ class Reservation < ActiveRecord::Base
     headers = {}
 
     begin
-      response = http.post(uri, headers)
+      response = http.get(uri, headers)
     rescue
       return nil
     end
