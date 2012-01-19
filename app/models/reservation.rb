@@ -59,6 +59,7 @@ class Reservation < ActiveRecord::Base
     
     case reservation_info[:course_id]
       puts "Course ID:" + reservation_info[:course_id]
+      puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
     
     when Course::DEEP_CLIFF_COURSE_ID
       logger.info "Returning Booking Response"
