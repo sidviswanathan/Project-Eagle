@@ -11,7 +11,7 @@ class Course < ActiveRecord::Base
   # === DEEP CLIFF GOLF COURSE ====
   # ===============================
   
-  Course::DEEP_CLIFF_COURSE_ID         = '987654'
+  Course::DEEP_CLIFF_COURSE_ID         = '1987654'
   Course::DEEP_CLIFF_COURSE_API        = :fore_reservations
   Course::DEEP_CLIFF_API_AFFILIATE_ID  = 'PressTee'
   Course::DEEP_CLIFF_API_PASSWORD      = '4PTee1nc'
