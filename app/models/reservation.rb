@@ -58,6 +58,7 @@ class Reservation < ActiveRecord::Base
   def self.book_time_via_api(reservation_info,u)
     
     case reservation_info[:course_id]
+      puts "Course ID:" + reservation_info[:course_id]
     
     when Course::DEEP_CLIFF_COURSE_ID
       logger.info "Returning Booking Response"
