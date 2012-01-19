@@ -58,15 +58,20 @@ class Reservation < ActiveRecord::Base
   def self.book_time_via_api(reservation_info,u)
     
     case reservation_info[:course_id]
-      puts "Course ID:" + reservation_info[:course_id]
-      puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
+
     
     when Course::DEEP_CLIFF_COURSE_ID
+      puts "Course ID:" + reservation_info[:course_id]
+      puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
       logger.info "Returning Booking Response"
       return book_time_via_fore_reservations_api(reservation_info,u)
     when Course::SOME_OTHER_COURSE_ID 
+      puts "Course ID:" + reservation_info[:course_id]
+      puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
       # Call function corresponding to the courses API
     else
+      puts "Course ID:" + reservation_info[:course_id]
+      puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
       logger.info "Did not find a valid course with specified course_id in book_time_via_api function"
       return nil
     end      
