@@ -159,7 +159,6 @@ class DeviceCommunicationController < ApplicationController
   def process_api_request
     course_id      = params[:course_id]
     response       = params[:tee_times_data]    
-    #pp response
     process_data   = Course.process_tee_times_data(response)    
     render :nothing => true
   end  
@@ -216,17 +215,18 @@ class DeviceCommunicationController < ApplicationController
   def cancel_reservation
     course_id           = params[:course_id]
     confirmation_code   = params[:confirmation_code]
-    response_object = intitiate_response_object
+    response_object     = intitiate_response_object
     
     r = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+    
     if r
-      r.destroy
+      r.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server destroyed a reservation with course_id="+course_id+" and confirmation_code="+confirmation_code
       render :json => response_object.to_json
     else
-      response_object[:message] = "The server failed to make the Reservation.cancel_reservation() request"
+      response_object[:message] = "The server failed to make the Reservation.cancel_reservation() request, cannot find reservation object"
       render :json => response_object.to_json
     end
     
@@ -241,7 +241,6 @@ class DeviceCommunicationController < ApplicationController
   # This should be moved into a separate API controller at some point, should not be in device communication controller
   # INPUT: http://www.presstee.com/device_communication/push_deal
   # OUTPUT:
-  
   
   def push_deal
     APNS.pem = '/app/config/apns.pem'

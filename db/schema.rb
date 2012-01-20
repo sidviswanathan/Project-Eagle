@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20120117193216) do
     t.integer  "course_id"
     t.string   "booking_type"
     t.string   "confirmation_code"
+    t.integer  "status_code",       :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end

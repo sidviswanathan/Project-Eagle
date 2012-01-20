@@ -8,6 +8,7 @@ class CreateReservations < ActiveRecord::Migration
       t.integer  :course_id
       t.string   :booking_type
       t.string   :confirmation_code
+      t.integer  :status_code, :default => 1
       t.timestamps
     end
   end
