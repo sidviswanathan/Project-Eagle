@@ -20,8 +20,8 @@ class Reservation < ActiveRecord::Base
   # INPUT:   
   # OUTPUT:   
 
-  def self.book_tee_time(email, course_id, golfers, time, date)
-    reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date}
+  def self.book_tee_time(email, course_id, golfers, time, date, total)
+    reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
     
     # Make the API reservation call here
     u = User.find_by_email(email)
@@ -86,7 +86,7 @@ class Reservation < ActiveRecord::Base
   #SAMPLE: response = http.post("http://dump-them.appspot.com/cgi-bin/bk.pl?CourseID=1&Date=2011-12-19&Time=06:08&Email=arjun.vasan@gmail.com&Quantity=2&AffiliateID=029f2fw&Password=eagle", headers)
   
   def self.book_time_via_fore_reservations_api(reservation_info,u)
-    uri = "#{Course::DEEP_CLIFF_API_URL}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&EMail=pressteex@gmail.com&FirstName=#{u[:f_name]}&LastName=#{u[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=5628884454&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}"
+    uri = "#{Course::DEEP_CLIFF_API_URL}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=pressteex@gmail.com&FirstName=#{u[:f_name]}&LastName=#{u[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=5628884454&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}"
     puts uri
     url = URI.parse(Course::DEEP_CLIFF_API_HOST)
     http = Net::HTTP.new(url.host, url.port)

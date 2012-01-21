@@ -131,9 +131,10 @@ class DeviceCommunicationController < ApplicationController
     golfers     = params[:golfers]
     time        = params[:time]    
     date        = params[:date]    
+    total       = params[:total]
     
     response_object = intitiate_response_object
-    reservation = Reservation.book_tee_time(email, course_id, golfers, time, date)
+    reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
     
     if reservation
       response_object[:status]     = "success"
