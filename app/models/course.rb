@@ -117,7 +117,7 @@ class Course < ActiveRecord::Base
   end  
   
   def self.get_green_fee(date,time,course_id)
-    d = Date.strptime(date,"%Y-%m-%d")).strftime("%u").to_i
+    d = Date.strptime(date,"%Y-%m-%d").strftime("%u").to_i
     t = time.split(":")[0].to_i
     course_fee_schedule = GREEN_FEES[course_id]
     book_day = "weekday"
