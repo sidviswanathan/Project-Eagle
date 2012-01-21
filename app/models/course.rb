@@ -20,7 +20,7 @@ class Course < ActiveRecord::Base
   Course::DEEP_CLIFF_API_URL           = '/cgi-bin/bk.pl'
   GREEN_FEES                           = {
     "1987654" => {
-      "split" => [2,4],
+      "split" => [14,16],
       "public" => {
         "weekday" => [28,21,18],
         "weekend" => [38,28,22]
@@ -149,7 +149,7 @@ class Course < ActiveRecord::Base
     course_id = "1"
     dates.each do |date|
       val = object['avail'][date]['teetime']
-      puts object['avail'][date]
+      #puts object['avail'][date]
       course_id = object['avail'][date]['teetime'][0]['courseid'][0]
       current_hour = 6
       hours = {6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[],13=>[],14=>[],15=>[],16=>[],17=>[],18=>[],19=>[]}
@@ -160,6 +160,7 @@ class Course < ActiveRecord::Base
         time.delete("quantity")
         time.delete("time")
         time['p'] = get_green_fee(date,time['t'],course_id)
+        puts date +":"+time['t']+":"+course_id 
         if time['t'].split(":")[0].to_i == current_hour
           hours[current_hour].push(time)
         else
@@ -192,16 +193,16 @@ class Course < ActiveRecord::Base
         cancels = set_new - set_old
         
         
-        logger.info '###########BOOKINGS###########################'
-        pp bookings
+        #logger.info '###########BOOKINGS###########################'
+        #pp bookings
         bookings.each do |r|
           reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k}
           r = EmailReservation.create(reservation_info)
         end
 
         
-        logger.info '###########CANCELS#######Delete These####################'
-        pp cancels
+        #logger.info '###########CANCELS#######Delete These####################'
+        #pp cancels
         
         # Write Code to Delete cancelled records (To Do)
         
@@ -212,7 +213,7 @@ class Course < ActiveRecord::Base
             
         #end
         
-        logger.info '############END##########################'
+        #logger.info '############END##########################'
       end
     end
     Rails.cache.write("LatestAvailableTimes_"+course_id,a)
