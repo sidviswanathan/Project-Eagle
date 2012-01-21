@@ -134,7 +134,7 @@ class Course < ActiveRecord::Base
     else
       price = course_fee_schedule[book_type][book_day][2]
     end
-    
+    puts date +":"+time['t']+":"+course_id +":"+price.to_s
     return price
   end
   ## Change format to local use from fore response
@@ -160,7 +160,7 @@ class Course < ActiveRecord::Base
         time.delete("quantity")
         time.delete("time")
         time['p'] = get_green_fee(date,time['t'],course_id)
-        puts date +":"+time['t']+":"+course_id 
+        
         if time['t'].split(":")[0].to_i == current_hour
           hours[current_hour].push(time)
         else
