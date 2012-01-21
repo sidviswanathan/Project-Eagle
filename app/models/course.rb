@@ -134,7 +134,7 @@ class Course < ActiveRecord::Base
     else
       price = course_fee_schedule[book_type][book_day][2]
     end
-    puts date +":"+time['t']+":"+course_id +":"+price.to_s
+    
     return price
   end
   ## Change format to local use from fore response
