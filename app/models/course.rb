@@ -121,17 +121,18 @@ class Course < ActiveRecord::Base
     t = time.split(":")[0].to_i
     course_fee_schedule = GREEN_FEES[course_id]
     book_day = "weekday"
+    book_type = "public"
     
     if d > 5
       book_day = "weekend"
     end
     
     if t < course_fee_schedule['split'][0]
-      price = course_fee_schedule[book_day][0]
+      price = course_fee_schedule[book_type][book_day][0]
     elsif t < course_fee_schedule['split'][1]
-      price = course_fee_schedule[book_day][1]
+      price = course_fee_schedule[book_type][book_day][1]
     else
-      price = course_fee_schedule[book_day][2]
+      price = course_fee_schedule[book_type][book_day][2]
     end
     
     return price
