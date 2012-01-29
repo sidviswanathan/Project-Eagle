@@ -56,7 +56,9 @@ module Fore
 
      
     end
-    self.process_tee_times_data(results.join,course)
+    r = results.join
+    Rails.cache.write("response",r)
+    self.process_tee_times_data(r,course)
     
   end
   
