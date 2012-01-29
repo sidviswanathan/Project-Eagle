@@ -2,6 +2,7 @@ class CreateCourses < ActiveRecord::Migration
   def self.up
     create_table :courses do |t|
       t.string :name
+      t.string :api
       t.string :api_course_id
       t.string :fee_matrix
       t.timestamps
