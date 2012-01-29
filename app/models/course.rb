@@ -8,29 +8,15 @@ class Course < ActiveRecord::Base
   has_many :users
   has_many :reservations
   
-  # ===============================
-  # === DEEP CLIFF GOLF COURSE ====
-  # ===============================
-  
-
-  GREEN_FEES                           = {
-    "1987654" => {
-      "split" => [14,16],
-      "public" => {
-        "weekday" => [28,21,18],
-        "weekend" => [38,28,22]
-      },
-      "member" => {
-        "weekday" => [21,17,15],
-        "weekend" => [31,22,17]
-      }
-    }
+  ##  This is necessary due to running the cron job on appengine.  When appengine queries fore (for example), the reply is data containing the "1987654" course_id.  
+  ##  When we start doing the cron job from heroku, this will no longer be needed.
+  TEMP_COURSE_ID_MAP = {
+    "1987654" => "1"
   }
-
-  def self.get_green_fee(date,time,course_id)
+  
+  def self.get_green_fee(date,time,fee_matrix)
     d = Date.strptime(date,"%Y-%m-%d").strftime("%u").to_i
     t = time.split(":")[0].to_i
-    course_fee_schedule = GREEN_FEES[course_id]
     book_day = "weekday"
     book_type = "public"
     
@@ -38,16 +24,17 @@ class Course < ActiveRecord::Base
       book_day = "weekend"
     end
     
-    if t < course_fee_schedule['split'][0]
-      price = course_fee_schedule[book_type][book_day][0]
-    elsif t < course_fee_schedule['split'][1]
-      price = course_fee_schedule[book_type][book_day][1]
+    if t < fee_matrix['split'][0]
+      price = fee_matrix[book_type][book_day][0]
+    elsif t < fee_matrix['split'][1]
+      price = fee_matrix[book_type][book_day][1]
     else
-      price = course_fee_schedule[book_type][book_day][2]
+      price = fee_matrix[book_type][book_day][2]
     end
     
     return price
   end
+  
   
   ## Processes the latest queried data from Course APIs
   def self.process_tee_times_data(response)
@@ -57,11 +44,15 @@ class Course < ActiveRecord::Base
     #pp object
     ## Get all dates from response
     dates = object['avail'].keys
-    course_id = "1"
+    
+    course_id = TEMPORARY_API_ID_TO_ID_MAP[object['avail'][dates[0]]['teetime'][0]['courseid'][0]]
+    
+    course = Rails.cache.fetch("Course_"+course_id) {Course.find(course_id.to_i)}
+    fee_matrix = JSON.parse(course.fee_matrix)
+    
     dates.each do |date|
       val = object['avail'][date]['teetime']
-      #puts object['avail'][date]
-      course_id = object['avail'][date]['teetime'][0]['courseid'][0]
+      
       current_hour = 6
       hours = {6=>[],7=>[],8=>[],9=>[],10=>[],11=>[],12=>[],13=>[],14=>[],15=>[],16=>[],17=>[],18=>[],19=>[]}
       val.each do |time|
@@ -70,12 +61,12 @@ class Course < ActiveRecord::Base
         time.delete("courseid")
         time.delete("quantity")
         time.delete("time")
-        time['p'] = get_green_fee(date,time['t'],course_id)
+        time['p'] = get_green_fee(date,time['t'],fee_matrix)
         
         if time['t'].split(":")[0].to_i == current_hour
           hours[current_hour].push(time)
         else
-          current_hour += 1
+          current_hour = time['t'].split(":")[0].to_i
           hours[current_hour].push(time)
         end
       end
