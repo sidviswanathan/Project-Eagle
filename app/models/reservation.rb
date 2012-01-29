@@ -27,7 +27,6 @@ class Reservation < ActiveRecord::Base
     booking = book_time_via_api(reservation_info,u)
     if XmlSimple.xml_in(booking.body).has_key?("confirmation")
       confirmation_code = XmlSimple.xml_in(booking.body)["confirmation"][0]
-      
       logger.info "Confirmation Code: "+confirmation_code 
     else
       return nil
@@ -37,11 +36,11 @@ class Reservation < ActiveRecord::Base
     if booking
       u = User.find_by_email(email)
       if u 
-        r = Reservation.create(reservation_info.merge({:booking_type=>u.device_name,:confirmation_code=>confirmation_code,:user=>u}))
-        #r.booking_type = u.device_name
-        #r.confirmation_code = confirmation_code
-        #r.user = u
-        #r.save
+        r = Reservation.create(reservation_info)
+        r.booking_type = u.device_name
+        r.confirmation_code = confirmation_code
+        r.user = u
+        r.save
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 
