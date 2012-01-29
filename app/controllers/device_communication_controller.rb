@@ -6,6 +6,10 @@ class DeviceCommunicationController < ApplicationController
   
   skip_before_filter :verify_authenticity_token  
   
+  API_MODULE_MAP = {
+    "fore" => Fore
+  }
+  
   # These are the clinet API endpoints for all devices communicating witht the Prestee server
   # Below is the expected format for paramters received from all client devices
   
@@ -84,7 +88,7 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     response_object = intitiate_response_object
-    a = Rails.cache.fetch("LatestAvailableTimes_"+course_id) {AvailableTimes.find_by_course_id(course_id)}
+    a = Rails.cache.fetch("Updated_Course_"+course_id) {Course.find(course_id.to_i)}
     
     if date
        dates = JSON.parse(a.data)
@@ -158,9 +162,15 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT: 
   
   def process_api_request
-    course_id      = params[:course_id]
-    response       = params[:tee_times_data]    
-    process_data   = Course.process_tee_times_data(response)    
+    #course_id      = params[:course_id]
+    #response       = params[:tee_times_data]
+    courses = Course.all
+    courses.each do |course|
+      API_MODULE_MAP[course.api].update(course)
+    end
+    
+    #Course.update_available_times()
+    #process_data   = Course.process_tee_times_data(response)    
     render :nothing => true
   end  
   

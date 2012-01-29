@@ -35,6 +35,7 @@ GEM
       fattr (>= 2.1.0)
     mime-types (1.16)
     orderedhash (0.0.6)
+    parallel (0.5.12)
     rack (1.0.1)
     rails (2.3.5)
       actionmailer (= 2.3.5)
@@ -64,6 +65,7 @@ DEPENDENCIES
   chronic (~> 0.3.0)
   dalli (~> 1.0.4)
   json (~> 1.6.3)
+  parallel
   rack (~> 1.0.0)
   rails (~> 2.3.5)
   sqlite3-ruby

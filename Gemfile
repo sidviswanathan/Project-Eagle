@@ -17,6 +17,8 @@ gem "twiliolib", "~> 2.0.7"
 gem "chronic", "~> 0.3.0"
 gem "xml-simple", "~> 1.1.0"
 
+gem "parallel"
+
 gem "apn_on_rails", "~> 0.4.2"
 
 gem "apns", "~> 0.9.0"

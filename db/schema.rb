@@ -100,12 +100,10 @@ ActiveRecord::Schema.define(:version => 20120117193216) do
 
   create_table "courses", :force => true do |t|
     t.string   "name"
-    t.decimal  "price",         :precision => 8, :scale => 2
     t.string   "api"
     t.string   "api_course_id"
     t.text     "fee_matrix"
-    t.text     "description"
-    t.text     "contact"
+    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

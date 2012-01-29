@@ -4,7 +4,8 @@ class CreateCourses < ActiveRecord::Migration
       t.string :name
       t.string :api
       t.string :api_course_id
-      t.string :fee_matrix
+      t.text :fee_matrix
+      t.text :data
       t.timestamps
     end
   end
