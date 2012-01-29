@@ -135,9 +135,9 @@ class Course < ActiveRecord::Base
     end
 
     
-    a = AvailableTeeTimes.find_by_courseid(course_id)
+    a = AvailableTimes.find_by_courseid(course_id)
     if !a
-      a = AvailableTeeTimes.new
+      a = AvailableTimes.new
       a.courseid = course_id
       a.data = converted_response.to_json
       a.save
@@ -155,67 +155,19 @@ class Course < ActiveRecord::Base
         bookings = set_old - set_new
         cancels = set_new - set_old
         
-        
         logger.info '###########BOOKINGS###########################'
         pp bookings
         bookings.each do |r|
           reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k}
           r = EmailReservation.create(reservation_info)
         end
-
-        
-        logger.info '###########CANCELS#######Delete These####################'
-        pp cancels
-        
-        # Write Code to Delete cancelled records (To Do)
-        
-        
-        #cancels.each do |r|
-        #  rs = EmailReservation.find_all_by_time_and_date(k,r['time'])
-        #  rs.each do |s|
-            
-        #end
-        
-        logger.info '############END##########################'
       end
     end
     Rails.cache.write("LatestAvailableTimes_"+course_id,a)
     
-  
-
-=begin
-    if !@@previous_response.nil?
-
-      dates.each do |date|
-        hsh_length_new = converted_response[date].length
-        hsh_length_old = @@previous_response[date].length
-        current_data = converted_response[date]
-        previous_data = @@previous_response[date]
-
-        
-        for i in 0..hsh_length_new-1
-          if previous_data[i]['time'][0] == current_data[i]['time'][0]
-            converted_response[date][i]['quanity'] = previous_data[i]['quantity'][0].to_i -  current_data[i]['quantity'][0].to_i
-            converted_response[date][i]['quanity'] = converted_response[date][i]['quanity'].to_s
-          end
-        end
-
-        for i in 0..hsh_length_old-1
-          if previous_data[i]['time'][0] == current_data[i]['time'][0]
-            converted_response[date][i]['quanity'] = previous_data[i]['quantity'][0].to_i -  current_data[i]['quantity'][0].to_i
-            converted_response[date][i]['quanity'] = converted_response[date][i]['quanity'].to_s
-          end
-        end
-
-      end
-
-    end
-=end
-
-    ## Storing values for next comparison
+    # Storing values for next comparison
     @@previous_response = converted_response
 
-    #puts "RETURNING PROCESSED RESPONSE => #{converted_response}"
     return converted_response   
   end
 

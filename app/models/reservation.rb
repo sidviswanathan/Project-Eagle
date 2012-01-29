@@ -3,18 +3,17 @@ require "net/https"
 
 class Reservation < ActiveRecord::Base
   
-  DEFAULT_CC_NUM = "4217639662603493"  
-  DEFAULT_CC_YEAR = "15"
+  DEFAULT_CC_NUM   = "4217639662603493"  
+  DEFAULT_CC_YEAR  = "15"
   DEFAULT_CC_MONTH = "11"
 
+  Reservation::BOOKING_CANCEL_STATUS_CODE   = 0
+  Reservation::BOOKING_SUCCESS_STATUS_CODE  = 1
   
   belongs_to :course
   belongs_to :user
 
   validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
-  
-  Reservation::BOOKING_CANCEL_STATUS_CODE   = 0
-  Reservation::BOOKING_SUCCESS_STATUS_CODE  = 1  
   
   # Book reservation record, creates a Reservation record, connects to user
   # INPUT:   
@@ -63,7 +62,6 @@ class Reservation < ActiveRecord::Base
     
     case reservation_info[:course_id]
 
-    
     when Course::DEEP_CLIFF_COURSE_ID
       puts "Course ID:" + reservation_info[:course_id]
       puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
