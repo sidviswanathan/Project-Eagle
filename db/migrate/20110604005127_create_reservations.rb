@@ -9,6 +9,7 @@ class CreateReservations < ActiveRecord::Migration
       t.string   :booking_type
       t.string   :confirmation_code
       t.integer  :status_code, :default => 1
+      t.string   :total
       t.timestamps
     end
   end

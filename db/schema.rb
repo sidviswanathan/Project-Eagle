@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120121230945) do
+ActiveRecord::Schema.define(:version => 20120117193216) do
 
   create_table "apn_apps", :force => true do |t|
     t.text     "apn_dev_cert"
@@ -104,42 +104,4 @@ ActiveRecord::Schema.define(:version => 20120121230945) do
     t.datetime "updated_at"
   end
 
-<<<<<<< HEAD
-=======
-  create_table "email_reservations", :force => true do |t|
-    t.date     "date"
-    t.string   "time"
-    t.integer  "golfers"
-    t.integer  "course_id"
-    t.string   "confirmation_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "reservations", :force => true do |t|
-    t.date     "date"
-    t.string   "time"
-    t.integer  "golfers"
-    t.integer  "user_id"
-    t.integer  "course_id"
-    t.string   "booking_type"
-    t.string   "confirmation_code"
-    t.integer  "status_code",       :default => 1
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "total"
-  end
-
-  create_table "users", :force => true do |t|
-    t.text     "email"
-    t.text     "f_name"
-    t.text     "l_name"
-    t.text     "device_name"
-    t.text     "os_version"
-    t.text     "app_version"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
->>>>>>> f6a414b83c7ac3208bdc4bca37e6e6afdbec9e15
 end
