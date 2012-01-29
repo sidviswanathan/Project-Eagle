@@ -175,7 +175,7 @@ class Course < ActiveRecord::Base
     a = AvailableTimes.find_by_course_id(course_id)
     if !a
       a = AvailableTimes.new
-      a.courseid = course_id
+      a.course_id = course_id
       a.data = converted_response.to_json
       a.save
     else
