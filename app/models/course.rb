@@ -172,7 +172,7 @@ class Course < ActiveRecord::Base
     end
 
     
-    a = AvailableTimes.find_by_courseid(course_id)
+    a = AvailableTimes.find_by_course_id(course_id)
     if !a
       a = AvailableTimes.new
       a.courseid = course_id

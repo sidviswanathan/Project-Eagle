@@ -84,7 +84,7 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     response_object = intitiate_response_object
-    a = Rails.cache.fetch("LatestAvailableTimes_"+course_id) {AvailableTimes.find_by_courseid(course_id)}
+    a = Rails.cache.fetch("LatestAvailableTimes_"+course_id) {AvailableTimes.find_by_course_id(course_id)}
     
     if date
        dates = JSON.parse(a.data)
