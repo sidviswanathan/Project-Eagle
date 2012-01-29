@@ -45,7 +45,7 @@ class Course < ActiveRecord::Base
     ## Get all dates from response
     dates = object['avail'].keys
     
-    course_id = TEMPORARY_API_ID_TO_ID_MAP[object['avail'][dates[0]]['teetime'][0]['courseid'][0]]
+    course_id = TEMP_COURSE_ID_MAP[object['avail'][dates[0]]['teetime'][0]['courseid'][0]]
     
     course = Rails.cache.fetch("Course_"+course_id) {Course.find(course_id.to_i)}
     fee_matrix = JSON.parse(course.fee_matrix)
