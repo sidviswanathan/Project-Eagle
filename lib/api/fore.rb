@@ -15,7 +15,7 @@ module Fore
   API_GET_AVAILABLE_URI                = '/cgi-bin/avail2.pl'
   
   
-  
+  # OLd Fee Matrix = {"split" => [14,16],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
   def self.book(params)
     
   end
@@ -56,7 +56,7 @@ module Fore
 
      
     end
-    self.process_tee_times_data(results,course)
+    self.process_tee_times_data(results.join,course)
     
   end
   
