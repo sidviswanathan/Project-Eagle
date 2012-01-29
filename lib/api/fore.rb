@@ -90,12 +90,8 @@ module Fore
     ## Convert response to hash
     object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
     converted_response = Hash.new
-    #pp object
-    ## Get all dates from response
     dates = object['avail'].keys
-    
     course_id = course.id.to_s
-    
     fee_matrix = JSON.parse(course.fee_matrix)
     
     dates.each do |date|
@@ -137,8 +133,6 @@ module Fore
         bookings = set_old - set_new
         cancels = set_new - set_old
 
-        logger.info '###########BOOKINGS###########################'
-        pp bookings
 
         bookings.each do |r|
           reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k}
