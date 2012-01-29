@@ -2,9 +2,9 @@ class CreateCourses < ActiveRecord::Migration
   def self.up
     create_table :courses do |t|
       t.string :name
-      t.decimal :price, :precision => 8, :scale => 2
-      t.text :description
-      t.text :contact
+      t.string :api
+      t.string :api_course_id
+      t.string :fee_matrix
       t.timestamps
     end
   end
