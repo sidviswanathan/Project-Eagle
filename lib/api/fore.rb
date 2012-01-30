@@ -40,9 +40,10 @@ module Fore
   def self.book(reservation_info,course,u)
     uri = "#{API_BOOK_URI}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{EMAIL_CATCHER}&FirstName=#{u[:f_name]}&LastName=#{u[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
     response = self.http_get(uri)
+    puts response
     
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
-      return XmlSimple.xml_in(booking.body)["confirmation"][0]
+      return XmlSimple.xml_in(response.body)["confirmation"][0]
     else
       return nil
     end

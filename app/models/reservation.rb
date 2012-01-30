@@ -22,7 +22,12 @@ class Reservation < ActiveRecord::Base
     u = User.find_by_email(email)
     course = Course.find(course_id.to_i)
     
+    puts "________________COURSE API------------------"
+    puts course.api
+    
     confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,u)
+    
+    puts confirmation_code
     
     if !confirmation_code.nil?
       if u 
