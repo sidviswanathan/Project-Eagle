@@ -42,9 +42,9 @@ Rails::Initializer.run do |config|
 end
 
 ActionMailer::Base.smtp_settings = {
-  :user_name => "app571214@heroku.com",
-  :password => "eagle",
-  :domain => "presstee.com",
+  :user_name => "eaglesupport",
+  :password => "eagle1",
+  :domain => "mail.presstee.com",
   :address => "smtp.sendgrid.net",
   :port => 587,
   :authentication => :plain,
