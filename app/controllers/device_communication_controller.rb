@@ -4,7 +4,7 @@ require 'apns'
 require 'xmlsimple'
 require 'date'
 require 'lib/api/fore.rb'
-require 'mail'
+
 
 
 class DeviceCommunicationController < ApplicationController
@@ -262,7 +262,7 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT:
   
   def test_mail
-    Notifier.signup_email("arjun.vasan@gmail.com").deliver
+    #Notifier.signup_email("arjun.vasan@gmail.com").deliver
   end
   
   
