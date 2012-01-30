@@ -166,15 +166,11 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT: 
   
   def process_api_request
-    #course_id      = params[:course_id]
-    #response       = params[:tee_times_data]
     courses = Course.all
     courses.each do |course|
       DeviceCommunicationController::API_MODULE_MAP[course.api].update(course)
     end
-    
-    #Course.update_available_times()
-    #process_data   = Course.process_tee_times_data(response)    
+      
     render :nothing => true
   end  
   

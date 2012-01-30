@@ -15,29 +15,16 @@ class Reservation < ActiveRecord::Base
 
   validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
   
-  # Book reservation record, creates a Reservation record, connects to user
-  # INPUT:   
-  # OUTPUT:   
 
   def self.book_tee_time(email, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
     
-    # Make the API reservation call here
     u = User.find_by_email(email)
     course = Course.find(course_id.to_i)
     
+    confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,u)
     
-    #booking = book_time_via_api(reservation_info,u)
-    booking = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,u)
-    
-    
-    if XmlSimple.xml_in(booking.body).has_key?("confirmation")
-      confirmation_code = XmlSimple.xml_in(booking.body)["confirmation"][0]
-    else
-      return nil
-    end    
-
-    if booking
+    if !confirmation_code.nil?
       if u 
         r = Reservation.create(reservation_info)
         r.booking_type = u.device_name
@@ -55,6 +42,7 @@ class Reservation < ActiveRecord::Base
       return nil
     end  
   end 
+  
   
 
 end
