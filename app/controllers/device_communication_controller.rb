@@ -227,7 +227,7 @@ class DeviceCommunicationController < ApplicationController
     
     cancelled = Reservation.cancel(confirmation_code,course_id)
     
-    if cancelled?
+    if cancelled
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server destroyed a reservation with course_id="+course_id+" and confirmation_code="+confirmation_code
