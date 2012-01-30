@@ -58,7 +58,7 @@ module Fore
   end
   
   def self.cancel(reservation)
-    uri = "#{API_CANCEL_URL}?cn=#{reservation.confirmation_code}&a=#{API_AFFILIATE_ID}&p=#{API_PASSWORD}"
+    uri = "#{API_CANCEL_URI}?cn=#{reservation.confirmation_code}&a=#{API_AFFILIATE_ID}&p=#{API_PASSWORD}"
     response = self.http_get(uri)
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
       return true
