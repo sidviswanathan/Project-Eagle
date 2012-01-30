@@ -43,7 +43,7 @@ end
 
 ActionMailer::Base.smtp_settings = {
   :user_name => "app571214@heroku.com",
-  :password => "eagle1",
+  :password => "eagle",
   :domain => "presstee.com",
   :address => "smtp.sendgrid.net",
   :port => 587,
