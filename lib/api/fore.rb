@@ -64,7 +64,9 @@ module Fore
     end
     @@response_sum = ""
     results = Parallel.map [today,today+1,today+2,today+3,today+4,today+5,today+6], :in_threads => 7 do |day|
-      query = "#{API_GET_AVAILABLE_URI}?a=#{API_AFFILIATE_ID}&c=#{course.api_course_id}&q=0&p=#{API_PASSWORD}&d="+day.strftime("%Y-%m-%d")+"&t=08:00&et=19:00" 
+      query = "#{API_GET_AVAILABLE_URI}?a=#{API_AFFILIATE_ID}&c=#{course.api_course_id}&q=0&p=#{API_PASSWORD}&d="+day.strftime("%Y-%m-%d")+"&t=08:00&et=19:00"
+      
+      
       url = URI.parse(API_HOST)
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
@@ -161,7 +163,6 @@ module Fore
         set_new = v["day"].to_set
         bookings = set_old - set_new
         cancels = set_new - set_old
-
 
         bookings.each do |r|
           reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k}

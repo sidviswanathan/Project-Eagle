@@ -92,38 +92,40 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     response_object = intitiate_response_object
-    a = Rails.cache.fetch("Updated_Course_"+course_id) {Course.find(course_id.to_i)}
+    updated_course = Rails.cache.fetch("Updated_Course_"+course_id) {Course.find(course_id.to_i)}
     
-    if date
-       dates = JSON.parse(a.data)
-       if dates.has_key?(date)
-         response_object[:status]     = "success"
-         response_object[:statusCode] = 200
-         response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-          if time
-             if dates[date]["hours"].has_key?(time.split(":")[0].to_i.to_s)
-               response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
-               render :json => response_object.to_json
-             else
-               response_object[:statusCode] = 500
-               response_object[:message]    = "Sorry, please choose an hour between 6:00 and 18:00 (24 hour format)"
-               render :json => response_object.to_json
-             end
-             
-          else
-             response_object[:response]   = dates[date]["day"]
-             render :json => response_object.to_json
-          end
-       else
-         response_object[:message]    = "Sorry, please choose a date within the next 7 days.."
-         render :json => response_object.to_json
-       end
-       
+    if updated_course
+      if date
+         dates = JSON.parse(updated_course.data)
+         if dates.has_key?(date)
+           response_object[:status]     = "success"
+           response_object[:statusCode] = 200
+           response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+            if time
+               if dates[date]["hours"].has_key?(time.split(":")[0].to_i.to_s)
+                 response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
+               else
+                 response_object[:statusCode] = 500
+                 response_object[:message]    = "Sorry, please choose an hour between 6:00 and 18:00 (24 hour format)"
+               end
+            else
+               response_object[:response]   = dates[date]["day"]
+            end
+         else
+           response_object[:message]    = "Sorry, please choose a date within the next 7 days.."
+         end
+      elsif !a.data.nil?
+        response_object[:status]     = "success"
+        response_object[:statusCode] = 200
+        response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+        response_object[:response]   = updated_course.data
+      else
+        response_object[:message]    = "The server does not have data for the Course with ID:#{course_id}"
+      end
     else
-       render :json => a.data
+      response_object[:message]    = "The server could not find a Course with ID:#{course_id}"
     end
-    
-
+    render :json => response_object.to_json
   end
   
   # ===================================================================
@@ -148,12 +150,11 @@ class DeviceCommunicationController < ApplicationController
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
-      response_object[:confirmation_code] = reservation.confirmation_code
-      render :json => response_object.to_json         
+      response_object[:confirmation_code] = reservation.confirmation_code      
     else
-      response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"
-      render :json => response_object.to_json         
+      response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"    
     end
+    render :json => response_object.to_json 
   end
   
   
@@ -170,7 +171,6 @@ class DeviceCommunicationController < ApplicationController
     courses.each do |course|
       DeviceCommunicationController::API_MODULE_MAP[course.api].update(course)
     end
-      
     render :nothing => true
   end  
   
@@ -203,14 +203,10 @@ class DeviceCommunicationController < ApplicationController
         r_list.push(r['reservation'])
       end
       response_object[:data]       = r_list
-      render :json => response_object.to_json
-      
     else
-      response_object[:message] = "The server failed to make the get_reservations() request"
-      render :json => response_object.to_json
+      response_object[:message] = "The server failed to make the get_reservations() request (Login Failure)"
     end
-
-    
+    render :json => response_object.to_json
   end
   
   
@@ -228,20 +224,18 @@ class DeviceCommunicationController < ApplicationController
     confirmation_code   = params[:confirmation_code]
     response_object     = intitiate_response_object
     
-    r = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
-    result = DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(r)
+    reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+    cancelled = DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(r)
     
-    if r and result
+    if reservation and !result.nil?
       r.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server destroyed a reservation with course_id="+course_id+" and confirmation_code="+confirmation_code
-      render :json => response_object.to_json
     else
       response_object[:message] = "The server failed to make the Reservation.cancel_reservation() request, cannot find reservation object"
-      render :json => response_object.to_json
     end
-    
+    render :json => response_object.to_json
   end  
   
   # ===================================================================
@@ -256,8 +250,6 @@ class DeviceCommunicationController < ApplicationController
     APNS.pem = '/app/config/apns.pem'
     APNS.send_notification(params[:token],params[:message])
   end
-  
-      
   
 end
 

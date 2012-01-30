@@ -3,10 +3,6 @@ require "net/https"
 
 class Reservation < ActiveRecord::Base
   
-  DEFAULT_CC_NUM   = "4217639662603493"  
-  DEFAULT_CC_YEAR  = "15"
-  DEFAULT_CC_MONTH = "11"
-
   Reservation::BOOKING_CANCEL_STATUS_CODE   = 0
   Reservation::BOOKING_SUCCESS_STATUS_CODE  = 1
   
@@ -21,14 +17,9 @@ class Reservation < ActiveRecord::Base
     
     u = User.find_by_email(email)
     course = Course.find(course_id.to_i)
-    
-    puts "________________COURSE API------------------"
-    puts course.api
-    
+
     confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,u)
-    
-    puts confirmation_code
-    
+
     if !confirmation_code.nil?
       if u 
         r = Reservation.create(reservation_info)
