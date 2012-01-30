@@ -119,7 +119,7 @@ class DeviceCommunicationController < ApplicationController
         response_object[:status]     = "success"
         response_object[:statusCode] = 200
         response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-        response_object[:response]   = updated_course.data
+        response_object[:response]   = updated_course.available_times
       else
         response_object[:message]    = "The server does not have data for the Course with ID:#{course_id}"
       end
