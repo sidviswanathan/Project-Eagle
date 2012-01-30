@@ -18,7 +18,6 @@ gem "chronic", "~> 0.3.0"
 gem "xml-simple", "~> 1.1.0"
 
 gem "parallel"
-gem "mail"
 
 gem "apn_on_rails", "~> 0.4.2"
 
