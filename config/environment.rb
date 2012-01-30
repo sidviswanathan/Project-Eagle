@@ -42,7 +42,7 @@ Rails::Initializer.run do |config|
 end
 
 ActionMailer::Base.smtp_settings = {
-  :user_name => "projecteagle",
+  :user_name => "app571214@heroku.com",
   :password => "eagle1",
   :domain => "presstee.com",
   :address => "smtp.sendgrid.net",

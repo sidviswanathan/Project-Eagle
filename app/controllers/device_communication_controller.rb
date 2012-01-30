@@ -267,10 +267,5 @@ class DeviceCommunicationController < ApplicationController
   
   
   
-  
-  
-  
-  
-  
 end
 
