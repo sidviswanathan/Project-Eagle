@@ -31,6 +31,7 @@ module Fore
 
     begin
       response = http.get(uri, headers)
+      puts response
       return response
     rescue
       return nil
