@@ -225,11 +225,9 @@ class DeviceCommunicationController < ApplicationController
     confirmation_code   = params[:confirmation_code]
     response_object     = intitiate_response_object
     
-    reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
-    cancelled = DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(r)
+    cancelled = Reservation.cancel(course_id,confirmation_code)
     
-    if reservation and !result.nil?
-      r.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
+    if cancelled?
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server destroyed a reservation with course_id="+course_id+" and confirmation_code="+confirmation_code
@@ -262,7 +260,7 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT:
   
   def test_mail
-    #Notifier.signup_email("arjun.vasan@gmail.com").deliver
+    render :nothing => true
   end
   
   

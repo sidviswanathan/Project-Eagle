@@ -11,6 +11,17 @@ class Reservation < ActiveRecord::Base
 
   validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
   
+  def self.cancel(confirmation_code,course_id)
+    reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+    course = Course.find(course_id.to_i)
+    cancelled = DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(reservation)
+    if cancelled
+      reservation.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
+      return true
+    else
+      return false
+    end
+  end
 
   def self.book_tee_time(email, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
