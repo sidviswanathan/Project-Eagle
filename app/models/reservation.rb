@@ -1,5 +1,6 @@
 require "net/http"
 require "net/https"
+require 'lib/api/fore.rb'
 
 class Reservation < ActiveRecord::Base
   
