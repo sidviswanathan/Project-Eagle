@@ -97,7 +97,7 @@ class DeviceCommunicationController < ApplicationController
     
     if updated_course
       if date
-         dates = JSON.parse(updated_course.data)
+         dates = JSON.parse(updated_course.available_times)
          if dates.has_key?(date)
            response_object[:status]     = "success"
            response_object[:statusCode] = 200
@@ -115,7 +115,7 @@ class DeviceCommunicationController < ApplicationController
          else
            response_object[:message]    = "Sorry, please choose a date within the next 7 days.."
          end
-      elsif !a.data.nil?
+      elsif !updated_course.available_times.nil?
         response_object[:status]     = "success"
         response_object[:statusCode] = 200
         response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"

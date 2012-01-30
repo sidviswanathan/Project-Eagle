@@ -155,12 +155,12 @@ module Fore
 
     # Note use of JSON.parse rather than the Rails method json.decode.  This is because json.decode converts the string date to a DateTime...
     previous_response = nil
-    if !course.data.nil?
-      previous_response = JSON.parse(course.data)
+    if !course.available_times.nil?
+      previous_response = JSON.parse(course.available_tiles)
     end
     
 
-    course.data = converted_response.to_json
+    course.available_times = converted_response.to_json
     course.save
     if !previous_response.nil?
       converted_response.each_pair do |k,v|

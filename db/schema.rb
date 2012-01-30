@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(:version => 20120117193216) do
     t.string   "api"
     t.string   "api_course_id"
     t.text     "fee_matrix"
-    t.text     "data"
+    t.text     "available_times"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
