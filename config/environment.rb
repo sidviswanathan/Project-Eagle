@@ -44,7 +44,7 @@ end
 ActionMailer::Base.smtp_settings = {
   :user_name => "eaglesupport",
   :password => "eagle1",
-  :domain => "mail.presstee.com",
+  :domain => "presstee.com",
   :address => "smtp.sendgrid.net",
   :port => 587,
   :authentication => :plain,
