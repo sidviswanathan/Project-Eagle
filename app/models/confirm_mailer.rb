@@ -1,8 +1,8 @@
 class ConfirmMailer < ActionMailer::Base
   def signup_notification(email)
-    recipients "Arjun Vasan <#{email}>"
-    from       "My Forum "
-    subject    "Please activate your new account"
+    recipients "<#{email}>"
+    from       "PressTee booking <confirm@mail.presstee.com>"
+    subject    "Please confirm or cancel your booking"
     sent_on    Time.now
     body       "Hellow"
   end
