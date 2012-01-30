@@ -14,8 +14,7 @@ class Reservation < ActiveRecord::Base
   def self.cancel(confirmation_code,course_id)
     reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
     course = Course.find(course_id.to_i)
-    cancelled = DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(reservation)
-    if cancelled
+    if DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(reservation)
       reservation.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
       return true
     else
