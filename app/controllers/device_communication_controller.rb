@@ -262,29 +262,7 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT:
   
   def test_mail
-    Mail.defaults do
-      delivery_method :smtp, { :address   => "smtp.sendgrid.net",
-                               :port      => 587,
-                               :domain    => "presstee.com",
-                               :user_name => "sid.viswanathan@gmail.com",
-                               :password  => "eagle1",
-                               :authentication => 'plain',
-                               :enable_starttls_auto => true }
-    end
-    
-    
-    mail = Mail.deliver do
-      to 'pressteex@gmail.com'
-      from 'Project Eagle <eagle@presstee.com>'
-      subject 'This is the subject of your email'
-      text_part do
-        body 'Hello world in text'
-      end
-      html_part do
-        content_type 'text/html; charset=UTF-8'
-        body '<b>Hello world in HTML</b>'
-      end
-    end
+    Notifier.signup_email("arjun.vasan@gmail.com").deliver
   end
   
   
