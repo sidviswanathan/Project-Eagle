@@ -35,22 +35,9 @@ Rails::Initializer.run do |config|
   # Run "rake -D time" for a list of tasks for finding time zone names.
   config.time_zone = 'UTC'
   config.gem 'dalli'
-  config.action_mailer.delivery_method = :smtp
 
-  
-  config.action_mailer.raise_delivery_errors = true
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
-
-ActionMailer::Base.smtp_settings = {
-  :user_name => "eaglesupport",
-  :password => "eagle1",
-  :domain => "presstee.com",
-  :address => "smtp.sendgrid.net",
-  :port => 587,
-  :authentication => :plain,
-  :enable_starttls_auto => true
-}
