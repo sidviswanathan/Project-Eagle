@@ -13,18 +13,41 @@ module Fore
   API_BOOK_URI                         = '/cgi-bin/bk.pl'
   API_CANCEL_URI                       = '/cgi-bin/cancel.pl'
   API_GET_AVAILABLE_URI                = '/cgi-bin/avail2.pl'
+  EMAIL_CATCHER                        = 'pressteex@gmail.com'
+  
+  DEFAULT_CC_NUM   = "4217639662603493"  
+  DEFAULT_CC_YEAR  = "15"
+  DEFAULT_CC_MONTH = "11"
+  DEFAULT_PHONE    = "5628884454"
   
   
-  # OLd Fee Matrix = {"split" => [14,16],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
-  def self.book(params)
-    
+  # Deep Cliff Fee Matrix = {"split" => [14,16],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
+  
+  def self.http_get(uri)
+    url = URI.parse(API_HOST)
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    headers = {}
+
+    begin
+      response = http.get(uri, headers)
+      return response
+    rescue
+      return nil
+    end
   end
   
-  def self.cancel(params)
-    
+  def self.book(reservation_info,course,u)
+    uri = "#{API_BOOK_URI}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{EMAIL_CATCHER}&FirstName=#{u[:f_name]}&LastName=#{u[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
+    response = self.http_get(uri)
+    if response; return response else return nil end
   end
   
-  
+  def self.cancel(r)
+    uri = "#{API_CANCEL_URL}?cn=#{r.confirmation_code}&a=#{API_AFFILIATE_ID}&p=#{API_PASSWORD}"
+    response = self.http_get(uri)
+    if response; return response else return nil end
+  end
   
   def self.update(course)
     
@@ -34,7 +57,7 @@ module Fore
       today += 1
     end
     @@response_sum = ""
-    results = Parallel.map [today,today+1,today+2,today+3,today+4,today+5,today+6], :in_threads => 4 do |day|
+    results = Parallel.map [today,today+1,today+2,today+3,today+4,today+5,today+6], :in_threads => 8 do |day|
       query = "#{API_GET_AVAILABLE_URI}?a=#{API_AFFILIATE_ID}&c=#{course.api_course_id}&q=0&p=#{API_PASSWORD}&d="+day.strftime("%Y-%m-%d")+"&t=08:00&et=19:00" 
       url = URI.parse(API_HOST)
       http = Net::HTTP.new(url.host, url.port)

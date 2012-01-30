@@ -10,7 +10,7 @@ class DeviceCommunicationController < ApplicationController
   
   skip_before_filter :verify_authenticity_token  
   
-  API_MODULE_MAP = {
+  DeviceCommunicationController::API_MODULE_MAP = {
     "fore" => Fore
   }
   
@@ -170,7 +170,7 @@ class DeviceCommunicationController < ApplicationController
     #response       = params[:tee_times_data]
     courses = Course.all
     courses.each do |course|
-      API_MODULE_MAP[course.api].update(course)
+      DeviceCommunicationController::API_MODULE_MAP[course.api].update(course)
     end
     
     #Course.update_available_times()
@@ -233,8 +233,9 @@ class DeviceCommunicationController < ApplicationController
     response_object     = intitiate_response_object
     
     r = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+    result = DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(r)
     
-    if r
+    if r and result
       r.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
@@ -244,8 +245,6 @@ class DeviceCommunicationController < ApplicationController
       response_object[:message] = "The server failed to make the Reservation.cancel_reservation() request, cannot find reservation object"
       render :json => response_object.to_json
     end
-    
-    
     
   end  
   
