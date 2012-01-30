@@ -225,7 +225,7 @@ class DeviceCommunicationController < ApplicationController
     confirmation_code   = params[:confirmation_code]
     response_object     = intitiate_response_object
     
-    cancelled = Reservation.cancel(course_id,confirmation_code)
+    cancelled = Reservation.cancel(confirmation_code,course_id)
     
     if cancelled?
       response_object[:status]     = "success"
