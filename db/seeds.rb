@@ -20,3 +20,14 @@ if u == nil
     puts 'user seed failed!'
   end
 end
+
+
+c = Course.find(1)
+if c == nil
+  c = Course.new
+  c.name = "Deep Cliff"
+  c.api = "fore"
+  c.api_course_id = "1987654"
+  c.fee_matrix = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}.to_json
+  c.save
+end

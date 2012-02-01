@@ -8,6 +8,11 @@ require 'lib/api/fore.rb'
 
 
 class ServerCommunicationController < ApplicationController 
+
+  ADD_TASK_HOST                         = 'http://dump-them.appspot.com'
+  ADD_TASK_URI                          = '/schedule/'
+
+  
   def intitiate_response_object    
     response_object              = Hash.new
     response_object[:status]     = "failure"
@@ -17,12 +22,32 @@ class ServerCommunicationController < ApplicationController
     return response_object
   end
   
-  def process_api_request
+  def update_courses
     courses = Course.all
     courses.each do |course|
       DeviceCommunicationController::API_MODULE_MAP[course.api].update(course)
     end
     render :nothing => true
+  end
+  
+  def schedule_mailing(data,eta)
+    dump = Dump.create({:data => data.to_json})
+    
+    query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id}&dt=#{eta}"
+    
+    url = URI.parse(ADD_TASK_HOST)
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    headers = {}
+    
+    response = http.get(query, headers)
+    render :nothing => true
+    
+  end
+  
+  def perform_reminder
+    dump = Dump.find(params[:key].to_i)
+    ConfirmMailer.deliver_reminder(dump)
   end
   
   
