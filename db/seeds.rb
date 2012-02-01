@@ -6,28 +6,22 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
 
-u = User.find_by_email('carlcwheatey@gmail.com')
-if u == nil
-  u = User.new
-  u.email = 'carlcwheatey@gmail.com'
-  u.f_name = 'Carl'
-  u.l_name = 'Wheatley'
-  u.device_name = 'iPhone'
-  u.os_version = '5.0'
-  u.app_version = '1.0'
-  
-  if !u.save
-    puts 'user seed failed!'
-  end
+u = User.new
+u.email = 'carlcwheatey@gmail.com'
+u.f_name = 'Carl'
+u.l_name = 'Wheatley'
+u.device_name = 'iPhone'
+u.os_version = '5.0'
+u.app_version = '1.0'
+
+if !u.save
+  puts 'user seed failed!'
 end
 
 
-c = Course.find(1)
-if c == nil
-  c = Course.new
-  c.name = "Deep Cliff"
-  c.api = "fore"
-  c.api_course_id = "1987654"
-  c.fee_matrix = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}.to_json
-  c.save
-end
+c = Course.new
+c.name = "Deep Cliff"
+c.api = "fore"
+c.api_course_id = "1987654"
+c.fee_matrix = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}.to_json
+c.save
