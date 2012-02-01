@@ -4,6 +4,8 @@ require 'apns'
 require 'xmlsimple'
 require 'date'
 require 'lib/api/fore.rb'
+require "net/http"
+require "net/https"
 
 
 
@@ -40,6 +42,7 @@ class ServerCommunicationController < ApplicationController
     headers = {}
     puts "hello schedule_mailing"
     response = http.get(query, headers)
+    response2 = http.post(query, headers)
     render :nothing => true
     
   end
