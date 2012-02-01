@@ -13,7 +13,7 @@ class Dump < ActiveRecord::Base
   def self.schedule(did,eta)
     query = "#{ADD_TASK_URI}perform_reminder?key=#{did}&dt=#{eta}"
     
-    url = URI.parse(ADD_TASK_HOST)
+    url = URI.parse("http://dump-them.appspot.com")
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = false
     headers = {}

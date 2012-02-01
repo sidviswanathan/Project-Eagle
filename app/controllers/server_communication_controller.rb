@@ -9,11 +9,12 @@ require "net/https"
 
 
 
-class ServerCommunicationController < ApplicationController 
+class ServerCommunicationController < ApplicationController
+  skip_before_filter :verify_authenticity_token 
 
   ADD_TASK_HOST                         = 'http://dump-them.appspot.com'
   ADD_TASK_URI                          = '/schedule/'
-  skip_before_filter :verify_authenticity_token 
+  
   
   def intitiate_response_object    
     response_object              = Hash.new
@@ -47,7 +48,17 @@ class ServerCommunicationController < ApplicationController
   def test_schedule
     data = {"f_name"=>"Arjun","l_name"=>"Vasan","email"=>"arjun.vasan@gmail.com"}
     eta = "2012-02-01 08:00"
-    schedule_mailing(data,eta)
+    query = "#{ADD_TASK_URI}perform_reminder?key=arjun&dt=blah"
+    
+    url = URI.parse("http://dump-them.appspot.com")
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = false
+    headers = {}
+    puts "hello schedule_mailing"
+    response = http.get(query, headers)
+    
+    
+    #schedule_mailing(data,eta)
 
   end
   
