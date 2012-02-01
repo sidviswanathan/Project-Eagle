@@ -47,10 +47,11 @@ class ServerCommunicationController < ApplicationController
   
   def test_schedule
     data = {"f_name"=>"Arjun","l_name"=>"Vasan","email"=>"arjun.vasan@gmail.com"}
-    eta = "2012-02-01 08:00"
+    eta_day = "2012-02-01"
+    eta_time = "13:00"
     dump = Dump.create({:data => data.to_json})
     #Dump.schedule(eta,dump.id)
-    query = "/schedule/perform_reminder?key=#{dump.id.to_s}&dt=a"
+    query = "/schedule/perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
     
     url = URI.parse("http://dump-them.appspot.com")
     http = Net::HTTP.new(url.host, url.port)
