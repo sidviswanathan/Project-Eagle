@@ -37,6 +37,8 @@ class Reservation < ActiveRecord::Base
         r.confirmation_code = confirmation_code
         r.user = u
         r.save
+        day_before_tt = Date.parse(date) - 1
+        
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 

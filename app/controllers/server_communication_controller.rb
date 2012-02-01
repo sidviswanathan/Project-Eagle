@@ -33,16 +33,29 @@ class ServerCommunicationController < ApplicationController
     render :nothing => true
   end
   
-  def schedule_mailing(data,eta)
+  def schedule_mailing(user,date,time)
+    data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email}
+    eta_day = date
+    eta_time = time
     dump = Dump.create({:data => data.to_json})
-    Dump.schedule(eta,dump.id)
+
+    query = "/schedule/perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+    
+    url = URI.parse("http://dump-them.appspot.com")
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = false
+    headers = {}
+
+    response = http.get(query, headers)
+    
     render :nothing => true
+
     
   end
   
   def perform_reminder
     dump = Dump.find(params[:key].to_i)
-    ConfirmMailer.deliver_reminder(dump)
+    ConfirmMailer.deliver_reminder(JSON.parse(dump.data))
   end
   
   def test_schedule
