@@ -19,6 +19,14 @@ class Reservation < ActiveRecord::Base
       Tee Time       : <teetime> for <golfers> golfers.
       Confirmation   : <confirm>
       
+      For your convenience and security, we do not require credit card information to book via our 
+      mobile app.  Therefore, if you do not plan on showing up to your teetime, please be sure to 
+      cancel via the link below so we can make your slots available to other customers.  
+      
+      Cancel         :  http://www.presstee.com/device_communication/cancel_reservation?q=<res_id>
+      
+      Thanks for your business, and hope to see you soon!
+      
     eos
     
   REMINDER_SUBJECT = "Tee Time Reminder"
@@ -85,7 +93,9 @@ class Reservation < ActiveRecord::Base
         
         # Schedule Tee Time Reminder
         ServerCommunicationController.schedule_mailing(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now)
-        ServerCommunicationController.schedule_mailing(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time)
+        if day_before_tt > today
+          ServerCommunicationController.schedule_mailing(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time)
+        end
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 
