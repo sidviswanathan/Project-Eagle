@@ -37,7 +37,6 @@ class ServerCommunicationController < ApplicationController
     
     url = URI.parse(ADD_TASK_HOST)
     http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
     headers = {}
     
     response = http.get(query, headers)
