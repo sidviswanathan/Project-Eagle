@@ -48,7 +48,7 @@ class ServerCommunicationController < ApplicationController
 
     response = http.get(query, headers)
     
-    render :nothing => true
+    #render :nothing => true
 
     
   end
