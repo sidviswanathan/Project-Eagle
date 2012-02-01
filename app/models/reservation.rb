@@ -78,7 +78,8 @@ class Reservation < ActiveRecord::Base
           "confirm" => confirmation_code,
           "res_id"  => r.id.to_s,
           "teetime" => Date.parse(date).strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
-          "golfers" => golfers
+          "golfers" => golfers,
+          "coursename" => "Deep Cliff Golf Course"
         }
         
         # Schedule Tee Time Reminder
