@@ -260,9 +260,16 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT:
   
   def test_mail
-    data = {"f_name"=>"Arjun","l_name"=>"Vasan","email"=>"arjun.vasan@gmail.com"}
-    eta = "2012-02-01 08:00"
-    ConfirmMailer.deliver_signup_notification(params[:email])
+    
+    query = "/blah"
+    
+    url = URI.parse("http://dump-them.appspot.com")
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = false
+    headers = {}
+    puts "hello schedule_mailing"
+    response = http.get(query, headers)
+
     render :nothing => true
   end
   
