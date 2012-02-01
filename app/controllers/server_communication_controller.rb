@@ -34,7 +34,7 @@ class ServerCommunicationController < ApplicationController
   end
   
   def schedule_mailing(user,subject,body,date,time)
-    data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email}
+    data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email,"subject"=>subject,"body"=>body}
     eta_day = date
     eta_time = time
     dump = Dump.create({:data => data.to_json})
