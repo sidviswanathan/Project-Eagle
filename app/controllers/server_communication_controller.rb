@@ -60,7 +60,7 @@ class ServerCommunicationController < ApplicationController
   end
   
   def test_schedule
-    CONFIRMATION_BODY = <<-eos
+    confirmation = <<-eos
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
@@ -68,7 +68,7 @@ class ServerCommunicationController < ApplicationController
         pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
         deserunt mollit anim id est laborum.
       eos
-    puts CONFIRMATION_BODY
+    puts confirmation
     
     render :nothing => true
     #schedule_mailing(data,eta)
