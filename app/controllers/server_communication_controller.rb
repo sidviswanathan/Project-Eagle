@@ -48,16 +48,18 @@ class ServerCommunicationController < ApplicationController
   def test_schedule
     data = {"f_name"=>"Arjun","l_name"=>"Vasan","email"=>"arjun.vasan@gmail.com"}
     eta = "2012-02-01 08:00"
-    query = "#{ADD_TASK_URI}perform_reminder?key=arjun&dt=blah"
+    dump = Dump.create({:data => data.to_json})
+    #Dump.schedule(eta,dump.id)
+    query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id}&dt=#{eta}"
     
     url = URI.parse("http://dump-them.appspot.com")
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = false
     headers = {}
-    puts "hello schedule_mailing"
+
     response = http.get(query, headers)
     
-    
+    render :nothing => true
     #schedule_mailing(data,eta)
 
   end
