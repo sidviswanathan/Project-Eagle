@@ -61,7 +61,7 @@ class Reservation < ActiveRecord::Base
     confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)
 
     if !confirmation_code.nil?
-      if u 
+      if user 
         r = Reservation.create(reservation_info)
         r.booking_type = user.device_name
         r.confirmation_code = confirmation_code
