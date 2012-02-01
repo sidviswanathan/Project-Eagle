@@ -34,7 +34,7 @@ class ServerCommunicationController < ApplicationController
   
   def schedule_mailing(data,eta)
     dump = Dump.create({:data => data.to_json})
-    puts dump.schedule(eta)
+    Dump.schedule(eta,dump.id)
     render :nothing => true
     
   end

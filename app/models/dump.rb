@@ -10,8 +10,8 @@ require "net/https"
 class Dump < ActiveRecord::Base
   ADD_TASK_HOST                         = 'http://dump-them.appspot.com'
   ADD_TASK_URI                          = '/schedule/'
-  def self.schedule(eta)
-    query = "#{ADD_TASK_URI}perform_reminder?key=#{self.id}&dt=#{eta}"
+  def self.schedule(did,eta)
+    query = "#{ADD_TASK_URI}perform_reminder?key=#{did}&dt=#{eta}"
     
     url = URI.parse(ADD_TASK_HOST)
     http = Net::HTTP.new(url.host, url.port)
