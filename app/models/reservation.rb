@@ -58,7 +58,7 @@ class Reservation < ActiveRecord::Base
         r.user = u
         r.save
         day_before_tt = Date.parse(date) - 1
-        ServerCommunicationController.schedule_mailing(user,REMINDER_SUBJECT,REMINDER_BODY,day_before_tt,time)
+        ServerCommunicationController.schedule_mailing(u,REMINDER_SUBJECT,REMINDER_BODY,day_before_tt,time)
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 
