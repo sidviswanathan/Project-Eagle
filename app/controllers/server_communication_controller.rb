@@ -50,7 +50,7 @@ class ServerCommunicationController < ApplicationController
     eta = "2012-02-01 08:00"
     dump = Dump.create({:data => data.to_json})
     #Dump.schedule(eta,dump.id)
-    query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id}&dt=#{eta}"
+    query = "/schedule/perform_reminder?key=#{dump.id.to_s}&dt=#{eta}"
     
     url = URI.parse("http://dump-them.appspot.com")
     http = Net::HTTP.new(url.host, url.port)
