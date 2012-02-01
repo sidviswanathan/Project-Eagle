@@ -11,6 +11,24 @@ class Reservation < ActiveRecord::Base
 
   validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
   
+  CONFIRMATION_BODY = <<-eos
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+      irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+      deserunt mollit anim id est laborum.
+    eos
+    
+  REMINDER_BODY = <<-eos
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+      irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+      deserunt mollit anim id est laborum.
+    eos
+  
   def self.cancel(confirmation_code,course_id)
     reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
     course = Course.find(course_id.to_i)
@@ -38,7 +56,7 @@ class Reservation < ActiveRecord::Base
         r.user = u
         r.save
         day_before_tt = Date.parse(date) - 1
-        
+        ServerCommunicationController.
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 

@@ -33,7 +33,7 @@ class ServerCommunicationController < ApplicationController
     render :nothing => true
   end
   
-  def schedule_mailing(user,date,time)
+  def schedule_mailing(user,subject,body,date,time)
     data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email}
     eta_day = date
     eta_time = time
@@ -56,22 +56,19 @@ class ServerCommunicationController < ApplicationController
   def perform_reminder
     dump = Dump.find(params[:key].to_i)
     ConfirmMailer.deliver_reminder(JSON.parse(dump.data))
+    render :nothing => true
   end
   
   def test_schedule
-    data = {"f_name"=>"Arjun","l_name"=>"Vasan","email"=>"arjun.vasan@gmail.com"}
-    eta_day = "2012-02-01"
-    eta_time = "13:00"
-    dump = Dump.create({:data => data.to_json})
-    #Dump.schedule(eta,dump.id)
-    query = "/schedule/perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
-    
-    url = URI.parse("http://dump-them.appspot.com")
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = false
-    headers = {}
-
-    response = http.get(query, headers)
+    CONFIRMATION_BODY = <<-eos
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
+        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+        deserunt mollit anim id est laborum.
+      eos
+    puts CONFIRMATION_BODY
     
     render :nothing => true
     #schedule_mailing(data,eta)
