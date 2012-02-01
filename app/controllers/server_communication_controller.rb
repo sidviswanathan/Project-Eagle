@@ -50,6 +50,12 @@ class ServerCommunicationController < ApplicationController
     ConfirmMailer.deliver_reminder(dump)
   end
   
+  def test_schedule
+    data = {"f_name"=>"Arjun","l_name"=>"Vasan","email"=>"arjun.vasan@gmail.com"}
+    eta = "2012-02-01 08:00"
+    schedule_mailing(data,eta)
+    render :nothing => true
+  end
   
   
 end
