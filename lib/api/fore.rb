@@ -12,9 +12,13 @@ module Fore
   require 'parallel'
   
 =begin
+
+    *** All API Modules should implement the following methods ***
+    
     self.book(reservation_info,course,user)   =>  Makes a booking via https and returns a confirmation_code (string) or nil
     self.cancel(reservation)                  =>  Sends a cancel request returns true or false
     self.update(course)                       =>  Queries and updates the latest available tee times data 
+    
 =end
   
   API_AFFILIATE_ID                     = 'PressTee'
@@ -30,7 +34,7 @@ module Fore
   DEFAULT_PHONE    = "5628884454"
   DEFAULT_EMAIL    = 'pressteex@gmail.com'  
   
-  # Deep Cliff Fee Matrix = {"split" => [14,16],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
+  # Deep Cliff Fee Matrix = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
   
   def self.http_get(uri)
     url = URI.parse(API_HOST)
@@ -75,7 +79,7 @@ module Fore
     end
     @@response_sum = ""
     results = Parallel.map [today,today+1,today+2,today+3,today+4,today+5,today+6], :in_threads => 7 do |day|
-      query = "#{API_GET_AVAILABLE_URI}?a=#{API_AFFILIATE_ID}&c=#{course.api_course_id}&q=0&p=#{API_PASSWORD}&d="+day.strftime("%Y-%m-%d")+"&t=08:00&et=19:00"
+      query = "#{API_GET_AVAILABLE_URI}?a=#{API_AFFILIATE_ID}&c=#{course.api_course_id}&q=0&p=#{API_PASSWORD}&d=#{day.strftime('%Y-%m-%d')}&t=08:00&et=19:00"
       
       url = URI.parse(API_HOST)
       http = Net::HTTP.new(url.host, url.port)
@@ -88,7 +92,7 @@ module Fore
         if dat.index("teetime").nil?:
   				response = ""
 				else
-				  response = "<avail date='"+day.strftime("%Y-%m-%d")+"'>"+dat
+				  response = "<avail date='#{day.strftime("%Y-%m-%d")}'>"+dat
   			end
         
       rescue
@@ -96,9 +100,7 @@ module Fore
       end
       
     end
-    r = results.join
-    Rails.cache.write("response","<results>"+r+"</results>")
-    self.process_tee_times_data("<results>"+r+"</results>",course)
+    self.process_tee_times_data("<results>#{results.join}</results>",course)
   end
   
   def self.get_green_fee(date,time,fee_matrix)

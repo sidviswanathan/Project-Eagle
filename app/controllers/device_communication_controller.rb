@@ -260,6 +260,7 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT:
   
   def test_mail
+    ConfirmMailer.deliver_signup_notification(params[:email])
     render :nothing => true
   end
   
