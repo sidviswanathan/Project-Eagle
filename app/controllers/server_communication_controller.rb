@@ -11,7 +11,7 @@ class ServerCommunicationController < ApplicationController
 
   ADD_TASK_HOST                         = 'http://dump-them.appspot.com'
   ADD_TASK_URI                          = '/schedule/'
-
+  skip_before_filter :verify_authenticity_token 
   
   def intitiate_response_object    
     response_object              = Hash.new
