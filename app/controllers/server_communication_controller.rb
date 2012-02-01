@@ -34,15 +34,7 @@ class ServerCommunicationController < ApplicationController
   
   def schedule_mailing(data,eta)
     dump = Dump.create({:data => data.to_json})
-    
-    query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id}&dt=#{eta}"
-    
-    url = URI.parse(ADD_TASK_HOST)
-    http = Net::HTTP.new(url.host, url.port)
-    headers = {}
-    puts "hello schedule_mailing"
-    response = http.get(query, headers)
-    response2 = http.post(query, headers)
+    puts dump.schedule(eta)
     render :nothing => true
     
   end
