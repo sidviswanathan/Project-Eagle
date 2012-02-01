@@ -30,7 +30,7 @@ class ServerCommunicationController < ApplicationController
     render :nothing => true
   end
   
-  def self.schedule_mailing(data,eta)
+  def schedule_mailing(data,eta)
     dump = Dump.create({:data => data.to_json})
     
     query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id}&dt=#{eta}"
@@ -52,7 +52,7 @@ class ServerCommunicationController < ApplicationController
   def test_schedule
     data = {"f_name"=>"Arjun","l_name"=>"Vasan","email"=>"arjun.vasan@gmail.com"}
     eta = "2012-02-01 08:00"
-    self.schedule_mailing(data,eta)
+    schedule_mailing(data,eta)
 
   end
   
