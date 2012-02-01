@@ -52,6 +52,7 @@ class Reservation < ActiveRecord::Base
     #body = body.gsub("<coursename>",data["coursename"])
     #body = body.gsub("<coursename>",data["coursename"])
     #body = body.gsub("<coursename>",data["coursename"])
+    return body
   end
 
   def self.book_tee_time(email, course_id, golfers, time, date, total)
