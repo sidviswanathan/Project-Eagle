@@ -13,22 +13,25 @@ class Reservation < ActiveRecord::Base
   
   CONFIRMATION_SUBJECT = "Tee Time Confirmation"
   CONFIRMATION_BODY = <<-eos
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
-      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-      irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-      deserunt mollit anim id est laborum.
+      This message is to confirm your teetime reservation at <coursename>. 
+      
+      Customer       : <first> <last> <email>
+      Tee Time       : <teetime> for <golfers> golfers.
+      Confirmation   : <confirm>
+      
     eos
     
   REMINDER_SUBJECT = "Tee Time Reminder"
   REMINDER_BODY = <<-eos
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
-      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-      irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-      deserunt mollit anim id est laborum.
+      This is a reminder that you have a tee time reservation for tomorrow.  For your convenience 
+      and security, we do not require credit card information to book via our mobile app.  Therefore,
+      if you do not plan on showing up to your teetime tomorrow, please be sure to cancel via the 
+      link below so we can make your slots available to other customers.  
+      
+      Tee Time       :  <teetime> for <golfers> golfers.
+      Cancel         :  http://www.presstee.com/device_communication/cancel_reservation?q=<res_id>
+      
+      Thanks again for your business.  
     eos
   
   def self.cancel(confirmation_code,course_id)
@@ -41,25 +44,46 @@ class Reservation < ActiveRecord::Base
       return false
     end
   end
+  
+  def self.mail_sub(data,template)
+    body = template
+    data.each_pair do |k,v|
+      body = body.gsub("<#{k}>",v)
+    end
+  end
 
   def self.book_tee_time(email, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
     
-    u = User.find_by_email(email)
+    user = User.find_by_email(email)
     course = Course.find(course_id.to_i)
 
-    confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,u)
+    confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)
 
     if !confirmation_code.nil?
       if u 
         r = Reservation.create(reservation_info)
-        r.booking_type = u.device_name
+        r.booking_type = user.device_name
         r.confirmation_code = confirmation_code
-        r.user = u
+        r.user = user
         r.save
         day_before_tt = Date.parse(date) - 1
+        today = Date.today.strftime("%F")
+        now = Time.now.strftime("%R")
         
-        ServerCommunicationController.schedule_mailing(u,REMINDER_SUBJECT,REMINDER_BODY,day_before_tt,time)
+        subs = {
+          "first" => user.f_name.capitalize,
+          "last"  => user.l_name.capitalize,
+          "email" => user.email,
+          "confirm" => confirmation_code,
+          "res_id"  => r.id.to_s,
+          "teetime" => Date.parse(date).strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
+          "golfers" => golfers
+        }
+        
+        # Schedule Tee Time Reminder
+        ServerCommunicationController.schedule_mailing(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now)
+        ServerCommunicationController.schedule_mailing(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time)
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 
