@@ -47,9 +47,11 @@ class Reservation < ActiveRecord::Base
   
   def self.mail_sub(data,template)
     body = template
-    data.each_pair do |k,v|
-      body = body.gsub("<#{k}>",v)
-    end
+    body = body.gsub("<coursename>",data["coursename"])
+    body = body.gsub("<first>",data["first"])
+    #body = body.gsub("<coursename>",data["coursename"])
+    #body = body.gsub("<coursename>",data["coursename"])
+    #body = body.gsub("<coursename>",data["coursename"])
   end
 
   def self.book_tee_time(email, course_id, golfers, time, date, total)
