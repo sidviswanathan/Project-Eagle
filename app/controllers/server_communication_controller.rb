@@ -12,7 +12,7 @@ require "net/https"
 class ServerCommunicationController < ApplicationController
   skip_before_filter :verify_authenticity_token 
 
-  ADD_TASK_HOST                         = 'http://dump-them.appspot.com'
+  ADD_TASK_HOST                         = 'http://project-eagle.appspot.com'
   ADD_TASK_URI                          = '/schedule/'
   
   def intitiate_response_object    
@@ -38,9 +38,9 @@ class ServerCommunicationController < ApplicationController
     eta_time = time
     dump = Dump.create({:data => data.to_json})
 
-    query = "/schedule/perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+    query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
     
-    url = URI.parse("http://dump-them.appspot.com")
+    url = URI.parse(ADD_TASK_HOST)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = false
     headers = {}
@@ -50,7 +50,7 @@ class ServerCommunicationController < ApplicationController
   
   def perform_reminder
     dump = Dump.find(params[:key].to_i)
-    ConfirmMailer.deliver_reminder(JSON.parse(dump.data))
+    Mailer.deliver_reminder(JSON.parse(dump.data))
     render :nothing => true
   end
   

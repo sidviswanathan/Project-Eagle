@@ -1,4 +1,4 @@
-class ConfirmMailer < ActionMailer::Base
+class Mailer < ActionMailer::Base
   SIGNATURE = <<-eos
       Deep Cliff Golf Course <deepcliff@presstee.com>
       10700 Clubhouse Lane 
