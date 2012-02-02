@@ -93,7 +93,7 @@ class Reservation < ActiveRecord::Base
         
         # Schedule Tee Time Reminder
         ServerCommunicationController.schedule_mailing(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now)
-        if day_before_tt > today
+        if day_before_tt > Date.today
           ServerCommunicationController.schedule_mailing(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time)
         end
       else 
