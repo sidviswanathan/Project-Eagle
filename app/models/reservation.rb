@@ -15,7 +15,7 @@ class Reservation < ActiveRecord::Base
   CONFIRMATION_BODY = <<-eos
       This message is to confirm your teetime reservation at <coursename>. 
       
-      Customer       : <first> <last> <email>
+      Customer       : <first> <last> <<email>>
       Tee Time       : <teetime> for <golfers> golfers.
       Confirmation   : <confirm>
       
@@ -23,7 +23,7 @@ class Reservation < ActiveRecord::Base
       mobile app.  Therefore, if you do not plan on showing up to your teetime, please be sure to 
       cancel via the link below so we can make your slots available to other customers.  
       
-      Cancel         :  http://www.presstee.com/device_communication/cancel_reservation?q=<res_id>
+      Cancel         :  http://www.presstee.com/device_communication/cancel_reservation?course_id=<course_id>&confirmation_code=<confirm>
       
       Thanks for your business, and hope to see you soon!
       
@@ -37,7 +37,7 @@ class Reservation < ActiveRecord::Base
       link below so we can make your slots available to other customers.  
       
       Tee Time       :  <teetime> for <golfers> golfers.
-      Cancel         :  http://www.presstee.com/device_communication/cancel_reservation?q=<res_id>
+      Cancel         :  http://www.presstee.com/device_communication/cancel_reservation?course_id=<course_id>&confirmation_code=<confirm>
       
       Thanks again for your business.  
     eos
@@ -85,10 +85,10 @@ class Reservation < ActiveRecord::Base
           "last"  => user.l_name.capitalize,
           "email" => user.email,
           "confirm" => confirmation_code,
-          "res_id"  => r.id.to_s,
           "teetime" => Date.parse(date).strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
           "golfers" => golfers,
-          "coursename" => "Deep Cliff Golf Course"
+          "coursename" => course.name,
+          "course_id" => course.id.to_s
         }
         
         # Schedule Tee Time Reminder

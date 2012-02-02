@@ -6,6 +6,7 @@ class CreateCourses < ActiveRecord::Migration
       t.string :api_course_id
       t.text :fee_matrix
       t.text :available_times
+      t.text :info
       t.timestamps
     end
   end

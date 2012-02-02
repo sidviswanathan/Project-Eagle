@@ -15,7 +15,6 @@ class ServerCommunicationController < ApplicationController
   ADD_TASK_HOST                         = 'http://dump-them.appspot.com'
   ADD_TASK_URI                          = '/schedule/'
   
-  
   def intitiate_response_object    
     response_object              = Hash.new
     response_object[:status]     = "failure"
@@ -47,10 +46,6 @@ class ServerCommunicationController < ApplicationController
     headers = {}
 
     response = http.get(query, headers)
-    
-    #render :nothing => true
-
-    
   end
   
   def perform_reminder
@@ -59,21 +54,7 @@ class ServerCommunicationController < ApplicationController
     render :nothing => true
   end
   
-  def test_schedule
-    confirmation = <<-eos
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-        deserunt mollit anim id est laborum.
-      eos
-    puts confirmation
-    
-    render :nothing => true
-    #schedule_mailing(data,eta)
 
-  end
   
   
 end
