@@ -23,7 +23,7 @@ class Reservation < ActiveRecord::Base
       mobile app.  Therefore, if you do not plan on showing up to your teetime, please be sure to 
       cancel via the link below so we can make your slots available to other customers.  
       
-      Cancel         :  http://www.presstee.com/device_communication/cancel_reservation?course_id=<course_id>&confirmation_code=<confirm>
+      Cancel         :  http://www.presstee.com/cancel?course_id=<course_id>&confirmation_code=<confirm>
       
       Thanks for your business, and hope to see you soon!
       
@@ -37,7 +37,7 @@ class Reservation < ActiveRecord::Base
       link below so we can make your slots available to other customers.  
       
       Tee Time       :  <teetime> for <golfers> golfers.
-      Cancel         :  http://www.presstee.com/device_communication/cancel_reservation?course_id=<course_id>&confirmation_code=<confirm>
+      Cancel         :  http://www.presstee.com/cancel?course_id=<course_id>&confirmation_code=<confirm>
       
       Thanks again for your business.  
     eos
@@ -81,14 +81,14 @@ class Reservation < ActiveRecord::Base
         now = Time.now.strftime("%R")
         
         subs = {
-          "first" => user.f_name.capitalize,
-          "last"  => user.l_name.capitalize,
-          "email" => user.email,
-          "confirm" => confirmation_code,
-          "teetime" => Date.parse(date).strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
-          "golfers" => golfers,
+          "first"      => user.f_name.capitalize,
+          "last"       => user.l_name.capitalize,
+          "email"      => user.email,
+          "confirm"    => confirmation_code,
+          "teetime"    => Date.parse(date).strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
+          "golfers"    => golfers,
           "coursename" => course.name,
-          "course_id" => course.id.to_s
+          "course_id"  => course.id.to_s
         }
         
         # Schedule Tee Time Reminder
