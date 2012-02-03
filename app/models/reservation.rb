@@ -79,10 +79,14 @@ class Reservation < ActiveRecord::Base
         r.save
         puts "date ----------------------"
         puts date
+        
         if date.class() == Date
           day_before_tt = date - 1
+          date_date = date
         else
-          day_before_tt = Date.parse(date) - 1
+          date_date = Date.parse(date)
+          day_before_tt = date_date - 1
+          
         end
         
         today = Date.today.strftime("%F")
@@ -93,7 +97,7 @@ class Reservation < ActiveRecord::Base
           "last"       => user.l_name.capitalize,
           "email"      => user.email,
           "confirm"    => confirmation_code,
-          "teetime"    => Date.parse(date).strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
+          "teetime"    => date_date.strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
           "golfers"    => golfers,
           "coursename" => course.name,
           "course_id"  => course.id.to_s
