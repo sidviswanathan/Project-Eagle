@@ -76,6 +76,8 @@ class Reservation < ActiveRecord::Base
         r.confirmation_code = confirmation_code
         r.user = user
         r.save
+        puts "date ----------------------"
+        puts date
         day_before_tt = Date.parse(date) - 1
         today = Date.today.strftime("%F")
         now = Time.now.strftime("%R")
