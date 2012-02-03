@@ -78,7 +78,8 @@ class Reservation < ActiveRecord::Base
         r.save
         puts "date ----------------------"
         puts date
-        day_before_tt = Date.parse(date.to_s) - 1
+        puts date.type
+        day_before_tt = Date.parse(reservation_info[:date]) - 1
         today = Date.today.strftime("%F")
         now = Time.now.strftime("%R")
         
