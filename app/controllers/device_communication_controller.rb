@@ -137,12 +137,15 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT: {"status":"success","message":"The server successfully made the Reservation.book_tee_time() request","response":"","statusCode":200}
   
   def book_reservation
+    
     email       = params[:email]
     course_id   = params[:course_id]
     golfers     = params[:golfers]
     time        = params[:time]    
     date        = params[:date]    
     total       = params[:total]
+    
+    logger.info params
     
     response_object = intitiate_response_object
     reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
