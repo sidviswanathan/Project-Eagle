@@ -78,8 +78,7 @@ class Reservation < ActiveRecord::Base
         r.save
         puts "date ----------------------"
         puts date
-        puts date.type
-        if date.type == 'Date'
+        if date.class == Date
           day_before_tt = date - 1
         else
           day_before_tt = Date.parse(date) - 1
