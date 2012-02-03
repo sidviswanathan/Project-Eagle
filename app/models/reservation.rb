@@ -1,5 +1,6 @@
 require "net/http"
 require "net/https"
+require "date"
 
 class Reservation < ActiveRecord::Base
   
@@ -78,7 +79,7 @@ class Reservation < ActiveRecord::Base
         r.save
         puts "date ----------------------"
         puts date
-        if date.class == Date
+        if date.class() == Date
           day_before_tt = date - 1
         else
           day_before_tt = Date.parse(date) - 1
