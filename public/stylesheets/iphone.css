@@ -1,0 +1,1022 @@
+/************************ LISTS *************************/
+
+.content {
+    min-height: 480px;
+	background:#f2f2f2;
+}
+
+.content ul {
+    -webkit-padding-start: 0;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+	border-top: 1px solid #848284;
+    background-color: #f2f2f2;
+	font-family:Helvetica;
+}
+
+.content ul li.booked_tee_time {
+	display: block;
+    color: black;
+	min-height:80px;
+    border-bottom: 1px solid #848284;
+}
+
+.content ul li.booked_tee_time span {
+	font-size: 20px;
+	font-weight:normal;
+	display: inline;
+	float:left;
+	color:#D0D0D0;
+	border: 0px dotted;
+	margin:28px 0 0 10px;
+}
+
+.content ul li {
+    border-bottom: 1px solid #848284;
+}
+
+.content ul li span.title {
+    font-size: 20px;
+	font-weight:bold;
+	display: inline;
+	float:left;
+	color:black;
+	border: 0px dotted;
+	margin:28px 0 0 10px;
+}
+
+.content ul li a {
+    display: block;
+    color: black;
+	min-height:80px;
+	padding: 0px 0 0px 0;
+	border:0px dotted;
+}
+
+.content ul li a:active {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(5, 140, 245)), to(rgb(1, 95, 230)));
+}
+
+.content ul li a span.title {
+    font-size: 20px;
+	font-weight:bold;
+	display: inline;
+	float:left;
+	color:black;
+	border: 0px dotted;
+	margin:28px 0 0 10px;
+}
+
+.content ul li span.title4 {
+	display: block;
+    color: black;
+    font-size: 20px;
+    height: 100%;
+    width: 100%;
+    padding: 28px 0 32px 10px;
+	border:0px dotted;
+	font-weight: bold;
+	color:black;
+}
+
+.content ul li span.title5 {
+	display: block;
+    color: green;
+    font-size: 12px;
+    height: 100%;
+    width: 100%;
+    padding: 0 0 0 0;
+	border:0px dotted;
+	font-weight: bold;
+	color:#6bc008;
+}
+
+.content ul li span.disclosure_indicator {
+    background: url('/images/iphone/disclosure.png') no-repeat center right;
+    float: right;
+    display: inline;
+    height: 27px;
+    width: 34px;
+	border:0px dotted;
+	margin:30px 5px 0 0;
+}
+
+/************************ DATE PICKER *************************/
+
+#wrapper1 {
+	margin-top:-10px;
+	float:left;
+	border:0px dotted;
+}
+
+#wrapper2 {
+	margin-top:-35px;
+	float:left;
+	border:0px dotted;
+}
+
+#wrapper3 {
+	float:left;
+}
+
+#wrapper4 {
+	margin-top:-13px;
+	padding-right:10px;
+	margin-right:4px;
+	float:right;
+	border:0px dotted;
+}
+
+#wrapper4 {
+	margin-top:-7px;
+	padding-right:10px;
+	margin-right:4px;
+	float:right;
+	border:0px dotted;
+}
+
+#clear {
+	clear:both;
+}
+
+#day {
+	float:left;
+	border:0px dotted;
+	font-size:16px;
+	margin-top:5px;
+	font-weight:300;
+}
+
+#month {
+	float:left;
+	border:0px dotted;
+	font-size:16px;
+	font-weight:300;
+}
+
+#date {
+	top:0;
+	float:left;
+	font-size:44px;
+	font-weight:bold;
+	padding-left:3px;
+	border:0px dotted;
+}
+
+/************************ FORMS *************************/
+
+.content form {
+	padding: 5px 0 0 0;
+    border: none;
+    width: 300px;
+    margin: 0 auto;
+    font-size: medium;
+	background:#f2f2f2;
+}
+
+.content form ul {
+    -webkit-border-radius: 12px;
+    background-color: white;
+    border: 1px solid #ababab;
+    display: block;
+    font-size: 16px;
+    list-style-type: none;
+    margin: 0 auto 15px auto;
+    overflow: hidden;
+    padding: 0;
+}
+
+.content form ul li {
+}
+
+.content form input[type="text"], .content form input[type="password"] {
+	width: 289px;
+	height:50px;
+    padding: 0 0px 0 9px;
+	font-weight: normal;
+	outline:none;
+	color:black;
+	background:white;
+	-webkit-appearance: none;
+    border: none;
+}
+
+.content form ul li:last-child {
+    border-bottom: none;
+}
+
+/*
+.content ul.edit li:last-child {
+    min-height: 40px;
+}
+
+.content ul li:last-child {
+    border-bottom: none;
+    min-height: 70px;
+}
+
+
+
+.content ul li > span {
+    padding: 15px 0 15px 0;
+}
+
+.content ul li a:active {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(5, 140, 245)), to(rgb(1, 95, 230)));
+}
+
+.content ul li span.title {
+    padding: 0 10px 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline;
+}
+
+
+.content ul li a span.title {
+    padding: 0 10px 0 10px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline;
+}
+
+
+.content ul li span.title2 {
+    padding: 0 0 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline;
+	border:0px dotted;
+}
+
+.content ul li span.title3 {
+	display: block;
+    color: black;
+    font-size: 20px;
+    height: 100%;
+    width: 100%;
+    padding: 28px 0 32px 10px;
+	border:0px dotted;
+	font-weight: bold;
+	color:#bebfbd;
+}
+
+.content ul li span.title4 {
+	display: block;
+    color: black;
+    font-size: 20px;
+    height: 100%;
+    width: 100%;
+    padding: 28px 0 32px 10px;
+	border:0px dotted;
+	font-weight: bold;
+	color:black;
+}
+
+.content ul li span.title5 {
+	display: block;
+    color: green;
+    font-size: 12px;
+    height: 100%;
+    width: 100%;
+    padding: 5px 0 0 0;
+	border:0px dotted;
+	font-weight: bold;
+	color:green;
+}
+
+.content ul li div.itemLabel {
+    float: left;
+    width: 45%;
+    padding: 15px 0 15px 10px;
+}
+
+.content ul li div.itemValue {
+    float: right;
+    width: 45%;
+    padding: 15px 10px 15px 0;
+}
+
+.content ul li a span.disclosure_indicator {
+    background: url('/public/images/iphone/disclosure.png') no-repeat center right;
+    height: 25px;
+    width: 35px;
+    float: right;
+    margin-right: 10px;
+    display: inline;
+	border:0px dotted;
+}
+
+.content ul li a span.detail_disclosure {
+    background: url('/public/images/iphone/disclosure_detail.png') no-repeat center right;
+    height: 27px;
+    width: 34px;
+    float: right;
+    margin-right: 10px;
+    display: inline;
+}
+
+.content ul li a span.detail_disclosure2 {
+    background: url('/public/images/iphone/disclosure_detail.png') no-repeat center right;
+    height: 27px;
+    width: 34px;
+    float: right;
+    margin-right: 10px;
+    display: inline;
+}
+
+.content ul li a img {
+    float: left;
+    height: 100%;
+    max-width: 100px;
+}
+
+*/
+
+.boxed-disclosure {
+    background: url('/public/images/iphone/disclosure.png') no-repeat center right;
+    float: right;
+    display: inline;
+    height: 27px;
+    width: 20px;
+	border:0px dotted;
+	margin-right:-8px;
+}
+
+.boxed
+{
+	height: 145px;
+	background: #f2f2f2;
+	color:black;
+}
+
+.boxeda
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	border-radius: 0.5em;
+	background: white;
+	margin:10px;
+	height: 137px;
+}
+
+.boxeda:hover
+{
+	background:#0b78e7;
+}
+
+.boxedbig
+{
+	background: #0D1D03;
+	width: inherit;
+    height: 100%;
+}
+
+.boxedb
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	background: white;
+	height: 50px;
+	margin-top:35px;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.boxedc
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	background: white;
+	height: 25px;
+	margin-top:-4px;
+	margin-left:0.5px;
+	margin-right:0.5px;
+}
+
+.boxeda a {
+    color: black;
+    font-size: 14px;
+    height: 100%;
+    width: 100%;
+	border:0px dotted;
+}
+
+.boxeda img
+{ 
+    width: 72px; 
+	margin-top: 4px;
+	margin-left: 2px;
+}
+
+.boxedb a {
+    color: black;
+    font-size: 14px;
+    height: 100%;
+    width: 100%;
+	border:0px dotted;
+	margin-left:20px;
+}
+
+.boxedb img
+{ 
+    width: 40px; 
+	margin-top: 0px;
+	margin-left: 2px;
+}
+
+.boxed1
+{
+	min-height: 45px;
+	background: #f2f2f2;
+	color:black;
+}
+
+.boxed1a
+{
+	-webkit-border-radius: 0.5em;
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	background: white;
+	margin:10px;
+	height: 43px;
+	line-height: 43px;
+	text-align: center;
+}
+.boxed1ax
+{
+	-webkit-border-radius: 0.5em;
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	background: white;
+	margin:10px;
+	min-height: 43px;
+	text-align: center;
+}
+.more_details{
+	display:none;
+}
+.boxed1a:hover
+{
+	background:#0b78e7;
+}
+
+.boxed2
+{
+	background:white;
+	margin:10px;
+    -webkit-border-radius: 0.5em;
+    border: 1px solid #ababab;
+    display: block;
+    list-style-type: none;
+    overflow: hidden;
+    padding: 0;
+	color:black;
+}
+
+.boxed2a
+{
+    display: block;
+    border-bottom: 1px solid #ababab;
+	line-height: 43px;
+    height: 61px;
+	text-align: center;
+}
+
+.boxed2b
+{
+    display: block;
+    border-bottom: 1px solid #ababab;
+	line-height: 43px;
+    height: 43px;
+	text-align: center;
+	border:0;
+}
+
+table.center {margin-left:auto; margin-right:auto;margin-top:7px;}
+table.center1 {margin-left:auto; margin-right:auto;margin-top:9px;}
+table.force {margin-left:20px;margin-top:-8px;}
+
+
+}
+.boxed2a a {
+    color:#516691;
+    text-decoration: none;
+	margin-bottom:5px;
+	font-family:helvetica;
+}
+
+a.force { color: #bebfbd; font-size:13px; font-family: helvetica;margin-top:-10px;}
+a.espopen { color: green; font-family: helvetica;}
+a.espclose { color: red; font-family: helvetica;}
+a.hour { margin-left:40px; color:#516691; font-family: helvetica;}
+a.day { margin-left:17px; color:black; font-family: helvetica;}
+a.course { margin-left:58px; color:#516691; font-family: helvetica;}
+a.rates { margin-left:17px; color:black; font-family: helvetica;}
+a.details {color:#bebfbd; font-size: 13px; font-family: helvetica;}
+a.yes { text-decoration:  none;color:black; font-size: 13px; font-family: helvetica;}
+
+.boxedmore
+{
+	height: 150px;
+	background: #f2f2f2;
+	border-style:solid;
+	border-width:1px;
+}
+
+.boxed1more
+{
+	height: 100px;
+	background: #f2f2f2;
+}
+
+.boxed1morea
+{
+	background: #f2f2f2;
+	margin-top:3px;
+	margin-left:8px;
+	margin-right:8px;
+	height: 98px;
+}
+
+.boxed1more img
+{ 
+    width:300px;
+ 	margin-left:2px;
+	margin-top:1px;
+	height:97px;
+}
+
+.boxed2more
+{
+	height: 45px;
+	background: #f2f2f2;
+}
+
+.boxed2morea
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	border-radius: 0.5em;
+	background: white;
+	margin-top:3px;
+	margin-left:8px;
+	margin-right:8px;
+	height: 42px;
+	line-height: 42px;
+}
+
+.boxed2moreb
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	border-radius: 0.5em;
+	background: white;
+	margin-top:3px;
+	margin-left:8px;
+	margin-right:8px;
+	height: 42px;
+	line-height: 42px;
+	text-align: center;
+}
+
+.boxed3more
+{
+	height: 125px;
+	background: #f2f2f2;
+}
+
+
+.boxed3morea
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	border-radius: 0.5em;
+	background: white;
+	margin-top:3px;
+	margin-left:8px;
+	margin-right:8px;
+	height: 112px;
+}
+
+.boxed3morea table
+{
+	margin-top:6px;
+}
+
+/********************** ABOUT US ***********************/
+
+.wrapper_flexible
+{
+	-webkit-border-radius: 0.5em;
+	border-style:solid;
+	border-width:1px;
+	border-color:#ababab;
+	background: white;
+	margin:10px;
+	line-height: 15px;
+	text-align: center;
+}
+
+.heading
+{
+	background: black;
+	padding: 12px;
+	height: 12px;
+}
+
+.heading h1{
+	font-size: 0.65em;
+	color: white;
+	text-align:right;
+	margin-left:20px;
+}
+
+.postheader
+{
+	background: #bebfbd;
+	padding: 7px;
+	height: 12px;
+	border: 1px dottted;
+	border-color: black;
+}
+
+.postheader h1{
+	margin-top:0px;
+	font-size: 0.75em;
+	color: white;
+	text-align:left;
+}
+
+a {
+    text-decoration: none;
+	color:#516691;	
+}
+
+
+.content {
+    width: inherit;
+    height: 100%;
+}
+
+.toolbar .noButton {
+    display: none;
+}
+
+body {
+    margin: 0;
+    font-family: Helvetica;
+}
+
+h1 {
+    font-size: 1.4em;
+}
+
+/* header */
+
+.pageTitle h1 {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto 0 auto;
+    line-height: 50px;
+    color: white;
+    text-shadow: 1px 1px 1px #000;
+}
+
+/* button */
+
+.reserve_button{
+    
+    background:transparent url('/public/images/button.png') no-repeat scroll 0 0;
+    width: 100px;
+    height: 100px;
+}
+
+/* toolbar */
+
+.toolbar {
+    width: 100%;
+    height: 50px;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #aebbcb), color-stop(0.5, #8094ae), color-stop(1.0, #6e84a2));
+    text-align: center;
+}
+
+.toolbar div {
+    position: absolute;
+    overflow: hidden;
+    text-align: center;
+}
+
+.toolbar .leftItem {
+    top: 12px;
+    left: 10px;
+    width: 20px;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.toolbar .centerItem {
+    bottom: 50px;
+    height: 50px;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto 0 auto;
+    line-height: 50px;
+    color: white;
+    text-shadow: 1px 1px 1px #000;
+    font-size: 22px;
+}
+
+.toolbar .rightItem {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.toolbar a {
+    color: white;
+    display: block;
+    line-height: 30px;
+}
+
+.toolbar .backButton {
+    -webkit-border-bottom-left-radius: 16px 16px;
+    -webkit-border-bottom-right-radius: 6px 6px;
+    -webkit-border-image: url('/public/images/backButton.png') 0 5 0 13 stretch stretch;
+    -webkit-border-top-left-radius: 16px 16px;
+    -webkit-border-top-right-radius: 6px 6px;
+    border-width: 0 5px 0 13px;
+    width: auto;
+    font-size: .9em;
+    z-index: 3;
+}
+
+.toolbar .deleteButton,
+.toolbar .regularButton,
+.toolbar .blueButton {
+    -webkit-border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+    width: auto;
+    height: 30px;
+    font-size: .9em;
+    border-left: #5e7088 1px solid;
+    border-right: #5e7088 1px solid;
+    border-top: #34404e 1px solid;
+    border-bottom: #34404e 1px solid;
+    padding: 0 2px 0 2px;
+}
+
+.toolbar .deleteButton {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #aebbcb), color-stop(0.5, #8094ae), color-stop(1.0, #6e84a2));
+}
+
+.toolbar .regularButton {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #92a4bc), color-stop(0.5, #476997), color-stop(1.0, #4e6c92));
+}
+
+.toolbar .blueButton {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #6f96e9), color-stop(0.5, #3366cc), color-stop(1.0, #3366cc));
+    border: #1a49b3 1px solid;
+}
+
+
+.content form button.createButton {
+    position: absolute;
+    bottom: 20px;
+    height: 35px;
+}
+
+.content .standardButton {
+    -webkit-appearance: none;
+    -webkit-border-radius: 8px;
+    background: white;
+    color: #436395;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+    height: 40px;
+    border: 1px solid black;
+    margin-top: 10px;
+}
+
+.content .greenBox {
+    background: url('/public/images/iphone/icons/3_bubble.png');
+	width:100px;
+}
+
+
+.panel > h2 {
+    margin: 0 0 8px 14px;
+    font-size: inherit;
+    font-weight: bold;
+    color: #4d4d70;
+    text-shadow: rgba(255, 255, 255, 0.75) 2px 2px 0;
+}
+
+body > .panel {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding: 10px;
+    background: #c8c8c8 url('/public/images/pinstripes.png');
+}
+
+.panel > fieldset {
+    position: relative;
+    margin: 0 0 20px 0;
+    padding: 0;
+    background: #FFFFFF;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border: 1px solid #999999;
+    text-align: right;
+    font-size: 16px;
+}
+
+ul.edit li.input1{
+    height:5px;
+    list-style-type:none;
+    overflow:hidden;
+    width:300px;
+}
+
+ul.edit li.login_token{
+    height:5px;
+    list-style-type:none;
+    overflow:hidden;
+    padding:0px;
+    width:300px;
+}
+
+
+.content .standardButton a {
+    display: block;
+    width: 100%;
+    color: #436395;
+    text-align: center;
+    line-height: 40px;
+}
+
+/*  text styles  */
+
+.darkBlue {
+    color: #7287A4;
+}
+
+.content h2.groupTitle {
+    font-size: 16px;
+    margin: 8px;
+    color: #565E70;
+}
+
+
+/* Settings */
+
+.content ul.settings {
+    padding: 0;
+    margin: 0;
+}
+
+.content ul.settings li.alertMessage {
+    text-align: center;
+}
+
+.content ul.settings li span {
+    line-height: 40px;
+}
+
+.content ul.settings li.alertMessage span.message {
+    color: red;
+}
+
+.content ul.settings li span.clientID {
+    margin-left: 4px;
+    font-size: 10px;
+}
+
+.content ul.settings li div.itemLabel span.title {
+    padding: 0;
+    margin: 0;
+}
+
+.content .reset {
+    height: 100%;
+    width: 300px;
+    padding: 10px;
+}
+
+.content .reset h4 {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin: 0 8px;
+    color: #565E70;
+}
+
+
+
+/* Override some styles provided by iphone.css to make them match the real iPhone more closely. */
+
+.toolbar {
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(0, rgb(000,000,000)), color-stop(0.5, rgb(000,000,000)), color-stop(0.51, rgb(000,000,000)), color-stop(1, rgb(000,000,000)));
+	border-top: 1px solid #CDD5Df;
+	border-bottom: 1px solid #2D3642; 
+}
+
+.toolbar a { font-weight: bold; }
+
+.pageTitle { width: 50%; margin:0 auto; }
+
+.pageTitle h1 {
+	text-shadow: rgba(0,0,0,0.6) 0px -1px 0;
+	width: 50%;  /* Should match pageTitle's width. */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space:nowrap;
+}
+
+/* --- Controls the switcher buttons, trying to emulate the native switcher control. --- */
+
+/* Use the following pattern in your HTML code to implement it:
+
+  <div class="switcher">
+	<div class="ls-button ls-pressed ls-left"><a href="#">Left Button</a></div>
+	<div class="ls-button ls-center"><a href="#">Center Button</a></div>
+	<div class="ls-button ls-right ls-disabled"><a href="#">Right Button</a></div>
+  </div>
+  
+  */
+
+/* Use on the div containing your button options. */
+.switcher {
+	text-align:center;
+	position:relative;
+	position:relative;
+	width:250px;
+	margin:0 auto;
+	padding-top:10px;
+	height:30px;
+}
+
+/* All button divs must contain an <a> tag with the button's label in it. */
+.switcher a {
+	color:#fff;
+	text-shadow: rgba(0,0,0,0.5) 0px -1px 0;
+	font-weight:bold;
+	font-size:smaller;
+}
+
+	/* Include the .ls-button style on each button div. */
+	.switcher .ls-button {
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(171,185,202)), color-stop(0.5, rgb(130,151,175)), color-stop(0.51, rgb(118,139,167)), color-stop(1, rgb(120,141,169)));
+		width:80px;  /* NOTE: If you only want to use 2 buttons, increase width to something more like 125px, and change margin to 0 -3px. */
+		height:15px;
+		display:inline-block;
+		padding-bottom:8px;
+		margin:0 -2px;
+		border:1px solid #000;
+		text-align:center;
+	}
+
+	/* Indicates the currently active (pressed) button. */
+	.switcher .ls-pressed {
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(142,164,193)), color-stop(0.5, rgb(88,119,162)), color-stop(0.51, rgb(71,105,153)), color-stop(1, rgb(74,108,152)));
+	}
+
+	.switcher .ls-left {
+		-webkit-border-top-left-radius: 4px;
+		-webkit-border-bottom-left-radius: 4px;
+	}
+
+	.switcher .ls-center {
+		border-right:none;
+		border-left:none;
+	}
+
+	.switcher .ls-right {
+		-webkit-border-top-right-radius: 4px;
+		-webkit-border-bottom-right-radius: 4px;
+	}
+
+	/* If an option should not be available, you can use the .ls-disabled class to gray it out. */
+	.switcher .ls-disabled {
+		background:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(158,158,158)), color-stop(0.95, rgb(204,204,204)))
+	}
+
+	/* However, even with disabled classes you must still include an <a> tag. Just have it go href="#" */
+	.switcher .ls-disabled a {
+		color:#f0f0f0;
+	}
+

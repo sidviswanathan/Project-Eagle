@@ -13,6 +13,8 @@ config.action_view.cache_template_loading            = true
 require 'active_support/cache/dalli_store23'
 config.cache_store = :dalli_store
 
+config.serve_static_assets = true
+
 # See everything in the log (default is :info)
 # config.log_level = :debug
 

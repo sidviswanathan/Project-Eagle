@@ -1,0 +1,118 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Deep Cliff Golf Course</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	
+	
+	<script type='text/javascript'>
+	$(document).bind("mobileinit", function(){
+	  $.mobile.touchOverflowEnabled = true;
+	});
+	</script>
+	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+	<%= stylesheet_link_tag "iphone" %>
+	<style type='text/css'>
+	div.content{
+		min-height:1000px;
+	}
+	</style>
+</head> 
+<body> 
+
+<div data-role="page" class='type-interior'>
+
+	<div data-position="fixed" data-role="header">
+		<h1><%= @course.name %></h1>
+	</div><!-- /header -->
+
+	  <div class="content">
+
+
+		<ul>
+
+			<!--##########################################-->
+			<!--Number of Golfers-->
+			<!--##########################################-->
+
+			<li>				
+		  		<a href="javascript:changePage('<%= url_for :controller => :Product, :action => :num, :query => {:timeview => @params["timeview"], :time => @time, :date => @date, :num =>@num, :num_range => @num_range} %>')" ><%= image_tag "iphone/icons/Icon_3.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @num %> Golfers</span><span class="disclosure_indicator"/></a>
+		  	</li>
+
+
+			<!--##########################################-->
+			<!--Date Picker-->
+			<!--##########################################-->
+
+			<li>
+		  		<a href="javascript:datePicker()" id="datePicker" data-transition="slideup"><%= image_tag "iphone/icons/Icon_2.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %>
+		    		<span class="title">&nbsp;
+						<div id="wrapper2">
+					      <div id="wrapper3">
+					        <div id="day"><%= Time.parse(@date).strftime('%a').upcase %></div>
+					        <div id="clear"></div>
+					        <div id="month"><%= Time.parse(@date).strftime('%b').upcase %></div>
+					      </div>
+					      <div id="date"><%= Time.parse(@date).strftime('%d') %></div>
+					    </div>
+		    		</span>
+		    		<span class="disclosure_indicator"/>
+				</a>
+		  	</li>
+
+			<!--##########################################-->
+			<!--Tee Time-->
+			<!--##########################################-->
+
+			<% if $timeview == nil or $timeview == ""  %>
+		    	<li>
+		    		<a href="javascript:changePage('<%= url_for :controller => :Product, :action => :timelist, :query => {:date => @date, :num => @num} %>')" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title">Tee Time</span><span class="disclosure_indicator"/></a>
+		    	</li>
+		  	<% else %>
+		    	<li>
+					<a href="javascript:changePage('<%= url_for :controller => :Product, :action => :timelist, :query => {:date => @date, :num => @num,:timeview => @params["timeview"], :time => @time} %>')" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= $timeview %> <%= $time_string %></span><span class="disclosure_indicator"/></a>
+		    	</li>
+		  	<%end%>
+
+			<!--##########################################-->
+			<!--Reserve Button-->
+			<!--##########################################-->
+
+		  	<% if $timeview == nil or $timeview == "" %>
+		    	<center>
+		    	<a href="javascript:callNoTeeTimeSelected()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+		  	<% else%>
+		    	<% $user = User.find(:all) %>
+		    	<% if $user.empty? %>
+		      		<center>
+	<!--
+	                   <a href="javascript:callReserveTime()"><img border="0" width="300" style="padding-top:28px" src="/public/images/button.png"/></a>
+	-->
+		      		<a href="javascript:callUserSignIn()"><%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+		    	<% else %>
+		      		<center>
+	                   <a href="javascript:callReserveTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+		    	<% end %>
+		  	<% end %>
+		</ul>
+
+	  </div>			
+
+
+	<div data-role="footer" data-theme="a" data-position="fixed">		
+		<div data-role="navbar" data-theme="a">
+				<ul>
+					<li><a class="ui-btn-active" href="#">Tee Times</a></li>
+					<li><a href="#">Reservations</a></li>
+					<li><a href="#">About Us</a></li>
+				</ul>
+			</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+</body>
+</html>

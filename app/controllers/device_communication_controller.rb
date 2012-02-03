@@ -57,6 +57,25 @@ class DeviceCommunicationController < ApplicationController
   # = http://presstee.com/device_communication/login =================
   # ===================================================================
   
+  def index
+    email        = params[:email]
+    f_name       = params[:f_name]
+    l_name       = params[:l_name]
+    device_name  = params[:device_name]
+    os_version   = params[:os_version]
+    app_version  = params[:app_version]
+    @course_id    = params[:course_id]
+    @time         = params[:time]    
+    @date         = params[:date]
+    @params      = params
+    response_object = intitiate_response_object
+    
+    @course = Course.find(@course_id.to_i)
+    
+    render 'mobile/index'
+    
+  end
+  
   def login 
     email        = params[:email]
     f_name       = params[:f_name]
