@@ -99,13 +99,5 @@ function switchTab(which){
 	<%end%>
 
  </div>
-	<div data-role="footer" data-id="footer_bottom" data-tap-toggle="false"  data-theme="a" data-position="fixed">		
-		<div data-role="navbar" data-theme="a">
-				<ul>
-					<li><a class="ui-btn-active" href="/mobile/">Tee Times</a></li>
-					<li><a href="/mobile/reservations">Reservations</a></li>
-					<li><a href="/mobile/about">About Us</a></li>
-				</ul>
-			</div><!-- /navbar -->
-	</div><!-- /footer -->
+	<%= render :partial => "footer", :locals => { :app => @app } %>
 </div>

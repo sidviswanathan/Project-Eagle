@@ -24,14 +24,6 @@
 	  <% end %>
   	</ul>
 	</div>
-	<div data-role="footer" data-id="footer_bottom" data-tap-toggle="false"  data-theme="a" data-position="fixed">		
-		<div data-role="navbar" data-theme="a">
-				<ul>
-					<li><a class="ui-btn-active" href="#">Tee Times</a></li>
-					<li><a href="#">Reservations</a></li>
-					<li><a href="#">About Us</a></li>
-				</ul>
-			</div><!-- /navbar -->
-	</div><!-- /footer -->
+	<%= render :partial => "footer", :locals => { :app => @app } %>
 
 </div>
