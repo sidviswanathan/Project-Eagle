@@ -1,6 +1,6 @@
 <div data-role="page" data-theme="a" data-cache="never">
   
-  <div data-role="header" data-id="header_top" data-backbtn="true">
+  <div data-role="header" data-id="header_top" data-tap-toggle="false" data-backbtn="true">
     <h1><%= @app.course.name %></h1>
     <a data-icon="back" data-transition="reverse slide" href="<%= @app.get_url('',{}) %>">Back</a>
   </div>
@@ -29,5 +29,14 @@
 	    	<a href="<%= @app.get_url('',{:date=>@app.d[6]}) %>" data-transition="slide"><span class="title"><%= @app.d2[6] %></span><span class="disclosure_indicator"/></a>
 	    </li>
   </ul>
+	<div data-role="footer" data-id="footer_bottom" data-tap-toggle="false"  data-theme="a" data-position="fixed">		
+		<div data-role="navbar" data-theme="a">
+				<ul>
+					<li><a class="ui-btn-active" href="#">Tee Times</a></li>
+					<li><a href="#">Reservations</a></li>
+					<li><a href="#">About Us</a></li>
+				</ul>
+			</div><!-- /navbar -->
+	</div><!-- /footer -->
 
 </div>
