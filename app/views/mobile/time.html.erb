@@ -1,6 +1,6 @@
 <div data-role="page" data-theme="a" data-cache="never">
   
-  <div data-role="header" data-id="header_top" data-backbtn="true">
+  <div data-role="header" data-id="header_top" data-tap-toggle="false"   data-transition="none" data-fullscreen="true"  data-backbtn="true">
     <h1><%= @app.course.name %></h1>
     <a data-icon="back" data-transition="reverse slide" href="<%= @app.get_url('',{}) %>">Back</a>
   </div>
@@ -23,7 +23,7 @@
 	    <% end %>
 	  <% end %>
   	</ul>
-	<div data-role="footer" data-id="footer_bottom" data-tap-toggle="false"  data-theme="a" data-position="fixed">		
+	<div data-role="footer" data-id="footer_bottom" data-tap-toggle="false"  data-transition="none" data-fullscreen="true"  data-theme="a" data-position="fixed">		
 		<div data-role="navbar" data-theme="a">
 				<ul>
 					<li><a class="ui-btn-active" href="#">Tee Times</a></li>
