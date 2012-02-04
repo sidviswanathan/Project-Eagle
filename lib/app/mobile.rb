@@ -38,6 +38,6 @@ class MobileApp
   end
   def get_url(action,new_params)
     @params = @params.merge(new_params)
-    uri = "/device_communication/#{action}#{get_query}"
+    uri = "/mobile/#{action}#{get_query}"
   end
 end

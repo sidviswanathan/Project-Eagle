@@ -1,3 +1,11 @@
+require 'pp'
+require 'json'
+require 'apns'
+require 'xmlsimple'
+require 'date'
+require 'lib/api/fore.rb'
+require 'lib/app/mobile.rb'
+
 class MobileController < ApplicationController
   skip_before_filter :verify_authenticity_token 
 
@@ -13,10 +21,42 @@ class MobileController < ApplicationController
     return response_object
   end
   
+  def get_mobile_app(params)
+    return MobileApp.new(params)
+  end
+  
+  
   def index
-    @course = Course.find(1)
-    @params = params
-    @date = "2012-"
+    @app = get_mobile_app(params)
+    response_object = intitiate_response_object
+    render 'mobile/index'
+    
+  end
+  
+  def app_num
+    @app = get_mobile_app(params)
+    response_object = intitiate_response_object
+    render 'mobile/num'
+    
+  end
+  
+  def app_date
+    @app = get_mobile_app(params)
+    response_object = intitiate_response_object
+    render 'mobile/date'
+    
+  end
+  
+  def app_test
+    render 'mobile/test'
+  end
+  
+  def app_times
+    @app = get_mobile_app(params)
+    @times = Course.get_available_times(@app.course,params[:date])
+    response_object = intitiate_response_object
+    render 'mobile/time'
+    
   end
 
 end

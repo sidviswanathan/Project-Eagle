@@ -60,43 +60,7 @@ class DeviceCommunicationController < ApplicationController
   # Mobile App Port (should probably be its own controller)
   
 
-  def get_mobile_app(params)
-    return MobileApp.new(params)
-  end
-  
-  
-  def index
-    @app = get_mobile_app(params)
-    response_object = intitiate_response_object
-    render 'mobile/index'
-    
-  end
-  
-  def app_num
-    @app = get_mobile_app(params)
-    response_object = intitiate_response_object
-    render 'mobile/num'
-    
-  end
-  
-  def app_date
-    @app = get_mobile_app(params)
-    response_object = intitiate_response_object
-    render 'mobile/date'
-    
-  end
-  
-  def app_test
-    render 'mobile/test'
-  end
-  
-  def app_times
-    @app = get_mobile_app(params)
-    @times = Course.get_available_times(@app.course,params[:date])
-    response_object = intitiate_response_object
-    render 'mobile/time'
-    
-  end
+
   
   # ===================================================================
   # = http://presstee.com/device_communication/login =================
