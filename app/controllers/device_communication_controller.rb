@@ -69,6 +69,7 @@ class DeviceCommunicationController < ApplicationController
     user = User.login(f_name, l_name, email, device_name, os_version, app_version)
     
     if user
+      session[:current_user_id] = user.id
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server successfully created a User record"

@@ -56,7 +56,9 @@
 		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
 
 	});
-	
+	function callUserSignIn(){
+		alert("Hello New User");
+	}
 	function changePage(where){
 		$.mobile.changePage(where, {transition: 'slide', showLoadMsg:false});
 	}
@@ -240,8 +242,7 @@
 		    	<center>
 		    	<a href="javascript:callNoTeeTimeSelected()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		  	<% else%>
-		    	<% $user = User.find(:all) %>
-		    	<% if $user.empty? %>
+		    	<% if @app.user == nil or !@app.user %>
 		      		<center>
 	<!--
 	                   <a href="javascript:callReserveTime()"><img border="0" width="300" style="padding-top:28px" src="/public/images/button.png"/></a>
