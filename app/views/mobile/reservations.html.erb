@@ -1,0 +1,111 @@
+<script type="text/javascript">
+
+  $(document).ready(function(){
+      
+  });
+
+var cancel_which = "";
+  function callCancelBooking(which) {
+	cancel_which = which;
+
+    //$('.ui-loader').fadeIn(100);
+    $.post("/app/Product/cancel_booking", { confirmation_code:which },
+      function(data){
+        //$('#r_'+cancel_which).remove();
+    });
+  }
+
+function openReservation(which,id){
+	$.get("/app/Product/view_reservation",{rid:which});
+}
+function switchTab(which){
+	$.get("/app/Product/switchTab",{nt:which})
+}
+
+</script>
+<div data-role="page" data-theme="a" data-cache="always">
+  
+  <div data-role="header" data-backbtn="false">
+    <h1>My Reservations</h1>
+  </div>
+
+  <div class="content">
+  	
+	<% if !@uEmail.nil? %>
+	
+	<!--	
+		<div class= "heading">
+			<h1><%= @uFname %> <%= @uLname %></h1>
+			<h1><%= @uEmail %></h1>
+		</div>
+ 	-->	
+				
+		
+		<div class= "postheader">
+			<h1><b>UPCOMING TEE TIMES</b></h1> 
+		</div>
+
+		
+		<ul>	
+			<% @allUserReservations.reverse.each do |r| %>
+				<% if (Time.parse(r.user_book_date) - Time.new) > 0%>
+				<li id='r_<%= r.confirmation_code %>'><a href="/app/Product/view_reservation?rid=<%= r.confirmation_code %>">
+					<span class="title4">&nbsp;
+						<div id="wrapper1">
+							<div id="wrapper3">
+								<div id="day"><%= Time.parse(r.user_book_date).strftime('%a').upcase %></div>
+								<div id="clear"></div>
+								<div id="month"><%= Time.parse(r.user_book_date).strftime('%b').upcase %></div>
+							</div>
+							<div id="date"><%= Time.parse(r.user_book_date).strftime('%d') %></div>
+						</div>
+						
+						<div id ="wrapper4" style='margin-right:32px'><%=Time.parse(r.user_book_time).strftime('%I:%M') %>
+							<span class="title5"><%= r.user_book_golfers %> Golfers</span>
+						</div>
+					</span></a><span class="disclosure_indicator" style='margin-top:-57px'/>
+				</li>
+				<% end %>
+			<% end %>
+			
+			<div class= "postheader">
+				<h1><b>PREVIOUS BOOKINGS</b></h1> 
+			</div>
+			
+			<% @allUserReservations.reverse.each do |r| %>
+				<% if (Time.parse(r.user_book_date) - Time.new) <= 0%>
+					<li>	
+						<span class="title4">&nbsp;
+							<div id="wrapper1">
+								<div id="wrapper3">
+									<div id="day"><%= Time.parse(r.user_book_date).strftime('%a').upcase %></div>
+									<div id="clear"></div>
+									<div id="month"><%= Time.parse(r.user_book_date).strftime('%b').upcase %></div>
+								</div>
+								<div id="date"><%= Time.parse(r.user_book_date).strftime('%d') %></div>
+							</div>
+							
+							<div id ="wrapper4" style='margin-right:32px'><%=Time.parse(r.user_book_time).strftime('%I:%M') %>
+								<span class="title5"><%= r.user_book_golfers %> Golfers</span>
+							</div>
+						</span>
+					</li>
+				<%end%>
+			<% end %>
+		</ul>     
+		          
+	<%else%>
+		<img onclick="switchTab('0');" style='width:100%;height:85%' src='/public/images/empty_data_set.png' />
+	<%end%>
+
+ </div>
+	<div data-role="footer" data-id="footer_bottom" data-tap-toggle="false"  data-theme="a" data-position="fixed">		
+		<div data-role="navbar" data-theme="a">
+				<ul>
+					<li><a class="ui-btn-active" href="/mobile/">Tee Times</a></li>
+					<li><a href="/mobile/reservations">Reservations</a></li>
+					<li><a href="/mobile/about">About Us</a></li>
+				</ul>
+			</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div>

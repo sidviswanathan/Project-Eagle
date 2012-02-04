@@ -8,8 +8,7 @@
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
 
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-	<link rel="stylesheet" href="/stylesheets/add2home.css">
-	<script type="application/javascript" src="/javascripts/add2home.js"></script>
+
 	
 	
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -134,15 +133,7 @@
 	  </div>			
 
 
-	<div data-role="footer" data-id="footer_bottom" data-tap-toggle="false"  data-theme="a" data-position="fixed">		
-		<div data-role="navbar" data-theme="a">
-				<ul>
-					<li><a class="ui-btn-active" href="#">Tee Times</a></li>
-					<li><a href="#">Reservations</a></li>
-					<li><a href="#">About Us</a></li>
-				</ul>
-			</div><!-- /navbar -->
-	</div><!-- /footer -->
+	<%= render :partial => "footer", :locals => { :app => @app } %>
 </div><!-- /page -->
 
 </body>

@@ -44,4 +44,14 @@ class MobileApp
     @params = @params.merge(new_params)
     uri = "/mobile/#{action}#{get_query}"
   end
+  
+  def is_active(act)
+    if @params[:action] == act
+      return true
+    else
+      return false
+    end
+  end
+  
+  
 end
