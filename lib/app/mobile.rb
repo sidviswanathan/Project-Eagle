@@ -22,10 +22,11 @@ class MobileApp
     @date = params[:date]
     @params = params
     @request = request
-    if !@golfers.nil? and !params[:price].nil?
+    begin
       @total = (params[:golfers].to_i * params[:price].to_i).to_s
+    rescue
+      @total = ""
     end
-    @total = ""
     @user ||= session[:current_user_id] && User.find_by_id(session[:current_user_id])
     today = Date.today
     
