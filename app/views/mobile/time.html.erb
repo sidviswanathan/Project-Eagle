@@ -7,7 +7,7 @@
   <div class="content">
 
 	<ul>
-	  <% @app.times.each do |i| %>
+	  <% @times.each do |i| %>
 	  	<% @time12hr = Time.parse(i['t']) %>
 	    <% @timeview = @time12hr.strftime("%I:%M") %>
 	    <% if i['q'].to_i > 1 %>
