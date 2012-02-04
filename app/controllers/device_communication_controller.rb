@@ -76,6 +76,7 @@ class DeviceCommunicationController < ApplicationController
       response_object[:message]    = "The server successfully created a User record"
       if !redirect.nil?
         puts user.id
+        render :nothing => true
       else
         render :json => response_object.to_json
       end
