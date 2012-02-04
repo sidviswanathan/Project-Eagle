@@ -25,9 +25,7 @@ function switchTab(which){
 </script>
 <div data-role="page" data-theme="a" data-cache="always">
   
-  <div data-role="header" data-backbtn="false">
-    <h1>My Reservations</h1>
-  </div>
+  <%= render :partial => "header", :locals => { :app => @app } %>
 
   <div class="content">
   	

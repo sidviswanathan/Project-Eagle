@@ -1,9 +1,6 @@
 <div data-role="page" data-theme="a" data-cache="never">
   
-  <div data-role="header" data-id="header_top" data-backbtn="true">
-    <h1><%= @app.course.name %></h1>
-    <a data-icon="back" data-transition="reverse slide" href="<%= @app.get_url('',{}) %>">Back</a>
-  </div>
+  <%= render :partial => "header", :locals => { :app => @app } %>
   <div class="content" style='padding-top:0em'>
 
 	<ul>
