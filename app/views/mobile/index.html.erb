@@ -138,7 +138,7 @@
 			"date":app.date,
 			"time":app.timer,
 			"total":app.total},function(data){
-				$.mobile.changePage("<% @app.get_url('reservations',{}) %>");
+				$.mobile.changePage("/mobile/reservations?course_id=1");
 			
 		});
 	}
