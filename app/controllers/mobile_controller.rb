@@ -53,7 +53,6 @@ class MobileController < ApplicationController
   
   def app_times
     @app = get_mobile_app(params)
-    @times = Course.get_available_times(@app.course,params[:date])
     response_object = intitiate_response_object
     render 'mobile/time'
     
