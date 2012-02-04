@@ -7,7 +7,7 @@ require 'lib/api/fore.rb'
 
 class MobileApp
   attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm
-  def initialize(params)
+  def initialize(params,request)
     @course = Course.find(params[:course_id].to_i)
     if params[:time].nil?
       params[:time] = ""
@@ -21,6 +21,7 @@ class MobileApp
     @golfers = params[:golfers]
     @date = params[:date]
     @params = params
+    @request = request
     today = Date.today
     
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
@@ -46,7 +47,8 @@ class MobileApp
   end
   
   def is_active(act)
-    if @params[:action] == act
+    uri = @request.split("/")[-1].split("?")[0]
+    if uri == act
       return true
     else
       return false
