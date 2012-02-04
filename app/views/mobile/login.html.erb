@@ -1,0 +1,31 @@
+<div data-role="page" data-theme="a" data-cache="never">
+  <%= render :partial => "header", :locals => { :app => @app } %>
+
+  <script type="text/javascript">
+  function submitform(){
+            $('.ui-loader').fadeIn(100);
+	    document.forms["signInForm"].submit();
+	}
+  </script>
+
+  <div class="content">
+	
+  	<form method="POST" id="signInForm" action="<%= url_for :action => :userLogin, :query => {:time => @time, :date => @date, :num => @num, :price=>@price, :new_user_flag => '1'} %>">
+    	<div style="height:15px;"></div>
+		<ul>
+      		<li><input placeholder="First Name" value="" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
+      		<li><input placeholder="Last Name"  type="text" value=""  name="lname1" onfocus="$('#token').attr('value', '')"/></li>
+    	</ul>  
+
+    	<ul>
+      		<li><input placeholder="Email Address" type="text" value=""  name="email1" /></li>
+    	</ul>
+    
+		<p align="center">
+			<a href="javascript: submitform()"><img border="0" width="300" style="padding-top:0px" src="/public/images/button.png"/></a>
+    	</p>
+  	</form>
+
+  </div>
+<%= render :partial => "footer", :locals => { :app => @app } %>
+</div>

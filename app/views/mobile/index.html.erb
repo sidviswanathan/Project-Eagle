@@ -247,7 +247,7 @@
 	<!--
 	                   <a href="javascript:callReserveTime()"><img border="0" width="300" style="padding-top:28px" src="/public/images/button.png"/></a>
 	-->
-		      		<a href="javascript:callUserSignIn()"><%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+		      		<a href="<%= @app.get_url('login',{}) %>"><%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		    	<% else %>
 		      		<center>
 	                   <a href="javascript:callReserveTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
