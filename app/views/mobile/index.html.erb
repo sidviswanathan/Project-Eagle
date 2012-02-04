@@ -135,7 +135,7 @@
 			"date":app.date,
 			"time":app.timer,
 			"total":app.total},function(data){
-				alert(data);
+				$.mobile.changePage("<% @app.get_url('reservations',{}) %>");
 			
 		});
 	}
