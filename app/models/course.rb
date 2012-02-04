@@ -2,11 +2,11 @@ class Course < ActiveRecord::Base
   has_many :users
   has_many :reservations
   
-  def self.get_available_times(course,date)    
+  def self.get_available_times(course,params)    
     
     if !course.available_times.nil?
       dates = JSON.parse(course.available_times)
-      return dates[date]["day"]
+      return dates[params[:date]]["day"]
     else
       return []
     end
