@@ -22,6 +22,7 @@ class MobileApp
     @date = params[:date]
     @params = params
     @request = request
+    
     begin
       @total = (params[:golfers].to_i * params[:price].to_i).to_s
     rescue
