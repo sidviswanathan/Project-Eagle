@@ -5,7 +5,44 @@ require 'xmlsimple'
 require 'date'
 require 'lib/api/fore.rb'
 
-
+class MobileApp
+  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times
+  def initialize(params)
+    @course = Course.find(params[:course_id].to_i)
+    if params[:time].nil?
+      params[:time] = ""
+    end
+    if params[:date].nil?
+      params[:date] = Date.today.strftime("%Y-%m-%d")
+    end
+    
+    df = "%A, %B %e"
+    @time = params[:time]
+    @golfers = params[:golfers]
+    @date = params[:date]
+    @date_ob = Date.parse(params[:date])
+    @params = params
+    d = Date.today
+    @d2 = [d.strftime(df),(d+1).strftime(df),(d+2).strftime(df),(d+3).strftime(df),(d+4).strftime(df),(d+5).strftime(df),(d+6).strftime(df)]
+    
+    @d = [d.strftime("%Y-%m-%d"),(d+1).strftime("%Y-%m-%d"),(d+2).strftime("%Y-%m-%d"),(d+3).strftime("%Y-%m-%d"),(d+4).strftime("%Y-%m-%d"),(d+5).strftime("%Y-%m-%d"),(d+6).strftime("%Y-%m-%d")]
+    @times = DeviceCommunicationController.get_available_times({
+      :date => @date,
+      :course_id => @course.id.to_s
+    })
+  end
+  def get_query
+    kvs = []
+    @params.each_pair do |k,v|
+      kvs.push(k+"="+v)
+    end
+    return "?#{kvs.join('&')}"
+  end
+  def get_url(action,new_params)
+    @params = @params.merge(new_params)
+    uri = "/device_communication/#{action}#{get_query}"
+  end
+end
 
 class DeviceCommunicationController < ApplicationController
   
@@ -53,28 +90,51 @@ class DeviceCommunicationController < ApplicationController
     return response_object
   end  
   
+  
   # ===================================================================
-  # = http://presstee.com/device_communication/login =================
+  # = http://presstee.com/device_communication/ =======================
   # ===================================================================
   
+  # Mobile App Port (should probably be its own controller)
+  
+
+  def get_mobile_app(params)
+    return MobileApp.new(params)
+  end
+  
+  
   def index
-    email        = params[:email]
-    f_name       = params[:f_name]
-    l_name       = params[:l_name]
-    device_name  = params[:device_name]
-    os_version   = params[:os_version]
-    app_version  = params[:app_version]
-    @course_id    = params[:course_id]
-    @time         = params[:time]    
-    @date         = params[:date]
-    @params      = params
+    @app = get_mobile_app(params)
     response_object = intitiate_response_object
-    
-    @course = Course.find(@course_id.to_i)
-    
     render 'mobile/index'
     
   end
+  
+  def app_num
+    @app = get_mobile_app(params)
+    response_object = intitiate_response_object
+    render 'mobile/num'
+    
+  end
+  
+  def app_date
+    @app = get_mobile_app(params)
+    response_object = intitiate_response_object
+    render 'mobile/date'
+    
+  end
+  
+  def app_times
+    @app = get_mobile_app(params)
+    response_object = intitiate_response_object
+    render 'mobile/time'
+    
+  end
+  
+  # ===================================================================
+  # = http://presstee.com/device_communication/login =================
+  # ===================================================================
+
   
   def login 
     email        = params[:email]

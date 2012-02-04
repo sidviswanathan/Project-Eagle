@@ -9,11 +9,28 @@
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 	
 	
-	<script type='text/javascript'>
+    <script type="text/javascript">    
+
+    //$.mobile.pageLoading( true );
+
 	$(document).bind("mobileinit", function(){
-	  $.mobile.touchOverflowEnabled = true;
+	  $.mobile.loadingMessage = false;
+		$.extend($.mobile, {
+	        hashListeningEnabled: false
+	    });
+		$.extend($.mobile, {
+	        loadingMessage: false
+	    });
+		$.extend($.mobile, {
+		metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
+		});
 	});
-	</script>
+	
+	function changePage(where){
+		$.mobile.changePage(where, {transition: 'slide', showLoadMsg:false});
+	}
+
+    </script>
 	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 	<%= stylesheet_link_tag "iphone" %>
 	<style type='text/css'>
@@ -26,8 +43,8 @@
 
 <div data-role="page" class='type-interior'>
 
-	<div data-position="fixed" data-role="header">
-		<h1><%= @course.name %></h1>
+	<div data-position="fixed" data-role="header" data-id="header_top">
+		<h1><%= @app.course.name %></h1>
 	</div><!-- /header -->
 
 	  <div class="content">
@@ -40,7 +57,7 @@
 			<!--##########################################-->
 
 			<li>				
-		  		<a href="javascript:changePage('<%= url_for :controller => :Product, :action => :num, :query => {:timeview => @params["timeview"], :time => @time, :date => @date, :num =>@num, :num_range => @num_range} %>')" ><%= image_tag "iphone/icons/Icon_3.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @num %> Golfers</span><span class="disclosure_indicator"/></a>
+		  		<a href="<%= @app.get_url('app_num',{}) %>" ><%= image_tag "iphone/icons/Icon_3.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @app.golfers %> Golfers</span><span class="disclosure_indicator"/></a>
 		  	</li>
 
 
@@ -49,15 +66,15 @@
 			<!--##########################################-->
 
 			<li>
-		  		<a href="javascript:datePicker()" id="datePicker" data-transition="slideup"><%= image_tag "iphone/icons/Icon_2.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %>
+		  		<a href="<%= @app.get_url('app_date',{}) %>" id="datePicker" data-transition="slide"><%= image_tag "iphone/icons/Icon_2.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %>
 		    		<span class="title">&nbsp;
 						<div id="wrapper2">
 					      <div id="wrapper3">
-					        <div id="day"><%= Time.parse(@date).strftime('%a').upcase %></div>
+					        <div id="day"><%= Time.parse(@app.date).strftime('%a').upcase %></div>
 					        <div id="clear"></div>
-					        <div id="month"><%= Time.parse(@date).strftime('%b').upcase %></div>
+					        <div id="month"><%= Time.parse(@app.date).strftime('%b').upcase %></div>
 					      </div>
-					      <div id="date"><%= Time.parse(@date).strftime('%d') %></div>
+					      <div id="date"><%= Time.parse(@app.date).strftime('%d') %></div>
 					    </div>
 		    		</span>
 		    		<span class="disclosure_indicator"/>
@@ -74,7 +91,7 @@
 		    	</li>
 		  	<% else %>
 		    	<li>
-					<a href="javascript:changePage('<%= url_for :controller => :Product, :action => :timelist, :query => {:date => @date, :num => @num,:timeview => @params["timeview"], :time => @time} %>')" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= $timeview %> <%= $time_string %></span><span class="disclosure_indicator"/></a>
+					<a href="javascript:changePage('<%= url_for :controller => :Product, :action => :timelist, :query => {:date => @date, :num => @num,:timeview => @app.params["timeview"], :time => @time} %>')" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= $timeview %> <%= $time_string %></span><span class="disclosure_indicator"/></a>
 		    	</li>
 		  	<%end%>
 
@@ -103,7 +120,7 @@
 	  </div>			
 
 
-	<div data-role="footer" data-theme="a" data-position="fixed">		
+	<div data-role="footer" data-id="footer_bottom" data-theme="a" data-position="fixed">		
 		<div data-role="navbar" data-theme="a">
 				<ul>
 					<li><a class="ui-btn-active" href="#">Tee Times</a></li>

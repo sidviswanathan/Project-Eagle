@@ -20,4 +20,3 @@ config.cache_store = :dalli_store
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-config.serve_static_assets = true

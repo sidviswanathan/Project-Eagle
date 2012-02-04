@@ -1,0 +1,36 @@
+<div data-role="page" data-theme="a">
+
+  <div data-role="header" data-id="header_top" data-backbtn="true">
+    <h1><%= @app.course.name %></h1>
+    <a data-icon="back" data-transition="reverse slide" href="<%= @app.get_url('',{}) %>">Back</a>
+  </div>
+
+  <div class="content">
+  	<ul>
+    	<li>
+    		<a href="<%= @app.get_url('',{:golfers=>'2'}) %>"><span class="title">2 Golfers</span><span class="disclosure_indicator"/></a>
+    		<img border="0" width="100px;" style="float:right;margin-top:-80px;padding:10px 0px 0 0;" src="/images/iphone/icons/2_golfers.png"/>
+    	</li>
+    	
+		<li>
+    		<a href="<%= @app.get_url('',{:golfers=>'3'}) %>"><span class="title">3 Golfers</span><span class="disclosure_indicator"/></a>
+    		<img border="0" width="100px;" style="float:right;margin-top:-80px;padding:10px 20px 0 0;" src="/images/iphone/icons/3_golfers.png"/>
+    	</li>
+    
+		<li>
+    		<a href="<%= @app.get_url('',{:golfers=>'4'}) %>"><span class="title">4 Golfers</span><span class="disclosure_indicator"/></a>
+    		<img border="0" width="100px;" style="float:right;margin-top:-80px;padding:10px 40px 0 0;" src="/images/iphone/icons/4_golfers.png"/>
+    	</li>
+  	</ul>
+  </div>	
+	<div data-role="footer" data-id="footer_bottom" data-theme="a" data-position="fixed">		
+		<div data-role="navbar" data-theme="a">
+				<ul>
+					<li><a class="ui-btn-active" href="#">Tee Times</a></li>
+					<li><a href="#">Reservations</a></li>
+					<li><a href="#">About Us</a></li>
+				</ul>
+			</div><!-- /navbar -->
+	</div><!-- /footer -->
+
+</div>
