@@ -11,7 +11,7 @@ app.email = "<%= @app.get_user_email %>";
 </script>
 <div data-position="fixed" data-role="header" data-tap-toggle="false" data-id="header_top">
 	<% if @app.params[:action] == 'date' %>
-	<a href="<%= @app.get_url('date',{:date=>@app.prev_date}) %>" data-icon="arrow-l" data-iconpos="notext"></a>
+	<a href="<%= @app.get_url('date',{:date=>@app.prev_date}) %>" data-transition="reverse slide" data-icon="arrow-l" data-iconpos="notext"></a>
 		<h1><%= @app.date %></h1>
 		<a href="<%= @app.get_url('date',{:date=>@app.next_date}) %>" data-icon="arrow-r" data-iconpos="notext" data-theme="b"></a>
 	<% else %>
