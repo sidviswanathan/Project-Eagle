@@ -10,7 +10,7 @@
 		<% @time24hr = @time12hr.strftime("%H:%M") %>
 	    <% if i['q'].to_i > 1 %>
 	      <li>
-	      	<a href="<%= @app.get_url('',{:time=>@time24hr,:price=> i['p'].to_s }) %>" data-transition="slide"><span class="title"><%=@timeview%></span><span class ="disclosure_indicator"></span></a>
+	      	<a href="<%= @app.get_url('',{:time=>@time24hr,:price=> i['p'].to_s },:date=>@app.date) %>" data-transition="slide"><span class="title"><%=@timeview%></span><span class ="disclosure_indicator"></span></a>
 	      	<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-58px;padding:10px 40px 0 0;" src="/images/iphone/icons/<%= i['q'] %>_bubble.png"/>
 	      </li>
 	    <% else %>
