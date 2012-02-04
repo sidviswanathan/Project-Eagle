@@ -23,5 +23,28 @@ c = Course.new
 c.name = "Deep Cliff"
 c.api = "fore"
 c.api_course_id = "1987654"
-c.fee_matrix = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}.to_json
+c.fee_matrix = {
+  "split" => [14,16],
+  "holidays" => [1,360],
+  "public" => {
+    "weekday" => [28,21,18],
+    "weekend" => [38,28,22]},
+  "member" => {
+    "weekday" => [21,17,15],
+    "weekend" => [31,22,17]}
+}.to_json
+
+c.info = {
+  "title_short" => "Deep Cliff",
+  "title" => "Deep Cliff Golf Course",
+  "url" => "http://www.playdeepcliff.com/",
+  "phone" => "(408) 253-5357",
+  "address" => {
+    "city" => "Cupertino",
+    "state" => "CA",
+    "street" => "10700 Club House Ln",
+    "logo" => "",
+    "gallery" => []
+  }
+}.to_json
 c.save

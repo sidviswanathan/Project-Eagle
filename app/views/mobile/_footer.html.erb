@@ -1,9 +1,9 @@
 <div data-role="footer" data-id="footer_bottom" data-tap-toggle="false"  data-theme="a" data-position="fixed">		
 	<div data-role="navbar" data-theme="a">
 			<ul>
-				<li><a class="ui-btn-active" href="<%= @app.get_url('',{}) %>">Tee Times</a></li>
-				<li><a href="<%= @app.get_url('reservations',{}) %>">Reservations</a></li>
-				<li><a href="<%= @app.get_url('about',{}) %>">About Us</a></li>
+				<li><a <% if @app.is_active('') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('',{}) %>">Tee Times</a></li>
+				<li><a <% if @app.is_active('reservations') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('reservations',{}) %>">Reservations</a></li>
+				<li><a <% if @app.is_active('about') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('about',{}) %>">About Us</a></li>
 			</ul>
 		</div><!-- /navbar -->
 </div><!-- /footer -->

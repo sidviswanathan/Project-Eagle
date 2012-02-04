@@ -6,7 +6,7 @@ require 'date'
 require 'lib/api/fore.rb'
 
 class MobileApp
-  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm
+  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request
   def initialize(params,request)
     @course = Course.find(params[:course_id].to_i)
     if params[:time].nil?
@@ -27,9 +27,11 @@ class MobileApp
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
     @d = (0..6).map {|x| (today+x).strftime("%Y-%m-%d")}
     
-    
-    dates = JSON.parse(@course.available_times)
-    @times = dates[params[:date]]["day"]
+    begin
+      dates = JSON.parse(@course.available_times)
+      @times = dates[params[:date]]["day"]
+    rescue
+    end
     
   end
   
@@ -41,13 +43,17 @@ class MobileApp
     return "?#{kvs.join('&')}"
   end
   
+  def course_info
+    return JSON.parse(@course.info)
+  end
+  
   def get_url(action,new_params)
     @params = @params.merge(new_params)
     uri = "/mobile/#{action}#{get_query}"
   end
   
   def is_active(act)
-    uri = @request.split("/")[-1].split("?")[0]
+    uri = @request.url.split("/")[-1].split("?")[0]
     if uri == act
       return true
     else
