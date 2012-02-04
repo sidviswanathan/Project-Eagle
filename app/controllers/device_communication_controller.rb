@@ -26,7 +26,9 @@ class MobileApp
     @d2 = [d.strftime(df),(d+1).strftime(df),(d+2).strftime(df),(d+3).strftime(df),(d+4).strftime(df),(d+5).strftime(df),(d+6).strftime(df)]
     
     @d = [d.strftime("%Y-%m-%d"),(d+1).strftime("%Y-%m-%d"),(d+2).strftime("%Y-%m-%d"),(d+3).strftime("%Y-%m-%d"),(d+4).strftime("%Y-%m-%d"),(d+5).strftime("%Y-%m-%d"),(d+6).strftime("%Y-%m-%d")]
-    @times = Course.get_available_times(@course,params)
+    if !@date.nil?
+      @times = Course.get_available_times(@course,params)
+    end
   end
   def get_query
     kvs = []
