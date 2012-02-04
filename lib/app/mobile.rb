@@ -50,6 +50,12 @@ class MobileApp
     end
     
   end
+  def prev_date
+    return (Date.parse(@date)-1).strftime("%Y-%m-%d")
+  end
+  def next_date
+    return (Date.parse(@date)+1).strftime("%Y-%m-%d")
+  end
   def get_user_email
     if !@user.nil? 
       return @user.email
