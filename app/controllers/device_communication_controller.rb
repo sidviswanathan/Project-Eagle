@@ -4,7 +4,6 @@ require 'apns'
 require 'xmlsimple'
 require 'date'
 require 'lib/api/fore.rb'
-require 'lib/app/mobile.rb'
 
 class DeviceCommunicationController < ApplicationController
   
@@ -52,15 +51,6 @@ class DeviceCommunicationController < ApplicationController
     return response_object
   end  
   
-  
-  # ===================================================================
-  # = http://presstee.com/device_communication/ =======================
-  # ===================================================================
-  
-  # Mobile App Port (should probably be its own controller)
-  
-
-
   
   # ===================================================================
   # = http://presstee.com/device_communication/login =================

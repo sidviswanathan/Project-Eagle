@@ -17,6 +17,7 @@ class MobileApp
     end
     
     df = "%A, %B %e"
+    dff = "%Y-%m-%d"
     @time = params[:time]
     @ampm = Time.parse(@time).strftime("%p")
     @golfers = params[:golfers]
@@ -24,9 +25,13 @@ class MobileApp
     @date_ob = Date.parse(params[:date])
     @params = params
     d = Date.today
-    @d2 = [d.strftime(df),(d+1).strftime(df),(d+2).strftime(df),(d+3).strftime(df),(d+4).strftime(df),(d+5).strftime(df),(d+6).strftime(df)]
     
-    @d = [d.strftime("%Y-%m-%d"),(d+1).strftime("%Y-%m-%d"),(d+2).strftime("%Y-%m-%d"),(d+3).strftime("%Y-%m-%d"),(d+4).strftime("%Y-%m-%d"),(d+5).strftime("%Y-%m-%d"),(d+6).strftime("%Y-%m-%d")]
+    @d2 = (0..6).map {|x| (d+x).strftime(df)}
+    @d = (0..6).map {|x| (d+x).strftime(dff)}
+    
+    #@d2 = [d.strftime(df),(d+1).strftime(df),(d+2).strftime(df),(d+3).strftime(df),(d+4).strftime(df),(d+5).strftime(df),(d+6).strftime(df)]
+    
+    #@d = [d.strftime("%Y-%m-%d"),(d+1).strftime("%Y-%m-%d"),(d+2).strftime("%Y-%m-%d"),(d+3).strftime("%Y-%m-%d"),(d+4).strftime("%Y-%m-%d"),(d+5).strftime("%Y-%m-%d"),(d+6).strftime("%Y-%m-%d")]
     
   end
   def get_query
