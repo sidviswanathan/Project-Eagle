@@ -40,7 +40,7 @@ function switchTab(which){
 		
 		<ul>	
 			<% @app.reservations.reverse.each do |r| %>
-				<% if (Time.parse(r.date) - Time.new) > 0%>
+				<% if (r.date - Time.new) > 0%>
 				<li id='r_<%= r.confirmation_code %>'><a href="<% @app.get_url('reservations',{:view=>r.confirmation_code}) %>">
 					<span class="title4">&nbsp;
 						<div id="wrapper1">
@@ -65,7 +65,7 @@ function switchTab(which){
 			</div>
 			
 			<% @app.reservations.reverse.each do |r| %>
-				<% if (Time.parse(r.date) - Time.new) <= 0%>
+				<% if (r.date - Time.new) <= 0%>
 					<li>	
 						<span class="title4">&nbsp;
 							<div id="wrapper1">
