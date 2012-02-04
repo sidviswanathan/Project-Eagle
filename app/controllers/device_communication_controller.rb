@@ -27,7 +27,7 @@ class MobileApp
     
     @d = [d.strftime("%Y-%m-%d"),(d+1).strftime("%Y-%m-%d"),(d+2).strftime("%Y-%m-%d"),(d+3).strftime("%Y-%m-%d"),(d+4).strftime("%Y-%m-%d"),(d+5).strftime("%Y-%m-%d"),(d+6).strftime("%Y-%m-%d")]
     if !@date.nil?
-      @times = Course.get_available_times(@course,@date_ob.strftime("%Y-%m-%d"))
+      @times = Course.get_available_times(@course,params[:date])
     end
   end
   def get_query
