@@ -101,7 +101,14 @@
 			setTimeout("gflipIn()",2500);
 		});
 	}
-	
+	function submitform(){
+	    var first_name = $('#first_name').val();
+		var last_name  = $('#last_name').val();
+		var email_address = $('#email_address').val();
+		$.post("/device_communication/login",{"f_name":first_name,"l_name":last_name,"email":email_address},function(data){
+			alert(data);
+		})
+	}
 
     </script>
 	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>

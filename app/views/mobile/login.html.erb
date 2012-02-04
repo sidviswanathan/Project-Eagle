@@ -1,25 +1,20 @@
 <div data-role="page" data-theme="a" data-cache="never">
   <%= render :partial => "header", :locals => { :app => @app } %>
 
-  <script type="text/javascript">
-  function submitform(){
-	    document.forms["signInForm"].submit();
-	}
-  </script>
 
   <div class="content">
 	
   	<form method="POST" id="signInForm" action="/device_communication/login">
     	<div style="height:15px;"></div>
 		<ul>
-      		<li><input placeholder="First Name" value="" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
-      		<li><input placeholder="Last Name"  type="text" value=""  name="lname1" onfocus="$('#token').attr('value', '')"/></li>
+      		<li><input placeholder="First Name" id="first_name" value="" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
+      		<li><input placeholder="Last Name"  id="last_name" type="text" value=""  name="lname1" onfocus="$('#token').attr('value', '')"/></li>
     	</ul>  
 
     	<ul>
-      		<li><input placeholder="Email Address" type="text" value=""  name="email1" /></li>
+      		<li><input placeholder="Email Address" id="email_address" type="text" value=""  name="email1" /></li>
     	</ul>
-    
+    	<input type='hidden' name='redirect' value="true" />
 		<p align="center">
 			<a href="javascript: submitform()"><img border="0" width="300" style="padding-top:0px" src="/images/button.png"/></a>
     	</p>

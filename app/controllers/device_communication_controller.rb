@@ -64,6 +64,7 @@ class DeviceCommunicationController < ApplicationController
     device_name  = params[:device_name]
     os_version   = params[:os_version]
     app_version  = params[:app_version]
+    redirect     = params[:redirect]
     
     response_object = intitiate_response_object
     user = User.login(f_name, l_name, email, device_name, os_version, app_version)
@@ -74,6 +75,7 @@ class DeviceCommunicationController < ApplicationController
       response_object[:statusCode] = 200
       response_object[:message]    = "The server successfully created a User record"
       render :json => response_object.to_json
+      
     else
       response_object[:message] = "The server failed to make the User.login() request"
       render :json => response_object.to_json               
