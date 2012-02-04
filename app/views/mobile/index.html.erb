@@ -87,11 +87,11 @@
 
 			<% if $timeview == nil or $timeview == ""  %>
 		    	<li>
-		    		<a href="<%= @app.get_url('app_time',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title">Tee Time</span><span class="disclosure_indicator"/></a>
+		    		<a href="<%= @app.get_url('app_times',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title">Tee Time</span><span class="disclosure_indicator"/></a>
 		    	</li>
 		  	<% else %>
 		    	<li>
-					<a href="<%= @app.get_url('app_time',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= $timeview %> <%= $time_string %></span><span class="disclosure_indicator"/></a>
+					<a href="<%= @app.get_url('app_times',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= $timeview %> <%= $time_string %></span><span class="disclosure_indicator"/></a>
 		    	</li>
 		  	<%end%>
 
