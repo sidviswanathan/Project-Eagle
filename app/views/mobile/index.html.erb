@@ -122,7 +122,7 @@
 	
 	
 	function confirmTime(){
-		var confirm_time = confirm(first_name+" "+last_name+" ("+email_address+") \nMake a reservation for "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
+		var confirm_time = confirm(app.first_name+" "+app.last_name+" ("+app.email+") \nMake a reservation for "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
 		if(confirm_time==true){
 			reserveTime()
 		}else{
