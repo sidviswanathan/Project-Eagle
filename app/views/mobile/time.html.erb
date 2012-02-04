@@ -4,7 +4,7 @@
     <h1><%= @app.course.name %></h1>
     <a data-icon="back" data-transition="reverse slide" href="<%= @app.get_url('',{}) %>">Back</a>
   </div>
-  <div class="content">
+  <div class="content" style='padding-top:0em'>
 
 	<ul>
 	  <% @app.times.each do |i| %>
