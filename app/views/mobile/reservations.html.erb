@@ -45,11 +45,11 @@ function switchTab(which){
 					<span class="title4">&nbsp;
 						<div id="wrapper1">
 							<div id="wrapper3">
-								<div id="day"><%= Time.parse(r.date).strftime('%a').upcase %></div>
+								<div id="day"><%= r.date.strftime('%a').upcase %></div>
 								<div id="clear"></div>
-								<div id="month"><%= Time.parse(r.date).strftime('%b').upcase %></div>
+								<div id="month"><%= r.date.strftime('%b').upcase %></div>
 							</div>
-							<div id="date"><%= Time.parse(r.date).strftime('%d') %></div>
+							<div id="date"><%= r.date.strftime('%d') %></div>
 						</div>
 						
 						<div id ="wrapper4" style='margin-right:32px'><%=Time.parse(r.time).strftime('%I:%M') %>
@@ -70,11 +70,11 @@ function switchTab(which){
 						<span class="title4">&nbsp;
 							<div id="wrapper1">
 								<div id="wrapper3">
-									<div id="day"><%= Time.parse(r.date).strftime('%a').upcase %></div>
+									<div id="day"><%= r.date.strftime('%a').upcase %></div>
 									<div id="clear"></div>
-									<div id="month"><%= Time.parse(r.date).strftime('%b').upcase %></div>
+									<div id="month"><%= r.date.strftime('%b').upcase %></div>
 								</div>
-								<div id="date"><%= Time.parse(r.date).strftime('%d') %></div>
+								<div id="date"><%= r.date.strftime('%d') %></div>
 							</div>
 							
 							<div id ="wrapper4" style='margin-right:32px'><%=Time.parse(r.time).strftime('%I:%M') %>
