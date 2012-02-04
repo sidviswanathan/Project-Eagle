@@ -76,7 +76,6 @@
 				}else{
 					g1 = 1;
 				}
-
 			}
 			$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
 			setTimeout("gflipOut()",2500);
@@ -101,6 +100,7 @@
 			setTimeout("gflipIn()",2500);
 		});
 	}
+	
 	function submitform(){
 	    var first_name = $('#first_name').val();
 		var last_name  = $('#last_name').val();
@@ -117,6 +117,15 @@
 			
 		})
 	}
+	var app =new Object();
+	app.course_id = "<%= @app.course.id %>";
+	app.golfers = "<%= @app.golfers %>";
+	app.email = "<%= @app.get_user_email %>";
+	app.date = "<%= @app.date %>";
+	app.timer = "<%= @app.time %>";
+	app.total = "<%= @app.total %>";
+	
+	
 	function confirmTime(){
 		var confirm_time = confirm(first_name+" "+last_name+" ("+email_address+") \nMake a reservation for <%= @app.golfers %> golfers on <%= @app.date %> at <%= @app.time %>\n------------\n$<%= @app.total %> (due at course)");
 		if(confirm_time==true){
@@ -127,11 +136,11 @@
 	}
 	function reserveTime(){
 		$.post("/device_communication/book_reservation",{
-			"course_id":"<%= @app.course.id %>",
-			"golfers":"<%= @app.golfers %>",
-			"email":"<%= @app.get_user_email %>",
-			"date":"<%= @app.date %>",
-			"time":"<%= @app.time %>",
+			"course_id":app.course_id,
+			"golfers":app.golfers,
+			"email":app.golfers,
+			"date":app.date,
+			"time":app.timer,
 			"total":"84"},function(data){
 				alert(data);
 			
@@ -285,7 +294,7 @@
 		      		<a href="<%= @app.get_url('login',{}) %>"><%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		    	<% else %>
 		      		<center>
-	                   <a href="javascript:reserveTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+	                   <a href="javascript:confirmTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		    	<% end %>
 		  	<% end %>
 		</ul>

@@ -1,3 +1,11 @@
+<script type='text/javascript'>
+app.course_id = "<%= @app.course.id %>";
+app.golfers = "<%= @app.golfers %>";
+app.email = "<%= @app.get_user_email %>";
+app.date = "<%= @app.date %>";
+app.timer = "<%= @app.time %>";
+app.total = "<%= @app.total %>";
+</script>
 <div data-position="fixed" data-role="header" data-tap-toggle="false" data-id="header_top">
 	<h1><%= @app.course_info['title'] %></h1>
 </div><!-- /header -->
