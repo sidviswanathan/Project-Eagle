@@ -20,7 +20,6 @@ class MobileApp
     @ampm = Time.parse(@time).strftime("%p")
     @golfers = params[:golfers]
     @date = params[:date]
-    @date_ob = Date.parse(params[:date])
     @params = params
     today = Date.today
     
