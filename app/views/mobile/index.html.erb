@@ -117,7 +117,7 @@
 		})
 	}
 	function confirmTime(){
-		var confirm_time = confirm(first_name+" "+last_name+" ("+email_address+") \nMake a reservation for <%=%> golfers on <%=%> at <%=%>\n------------\n$<%=%> (due at course)");
+		var confirm_time = confirm(first_name+" "+last_name+" ("+email_address+") \nMake a reservation for <%= @app.golfers %> golfers on <%= @app.date %> at <%= @app.time %>\n------------\n$<%= @app.total %> (due at course)");
 		if(confirm_time==true){
 			reserveTime()
 		}else{
@@ -126,11 +126,11 @@
 	}
 	function reserveTime(){
 		$.post("/device_communication/book_reservation",{
-			"course_id":"<%=%>",
-			"golfers":"<%=%>",
-			"email":"<%=%>",
-			"date":"<%=%>",
-			"time":"<%=%>",
+			"course_id":"<%= @app.course.id %>",
+			"golfers":"<%= @app.golfers %>",
+			"email":"<%= @app.get_user_email %>",
+			"date":"<%= @app.date %>",
+			"time":"<%= @app.time %>",
 			"total":"84"},function(data){
 				alert(data);
 			
