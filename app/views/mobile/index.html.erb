@@ -9,16 +9,6 @@
 
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
 	<link rel="stylesheet" href="/stylesheets/add2home.css">
-	<script type="text/javascript">
-	var addToHomeConfig = {
-		animationIn: 'bubble',
-		animationOut: 'drop',
-		lifespan:10000,
-		expire:2,
-		touchIcon:true,
-		message:'This is a custom message. Your device is an <strong>%device</strong>. The action icon is `%icon`.'
-	};
-	</script>
 	<script type="application/javascript" src="/javascripts/add2home.js"></script>
 	
 	
@@ -53,6 +43,10 @@
 	div.content{
 		min-height:1000px;
 	}
+	    .ui-page {
+	        -webkit-backface-visibility: hidden;
+	    } 
+	.ui-page { outline: none; }
 	</style>
 
 </head> 
@@ -116,7 +110,7 @@
 			<!--Reserve Button-->
 			<!--##########################################-->
 
-		  	<% if $timeview == nil or $timeview == "" %>
+		  	<% if @app.time == nil or @app.time == "" %>
 		    	<center>
 		    	<a href="javascript:callNoTeeTimeSelected()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		  	<% else%>
