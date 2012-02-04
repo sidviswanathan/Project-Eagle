@@ -74,7 +74,11 @@ class DeviceCommunicationController < ApplicationController
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server successfully created a User record"
-      render :json => response_object.to_json
+      if !redirect.nil?
+        puts user.id
+      else
+        render :json => response_object.to_json
+      end
       
     else
       response_object[:message] = "The server failed to make the User.login() request"

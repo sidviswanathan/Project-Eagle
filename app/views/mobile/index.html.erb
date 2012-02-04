@@ -105,9 +105,36 @@
 	    var first_name = $('#first_name').val();
 		var last_name  = $('#last_name').val();
 		var email_address = $('#email_address').val();
-		$.post("/device_communication/login",{"f_name":first_name,"l_name":last_name,"email":email_address},function(data){
-			alert(data);
+		$.post("/device_communication/login",{
+			"f_name":first_name,
+			"l_name":last_name,
+			"email":email_address,
+			"device_name":"iphone",
+			"os_version":"4.0",
+			"app_version":"web"},function(data){
+				alert(data);
+			
 		})
+	}
+	function confirmTime(){
+		var confirm_time = confirm(first_name+" "+last_name+" ("+email_address+") \nMake a reservation for <%=%> golfers on <%=%> at <%=%>\n------------\n$<%=%> (due at course)");
+		if(confirm_time==true){
+			reserveTime()
+		}else{
+			
+		}
+	}
+	function reserveTime(){
+		$.post("/device_communication/book_reservation",{
+			"course_id":"<%=%>",
+			"golfers":"<%=%>",
+			"email":"<%=%>",
+			"date":"<%=%>",
+			"time":"<%=%>",
+			"total":"84"},function(data){
+				alert(data);
+			
+		});
 	}
 
     </script>
@@ -257,7 +284,7 @@
 		      		<a href="<%= @app.get_url('login',{}) %>"><%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		    	<% else %>
 		      		<center>
-	                   <a href="javascript:callReserveTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+	                   <a href="javascript:reserveTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		    	<% end %>
 		  	<% end %>
 		</ul>
