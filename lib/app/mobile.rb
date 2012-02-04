@@ -6,7 +6,7 @@ require 'date'
 require 'lib/api/fore.rb'
 
 class MobileApp
-  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total
+  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations
   def initialize(params,request,session)
     @course = Course.find(params[:course_id].to_i)
     if params[:time].nil?
@@ -23,12 +23,21 @@ class MobileApp
     @params = params
     @request = request
     
+    @reservations = []
+    
     begin
       @total = (params[:golfers].to_i * params[:price].to_i).to_s
     rescue
       @total = ""
     end
+    
+    
     @user ||= session[:current_user_id] && User.find_by_id(session[:current_user_id])
+    
+    if !@user.nil?
+      @reservations = Reservation.find_all_by_user_id_and_course_id_and_status_code(@user.id.to_s,@course.id,Reservation::BOOKING_SUCCESS_STATUS_CODE,:order=>"date DESC,time DESC")
+    end
+    
     today = Date.today
     
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
