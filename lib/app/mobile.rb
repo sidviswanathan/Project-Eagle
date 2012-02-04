@@ -41,7 +41,21 @@ class MobileApp
   end
   def get_user_email
     if !@user.nil? 
-      return user.email
+      return @user.email
+    else
+      return ""
+    end
+  end
+  def get_user_fname
+    if !@user.nil? 
+      return @user.f_name
+    else
+      return ""
+    end
+  end
+  def get_user_lname
+    if !@user.nil? 
+      return @user.l_name
     else
       return ""
     end
