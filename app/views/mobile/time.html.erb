@@ -13,7 +13,7 @@
 	    <% if i['q'].to_i > 1 %>
 	      <li>
 	      	<a href="<%= url_for :controller => :Product, :action => :booking, :query => {:timeview => @timeview, :price => i['p'], :time => i['t'], :date => @date, :num_range => i['q']} %>" data-transition="slide"><span class="title"><%=@timeview%></span><span class ="disclosure_indicator"></span></a>
-	      	<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-58px;padding:10px 40px 0 0;" src="<%= determine_num_bubble(i['t']) %>"/>
+	      	<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-58px;padding:10px 40px 0 0;" src="/images/iphone/icons/<%= i['q'] %>_bubble.png"/>
 	      </li>
 	    <% else %>
 	      <li>
