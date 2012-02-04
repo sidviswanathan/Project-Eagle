@@ -3,14 +3,13 @@
 
   <script type="text/javascript">
   function submitform(){
-            $('.ui-loader').fadeIn(100);
 	    document.forms["signInForm"].submit();
 	}
   </script>
 
   <div class="content">
 	
-  	<form method="POST" id="signInForm" action="<%= url_for :action => :userLogin, :query => {:time => @time, :date => @date, :num => @num, :price=>@price, :new_user_flag => '1'} %>">
+  	<form method="POST" id="signInForm" action="/device_communication/login">
     	<div style="height:15px;"></div>
 		<ul>
       		<li><input placeholder="First Name" value="" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
@@ -22,7 +21,7 @@
     	</ul>
     
 		<p align="center">
-			<a href="javascript: submitform()"><img border="0" width="300" style="padding-top:0px" src="/public/images/button.png"/></a>
+			<a href="javascript: submitform()"><img border="0" width="300" style="padding-top:0px" src="/images/button.png"/></a>
     	</p>
   	</form>
 
