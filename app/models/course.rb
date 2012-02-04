@@ -6,7 +6,7 @@ class Course < ActiveRecord::Base
     
     if !course.available_times.nil?
       dates = JSON.parse(course.available_times)
-      return dates[params[:date]]["day"]
+      return dates[date]["day"]
     else
       return []
     end
