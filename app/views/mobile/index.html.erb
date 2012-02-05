@@ -57,11 +57,12 @@
 		
 		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
 		
-		if( navigator.userAgent.match(/Android/i) ||
-		 navigator.userAgent.match(/webOS/i) ||
+		if(navigator.userAgent.match(/webOS/i) ||
 		 navigator.userAgent.match(/BlackBerry/)
 		 ){
 		 $.mobile.defaultPageTransition = "none";
+		}else if( navigator.userAgent.match(/Android/i) ){
+			$.mobile.defaultPageTransition = "fade";
 		}else{
 			$.mobile.defaultPageTransition = "slide";
 		}
