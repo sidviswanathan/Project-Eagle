@@ -16,7 +16,7 @@
 		<ul>	
 			<% @app.reservations.reverse.each do |r| %>
 				<% if (r.date - Date.today) > 0%>
-				<li id='r_<%= r.confirmation_code %>'><a href="/mobile/view?view=1">
+				<li id='r_<%= r.confirmation_code %>'><a href="/mobile/view?view=<%= r.id.to_s %>">
 					<span class="title4">&nbsp;
 						<div id="wrapper1">
 							<div id="wrapper3">
