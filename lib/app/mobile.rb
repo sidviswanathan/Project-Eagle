@@ -6,7 +6,7 @@ require 'date'
 require 'lib/api/fore.rb'
 
 class MobileApp
-  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation
+  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation, :time12
   def initialize(params,request,session)
     @course = Course.find(params[:course_id].to_i)
     
@@ -18,6 +18,7 @@ class MobileApp
     end
     
     @time = params[:time]
+    @time12 = Time.parse(@time).strftime("%I:%M")
     @ampm = Time.parse(@time).strftime("%p")
     @golfers = params[:golfers]
     @date = params[:date]
