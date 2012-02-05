@@ -294,14 +294,14 @@ function submitform(){
 
 
 function get_page(url){
-	x$( 'body' ).xhr( url );
-}
-window.onload = function on_load(){
-	x$('body').on('load',function(e){
+	x$( 'body' ).xhr( url,function(){
 		x$('a').each(function(element, index, xui) {
 		    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
 		});
-	});
+	} );
+}
+window.onload = function on_load(){
+
 	
 	x$('a').each(function(element, index, xui) {
 	    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
