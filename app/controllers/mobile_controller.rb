@@ -36,7 +36,6 @@ require 'lib/app/mobile.rb'
   # view reservation    => '/mobile/view'   
   # about us            => '/mobile/about'   
   
-  
 =end
 
 class MobileController < ApplicationController
