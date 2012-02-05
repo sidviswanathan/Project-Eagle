@@ -7,3 +7,12 @@
 			</ul>
 		</div><!-- /navbar -->
 </div><!-- /footer -->
+<script type='text/javascript'>
+window.onload = function on_load(){
+
+	
+	x$('a').each(function(element, index, xui) {
+	    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
+	});
+}
+</script>
