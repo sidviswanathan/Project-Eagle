@@ -115,7 +115,7 @@
 	function get_page(url){
 		x$( 'body' ).xhr( url );
 	}
-	x$.ready(function on_load(){
+	x$(document).ready(function on_load(){
 		x$('a').each(function(element, index, xui) {
 		    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
 		});
