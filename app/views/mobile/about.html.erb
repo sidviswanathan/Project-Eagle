@@ -1,4 +1,8 @@
+	<script type='text/javascript'>
+	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
 
+	setTimeout("gflipIn()",4000);
+	</script>
     <div data-role="page" data-theme="a" style='background:#e8e8e8'>
 		<div data-role="header" data-backbtn="false">
 			<h1>About <%= @app.course_info['name'] %></h1>
@@ -7,7 +11,7 @@
 			
 			<div class='container' >
 				<div  id='gbox' style='position:relative ;'>
-					<img id='gboxi' src='{{app.dtemplate.gallery.1}}' />
+					<img id='gboxi' src='<%= @app.course_info['url'] %>' />
 				</div>
 				<div class='boxes' >
 				<div class='box' id='topbox'>
@@ -118,7 +122,7 @@
 							<tbody>
 								<tr>
 									<td style='color:gray;text-align:right'><a href="tel:212-555-1212" rel=external style='color:#336699;text-decoration:none'>Call</a></td>
-									<td><a href="tel:408-253-5357" rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'>{{app.dtemplate.phone}}</a></td>
+									<td><a href="tel:408-253-5357" rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['phone'] %></a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -131,12 +135,12 @@
 						<table style='padding-left:6%'>
 							<tbody>
 								<tr>
-									<td style='color:gray;text-align:right' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q={{app.dtemplate.address.street}} {{app.dtemplate.address.city}} {{app.dtemplate.address.state}}" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></td>
-									<td><a href="http://maps.google.com/maps?rho_open_target=_blank&q={{app.dtemplate.address.street}} {{app.dtemplate.address.city}} {{app.dtemplate.address.state}}" target=_blank rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'>{{app.dtemplate.address.street}}, {{app.dtemplate.address.city}}, {{app.dtemplate.address.state}}</a></td>
+									<td style='color:gray;text-align:right' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></td>
+									<td><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %>, <%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></a></td>
 								</tr>
 							</tbody>
 						</table>
-						<div style='border-top:1px solid #888;margin-top:6px;padding-top:6px;text-align:center'><a href="http://maps.google.com/maps?rho_open_target=_blank&q={{app.dtemplate.address.street}} {{app.dtemplate.address.city}} {{app.dtemplate.address.state}}" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a>
+						<div style='border-top:1px solid #888;margin-top:6px;padding-top:6px;text-align:center'><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['sttree'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a>
 						</div>
 
 					</div>
@@ -148,7 +152,7 @@
 				</div>
 				<div class='box' style='text-align:center'>
 					<div class='pad'>
-						<a href='{{app.dtemplate.url}}' style='color:#336699;text-decoration:none'>{{app.dtemplate.url}}</a>
+						<a href='<%= @app.course_info['url'] %>' style='color:#336699;text-decoration:none'><%= @app.course_info['url'] %></a>
 					</div>
 				</div>
 				<div class='box'>

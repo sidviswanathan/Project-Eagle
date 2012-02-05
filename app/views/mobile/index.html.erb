@@ -31,6 +31,9 @@
 	var g1 = 0;
 	var g2 = 1;
 	var gflip = true;
+	 <% @app.course_info['gallery'].each do |i| %>
+	gallery.push("<%= i %>");
+	<% end %>
 	/*
 	{% for i in app.dtemplate.gallery %}
 	gallery.push("{{i}}");
