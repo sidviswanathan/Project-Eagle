@@ -9,6 +9,7 @@ class MobileApp
   attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation
   def initialize(params,request,session)
     @course = Course.find(params[:course_id].to_i)
+    
     if params[:time].nil?
       params[:time] = ""
     end
@@ -36,7 +37,6 @@ class MobileApp
       @reservation = Reservation.find(params[:view].to_i)
     end
     
-    
     @user ||= session[:current_user_id] && User.find_by_id(session[:current_user_id])
     
     if !@user.nil?
@@ -60,12 +60,15 @@ class MobileApp
     end
     
   end
+  
   def prev_date
     return (Date.parse(@date)-1).strftime("%Y-%m-%d")
   end
+  
   def next_date
     return (Date.parse(@date)+1).strftime("%Y-%m-%d")
   end
+  
   def get_user_email
     if !@user.nil? 
       return @user.email
@@ -73,6 +76,7 @@ class MobileApp
       return ""
     end
   end
+  
   def get_user_fname
     if !@user.nil? 
       return @user.f_name
@@ -80,6 +84,7 @@ class MobileApp
       return ""
     end
   end
+  
   def get_user_lname
     if !@user.nil? 
       return @user.l_name
@@ -87,6 +92,7 @@ class MobileApp
       return ""
     end
   end
+  
   def get_query
     kvs = []
     @params.each_pair do |k,v|
@@ -112,6 +118,4 @@ class MobileApp
       return false
     end
   end
-  
-  
 end
