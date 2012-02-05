@@ -3,8 +3,7 @@
   <%= render :partial => "header", :locals => { :app => @app } %>
 
   <div class="content">
-  		<div class='boxes' >
-		<div class='box' id='topbox'>
+  		<div class='box' id='topbox'>
 			<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
 			<div class='title' style='padding-top:66px;font-size:18px'>
 			<b><%= @app.course_info['title'] %></b>
@@ -16,10 +15,18 @@
 				<b style='color:green'>Booking #</b>: <%=@app.reservation.confirmation_code%>
 			</div>
 			
+			
+			
 			</div>
 			<div style='clear:both;height:4px'></div>
+			
+			<div style='margin-top:12px'>
+				Customer: <%=@app.user.f_name%> <%=@app.user.l_name%> (<%=@app.user.email%>)<br>
+				For : <%=@app.reservation.golfers%> On: <%=@app.reservation.date%> At: <%=@app.reservation.time%>
+			</div>
+			
+			<a data-role="button" data-icon="delete" href='/device_communication/cancel_reservation?course_id=<%=@app.course.id.to_s%>&confirmation_code=<%=@app.reservation.confirmation_code%>'>Cancel Reservation</a>
 
-		</div>
 		</div>
   </div>	
 <%= render :partial => "footer", :locals => { :app => @app } %>
