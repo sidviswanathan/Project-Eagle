@@ -6,6 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
+	
+	<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/xuijs/2.0.0/xui.min.js'></script>
 
     <script type="text/javascript">    
 	var details_open = false;
@@ -38,35 +40,10 @@
 
     //$.mobile.pageLoading( true );
 
-	$(document).bind("mobileinit", function(){
 
-
-		$.extend($.mobile, {
-		metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
-		});
-		
-		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
-		
-		if(navigator.userAgent.match(/webOS/i) ||
-		 navigator.userAgent.match(/BlackBerry/)
-		 ){
-		 $.mobile.defaultPageTransition = "none";
-		}else if( navigator.userAgent.match(/Android/i) ){
-			$.mobile.defaultPageTransition = "fade";
-		}else{
-			$.mobile.defaultPageTransition = "slide";
-		}
-
-	});
 
 	var gallery_not_started = true;
-	$( document ).bind( "pagechange", function( event, data ){
-		if (($("#gbox").length > 0) && gallery_not_started){
-		  	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
-			setTimeout("gflipIn()",4000);
-			gallery_not_started = false;
-		}
-	});
+
 
 	function callUserSignIn(){
 		alert("Hello New User");
@@ -135,6 +112,9 @@
 	var app =new Object();
 
 	
+	function get_page(url){
+		x$( 'body' ).xhr( url );
+	}
 	
 	function confirmTime(){
 		var confirm_time = confirm(app.first_name+" "+app.last_name+" ("+app.email+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
@@ -260,7 +240,7 @@
 			<!--##########################################-->
 
 			<li>				
-		  		<a href="<%= @app.get_url('num',{}) %>" ><%= image_tag "iphone/icons/Icon_3.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @app.golfers %> Golfers</span><span class="disclosure_indicator"/></a>
+		  		<a href="get_page('<%= @app.get_url('num',{}) %>');" ><%= image_tag "iphone/icons/Icon_3.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @app.golfers %> Golfers</span><span class="disclosure_indicator"/></a>
 		  	</li>
 
 
