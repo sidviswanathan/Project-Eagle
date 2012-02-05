@@ -1,8 +1,4 @@
-	<script type='text/javascript'>
-	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
 
-	setTimeout("gflipIn()",4000);
-	</script>
     <div data-role="page" data-theme="a" style='background:#e8e8e8'>
 		<div data-role="header" data-backbtn="false">
 			<h1>About <%= @app.course_info['name'] %></h1>
@@ -15,7 +11,7 @@
 				</div>
 				<div class='boxes' >
 				<div class='box' id='topbox'>
-					<a href=""><img src="/assets/tlogo.png" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
+					<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
 					<div class='title' style='padding-top:66px;font-size:18px'>
 					<b><%= @app.course_info['title'] %></b>
 					<div style='margin-top:-2px'>
@@ -199,3 +195,8 @@
 	    </div>
 <%= render :partial => "footer", :locals => { :app => @app, :fixed => false } %>
 	</div>
+	<script type='text/javascript'>
+	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
+
+	setTimeout("gflipIn()",4000);
+	</script>
