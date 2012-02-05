@@ -57,6 +57,34 @@
 		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
 
 	});
+	var last_event = "";
+	var load_data = "";
+	$( document ).bind( "pagechange", function( event, data ){
+
+
+		last_event="pagechange";
+		load_data = data;
+		if(data.toPage == 'about'){
+			$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
+
+			setTimeout("gflipIn()",4000);
+			
+		}
+
+
+
+	});
+	$( document ).bind( "pageload", function( event, data ){
+		last_event="pageload";
+		load_data = data;
+		if(data.url == 'about'){
+			$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
+
+			setTimeout("gflipIn()",4000);
+			
+		}
+
+	});
 	function callUserSignIn(){
 		alert("Hello New User");
 	}
@@ -147,6 +175,9 @@
 	}
 
     </script>
+	<script type='text/javascript'>
+
+	</script>
 	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 	<%= stylesheet_link_tag "iphone" %>
 	<style type='text/css'>
