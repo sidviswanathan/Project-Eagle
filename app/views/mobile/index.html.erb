@@ -57,34 +57,16 @@
 		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
 
 	});
-	var last_event = "";
-	var load_data = "";
+
+	var gallery_not_started = true;
 	$( document ).bind( "pagechange", function( event, data ){
-
-
-		last_event="pagechange";
-		load_data = data;
-		if(data.toPage == 'about'){
-			$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
-
+		if (($("#gbox").length > 0) && gallery_not_started){
+		  	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
 			setTimeout("gflipIn()",4000);
-			
+			gallery_not_started = false;
 		}
-
-
-
 	});
-	$( document ).bind( "pageload", function( event, data ){
-		last_event="pageload";
-		load_data = data;
-		if(data.url == 'about'){
-			$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
 
-			setTimeout("gflipIn()",4000);
-			
-		}
-
-	});
 	function callUserSignIn(){
 		alert("Hello New User");
 	}
