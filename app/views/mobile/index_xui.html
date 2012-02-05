@@ -296,15 +296,16 @@ function submitform(){
 function get_page(url){
 	x$( 'body' ).xhr( url );
 }
-/*
+var page_loaded = false;
 window.onload = function on_load(){
 
 	
 	x$('a').each(function(element, index, xui) {
 	    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
 	});
+	page_loaded = true;
 }
-*/
+
 function confirmTime(){
 	var confirm_time = confirm(app.first_name+" "+app.last_name+" ("+app.email+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
 	if(confirm_time==true){
