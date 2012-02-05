@@ -6,7 +6,7 @@ require 'date'
 require 'lib/api/fore.rb'
 
 class MobileApp
-  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations
+  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation
   def initialize(params,request,session)
     @course = Course.find(params[:course_id].to_i)
     if params[:time].nil?
@@ -29,6 +29,11 @@ class MobileApp
       @total = (params[:golfers].to_i * params[:price].to_i).to_s
     rescue
       @total = ""
+    end
+    
+    @reservation = nil
+    if !params[:view].nil?
+      @reservation = Reservation.find(params[:view].to_i)
     end
     
     
