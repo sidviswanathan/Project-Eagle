@@ -1,29 +1,4 @@
-<script type="text/javascript">
-
-  $(document).ready(function(){
-      
-  });
-
-var cancel_which = "";
-  function callCancelBooking(which) {
-	cancel_which = which;
-
-    //$('.ui-loader').fadeIn(100);
-    $.post("/app/Product/cancel_booking", { confirmation_code:which },
-      function(data){
-        //$('#r_'+cancel_which).remove();
-    });
-  }
-
-function openReservation(which,id){
-	$.get("/app/Product/view_reservation",{rid:which});
-}
-function switchTab(which){
-	$.get("/app/Product/switchTab",{nt:which})
-}
-
-</script>
-<div data-role="page" data-theme="a" data-cache="always">
+<div data-role="page" data-theme="a" data-cache="never">
   
   <%= render :partial => "header", :locals => { :app => @app } %>
 
