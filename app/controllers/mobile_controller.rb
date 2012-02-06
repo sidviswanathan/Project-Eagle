@@ -58,4 +58,8 @@ class MobileController < ApplicationController
     end
   end
   
+  def iframe_test
+  end
+  
+  
 end
