@@ -57,8 +57,16 @@ class MobileController < ApplicationController
       @render_head = false
     end
   end
-  
+  def mobile_agent?
+    request.user_agent =~ /Mobile|webOS/
+  end
+  def iframe
+    @is_mobile = mobile_agent?
+    @request = request
+    #puts request.user_agent
+  end
   def iframe_test
+    
   end
   
   
