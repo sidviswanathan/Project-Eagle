@@ -93,7 +93,9 @@ function submitform(){
 function get_page(url){
 	x$( 'body' ).xhr( url+"&xhr=true" );
 }
+<% if render_head %>
 var page_loaded = false;
+<% end %>
 window.onload = function on_load(){
 
 	
