@@ -95,6 +95,10 @@ function get_page(url){
 }
 <% if @render_head %>
 var page_loaded = false;
+<% else %>
+x$('a').each(function(element, index, xui) {
+    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
+});
 <% end %>
 window.onload = function on_load(){
 
