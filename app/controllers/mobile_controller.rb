@@ -46,4 +46,11 @@ class MobileController < ApplicationController
     @app = MobileApp.new(params,request,session)
   end
   
+  def index_xui
+    render_head = true
+    if params[:xhr] == 'true'
+      render_head = false
+    end
+  end
+  
 end
