@@ -1,4 +1,4 @@
-<% if render_head %>
+<% if @render_head %>
 <%= render :partial => "head", :locals => { :app => @app } %>
 <% end %>
 <div data-role="page" class='type-interior'>
@@ -78,6 +78,6 @@
 
 	<%= render :partial => "footer", :locals => { :app => @app } %>
 </div><!-- /page -->
-<% if render_head %>
+<% if @render_head %>
 <%= render :partial => "foot", :locals => { :app => @app } %>
 <% end %>

@@ -47,9 +47,9 @@ class MobileController < ApplicationController
   end
   
   def index_xui
-    render_head = true
+    @render_head = true
     if params[:xhr] == 'true'
-      render_head = false
+      @render_head = false
     end
   end
   
