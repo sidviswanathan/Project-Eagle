@@ -44,7 +44,7 @@ c.info = {
     "state" => "CA",
     "street" => "10700 Club House Ln",
     "logo" => "",
-    "gallery" => []
+    "gallery" => ["/images/holes/hole1.png","/images/holes/hole2.png","/images/holes/hole3.png","/images/holes/hole4.png","/images/holes/hole5.png","/images/holes/hole5.png","/images/holes/hole6.png","/images/holes/hole7.png","/images/holes/hole8.png","/images/holes/hole9.png","/images/holes/hole10.png","/images/holes/hole11.png","/images/holes/hole12.png","/images/holes/hole13.png","/images/holes/hole14.png","/images/holes/hole15.png","/images/holes/hole16.png","/images/holes/hole17.png","/images/holes/hole18.png"]
   }
 }.to_json
 c.mobile_domain = "http://m.deepclifftv.com/"
