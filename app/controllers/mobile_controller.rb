@@ -43,9 +43,15 @@ class MobileController < ApplicationController
   skip_before_filter :verify_authenticity_token 
 
   def get_mobile_app
+    if params[:course_id].nil?
+      course = Course.find_by_mobile_domain(request.url)
+      params[:course_id] = course.id.to_s
+    end
     @app = MobileApp.new(params,request,session)
   end
   def index
+    
+    
     if params[:xui] == "true"
       redirect_to @app.get_url("index_xui",{})
     end

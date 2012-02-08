@@ -47,4 +47,6 @@ c.info = {
     "gallery" => []
   }
 }.to_json
+c.mobile_domain = "http://m.deepclifftv.com/"
+c.web_domain = "http://www.deepclifftv.com/"
 c.save
