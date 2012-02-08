@@ -31,19 +31,17 @@
 	var g1 = 0;
 	var g2 = 1;
 	var gflip = true;
+	<% if !@app.course_info['gallery'].nil? %>
 	 <% @app.course_info['gallery'].each do |i| %>
 	gallery.push("<%= i %>");
 	<% end %>
+	<% else %>
 	/*
-	{% for i in app.dtemplate.gallery %}
-	gallery.push("{{i}}");
-	{% endfor %}
-	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
-
-	setTimeout("gflipIn()",4000);
+	<%= @app.course_info.to_s %>
 	*/
+	
+	<% end %>
 
-    //$.mobile.pageLoading( true );
 
 	$(document).bind("mobileinit", function(){
 
