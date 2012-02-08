@@ -35,6 +35,7 @@ Rails::Initializer.run do |config|
   # Run "rake -D time" for a list of tasks for finding time zone names.
   config.time_zone = 'UTC'
   config.gem 'dalli'
+  config.gem "subdomain_routes", :source => "http://gemcutter.org"
 
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
