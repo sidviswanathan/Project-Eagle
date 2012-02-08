@@ -39,7 +39,7 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
   
-  map.connect '/', :controller => 'mobile', :requirements => { :subdomain => 'm' }
+  map.connect '/', :controller => 'mobile', :requirements => { :subdomain => 'm' , :domain => "deepclifftv.com", :course_id => "1"}
   
   map.connect "/listener", :controller => "listener", :action => "index"
   map.connect "/cancel", :controller => "device_communication", :action => "cancel_reservation"
