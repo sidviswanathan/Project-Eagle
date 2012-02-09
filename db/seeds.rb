@@ -18,6 +18,8 @@ if !u.save
   puts 'user seed failed!'
 end
 
+m = Manager.create({:email => "eagle@presstee.com", :password => "eagle1", :courses => [].to_json})
+
 
 c = Course.new
 c.name = "Deep Cliff"
