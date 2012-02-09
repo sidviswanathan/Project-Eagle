@@ -89,7 +89,7 @@ div.browse h2{
 div.browse{
 	margin: 0;
 	position: fixed;
-	top: 100px;
+	top: 109px;
 	left: 814px;
 	width: 84px;
 	padding: 28px 28px 14px 28px;
@@ -109,6 +109,7 @@ div.browse{
 width: 740px;
 background: white;
 margin: 12px;
+margin-top:20px;
 padding: 28px;
 border-radius: 12px;
 -webkit-border-radius: 12px;
@@ -155,7 +156,7 @@ div#tab_holder{
       
       <div class="header">
         <h2>Manage Course</h2>
-        <p><a href="<%= @course.info['url'] %>"><%= @course.name %></a> <a href="/course/" class="cta">back to courses →</a></p>
+        <p><a href="<%= @course_info['url'] %>"><%= @course_info['title'] %></a> <a href="/course/" class="cta">back to courses →</a></p>
       </div>
 
       <fieldset class="inlineLabels" id='info'>
@@ -430,7 +431,7 @@ div#tab_holder{
 		
         <div class="ctrlHolder">
           <label for="">Deal Info</label>
-          <textarea name="" id="" rows="5" style='height:80px' cols="25"></textarea>
+          <textarea name="" id="" rows="5" style='height:60px' cols="25"></textarea>
           <p class="formHint">Deal Information.</p>
         </div>
 
@@ -485,7 +486,9 @@ div#tab_holder{
       <ul class='browser'>
         <li class='active browser' which='#info'><a class='browser'  >Information</a> </li>
         <li class='browser' which='#settings'><a  >Settings</a> </li>
-        <li class='browser' which='#deals'><a >Deals</a></li>
+        <li class='browser' which='#deals'><a >Messaging</a></li>
+		<li class='browser' which='#analytics'><a >Analytics</a></li>
+		<li class='browser' which='#managers'><a >Managers</a></li>
       </ul>
     </div>
 

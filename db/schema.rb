@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201034439) do
+ActiveRecord::Schema.define(:version => 20120209044136) do
 
   create_table "apn_apps", :force => true do |t|
     t.text     "apn_dev_cert"
@@ -138,6 +138,15 @@ ActiveRecord::Schema.define(:version => 20120201034439) do
     t.integer  "golfers"
     t.integer  "course_id"
     t.string   "confirmation_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "managers", :force => true do |t|
+    t.string   "email"
+    t.string   "password"
+    t.text     "courses"
+    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
