@@ -35,7 +35,23 @@ $(document).ready(function(){
 		current_tab = $(this).attr("which");
 		$('li.browser').removeClass('active');
 		$(this).addClass('active');
+	});
+	$('select').each(function(){
+		if($(this).attr("selected")){
+			$(this).val($(this).attr("selected"));
+		}
 	})
+	
+	$('div.tabber').click(function(){
+		$('.tab_content').hide();
+		$($(this).attr("show")).show();
+		$('.tabactive').removeClass("tabactive").addClass("tabinactive");
+		$(this).removeClass("tabinactive").addClass("tabactive")
+		
+	});
+	
+
+	
 })
 var current_tab = "#info";
 	function switchTab(which){
@@ -100,6 +116,34 @@ border-radius: 12px;
 -o-border-radius: 12px;
 -khtml-border-radius: 12px;
 }
+div.tabber{
+	display:inline-block;
+	border:1px solid gray;
+	border-bottom:1px solid white;
+	margin-bottom:-1px;
+	padding:4px;
+	padding-left:8px;
+	padding-right:8px;
+	cursor:pointer;
+
+}
+
+div.tabinactive{
+	border-bottom:1px solid gray;
+	color:gray;
+	
+}
+div.tabactive{
+	font-weight:bold;
+	color:#336699;
+}
+div.tabber:hover{
+	color:#336699;
+	background:#dddddd;
+}
+div#tab_holder{
+	border-bottom:1px solid gray;
+}
 </style>
   </head>
 
@@ -137,7 +181,7 @@ border-radius: 12px;
           <ul class="alternate">
             <li><label for="">City <input name="city" id="" data-default-value="Cupertino" size="35" maxlength="50" value="<%= @course_info['address']['city'] %>" type="text" class="textInput large"/></label></li>
             <li><label for="">State 
-	<select name="state">
+	<select selected="<%= @course_info['address']['state'] %>" name="state">
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>
@@ -358,6 +402,77 @@ border-radius: 12px;
 
       </fieldset>
 
+      <fieldset class="inlineLabels" id='deals' style='display:none'>
+	
+		<div id='tab_holder'>
+			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>Push New Deal</div>
+			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deals'>Review Past Deals</div>
+		</div>
+		<div id='new_deal_content' class='tab_content'>
+
+
+
+
+        <div class="ctrlHolder">
+          <p class="label">
+				Deal Channels
+          </p>
+          <ul class="alternate">
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> iPhone</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> iPad</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Android</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Facebook</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Email</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Website</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Twitter</label></li>
+			</ul>
+		</div>
+		
+        <div class="ctrlHolder">
+          <label for="">Deal Info</label>
+          <textarea name="" id="" rows="5" style='height:80px' cols="25"></textarea>
+          <p class="formHint">Deal Information.</p>
+        </div>
+
+		</div>
+		
+		<div class="ctrlHolder">
+          <label for="">Deal Type</label>
+          <select name="deal_type"  class="selectInput">
+            <option value="fcfs">First Come First Served</option>
+			<option value="reward">Loyalty Reward</option>
+			<option value="single">Single Tee Time</option>
+			<option value="custom">Custom</option>
+          </select>
+        </div>
+
+		
+		<div id='past_deal_content' style='display:none' class='tab_content'>
+	        <div class="ctrlHolder">
+	          <label for=""><em>*</em> Mobile Domain</label>
+	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.mobile_domain %>" type="text" class="textInput medium"/>
+	          <p class="formHint">http://m.golfcourse.com/</p>
+	        </div>
+
+
+	        <div class="ctrlHolder">
+	          <label for=""><em>*</em> Web Domain</label>
+	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="textInput medium"/>
+	          <p class="formHint">http://www.golfcourse.com/</p>
+	        </div>
+		</div>
+
+
+
+
+
+		
+
+      </fieldset>
+
+
+
+
       <div class="buttonHolder">
         <button type="submit" class="secondaryAction">← Cancel and go back</button>
         <button type="submit" class="primaryAction">Submit</button>
@@ -375,7 +490,7 @@ border-radius: 12px;
     </div>
 
     <div id="footer">
-      <p>Uni-Form is created by <a href="http://sprawsm.com/" title="Dragan is the founder of Superawesome">Dragan Babić</a> and is licensed under the MIT license.</p>
+      <p></p>
     </div>
 
   </body>
