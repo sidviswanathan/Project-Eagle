@@ -145,6 +145,10 @@ div.tabber:hover{
 div#tab_holder{
 	border-bottom:1px solid gray;
 }
+.header .ctax{
+	right:100px;
+	background:#336699;
+}
 </style>
   </head>
 
@@ -156,7 +160,7 @@ div#tab_holder{
       
       <div class="header">
         <h2>Welcome, <%=@manager.email%></h2>
-        <p><a href="/course/logout" style='background:red' class="cta">Logout</a></p>
+        <p><% if @manager.acl%><a href="/course/edit/new" class="cta ctax">New Course</a><% end %> <a href="/course/logout" style='background:red' class="cta">Logout</a></p>
       </div>
 
       <fieldset class="inlineLabels" id='info'>

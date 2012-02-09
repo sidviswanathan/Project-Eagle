@@ -2,9 +2,11 @@ class CreateManagers < ActiveRecord::Migration
   def self.up
     create_table :managers do |t|
       t.string :email
-      t.string :password
+      t.string :hashed_password
+      t.string :salt
       t.text :courses
       t.text :data
+      t.string :acl
 
       t.timestamps
     end

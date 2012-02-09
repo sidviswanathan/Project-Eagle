@@ -17,14 +17,26 @@ class CourseController < ApplicationController
   def edit
     if !session[:manager].nil?
       @manager = session[:manager]
-      @course = Course.find(params[:id].to_s)
+      @new_course = false
+      if params[:id] == 'new'
+        @course = Course.default
+        @new_course = true
+      else
+        @course = Course.find(params[:id].to_s)
+      end  
       @course_info = JSON.parse(@course.info)
       @course_matrix = JSON.parse(@course.fee_matrix)
+      if !@course.available_times.nil?
+        @course_times = JSON.parse(@course.available_times)
+      end
     else
       redirect_to "/course/"
     end
     
-    
+  
+  end
+  
+  def get_times
     
   end
   
@@ -35,12 +47,11 @@ class CourseController < ApplicationController
   
   def login
     if request.post?
-      m = Manager.find_by_email(params[:email])
-      if !m.nil?
-        if m.password == params[:password]
-          session[:manager] = m
-          redirect_to "/course/"
-        end
+      if session[:manager] = Manager.authenticate(params[:email], params[:password])
+        flash[:message]  = "Login successful"
+        redirect_to "/course/"
+      else
+        flash[:warning] = "Login unsuccessful"
       end
     end
     
@@ -49,7 +60,8 @@ class CourseController < ApplicationController
   def index
     if !session[:manager].nil?
       @manager = session[:manager]
-      @courses = Course.find(JSON.parse(session[:manager].courses))
+      @courses_acl = JSON.parse(session[:manager].courses)
+      @courses = Course.find(@courses_acl['list'])
     else
       @courses = nil
     end

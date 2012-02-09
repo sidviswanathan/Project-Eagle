@@ -144,9 +144,11 @@ ActiveRecord::Schema.define(:version => 20120209044136) do
 
   create_table "managers", :force => true do |t|
     t.string   "email"
-    t.string   "password"
+    t.string   "hashed_password"
+    t.string   "salt"
     t.text     "courses"
     t.text     "data"
+    t.string   "acl"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -20,6 +20,9 @@
     <![endif]-->
     
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
+				<link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/css" media="all" />
     <script type="text/javascript" src="/javascripts/uni-form.jquery.js"></script>
     <script type="text/javascript">
       $(function(){
@@ -41,6 +44,7 @@ $(document).ready(function(){
 			$(this).val($(this).attr("selected"));
 		}
 	})
+	$('.datepick').datepicker();
 	
 	$('div.tabber').click(function(){
 		$('.tab_content').hide();
@@ -49,6 +53,10 @@ $(document).ready(function(){
 		$(this).removeClass("tabinactive").addClass("tabactive")
 		
 	});
+	$('#deal_type_select').change(function(){
+		$('.deal_specs').hide();
+		$('.'+$(this).val()).show();
+	})
 	
 
 	
@@ -145,6 +153,13 @@ div.tabber:hover{
 div#tab_holder{
 	border-bottom:1px solid gray;
 }
+iframe.invisible_frame{
+	border:0px;
+	width:100%;
+	padding:0;
+	margin:0;
+	
+}
 </style>
   </head>
 
@@ -155,7 +170,7 @@ div#tab_holder{
     <form action="#" class="uniForm">
       
       <div class="header">
-        <h2>Manage Course</h2>
+        <h2><% if @new_course %>Create New Course<% else %>Manage Course<% end %></h2>
         <p><a href="<%= @course_info['url'] %>"><%= @course_info['title'] %></a> <a href="/course/" class="cta">back to courses →</a></p>
       </div>
 
@@ -256,17 +271,15 @@ div#tab_holder{
 
 		<div class="ctrlHolder">
           <label for="">Course Logo</label>
-          <input type="file" id="" name="upload" size="35" class="fileUpload" />
-          <p class="formHint"><img src='/images/tlogo.png' /></p>
+          <input type="file" id="" style='display:none' name="upload" size="35" class="fileUpload" />
+          <p class="formHint"><iframe src='http://project-eagle.appspot.com/photos/c<%= @course.id.to_s %>,logo' class='invisible_frame'></iframe></p>
         </div>
 
 		<div class="ctrlHolder">
           <label for="">Image Gallery</label>
-          <input type="file" id="" name="" size="35" class="fileUpload" />
+          <input type="file" id="" style='display:none' name="" size="35" class="fileUpload" />
           <p class="formHint">
-          	<% @course_info['gallery'].each do |p| %>
-				<img src='<%= p %>'  />
-			<% end %>
+          	<iframe src='http://project-eagle.appspot.com/photos/c<%= @course.id.to_s %>_gallery' class='invisible_frame'></iframe>
 			
           </p>
         </div>
@@ -406,19 +419,32 @@ div#tab_holder{
       <fieldset class="inlineLabels" id='deals' style='display:none'>
 	
 		<div id='tab_holder'>
-			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>Push New Deal</div>
-			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deals'>Review Past Deals</div>
+			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>New Message</div>
+			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Past Messages</div>
+			<div class='tabber tabinactive' show="#past_deal_content"  id='automation_tab'>Automation</div>
+			<div class='tabber tabinactive' show="#past_deal_content"  id='users_tab'>Manage Users</div>
 		</div>
 		<div id='new_deal_content' class='tab_content'>
 
 
-
+			<div class="ctrlHolder">
+	          <label for="">Message Type</label>
+	          <select name="deal_type"  class="selectInput">
+	            <option value="teetime">Tee Time Deal</option>
+				<option value="reward">Combination Deal</option>
+				<option value="announce">Announcement</option>
+	          </select>
+	        </div>
+	
+	
+	
 
         <div class="ctrlHolder">
           <p class="label">
-				Deal Channels
+				Channels
           </p>
           <ul class="alternate">
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Global</label></li>
 			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> iPhone</label></li>
 			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> iPad</label></li>
 			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Android</label></li>
@@ -428,26 +454,118 @@ div#tab_holder{
 			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Twitter</label></li>
 			</ul>
 		</div>
-		
-        <div class="ctrlHolder">
-          <label for="">Deal Info</label>
-          <textarea name="" id="" rows="5" style='height:60px' cols="25"></textarea>
-          <p class="formHint">Deal Information.</p>
-        </div>
-
+		<div class="ctrlHolder">
+          <p class="label">
+				User Tags
+          </p>
+          <ul class="alternate">
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Everyone</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Regulars</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Members</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> New Users</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Males</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Females</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Seniors</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Juniors</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> <a >+ new tag</a></label></li>
+			</ul>
 		</div>
 		
 		<div class="ctrlHolder">
           <label for="">Deal Type</label>
-          <select name="deal_type"  class="selectInput">
+          <select name="deal_type"  id='deal_type_select' class="selectInput">
             <option value="fcfs">First Come First Served</option>
-			<option value="reward">Loyalty Reward</option>
 			<option value="groupon">Group Coupon</option>
 			<option value="single">Single Tee Time</option>
 			<option value="custom">Custom</option>
           </select>
         </div>
 
+		<div class="ctrlHolder fcfs deal_specs " >
+          <p class="label">
+				Deal Specifics
+          </p>
+          <ul class="alternate">
+			<li><label for=""> Deals Available<input id="" name="" data-default-value="10" class="textInput large"  type="text"/></label></li>
+			<li><label for=""> Price / Golfer<input id="" name="" data-default-value="30" class="textInput large"  type="text"/></label></li>
+			<li style='margin-bottom:12px'><label for=""> Tee Times<select name="deal_type"  class="selectInput">
+            <option value="fcfs"> Until 2 PM</option>
+			<option value="reward">2-4 PM</option>
+			<option value="groupon">After 4 PM</option>
+          </select></label></li>
+		<li><label for=""> Start Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> End Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> Days of Week
+			<div style='padding-top:3px'><input id="" name="" type="checkbox"/>M <input id="" name="" type="checkbox"/>Tu <input id="" name="" type="checkbox"/>W <input id="" name="" type="checkbox"/>Th <input id="" name="" type="checkbox"/>F <br><input id="" name="" type="checkbox"/>Sa <input id="" name="" type="checkbox"/>Su <input id="" name="" type="checkbox"/>Holidays</div>
+			</label></li>
+
+
+			
+			</ul>
+        </div>
+
+		<div class="ctrlHolder groupon deal_specs" style='display:none' >
+          <p class="label">
+				Deal Specifics
+          </p>
+          <ul class="alternate">
+			<li><label for=""> Group Size<input id="" name="" data-default-value="10" class="textInput large"  type="text"/></label></li>
+			<li><label for=""> Price / Golfer<input id="" name="" data-default-value="30" class="textInput large"  type="text"/></label></li>
+			<li style='margin-bottom:12px'><label for=""> Tee Times<select name="deal_type"  class="selectInput">
+            <option value="fcfs"> Until 2 PM</option>
+			<option value="reward">2-4 PM</option>
+			<option value="groupon">After 4 PM</option>
+          </select></label></li>
+		<li><label for=""> Start Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> End Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> Days of Week
+			<div style='padding-top:3px'><input id="" name="" type="checkbox"/>M <input id="" name="" type="checkbox"/>Tu <input id="" name="" type="checkbox"/>W <input id="" name="" type="checkbox"/>Th <input id="" name="" type="checkbox"/>F <br><input id="" name="" type="checkbox"/>Sa <input id="" name="" type="checkbox"/>Su <input id="" name="" type="checkbox"/>Holidays</div>
+			</label></li>
+
+
+			
+			</ul>
+        </div>
+
+		<div class="ctrlHolder single deal_specs" style='display:none' >
+          <p class="label">
+				Deal Specifics
+          </p>
+          <ul class="alternate">
+			<li><label for=""> Price / Golfer<input id="" name="" data-default-value="" class="textInput large"  type="text"/></label></li>
+			<li><label for=""> Book Singles ?
+				<select name="allow_singles"  class="selectInput">
+	            <option value="no"> No 2-4 Only</option>
+				<option value="yes">Allow Singles</option>
+	          </select></label></li>
+
+		
+		<li><label for=""> Tee Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> Tee Time
+			
+			<select name="teetime"  class="selectInput">
+            <option value=""> Select Date First.. </option>
+          </select>
+			
+			</label></li>
+
+
+
+			
+			</ul>
+        </div>
+
+		
+		
+        <div class="ctrlHolder">
+          <label for="">Message</label>
+          <textarea name="" id="" rows="5" style='height:60px' cols="25"></textarea>
+        </div>
+
+
+
+		</div>
+		
 		
 		<div id='past_deal_content' style='display:none' class='tab_content'>
 	        <div class="ctrlHolder">
@@ -464,13 +582,53 @@ div#tab_holder{
 	        </div>
 		</div>
 
-
-
-
-
-		
-
       </fieldset>
+
+      <fieldset class="inlineLabels" id='analytics' style='display:none'>
+		<div id='tab_holder'>
+			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>User Base</div>
+			<div class='tabber tabinactive' show="#past_deal_content"  id='automation_tab'>Bookings</div>
+			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Deal Conversion</div>
+		</div>
+	
+		<div id='past_deal_content' style='display:none' class='tab_content'>
+	        <div class="ctrlHolder">
+	          <label for=""><em>*</em> Mobile Domain</label>
+	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.mobile_domain %>" type="text" class="textInput medium"/>
+	          <p class="formHint">http://m.golfcourse.com/</p>
+	        </div>
+
+
+	        <div class="ctrlHolder">
+	          <label for=""><em>*</em> Web Domain</label>
+	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="textInput medium"/>
+	          <p class="formHint">http://www.golfcourse.com/</p>
+	        </div>
+		</div>
+		</fieldset>
+		
+		<fieldset class="inlineLabels" id='managers' style='display:none'>
+		<div id='tab_holder'>
+			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>Managers</div>
+			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Inbox</div>
+			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Compose</div>
+		</div>
+
+		<div id='past_deal_content' style='display:none' class='tab_content'>
+	        <div class="ctrlHolder">
+	          <label for=""><em>*</em> Mobile Domain</label>
+	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.mobile_domain %>" type="text" class="textInput medium"/>
+	          <p class="formHint">http://m.golfcourse.com/</p>
+	        </div>
+
+
+	        <div class="ctrlHolder">
+	          <label for=""><em>*</em> Web Domain</label>
+	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="textInput medium"/>
+	          <p class="formHint">http://www.golfcourse.com/</p>
+	        </div>
+		</div>
+		</fieldset>
 
 
 
@@ -487,7 +645,7 @@ div#tab_holder{
       <ul class='browser'>
         <li class='active browser' which='#info'><a class='browser'  >Information</a> </li>
         <li class='browser' which='#settings'><a  >Settings</a> </li>
-        <li class='browser' which='#deals'><a >Messaging</a></li>
+        <li class='browser' which='#deals'><a >UserCenter</a></li>
 		<li class='browser' which='#analytics'><a >Analytics</a></li>
 		<li class='browser' which='#managers'><a >Managers</a></li>
       </ul>

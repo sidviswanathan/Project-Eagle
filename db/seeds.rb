@@ -18,8 +18,15 @@ if !u.save
   puts 'user seed failed!'
 end
 
-m = Manager.create({:email => "eagle@presstee.com", :password => "eagle1", :courses => [].to_json})
+#m = Manager.create({:email => "eagle@presstee.com", :password => "eagle1", :courses => [].to_json})
 
+m = Manager.new
+    m.email      = "eagle@presstee.com"
+    m.password   = "eagle1"
+    m.courses    = {"list"=>[1],"acl"=>{1=>["destroy","manage","admin"]}}.to_json
+    m.acl        = ['create','destroy','manage','admin'].to_json
+    m.save
+    
 
 c = Course.new
 c.name = "Deep Cliff"
@@ -46,7 +53,7 @@ c.info = {
     "state" => "CA",
     "street" => "10700 Club House Ln",
   },
-  "logo" => "",
+  "logo" => "/images/tlogo.png",
   "gallery" => ["/images/holes/hole1.png","/images/holes/hole2.png","/images/holes/hole3.png","/images/holes/hole4.png","/images/holes/hole5.png","/images/holes/hole5.png","/images/holes/hole6.png","/images/holes/hole7.png","/images/holes/hole8.png","/images/holes/hole9.png","/images/holes/hole10.png","/images/holes/hole11.png","/images/holes/hole12.png","/images/holes/hole13.png","/images/holes/hole14.png","/images/holes/hole15.png","/images/holes/hole16.png","/images/holes/hole17.png","/images/holes/hole18.png"]
 }.to_json
 c.mobile_domain = "http://m.deepclifftv.com/"
