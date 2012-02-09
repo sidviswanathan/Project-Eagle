@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(:version => 20120201034439) do
     t.string   "name"
     t.string   "api"
     t.string   "api_course_id"
+    t.string   "mobile_domain"
+    t.string   "web_domain"
     t.text     "fee_matrix"
     t.text     "available_times"
     t.text     "info"
