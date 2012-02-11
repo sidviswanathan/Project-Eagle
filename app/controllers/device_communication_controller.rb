@@ -159,19 +159,24 @@ class DeviceCommunicationController < ApplicationController
     
     if Date.parse(date) > (Date.today+8)
       reservation = ServerCommunicationController.schedule_booking(email, course_id, golfers, time, date, total)
-    else
-      reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
-    end
-    
-    if reservation
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
-      response_object[:confirmation_code] = reservation.confirmation_code      
+      response_object[:confirmation_code] = "none"
     else
-      response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"    
+      reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
+      if reservation
+        response_object[:status]     = "success"
+        response_object[:statusCode] = 200
+        response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
+        response_object[:confirmation_code] = reservation.confirmation_code      
+      else
+        response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"    
+      end
     end
-    render :json => response_object.to_json 
+    render :json => response_object.to_json
+    
+     
   end
   
   
