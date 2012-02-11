@@ -157,7 +157,7 @@ class DeviceCommunicationController < ApplicationController
     
     response_object = intitiate_response_object
     
-    if Date.parse(date) > (Date.today+8)
+    if Date.parse(date) > (Date.today+7)
       reservation = ServerCommunicationController.schedule_booking(email, course_id, golfers, time, date, total)
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
