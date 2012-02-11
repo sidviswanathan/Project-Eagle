@@ -156,7 +156,12 @@ class DeviceCommunicationController < ApplicationController
     logger.info params
     
     response_object = intitiate_response_object
-    reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
+    
+    if Date.parse(date) > (Date.today+8)
+      reservation = Reservation.schedule_booking(email, course_id, golfers, time, date, total)
+    else
+      reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
+    end
     
     if reservation
       response_object[:status]     = "success"

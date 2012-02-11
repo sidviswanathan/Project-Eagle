@@ -61,7 +61,9 @@ class Reservation < ActiveRecord::Base
     end
     return body
   end
+  
 
+  
   def self.book_tee_time(email, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
     

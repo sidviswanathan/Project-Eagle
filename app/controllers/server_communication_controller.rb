@@ -32,6 +32,29 @@ class ServerCommunicationController < ApplicationController
     render :nothing => true
   end
   
+  def perform_booking
+    dump = Dump.find(params[:key].to_i)
+    data = JSON.parse(dump.data)
+    Reservation.book_tee_time(data["email"], data["course_id"], data["golfers"], data["time"], data["date"], data["total"])
+    render :nothing => true
+  end
+  
+  def schedule_booking(email, course_id, golfers, time, date, total)
+    data = {"email"=>email,"course_id"=>course_id,"golfers"=>golfers,"time"=>time,"date"=>date,"total"=>total}
+    dump = Dump.create({:data => data.to_json})
+    eta_day = Date.parse(date) - 7
+    eta_time = "07:00"
+    query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+    url = URI.parse(ADD_TASK_HOST)
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = false
+    headers = {}
+
+    response = http.get(query, headers)
+    
+  end
+  
+  
   def self.schedule_mailing(user,subject,body,date,time)
     data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email,"subject"=>subject,"body"=>body}
     eta_day = date
