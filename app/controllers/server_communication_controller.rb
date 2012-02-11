@@ -49,8 +49,9 @@ class ServerCommunicationController < ApplicationController
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = false
     headers = {}
-
+    
     response = http.get(query, headers)
+    return {"confirmation_code"=>"none"}
     
   end
   
