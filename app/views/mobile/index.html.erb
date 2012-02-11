@@ -62,13 +62,14 @@
 			$.mobile.defaultPageTransition = "slide";
 		}
 		
-		$(window).scroll(function() {
-		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-		       alert("bottom!");
-		   }
-		});
+		
+		
 
 	});
+	var date_scroll = false;
+	function window_scroll_bottom(){
+
+	}
 
 	var gallery_not_started = true;
 	$( document ).bind( "pagechange", function( event, data ){

@@ -56,6 +56,11 @@ class MobileController < ApplicationController
       redirect_to @app.get_url("index_xui",{})
     end
   end
+  
+  def more_days
+    @app.more_days(params[:last])
+  end
+  
   def index_xui
     @render_head = true
     @app.params[:xui] = "true"

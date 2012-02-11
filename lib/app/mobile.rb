@@ -62,6 +62,12 @@ class MobileApp
     
   end
   
+  def more_days(last)
+    last = Date.parse(last) + 1
+    @d2 = (0..6).map {|x| (last+x).strftime("%A, %B %e")}
+    @d = (0..6).map {|x| (last+x).strftime("%Y-%m-%d")}
+  end
+  
   def prev_date
     return (Date.parse(@date)-1).strftime("%Y-%m-%d")
   end
