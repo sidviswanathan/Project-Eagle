@@ -39,7 +39,7 @@ class ServerCommunicationController < ApplicationController
     render :nothing => true
   end
   
-  def schedule_booking(email, course_id, golfers, time, date, total)
+  def self.schedule_booking(email, course_id, golfers, time, date, total)
     data = {"email"=>email,"course_id"=>course_id,"golfers"=>golfers,"time"=>time,"date"=>date,"total"=>total}
     dump = Dump.create({:data => data.to_json})
     eta_day = Date.parse(date) - 7
