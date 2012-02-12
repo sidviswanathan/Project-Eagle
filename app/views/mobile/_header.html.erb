@@ -8,6 +8,24 @@ app.total = "<%= @app.total %>";
 app.first_name = "<%= @app.get_user_fname %>";
 app.last_name = "<%= @app.get_user_lname %>";
 app.email = "<%= @app.get_user_email %>";
+function more_days_scroller(){
+	if(!is_xui){
+		$(window).unbind("scroll").scroll(function() {
+		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+		       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
+					$('#more_days').before(data);
+				})
+		   }
+		});
+	}else{
+
+		x$('#more_days').un('click').on("click",function(e){
+			more_days(x$('#more_days').attr("url"));
+		})
+
+	}
+}
+
 </script>
 <div data-position="fixed" data-role="header"  data-tap-toggle="false" data-id="header_top">
 	<% if @app.params[:action] == 'time' %>
