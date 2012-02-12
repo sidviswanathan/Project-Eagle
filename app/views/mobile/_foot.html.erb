@@ -89,9 +89,10 @@ function submitform(){
 	})
 }
 
-
+var no_back = false
 function get_page(url){
 	window.location.hash = url+"&xhr=true";
+	no_back = true;
 	x$( 'body' ).xhr( url+"&xhr=true");
 		
 	
@@ -107,7 +108,13 @@ var back_log = [""];
 var bc = function backCheck(){
 	var test_hash = window.location.hash;
 	if(back_log[back_log.length-1] != test_hash.replace("#","")){
-		back_log.push(test_hash.replace("#",""));
+		if(no_back){
+			back_log.push(test_hash.replace("#",""));
+			no_back = false;
+		}else{
+			x$( 'body' ).xhr( back_log.pop());
+		}
+		
 	}
 }
 window.onload = function on_load(){
