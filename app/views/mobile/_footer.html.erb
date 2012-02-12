@@ -1,7 +1,7 @@
 <div data-role="footer" data-transition="fade" data-id="footer_bottom" data-touch-toggle="false"  data-theme="a" data-position="fixed" class='footer'>		
 	<div data-role="navbar"  data-theme="a">
 			<ul>
-				<li><a <% if @app.is_active('') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('',{}) %>">Tee Times</a></li>
+				<li><a <% if @app.is_active('') or @app.is_active('index_xui') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('',{}) %>">Tee Times</a></li>
 				<li><a <% if @app.is_active('reservations') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('reservations',{}) %>">Reservations</a></li>
 				<li><a <% if @app.is_active('about') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('about',{}) %>">About Us</a></li>
 			</ul>
