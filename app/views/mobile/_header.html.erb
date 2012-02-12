@@ -17,6 +17,15 @@ function more_days_scroller(){
 				})
 		   }
 		});
+	}else{
+		x$('a').each(function(element, index, xui) {
+			
+			if(x$(this).attr("no_script")!="true"){
+				x$(this).attr("no_script","true");
+				x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
+			}
+		    
+		});
 	}
 }
 

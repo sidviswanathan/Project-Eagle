@@ -97,14 +97,14 @@ function get_page(url){
 var page_loaded = false;
 <% else %>
 x$('a').each(function(element, index, xui) {
-    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
+    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')").attr("no_script","true");
 });
 <% end %>
 window.onload = function on_load(){
 
 	
 	x$('a').each(function(element, index, xui) {
-	    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
+	    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')").attr("no_script","true");
 	});
 	page_loaded = true;
 }

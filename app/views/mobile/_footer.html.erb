@@ -11,7 +11,9 @@
 try{
 	if(page_loaded){
 		x$('a').each(function(element, index, xui) {
+			
 			if(x$(this).attr("no_script")!="true"){
+				x$(this).attr("no_script","true");
 				x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')");
 			}
 		    
