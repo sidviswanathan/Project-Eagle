@@ -124,7 +124,7 @@ class DeviceCommunicationController < ApplicationController
          else
            dates = JSON.parse(updated_course.future_dates)
            
-           if !if dates.has_key?(date)
+           if !dates.has_key?(date)
              dates[date] = dates["template"]
              updated_course.future_dates = dates.to_json
              updated_course.save
