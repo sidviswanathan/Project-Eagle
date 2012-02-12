@@ -109,11 +109,13 @@ var back_log = ["",""];
 var bc = function backCheck(){
 	var test_hash = window.location.hash;
 	if(back_log[back_log.length-1] != test_hash.replace("#","")){
+		alert(back_log.pop());
 		if(no_back){
 			back_log.push(test_hash.replace("#",""));
 			no_back = false;
 		}else{
 			var t = back_log.pop();
+			console.log(back_log);
 			var to_get = back_log[back_log.length-1];
 			if(to_get == ""){
 				window.location = "http://www.presstee.com/mobile/index_xui?course_id=<%= @app.course.id.to_s %>";
