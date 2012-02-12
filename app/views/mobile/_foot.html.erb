@@ -91,11 +91,12 @@ function submitform(){
 
 var no_back = false
 function get_page(url){
+	console.log("hello_ "+url);
 	window.location.hash = url+"&xhr=true";
 	no_back = true;
 	x$( 'body' ).xhr( url+"&xhr=true");
 		
-	
+
 }
 <% if @render_head %>
 var page_loaded = false;
@@ -104,7 +105,7 @@ x$('a').each(function(element, index, xui) {
     x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')").attr("no_script","true");
 });
 <% end %>
-var back_log = [""];
+var back_log = ["",""];
 var bc = function backCheck(){
 	var test_hash = window.location.hash;
 	if(back_log[back_log.length-1] != test_hash.replace("#","")){
@@ -112,12 +113,12 @@ var bc = function backCheck(){
 			back_log.push(test_hash.replace("#",""));
 			no_back = false;
 		}else{
-			var to_get = back_log.pop();
-			to_get = back_log.pop();
+			var to_get = back_log[back_log.length-2];
 			if(to_get == ""){
 				to_get = "/mobile/?course_id=<%= @app.course.id.to_s %>";
 			}
-			x$( 'body' ).xhr( to_get);
+			console.log(to_get);
+			//x$( 'body' ).xhr( to_get);
 		}
 		
 	}
