@@ -50,10 +50,8 @@ class MobileController < ApplicationController
     @app = MobileApp.new(params,request,session)
   end
   def index
-    
-    
     if params[:xui] == "true"
-      redirect_to @app.get_url("index_xui",{})
+      redirect_to @app.get_url("index_xui",{:xui=>true})
     end
   end
   
