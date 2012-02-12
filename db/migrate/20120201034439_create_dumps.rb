@@ -4,6 +4,7 @@ class CreateDumps < ActiveRecord::Migration
       t.text :data
       t.datetime :eta
       t.integer :counter
+      t.xkey :string
 
       t.timestamps
     end

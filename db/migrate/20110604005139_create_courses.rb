@@ -9,6 +9,7 @@ class CreateCourses < ActiveRecord::Migration
       t.text :fee_matrix
       t.text :available_times
       t.text :info
+      t.text :future_dates
       t.timestamps
     end
   end

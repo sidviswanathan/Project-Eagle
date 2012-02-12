@@ -33,6 +33,7 @@ class Course < ActiveRecord::Base
     }.to_json
     c.mobile_domain = "http://m.presstee.com/"
     c.web_domain = "http://www.presstee.com/"
+    c.future_dates = {}.to_json
     return c
   end
 end

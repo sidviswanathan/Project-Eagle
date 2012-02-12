@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20120209044136) do
     t.text     "fee_matrix"
     t.text     "available_times"
     t.text     "info"
+    t.text     "future_dates"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

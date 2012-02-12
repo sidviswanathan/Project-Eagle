@@ -31,7 +31,7 @@ class DeviceCommunicationController < ApplicationController
   # os_version    => '5.0'              (String)
   # app_version   => '1.0'              (String)
   # tee_time_data =>  'XML object'      (String)      
-  
+  # 07:00, 07, 15, 22, 30, 37, 45, 52
   # ==========================================
   # = DEFINE STANDARD RESPONSE OBJECT FORMAT =
   # ==========================================
@@ -107,6 +107,7 @@ class DeviceCommunicationController < ApplicationController
       if date
          dates = JSON.parse(updated_course.available_times)
          if dates.has_key?(date)
+           
            response_object[:status]     = "success"
            response_object[:statusCode] = 200
            response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
@@ -121,7 +122,18 @@ class DeviceCommunicationController < ApplicationController
                response_object[:response]   = dates[date]["day"]
             end
          else
-           response_object[:message]    = "Sorry, please choose a date within the next 7 days.."
+           dates = JSON.parse(updated_course.future_dates)
+           
+           if !if dates.has_key?(date)
+             dates[date] = dates["template"]
+             updated_course.future_dates = dates.to_json
+             updated_course.save
+           end
+           response_object[:status]     = "success"
+           response_object[:statusCode] = 200
+           response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+           response_object[:response]   = dates[date]
+
          end
       elsif !updated_course.available_times.nil?
         response_object[:status]     = "success"

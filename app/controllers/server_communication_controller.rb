@@ -41,17 +41,30 @@ class ServerCommunicationController < ApplicationController
   
   def self.schedule_booking(email, course_id, golfers, time, date, total)
     data = {"email"=>email,"course_id"=>course_id,"golfers"=>golfers,"time"=>time,"date"=>date,"total"=>total}
-    dump = Dump.create({:data => data.to_json})
-    eta_day = Date.parse(date) - 7
-    eta_time = "07:00"
-    query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
-    url = URI.parse(ADD_TASK_HOST)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = false
-    headers = {}
+    course = Course.find(course_id.to_i)
+    dates = JSON.parse(course.future_dates)
+    if !dates["taken"].has_key?(date)
+      dates["taken"][date] = 4
+    end
+    dates["taken"][date] -= golfers.to_i
+    if dates["taken"][date] > -1
+      course.future_dates = dates.to_json
+      course.save
+      dump = Dump.create({:data => data.to_json})
+      eta_day = Date.parse(date) - 7
+      eta_time = "07:00"
+      query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+      url = URI.parse(ADD_TASK_HOST)
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = false
+      headers = {}
+
+      response = http.get(query, headers)
+      return {"confirmation_code"=>"none"}
+    else
+      return nil
+    end
     
-    response = http.get(query, headers)
-    return {"confirmation_code"=>"none"}
     
   end
   
