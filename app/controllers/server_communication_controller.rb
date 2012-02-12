@@ -52,7 +52,7 @@ class ServerCommunicationController < ApplicationController
       course.save
       dump = Dump.create({:data => data.to_json})
       eta_day = Date.parse(date) - 7
-      eta_time = "07:00"
+      eta_time = "06:00"
       query = "#{ADD_TASK_URI}perform_booking?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
       url = URI.parse(ADD_TASK_HOST)
       http = Net::HTTP.new(url.host, url.port)
