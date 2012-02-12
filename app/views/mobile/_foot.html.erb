@@ -113,11 +113,13 @@ var bc = function backCheck(){
 			back_log.push(test_hash.replace("#",""));
 			no_back = false;
 		}else{
-			var to_get = back_log[back_log.length-2];
+			var t = back_log.pop();
+			var to_get = back_log[back_log.length-1];
 			if(to_get == ""){
 				to_get = "/mobile/?course_id=<%= @app.course.id.to_s %>";
 			}
 			console.log(to_get);
+			
 			//x$( 'body' ).xhr( to_get);
 		}
 		
