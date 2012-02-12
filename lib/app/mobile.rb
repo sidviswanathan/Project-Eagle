@@ -54,14 +54,15 @@ class MobileApp
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
     @d = (0..6).map {|x| (today+x).strftime("%Y-%m-%d")}
     
+    
     dates = JSON.parse(@course.available_times)
     if !dates.has_key?(date)
-      dates = JSON.parse(updated_course.future_dates)
+      dates = JSON.parse(@course.future_dates)
       
       if !dates.has_key?(date)
         dates[date] = dates["template"]
-        updated_course.future_dates = dates.to_json
-        updated_course.save
+        @course.future_dates = dates.to_json
+        @course.save
       end
       @times = dates[date]
     else
