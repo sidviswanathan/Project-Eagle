@@ -39,6 +39,8 @@
 		function more_days(url){
 			x$('#more_days').html("remove");
 			x$( '#day_list' ).xhr( 'bottom',url,function(){
+				console.log(this)
+				x$('#day_list').html('bottom',this.responseText);
 				x$('#more_days').on("click",function(e){
 					more_days(x$('#more_days').attr("url"));
 				})
