@@ -41,6 +41,13 @@
 			x$( '#day_list' ).xhr( 'bottom',url,function(){
 				console.log(this)
 				x$('#day_list').html('bottom',this.responseText);
+				x$('a').each(function(element, index, xui) {
+
+					if(x$(this).attr("no_script")!="true"){
+						x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')").attr("no_script","true");
+					}
+
+				});
 
 			} );
 		}
