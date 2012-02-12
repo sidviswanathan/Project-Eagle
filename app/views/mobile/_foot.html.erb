@@ -102,7 +102,7 @@ function get_page(url){
 var page_loaded = false;
 <% else %>
 x$('a').each(function(element, index, xui) {
-   x$(element).attr("href","#"+x$(this).attr("href")).attr("no_script","true").attr("onclick","get_page('"+x$(this).attr("href")+"')");
+   x$(element).attr("onclick","get_page('"+x$(this).attr("href")+"')").attr("href","#"+x$(this).attr("href")).attr("no_script","true");
 });
 <% end %>
 var back_log = ["",""];
@@ -131,7 +131,7 @@ window.onload = function on_load(){
 
 	
 	x$('a').each(function(element, index, xui) {
-	    x$(element).attr("href","#"+x$(this).attr("href")).attr("no_script","true").attr("onclick","get_page('"+x$(this).attr("href")+"')");
+	   x$(element).attr("onclick","get_page('"+x$(this).attr("href")+"')").attr("href","#"+x$(this).attr("href")).attr("no_script","true");
 	});
 	page_loaded = true;
 	setInterval(bc,100);

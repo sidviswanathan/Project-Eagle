@@ -21,7 +21,7 @@ function more_days_scroller(){
 		x$('a').each(function(element, index, xui) {
 			
 			if(x$(this).attr("no_script")!="true"){
-				x$(element).attr("href","#"+x$(this).attr("href")).attr("no_script","true").attr("onclick","get_page('"+x$(this).attr("href")+"')");
+				x$(element).attr("onclick","get_page('"+x$(this).attr("href")+"')").attr("href","#"+x$(this).attr("href")).attr("no_script","true");
 			}
 		    
 		});
