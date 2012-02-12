@@ -36,7 +36,7 @@ if(!is_xui){
 	$(window).unbind("scroll").scroll(function() {
 	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
 	       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
-				$('#day_list').append(data);
+				$('#more_days').before(data);
 			})
 	   }
 	});
