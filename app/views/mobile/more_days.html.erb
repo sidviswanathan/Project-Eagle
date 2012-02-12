@@ -20,8 +20,8 @@
 	    <li>
 	    	<a href="<%= @app.get_url('time',{:date=>@app.d[6]}) %>" ><span class="title"><%= @app.d2[6] %></span><span class="disclosure_indicator"/></a>
 	    </li>
-		<li id='more_days' url="javascript:more_days('<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>')">
-	    	<span class="title">View More Days &darr;</span>
+		<li id='more_days' >
+	    	<a href="javascript:more_days('<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>')"><span class="title">View More Days &darr;</span></a>
 	    </li>
 
 <script type='text/javascript'>
