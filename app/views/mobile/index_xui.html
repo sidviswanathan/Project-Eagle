@@ -58,7 +58,7 @@
 
 		  	<% if @app.time == nil or @app.time == "" %>
 		    	<center>
-		    	<a href="javascript:callNoTeeTimeSelected()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+		    	<a no_script="true" href="javascript:callNoTeeTimeSelected()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		  	<% else%>
 		    	<% if @app.user == nil or !@app.user %>
 		      		<center>
@@ -68,7 +68,7 @@
 		      		<a href="<%= @app.get_url('login',{}) %>"><%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		    	<% else %>
 		      		<center>
-	                   <a href="javascript:confirmTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+	                   <a no_script="true" href="javascript:confirmTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
 		    	<% end %>
 		  	<% end %>
 		</ul>
