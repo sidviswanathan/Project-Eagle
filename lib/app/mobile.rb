@@ -56,7 +56,18 @@ class MobileApp
     
     begin
       dates = JSON.parse(@course.available_times)
-      @times = dates[params[:date]]["day"]
+      if !dates.has_key?(date)
+        dates = JSON.parse(updated_course.future_dates)
+        
+        if !dates.has_key?(date)
+          dates[date] = dates["template"]
+          updated_course.future_dates = dates.to_json
+          updated_course.save
+        end
+        @times = dates[date]
+      else
+        @times = dates[params[:date]]["day"]
+      end
     rescue
     end
     
