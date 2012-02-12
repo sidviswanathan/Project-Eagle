@@ -9,6 +9,7 @@ app.first_name = "<%= @app.get_user_fname %>";
 app.last_name = "<%= @app.get_user_lname %>";
 app.email = "<%= @app.get_user_email %>";
 function more_days_scroller(){
+	alert("his")
 	if(!is_xui){
 		$(window).unbind("scroll").scroll(function() {
 		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
