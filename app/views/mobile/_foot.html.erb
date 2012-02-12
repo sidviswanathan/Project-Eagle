@@ -91,7 +91,9 @@ function submitform(){
 
 
 function get_page(url){
-	x$( 'body' ).xhr( url+"&xhr=true" );
+	x$( 'body' ).xhr( url+"&xhr=true",function(){
+		window.location.hash = url+"&xhr=true";
+	} );
 	
 }
 <% if @render_head %>
