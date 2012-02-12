@@ -32,20 +32,7 @@
 
   </ul>
 <script type='text/javascript'>
-if(!is_xui){
-	$(window).unbind("scroll").scroll(function() {
-	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-	       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
-				$('#more_days').before(data);
-			})
-	   }
-	});
-}else{
-	x$('.more_days').on("click",function(e){
-		more_days(x$(this).attr("url"));
-	})
-}
-
+more_days_scroller();
 
 </script>
 
