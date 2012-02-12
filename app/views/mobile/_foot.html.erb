@@ -103,6 +103,13 @@ x$('a').each(function(element, index, xui) {
     x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')").attr("no_script","true");
 });
 <% end %>
+var back_log = [""];
+function backCheck(){
+	var test_hash = window.location.hash;
+	if(back_log[back_log.length-1] != test_hash.replace("#","")){
+		back_log.push(test_hash.replace("#",""));
+	}
+}
 window.onload = function on_load(){
 
 	
@@ -110,6 +117,7 @@ window.onload = function on_load(){
 	    x$(element).attr("href","javascript:get_page('"+x$(this).attr("href")+"')").attr("no_script","true");
 	});
 	page_loaded = true;
+	setInterval(backCheck(),1000);
 }
 
 function confirmTime(){
