@@ -30,6 +30,11 @@ function more_days_scroller(){
 }
 
 </script>
+<% if @app.params[:xui] %>
+<div class='xui_header'>
+	<%= @app.course_info['title_short'] %>
+</div>
+<% else %>
 <div data-position="fixed" data-role="header"  data-tap-toggle="false" data-id="header_top">
 	<% if @app.params[:action] == 'time' %>
 	<a href="<%= @app.get_url('time',{:date=>@app.prev_date}) %>" data-transition="reverse slide" data-icon="arrow-l" data-iconpos="notext"></a>
@@ -39,3 +44,4 @@ function more_days_scroller(){
 		<h1><%= @app.course_info['title_short'] %></h1>
 	<% end %>
 </div><!-- /header -->
+<% end %>
