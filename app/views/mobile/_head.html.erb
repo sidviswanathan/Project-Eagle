@@ -38,7 +38,11 @@
 		var is_xui = true;
 		function more_days(url){
 			x$('#more_days').html("remove");
-			x$( '#day_list' ).xhr( 'bottom',url );
+			x$( '#day_list' ).xhr( 'bottom',url,function(){
+				x$('#more_days').on("click",function(e){
+					more_days(x$('#more_days').attr("url"));
+				})
+			} );
 		}
 		
 	</script>
