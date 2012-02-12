@@ -112,6 +112,8 @@ var bc = function backCheck(){
 			back_log.push(test_hash.replace("#",""));
 			no_back = false;
 		}else{
+			var to_get = back_log.pop();
+			
 			x$( 'body' ).xhr( back_log.pop());
 		}
 		
