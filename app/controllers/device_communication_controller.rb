@@ -1,10 +1,17 @@
 require 'pp'
 require 'json'
 require 'apns'
+require 'xmlsimple'
+require 'date'
+require 'lib/api/fore.rb'
 
 class DeviceCommunicationController < ApplicationController
   
   skip_before_filter :verify_authenticity_token  
+  
+  DeviceCommunicationController::API_MODULE_MAP = {
+    "fore" => Fore
+  }
   
   # These are the clinet API endpoints for all devices communicating witht the Prestee server
   # Below is the expected format for paramters received from all client devices
@@ -24,7 +31,7 @@ class DeviceCommunicationController < ApplicationController
   # os_version    => '5.0'              (String)
   # app_version   => '1.0'              (String)
   # tee_time_data =>  'XML object'      (String)      
-  
+  # 07:00, 07, 15, 22, 30, 37, 45, 52
   # ==========================================
   # = DEFINE STANDARD RESPONSE OBJECT FORMAT =
   # ==========================================
@@ -44,9 +51,11 @@ class DeviceCommunicationController < ApplicationController
     return response_object
   end  
   
+  
   # ===================================================================
   # = http://presstee.com/device_communication/login =================
   # ===================================================================
+
   
   def login 
     email        = params[:email]
@@ -55,15 +64,23 @@ class DeviceCommunicationController < ApplicationController
     device_name  = params[:device_name]
     os_version   = params[:os_version]
     app_version  = params[:app_version]
+    redirect     = params[:redirect]
     
     response_object = intitiate_response_object
     user = User.login(f_name, l_name, email, device_name, os_version, app_version)
     
     if user
+      session[:current_user_id] = user.id
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server successfully created a User record"
-      render :json => response_object.to_json
+      if !redirect.nil?
+        puts user.id
+        render :nothing => true
+      else
+        render :json => response_object.to_json
+      end
+      
     else
       response_object[:message] = "The server failed to make the User.login() request"
       render :json => response_object.to_json               
@@ -84,38 +101,52 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     response_object = intitiate_response_object
-    a = Rails.cache.fetch("LatestAvailableTimes_"+course_id) {AvailableTimes.find_by_course_id(course_id)}
+    updated_course = Rails.cache.fetch("Updated_Course_"+course_id) {Course.find(course_id.to_i)}
     
-    if date
-       dates = JSON.parse(a.data)
-       if dates.has_key?(date)
-         response_object[:status]     = "success"
-         response_object[:statusCode] = 200
-         response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
-          if time
-             if dates[date]["hours"].has_key?(time.split(":")[0].to_i.to_s)
-               response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
-               render :json => response_object.to_json
-             else
-               response_object[:statusCode] = 500
-               response_object[:message]    = "Sorry, please choose an hour between 6:00 and 18:00 (24 hour format)"
-               render :json => response_object.to_json
-             end
-             
-          else
-             response_object[:response]   = dates[date]["day"]
-             render :json => response_object.to_json
-          end
-       else
-         response_object[:message]    = "Sorry, please choose a date within the next 7 days.."
-         render :json => response_object.to_json
-       end
-       
-    else
-       render :json => a.data
-    end
-    
+    if updated_course
+      if date
+         dates = JSON.parse(updated_course.available_times)
+         if dates.has_key?(date)
+           
+           response_object[:status]     = "success"
+           response_object[:statusCode] = 200
+           response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+            if time
+               if dates[date]["hours"].has_key?(time.split(":")[0].to_i.to_s)
+                 response_object[:response]   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
+               else
+                 response_object[:statusCode] = 500
+                 response_object[:message]    = "Sorry, please choose an hour between 6:00 and 18:00 (24 hour format)"
+               end
+            else
+               response_object[:response]   = dates[date]["day"]
+            end
+         else
+           dates = JSON.parse(updated_course.future_dates)
+           
+           if !dates.has_key?(date)
+             dates[date] = dates["template"]
+             updated_course.future_dates = dates.to_json
+             updated_course.save
+           end
+           response_object[:status]     = "success"
+           response_object[:statusCode] = 200
+           response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+           response_object[:response]   = dates[date]
 
+         end
+      elsif !updated_course.available_times.nil?
+        response_object[:status]     = "success"
+        response_object[:statusCode] = 200
+        response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
+        response_object[:response]   = updated_course.available_times
+      else
+        response_object[:message]    = "The server does not have data for the Course with ID:#{course_id}"
+      end
+    else
+      response_object[:message]    = "The server could not find a Course with ID:#{course_id}"
+    end
+    render :json => response_object.to_json
   end
   
   # ===================================================================
@@ -126,6 +157,7 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT: {"status":"success","message":"The server successfully made the Reservation.book_tee_time() request","response":"","statusCode":200}
   
   def book_reservation
+    
     email       = params[:email]
     course_id   = params[:course_id]
     golfers     = params[:golfers]
@@ -133,19 +165,30 @@ class DeviceCommunicationController < ApplicationController
     date        = params[:date]    
     total       = params[:total]
     
-    response_object = intitiate_response_object
-    reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
+    logger.info params
     
-    if reservation
+    response_object = intitiate_response_object
+    
+    if Date.parse(date) > (Date.today+7)
+      reservation = ServerCommunicationController.schedule_booking(email, course_id, golfers, time, date, total)
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
-      response_object[:confirmation_code] = reservation.confirmation_code
-      render :json => response_object.to_json         
+      response_object[:confirmation_code] = "none"
     else
-      response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"
-      render :json => response_object.to_json         
+      reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
+      if reservation
+        response_object[:status]     = "success"
+        response_object[:statusCode] = 200
+        response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
+        response_object[:confirmation_code] = reservation.confirmation_code      
+      else
+        response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"    
+      end
     end
+    render :json => response_object.to_json
+    
+     
   end
   
   
@@ -158,9 +201,10 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT: 
   
   def process_api_request
-    course_id      = params[:course_id]
-    response       = params[:tee_times_data]    
-    process_data   = Course.process_tee_times_data(response)    
+    courses = Course.all
+    courses.each do |course|
+      DeviceCommunicationController::API_MODULE_MAP[course.api].update(course)
+    end
     render :nothing => true
   end  
   
@@ -182,7 +226,7 @@ class DeviceCommunicationController < ApplicationController
     user = User.find_by_email(email)
     
     if user
-      reservations = Reservation.find_all_by_user_id_and_course_id(user.id.to_s,course_id,:order=>"date DESC,time DESC")
+      reservations = Reservation.find_all_by_user_id_and_course_id_and_status_code(user.id.to_s,course_id,Reservation::BOOKING_SUCCESS_STATUS_CODE,:order=>"date DESC,time DESC")
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server succesfully made the get_reservations() request"
@@ -193,14 +237,10 @@ class DeviceCommunicationController < ApplicationController
         r_list.push(r['reservation'])
       end
       response_object[:data]       = r_list
-      render :json => response_object.to_json
-      
     else
-      response_object[:message] = "The server failed to make the get_reservations() request"
-      render :json => response_object.to_json
+      response_object[:message] = "The server failed to make the get_reservations() request (Login Failure)"
     end
-
-    
+    render :json => response_object.to_json
   end
   
   
@@ -218,21 +258,16 @@ class DeviceCommunicationController < ApplicationController
     confirmation_code   = params[:confirmation_code]
     response_object     = intitiate_response_object
     
-    r = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+    cancelled = Reservation.cancel(confirmation_code,course_id)
     
-    if r
-      r.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
+    if cancelled
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server destroyed a reservation with course_id="+course_id+" and confirmation_code="+confirmation_code
-      render :json => response_object.to_json
     else
       response_object[:message] = "The server failed to make the Reservation.cancel_reservation() request, cannot find reservation object"
-      render :json => response_object.to_json
     end
-    
-    
-    
+    render :json => response_object.to_json
   end  
   
   # ===================================================================
@@ -248,7 +283,30 @@ class DeviceCommunicationController < ApplicationController
     APNS.send_notification(params[:token],params[:message])
   end
   
-      
+  
+  # ===================================================================
+  # = httpo://presstee.com/device_communication/test_mail ===
+  # ===================================================================
+  
+  # This should be moved into a separate API controller at some point, should not be in device communication controller
+  # INPUT: http://www.presstee.com/device_communication/push_deal
+  # OUTPUT:
+  
+  def test_mail
+    
+    query = "/blah"
+    
+    url = URI.parse("http://dump-them.appspot.com")
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = false
+    headers = {}
+    puts "hello schedule_mailing"
+    response = http.get(query, headers)
+
+    render :nothing => true
+  end
+  
+  
   
 end
 

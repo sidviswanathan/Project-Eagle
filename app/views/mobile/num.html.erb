@@ -1,0 +1,25 @@
+<div data-role="page" data-theme="a">
+
+  <%= render :partial => "header", :locals => { :app => @app } %>
+
+  <div class="content">
+  	<ul>
+    	<li>
+    		<a href="<%= @app.get_url('date',{:golfers=>'2'}) %>"><span class="title">2 Golfers</span><span class="disclosure_indicator"/>
+    		<img border="0" width="100px;" style="float:right;margin-top:-80px;padding:10px 0px 0 0;" src="/images/iphone/icons/2_golfers.png"/></a>
+    	</li>
+    	
+		<li>
+    		<a href="<%= @app.get_url('date',{:golfers=>'3'}) %>"><span class="title">3 Golfers</span><span class="disclosure_indicator"/>
+    		<img border="0" width="100px;" style="float:right;margin-top:-80px;padding:10px 20px 0 0;" src="/images/iphone/icons/3_golfers.png"/></a>
+    	</li>
+    
+		<li>
+    		<a href="<%= @app.get_url('date',{:golfers=>'4'}) %>"><span class="title">4 Golfers</span><span class="disclosure_indicator"/>
+    		<img border="0" width="100px;" style="float:right;margin-top:-80px;padding:10px 40px 0 0;" src="/images/iphone/icons/4_golfers.png"/></a>
+    	</li>
+  	</ul>
+  </div>	
+<%= render :partial => "footer", :locals => { :app => @app } %>
+
+</div>

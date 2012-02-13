@@ -1,0 +1,26 @@
+<div data-role="page" data-theme="a" data-cache="never">
+  
+  <%= render :partial => "header", :locals => { :app => @app } %>
+  <div class="content" style='padding-top:0em'>
+
+	<ul>
+	  <% @app.times.each do |i| %>
+	  	<% @time12hr = Time.parse(i['t']) %>
+	    <% @timeview = @time12hr.strftime("%I:%M") %>
+		<% @time24hr = @time12hr.strftime("%H:%M") %>
+	    <% if i['q'].to_i > 1 %>
+	      <li>
+	      	<a href="<%= @app.get_url('',{:time=>@time24hr,:price=> i['p'].to_s,:date=>@app.date}) %>"><span class="title"><%=@timeview%></span><span class ="disclosure_indicator"></span></a>
+	      	<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-58px;padding:10px 40px 0 0;" src="/images/iphone/icons/<%= i['q'] %>_bubble.png"/>
+	      </li>
+	    <% else %>
+	      <li>
+		  	<div style="min-height:80px;display:block;"><span class="title"><font color="#D8D8D8"><%=@timeview%></font></span></div>
+	      </li>
+	    <% end %>
+	  <% end %>
+  	</ul>
+	</div>
+	
+<%= render :partial => "footer", :locals => { :app => @app } %>
+</div>

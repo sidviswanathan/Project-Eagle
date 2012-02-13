@@ -1,12 +1,9 @@
 require "net/http"
 require "net/https"
+require "date"
 
 class Reservation < ActiveRecord::Base
   
-  DEFAULT_CC_NUM   = "4217639662603493"  
-  DEFAULT_CC_YEAR  = "15"
-  DEFAULT_CC_MONTH = "11"
-
   Reservation::BOOKING_CANCEL_STATUS_CODE   = 0
   Reservation::BOOKING_SUCCESS_STATUS_CODE  = 1
   
@@ -15,32 +12,104 @@ class Reservation < ActiveRecord::Base
 
   validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
   
-  # Book reservation record, creates a Reservation record, connects to user
-  # INPUT:   
-  # OUTPUT:   
+  CONFIRMATION_SUBJECT = "Tee Time Confirmation"
+  CONFIRMATION_BODY = <<-eos
+      This message is to confirm your teetime reservation at <coursename>. 
+      
+      Customer       : <first> <last> <<email>>
+      Tee Time       : <teetime> for <golfers> golfers.
+      Confirmation   : <confirm>
+      
+      For your convenience and security, we do not require credit card information to book via our 
+      mobile app.  Therefore, if you do not plan on showing up to your teetime, please be sure to 
+      cancel via the link below so we can make your slots available to other customers.  
+      
+      Cancel         :  http://www.presstee.com/cancel?course_id=<course_id>&confirmation_code=<confirm>
+      
+      Thanks for your business, and hope to see you soon!
+      
+    eos
+    
+  REMINDER_SUBJECT = "Tee Time Reminder"
+  REMINDER_BODY = <<-eos
+      This is a reminder that you have a tee time reservation for tomorrow.  For your convenience 
+      and security, we do not require credit card information to book via our mobile app.  Therefore,
+      if you do not plan on showing up to your teetime tomorrow, please be sure to cancel via the 
+      link below so we can make your slots available to other customers.  
+      
+      Tee Time       :  <teetime> for <golfers> golfers.
+      Cancel         :  http://www.presstee.com/cancel?course_id=<course_id>&confirmation_code=<confirm>
+      
+      Thanks again for your business.  
+    eos
+  
+  def self.cancel(confirmation_code,course_id)
+    reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+    course = Course.find(course_id.to_i)
+    if DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(reservation)
+      reservation.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
+      return true
+    else
+      return false
+    end
+  end
+  
+  def self.mail_sub(data,template)
+    body = template
+    data.each_pair do |k,v|
+      body = body.gsub("<#{k}>",v)
+    end
+    return body
+  end
+  
 
+  
   def self.book_tee_time(email, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
     
-    # Make the API reservation call here
-    u = User.find_by_email(email)
-    booking = book_time_via_api(reservation_info,u)
-    if XmlSimple.xml_in(booking.body).has_key?("confirmation")
-      confirmation_code = XmlSimple.xml_in(booking.body)["confirmation"][0]
-      logger.info "Confirmation Code: "+confirmation_code 
-    else
-      return nil
-    end    
-    #
-    
-    if booking
-      u = User.find_by_email(email)
-      if u 
+    user = User.find_by_email(email)
+    course = Course.find(course_id.to_i)
+
+    confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)
+
+    if !confirmation_code.nil?
+      if user 
         r = Reservation.create(reservation_info)
-        r.booking_type = u.device_name
+        r.booking_type = user.device_name
         r.confirmation_code = confirmation_code
-        r.user = u
+        r.user = user
         r.save
+        puts "date ----------------------"
+        puts date
+        
+        if date.class() == Date
+          day_before_tt = date - 1
+          date_date = date
+        else
+          date_date = Date.parse(date)
+          day_before_tt = date_date - 1
+          
+        end
+        
+        today = Date.today.strftime("%F")
+        now = Time.now.strftime("%R")
+        
+        subs = {
+          "first"      => user.f_name.capitalize,
+          "last"       => user.l_name.capitalize,
+          "email"      => user.email,
+          "confirm"    => confirmation_code,
+          "teetime"    => date_date.strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
+          "golfers"    => golfers,
+          "coursename" => course.name,
+          "course_id"  => course.id.to_s
+        }
+        
+        # Schedule Tee Time Reminder
+        ServerCommunicationController.schedule_mailing(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now)
+        if day_before_tt > Date.today
+          ServerCommunicationController.schedule_mailing(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time)
+        end
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 
@@ -53,50 +122,6 @@ class Reservation < ActiveRecord::Base
     end  
   end 
   
-  # Book reservation through course's reservation system via corresponding API, as defined in Course model
-  # INPUT: http://dump-them.appspot.com/cgi-bin/bk.pl?CourseID=1&Date=2011-12-19&Time=06:08&Email=arjun.vasan@gmail.com&Quantity=2&AffiliateID=029f2fw&Password=eagle  
-  # OUTPUT:  
   
-  def self.book_time_via_api(reservation_info,u)
-    
-    case reservation_info[:course_id]
 
-    when Course::DEEP_CLIFF_COURSE_ID
-      puts "Course ID:" + reservation_info[:course_id]
-      puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
-      logger.info "Returning Booking Response"
-      return book_time_via_fore_reservations_api(reservation_info,u)
-    when Course::SOME_OTHER_COURSE_ID 
-      puts "Course ID:" + reservation_info[:course_id]
-      puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
-      # Call function corresponding to the courses API
-    else
-      puts "Course ID:" + reservation_info[:course_id]
-      puts "Course ID 2:" + Course::DEEP_CLIFF_COURSE_ID
-      logger.info "Did not find a valid course with specified course_id in book_time_via_api function"
-      return nil
-    end      
-    
-  end  
-  
-  #IMPLEMENT: Move this to a separate module file for all Fore API calls.  Every API should have it's own module
-  #SAMPLE: response = http.post("http://dump-them.appspot.com/cgi-bin/bk.pl?CourseID=1&Date=2011-12-19&Time=06:08&Email=arjun.vasan@gmail.com&Quantity=2&AffiliateID=029f2fw&Password=eagle", headers)
-  
-  def self.book_time_via_fore_reservations_api(reservation_info,u)
-    uri = "#{Course::DEEP_CLIFF_API_URL}?CourseID=#{reservation_info[:course_id]}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=pressteex@gmail.com&FirstName=#{u[:f_name]}&LastName=#{u[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=5628884454&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{Course::DEEP_CLIFF_API_AFFILIATE_ID}&Password=#{Course::DEEP_CLIFF_API_PASSWORD}"
-    puts uri
-    url = URI.parse(Course::DEEP_CLIFF_API_HOST)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-    headers = {}
-
-    begin
-      response = http.get(uri, headers)
-    rescue
-      return nil
-    end
-    
-    if response; return response else return nil end    
-  end
-     
 end

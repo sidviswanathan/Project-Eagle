@@ -1,0 +1,41 @@
+<div data-role="page" data-theme="a" class='page' data-cache="never">
+  
+  <%= render :partial => "header", :locals => { :app => @app } %>
+
+  <div class="content" style='padding-top:0em'>
+ 	 <ul id="day_list">
+	    <li>
+	    	<a href="<%= @app.get_url('time',{:date=>@app.d[0]}) %>" ><span class="title"><%= @app.d2[0] %></span><span class="disclosure_indicator"/></a>
+	    </li>
+	    <li>
+	    	<a href="<%= @app.get_url('time',{:date=>@app.d[1]}) %>"><span class="title"><%= @app.d2[1] %></span><span class="disclosure_indicator"/></a>
+	    </li>
+	    <li>
+	    	<a href="<%= @app.get_url('time',{:date=>@app.d[2]}) %>" ><span class="title"><%= @app.d2[2] %></span><span class="disclosure_indicator"/></a>
+	    </li>
+	    <li>
+	    	<a href="<%= @app.get_url('time',{:date=>@app.d[3]}) %>" ><span class="title"><%= @app.d2[3] %></span><span class="disclosure_indicator"/></a>
+	    </li>
+	    <li>
+	    	<a href="<%= @app.get_url('time',{:date=>@app.d[4]}) %>" ><span class="title"><%= @app.d2[4] %></span><span class="disclosure_indicator"/></a>
+	    </li>
+	    <li>
+	    	<a href="<%= @app.get_url('time',{:date=>@app.d[5]}) %>" ><span class="title"><%= @app.d2[5] %></span><span class="disclosure_indicator"/></a>
+	    </li>
+	    <li>
+	    	<a href="<%= @app.get_url('time',{:date=>@app.d[6]}) %>" ><span class="title"><%= @app.d2[6] %></span><span class="disclosure_indicator"/></a>
+	    </li>
+
+		<li id='more_days'>
+	    	<a no_script="true" href="javascript:more_days('<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>')"><span class="title">View More Days &darr;</span></a>
+	    </li>
+
+  </ul>
+<script type='text/javascript'>
+more_days_scroller();
+
+</script>
+
+</div>
+<%= render :partial => "footer", :locals => { :app => @app } %>
+</div>

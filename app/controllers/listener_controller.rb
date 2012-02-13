@@ -18,7 +18,6 @@ class ListenerController < ApplicationController
     r = EmailReservation.create(reservation_info)
   end
   
-  
   def index
     if params["subject"] == 'Reservation Confirmation - Deep Cliff Golf Course'
       
@@ -35,8 +34,6 @@ class ListenerController < ApplicationController
       
       logger.info make_reservation("1",num_golfers,tee_time,date,confirmation)
       
-      
-    
     elsif params["subject"] == 'Reservation Confirmation - GolfNow.com/San Francisco'
       text = params["text"]
       date = Date.strptime(get_value("Tee Date: ",text),"%A, %B %d, %Y").strftime('%Y-%m-%d')

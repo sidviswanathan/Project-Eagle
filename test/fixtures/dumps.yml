@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  data: MyText
+  eta: 2012-01-31 19:44:39
+  counter: 1
+
+two:
+  data: MyText
+  eta: 2012-01-31 19:44:39
+  counter: 1

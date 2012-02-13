@@ -1,0 +1,195 @@
+
+    <div data-role="page" data-theme="a" style='background:#e8e8e8'>
+		<%= render :partial => "header", :locals => { :app => @app } %>
+		<div class="content" id='content' style='background:#e8e8e8 important;position:relative' data-role="content">
+			
+			<div class='container' >
+				<div  id='gbox' style='position:relative ;'>
+					<img id='gboxi' src='<%= @app.course_info['gallery'][0] %>' />
+				</div>
+				<div class='boxes' >
+				<div class='box' id='topbox'>
+					<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
+					<div class='title' style='padding-top:66px;font-size:18px'>
+					<b><%= @app.course_info['title'] %></b>
+					<div style='margin-top:-2px'>
+						<span style='font-size:14px;color:#555'><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></span>
+					</div>
+					
+					<div style='margin-top:3px;border-top:1px solid gray;font-weight:normal;font-size:14px;padding-top:4px'>
+						<b style='color:green'>OPEN</b>: 6:00 AM to 8:00 PM
+					</div>
+					
+					</div>
+					<div style='clear:both;height:4px'></div>
+
+				</div>
+
+				<div class='box' style='margin-top:0px' onclick='slideDown();'>
+					<div class='pad'>
+
+						
+						<img style='float:right;padding-top:3px' src='http://pushspot.appspot.com/assets/img/ud.png' />
+						<table style='padding-left:6%;'>
+							<tbody>
+								<tr>
+									<td style='color:gray;text-align:right'><a  rel=external style='color:#336699;text-decoration:none;font-weight:bold'>Rates</a></td>
+									<td><a style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'>$18 - $38</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class='more_details'  style='text-align:left;display:none' id='pricing_details'>
+						<div class='pad'>
+						<table border="0" cellpadding="1" cellspacing="1" >
+							<tbody>
+								<tr>
+									<th colspan="2">
+										<strong>Weekday Green Fees</strong></th>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Monday - Friday</td>
+									<td align="left" valign="top">
+										$28.00</td>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Twilight - 2:00 PM</td>
+									<td align="left" valign="top">
+										$21.00</td>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Super Twilight - 4:00 PM</td>
+									<td align="left" valign="top">
+										$18.00</td>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Sr.&nbsp;Rate Special after 9:00 AM - Lunch Included (age 62 +)</td>
+									<td align="left" valign="top">
+										$22.00</td>
+								</tr>
+							</tbody>
+						</table>
+						<table border="0" cellpadding="1" cellspacing="1" style='margin-top:14px'>
+							<tbody>
+								<tr>
+									<th valign="bottom" width="75%">
+										<strong>Weekends and Holidays </strong></th>
+									<th align="left" valign="bottom">
+										Fees</th>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Regular</td>
+									<td align="left" valign="top">
+										$38.00</td>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Twilight - 2:00 PM</td>
+									<td align="left" valign="top">
+										$28.00</td>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Super-twilight - 4:00 PM</td>
+									<td align="left" valign="top">
+										$22.00</td>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Nine-hole (Restrictions apply)</td>
+									<td align="left" valign="top">
+										$22.00</td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+					</div>
+				</div>
+				<div class='box'>
+					<div class='pad'>
+						<table style='padding-left:6%'>
+							<tbody>
+								<tr>
+									<td style='color:gray;text-align:right'><a href="tel:212-555-1212" rel=external style='color:#336699;text-decoration:none'>Call</a></td>
+									<td><a href="tel:408-253-5357" rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['phone'] %></a></td>
+								</tr>
+							</tbody>
+						</table>
+						
+						 
+					</div>
+				</div>
+				<div class='box'>
+					<div class='pad' id="map_link">
+						<table style='padding-left:6%'>
+							<tbody>
+								<tr>
+									<td style='color:gray;text-align:right' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></td>
+									<td><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %>, <%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></a></td>
+								</tr>
+							</tbody>
+						</table>
+						<div style='border-top:1px solid #888;margin-top:6px;padding-top:6px;text-align:center'><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['sttree'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a>
+						</div>
+
+					</div>
+				</div>
+				<div class='box' style='text-align:center'>
+					<div class='pad'>
+					<a href='http://www.yelp.com/biz/deep-cliff-golf-course-cupertino?rho_open_target=_blank' style='color:#336699;text-decoration:none'>Read & Write Reviews</a>
+					</div>
+				</div>
+				<div class='box' style='text-align:center'>
+					<div class='pad'>
+						<a target=_blank href='<%= @app.course_info['url'] %>?rho_open_target=_blank' style='color:#336699;text-decoration:none'><%= @app.course_info['url'] %></a>
+					</div>
+				</div>
+				<div class='box'>
+					<div class='pad'>
+						<table style='padding-left:6%'>
+							<tbody>
+								<tr>
+									<td style='color:gray;text-align:right'><a  style='color:#336699;text-decoration:none'>Hours</a></td>
+									<td><a rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'>Mon-Sun 6:00AM-8:00PM</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class='box last'>
+					<table style='padding-left:20%'>
+						<tbody>
+							<tr>
+								<td style='color:gray;text-align:right'>All Ages</td>
+								<td>Yes</td>
+							</tr>
+							<tr>
+								<td style='color:gray;text-align:right'>18 holes</td>
+								<td>Yes</td>
+							</tr>
+							<tr>
+								<td style='color:gray;text-align:right'>Pro Shop</td>
+								<td>Yes</td>
+							</tr>
+							<tr>
+								<td style='color:gray;text-align:right'>Restaurant</td>
+								<td>Yes</td>
+							</tr>
+							<tr>
+								<td style='color:gray;text-align:right'>Practice Area</td>
+								<td>Yes</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				</div>
+			</div>
+	    </div>
+<%= render :partial => "footer", :locals => { :app => @app, :fixed => false } %>
+	</div>

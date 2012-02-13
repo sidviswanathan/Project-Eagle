@@ -1,0 +1,25 @@
+<div data-role="footer" data-transition="fade" data-id="footer_bottom" data-touch-toggle="false"  data-theme="a" data-position="fixed" class='footer'>		
+	<div data-role="navbar"  data-theme="a">
+			<ul>
+				<li <% if @app.is_active('') or @app.is_active('index_xui') %> class="active"<% end %>><a <% if @app.is_active('') or @app.is_active('index_xui') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('',{}) %>">Tee Times</a></li>
+				<li <% if @app.is_active('reservations') %> class="active"<% end %>><a <% if @app.is_active('reservations') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('reservations',{}) %>">Account</a></li>
+				<li style='border-right:0px solid white !important;' <% if @app.is_active('about') %> class="active last"<% else %>class='last'<% end %> ><a <% if @app.is_active('about') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('about',{}) %>">About Us</a></li>
+			</ul>
+		</div><!-- /navbar -->
+</div><!-- /footer -->
+<script type='text/javascript'>
+try{
+	if(page_loaded){
+		x$('a').each(function(element, index, xui) {
+			
+			if(x$(this).attr("no_script")!="true"){
+				x$(element).attr("onclick","get_page('"+x$(this).attr("href")+"')").attr("href","#"+x$(this).attr("href")).attr("no_script","true");
+			}
+		    
+		});
+	}
+}catch(err){
+	
+}
+
+</script>

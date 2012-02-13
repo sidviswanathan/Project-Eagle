@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en-us" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+
+
+    <title>PressTee Course Manager</title>
+    
+    <link href="/stylesheets/uni-form.css" media="screen" rel="stylesheet"/>
+    <link href="/stylesheets/demo.css" media="screen" rel="stylesheet"/>
+    <link href="/stylesheets/default.uni-form.css" id="formStyle" title="Default Style" media="screen" rel="stylesheet"/>
+
+
+    <!--[if lte ie 7]>
+      <style type="text/css" media="screen">
+        /* Move these to your IE6/7 specific stylesheet if possible */
+        .uniForm, .uniForm fieldset, .uniForm .ctrlHolder, .uniForm .formHint, .uniForm .buttonHolder, .uniForm .ctrlHolder ul{ zoom:1; }
+      </style>
+    <![endif]-->
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/uni-form.jquery.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        
+        // init Uni-Form
+        $('form.uniForm').uniform();
+        
+      });
+$(document).ready(function(){
+	$('li.browser').click(function(){
+		$(current_tab).hide();
+		$($(this).attr("which")).show();
+		current_tab = $(this).attr("which");
+		$('li.browser').removeClass('active');
+		$(this).addClass('active');
+	});
+	$('select').each(function(){
+		if($(this).attr("selected")){
+			$(this).val($(this).attr("selected"));
+		}
+	})
+	
+	$('div.tabber').click(function(){
+		$('.tab_content').hide();
+		$($(this).attr("show")).show();
+		$('.tabactive').removeClass("tabactive").addClass("tabinactive");
+		$(this).removeClass("tabinactive").addClass("tabactive")
+		
+	});
+	
+
+	
+})
+var current_tab = "#info";
+	function switchTab(which){
+		$(current_tab).hide();
+		$(which).show();
+		current_tab = which;
+	}
+    </script>
+<style type='text/css'>
+.formHint img{
+	width:80px;
+	height:60px;
+}
+fieldset.inactive{
+	display:none;
+}
+ul.browser li.active{
+	background:#EFEFEF;
+	margin-left:-28px;
+	padding-left:12px;
+	font-size:12pt;
+}
+ul.browser li:hover{
+	background:#EFEFEF;
+	margin-left:-28px;
+	padding-left:12px;
+	cursor:pointer;
+}
+div.browse h2{
+	background:#ccccff;
+	margin-left:-28px;
+	padding-left:12px;
+	font-size:12pt;
+}
+div.browse{
+	margin: 0;
+	position: fixed;
+	top: 109px;
+	left: 814px;
+	width: 84px;
+	padding: 28px 28px 14px 28px;
+	font-size: 12px;
+	background: #97A2B0;
+
+
+	border-radius: 12px;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	-o-border-radius: 12px;
+	-khtml-border-radius: 12px;
+	border-top-left-radius:0px;	
+	border-bottom-left-radius:0px;
+}
+.uniForm {
+width: 740px;
+background: white;
+margin: 12px;
+margin-top:20px;
+padding: 28px;
+border-radius: 12px;
+-webkit-border-radius: 12px;
+-moz-border-radius: 12px;
+-o-border-radius: 12px;
+-khtml-border-radius: 12px;
+}
+div.tabber{
+	display:inline-block;
+	border:1px solid gray;
+	border-bottom:1px solid white;
+	margin-bottom:-1px;
+	padding:4px;
+	padding-left:8px;
+	padding-right:8px;
+	cursor:pointer;
+
+}
+
+div.tabinactive{
+	border-bottom:1px solid gray;
+	color:gray;
+	
+}
+div.tabactive{
+	font-weight:bold;
+	color:#336699;
+}
+div.tabber:hover{
+	color:#336699;
+	background:#dddddd;
+}
+div#tab_holder{
+	border-bottom:1px solid gray;
+}
+.header .ctax{
+	right:100px;
+	background:#336699;
+}
+</style>
+  </head>
+
+  <body>
+    
+<div id='mainContent'>
+	<% if @courses %>
+	<form action="/course/login" method=POST class="uniForm">
+      
+      <div class="header">
+        <h2>Welcome, <%=@manager.email%></h2>
+        <p><% if @manager.acl%><a href="/course/edit/new" class="cta ctax">New Course</a><% end %> <a href="/course/logout" style='background:red' class="cta">Logout</a></p>
+      </div>
+
+      <fieldset class="inlineLabels" id='info'>
+        <% @courses.each do |c| %>
+        <div class="ctrlHolder">
+          <label for=""><%=c.name%></label>
+          <a href='/course/edit/<%=c.id.to_s%>'>Manage Course</a>
+        </div>
+		<% end %>
+
+
+      </fieldset>
+
+
+    </form>
+	<% else %>
+    <form action="/course/login" method=POST class="uniForm">
+      
+      <div class="header">
+        <h2>PressTee Manager Login</h2>
+        <p><a href=""></a> </p>
+      </div>
+
+      <fieldset class="inlineLabels" id='info'>
+        
+        <div class="ctrlHolder">
+          <label for=""><em>*</em> Email</label>
+          <input name="email" id="" data-default-value="golfmanager@course.com" size="35" maxlength="50" value="" type="text" class="textInput medium"/>
+        </div>
+
+        <div class="ctrlHolder">
+          <label for=""><em>*</em> Password</label>
+          <input name="password" id="" data-default-value="************" size="35" maxlength="50" value="" type="password" class="textInput medium"/>
+        </div>
+
+      </fieldset>
+
+
+      <div class="buttonHolder">
+
+        <button type="submit" class="primaryAction">Login</button>
+      </div>
+
+    </form>
+	<% end%>
+</div>
+
+
+
+    <div id="footer">
+      <p></p>
+    </div>
+
+  </body>
+</html>
