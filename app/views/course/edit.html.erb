@@ -211,6 +211,14 @@ iframe.invisible_frame{
       </div>
 
       <fieldset class="inlineLabels" action='save' id='info'>
+	
+		<div class='tab_holder'>
+			<div class='tabber tabactive' show="#basic_settings"  id='basic_settings_tab'>Basic</div>
+			<div class='tabber tabinactive' show="#media_settings"  id='media_settings_tab'>Media</div>
+			<div class='tabber tabinactive' show="#technical_settings"  id='technical_settings_tab'>Technical</div>
+		</div>
+		
+		<div class='tab_content' id='basic_settings'>
         
         <div class="ctrlHolder">
           <label for=""><em>*</em> Full Course Title</label>
@@ -305,7 +313,9 @@ iframe.invisible_frame{
           <input name="url" id="" data-default-value="" value="<%= @course_info['url'] %>" size="35" maxlength="50" type="text" class="saveable textInput medium"/>
           <p class="formHint">http://www.somegolfcourse.com/</p>
         </div>
-
+		</div>
+		
+		<div id='media_settings' style='display:none' class='tab_content'>
 		<div class="ctrlHolder">
           <label for="">Course Logo</label>
           <iframe src='http://project-eagle.appspot.com/photos/<%= @course.id.to_s %>/logo' class='invisible_frame iframeInput'></iframe>
@@ -315,6 +325,9 @@ iframe.invisible_frame{
           <label for="">Image Gallery</label>
           <iframe src='http://project-eagle.appspot.com/photos/<%= @course.id.to_s %>/gallery' class='invisible_frame iframeInput'></iframe>
         </div>
+		</div>
+		
+		<div id='technical_settings' style='display:none' class='tab_content'>
 
         <div class="ctrlHolder">
           <label for="">Tee Sheet API</label>
@@ -343,7 +356,7 @@ iframe.invisible_frame{
           <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
           <p class="formHint">http://www.golfcourse.com/</p>
         </div>
-
+		</div>
       </fieldset>
 
       <fieldset class="inlineLabels" id='teetimes' style='display:none'>
