@@ -33,7 +33,13 @@ class ServerCommunicationController < ApplicationController
   end
   
   def add_course_media
-    
+    course = Course.find(params[:course_id])
+    @info = JSON.parse(course.info)
+    if params[:action] == 'logo'
+      @info["logo"] = params[:url]
+    else
+      @info["gallery"].push(params[:url])
+    end
   end
   
   def perform_booking
