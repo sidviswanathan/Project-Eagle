@@ -234,6 +234,7 @@ iframe.invisible_frame{
             <li><label for="">City <input name="city" id="" data-default-value="Cupertino" size="35" maxlength="50" value="<%= @course_info['address']['city'] %>" type="text" class="saveable textInput large"/></label></li>
             <li><label for="">State 
 	<select selected="<%= @course_info['address']['state'] %>" class='saveable' name="state">
+				<option value="<%= @course_info['address']['state'] %>"><%= @course_info['address']['state'] %></option>
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>

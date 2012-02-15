@@ -4,9 +4,7 @@ require 'apns'
 require 'xmlsimple'
 require 'date'
 require 'lib/api/fore.rb'
-
-
-
+require 'gdata'
 
 class CourseController < ApplicationController
   skip_before_filter :verify_authenticity_token 
@@ -89,6 +87,11 @@ class CourseController < ApplicationController
   
   def messenger
     
+  end
+  
+  def photos
+    client = GData::Client::Photos.new
+    client.clientlogin('pressteex@gmail.com', 'presstee1')
   end
   
   

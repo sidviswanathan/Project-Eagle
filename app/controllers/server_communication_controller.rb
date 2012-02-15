@@ -32,6 +32,10 @@ class ServerCommunicationController < ApplicationController
     render :nothing => true
   end
   
+  def add_course_media
+    
+  end
+  
   def perform_booking
     dump = Dump.find(params[:key].to_i)
     data = JSON.parse(dump.data)
