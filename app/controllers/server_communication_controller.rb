@@ -40,6 +40,8 @@ class ServerCommunicationController < ApplicationController
     else
       @info["gallery"].push(params[:url])
     end
+    course.info = @info.to_json
+    course.save
   end
   
   def perform_booking
