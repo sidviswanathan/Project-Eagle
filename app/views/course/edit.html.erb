@@ -10,6 +10,7 @@
     <link href="/stylesheets/uni-form.css" media="screen" rel="stylesheet"/>
     <link href="/stylesheets/demo.css" media="screen" rel="stylesheet"/>
     <link href="/stylesheets/default.uni-form.css" id="formStyle" title="Default Style" media="screen" rel="stylesheet"/>
+<link href="/stylesheets/fullcalendar.css" id="formStyle" title="Default Style" media="screen" rel="stylesheet"/>
 
 
     <!--[if lte ie 7]>
@@ -19,11 +20,12 @@
       </style>
     <![endif]-->
     
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
 				<link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/css" media="all" />
     <script type="text/javascript" src="/javascripts/uni-form.jquery.js"></script>
+<script type="text/javascript" src="/javascripts/fullcalendar.min.js"></script>
     <script type="text/javascript">
       $(function(){
         
@@ -31,32 +33,64 @@
         $('form.uniForm').uniform();
         
       });
+	function do_form_action(){
+		var dat = {"save":current_save};
+		var course = "<%= @course.id.to_s %>";
+		if(course==""){
+			course = "new";
+		}
+		if($(current_save).attr("action") == 'save' || $(current_save).attr("action") == 'settings'){
+			
+			$(current_save+" .saveable").each(function(){
+				dat[$(this).attr("name")] = $(this).val();
+			})
+			$.post("/course/save/"+course,dat,function(data){
+				window.location = "/course/edit/"+data;
+			})
+		}else if($(current_save).attr("action") == 'deals'){
+			
+		}
+
+	}
+var current_save = "#info";
 $(document).ready(function(){
+	
 	$('li.browser').click(function(){
 		$(current_tab).hide();
+		current_save = $(this).attr("which");
 		$($(this).attr("which")).show();
 		current_tab = $(this).attr("which");
 		$('li.browser').removeClass('active');
 		$(this).addClass('active');
+		
 	});
 	$('select').each(function(){
 		if($(this).attr("selected")){
 			$(this).val($(this).attr("selected"));
 		}
 	})
+	$('button.primaryAction').unbind("click");
 	$('.datepick').datepicker();
 	
 	$('div.tabber').click(function(){
 		$('.tab_content').hide();
 		$($(this).attr("show")).show();
 		$('.tabactive').removeClass("tabactive").addClass("tabinactive");
-		$(this).removeClass("tabinactive").addClass("tabactive")
+		$(this).removeClass("tabinactive").addClass("tabactive");
+		$('#calendar').fullCalendar('render');
 		
 	});
 	$('#deal_type_select').change(function(){
 		$('.deal_specs').hide();
 		$('.'+$(this).val()).show();
 	})
+	$('#calendar').fullCalendar({
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+		editable: true});
 	
 
 	
@@ -150,7 +184,7 @@ div.tabber:hover{
 	color:#336699;
 	background:#dddddd;
 }
-div#tab_holder{
+div.tab_holder{
 	border-bottom:1px solid gray;
 }
 iframe.invisible_frame{
@@ -176,17 +210,17 @@ iframe.invisible_frame{
         <p><a href="<%= @course_info['url'] %>"><%= @course_info['title'] %></a> <a href="/course/" class="cta">back to courses →</a></p>
       </div>
 
-      <fieldset class="inlineLabels" id='info'>
+      <fieldset class="inlineLabels" action='save' id='info'>
         
         <div class="ctrlHolder">
           <label for=""><em>*</em> Full Course Title</label>
-          <input name="title" id="" data-default-value="Some Golf Course Title" size="35" maxlength="50" value="<%= @course_info['title'] %>" type="text" class="textInput medium"/>
+          <input name="title" id="" data-default-value="Some Golf Course Title" size="35" maxlength="50" value="<%= @course_info['title'] %>" type="text" class="saveable textInput medium"/>
           <p class="formHint">Deep Cliff Golf Course</p>
         </div>
 
         <div class="ctrlHolder">
           <label for=""><em>*</em> Short Course Title</label>
-          <input name="title_short" id="" data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course_info['title_short'] %>" type="text" class="textInput small"/>
+          <input name="title_short" id="" data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course_info['title_short'] %>" type="text" class="saveable textInput small"/>
           <p class="formHint">Deep Cliff</p>
         </div>
 
@@ -197,9 +231,9 @@ iframe.invisible_frame{
             <em>*</em> Course Location
           </p>
           <ul class="alternate">
-            <li><label for="">City <input name="city" id="" data-default-value="Cupertino" size="35" maxlength="50" value="<%= @course_info['address']['city'] %>" type="text" class="textInput large"/></label></li>
+            <li><label for="">City <input name="city" id="" data-default-value="Cupertino" size="35" maxlength="50" value="<%= @course_info['address']['city'] %>" type="text" class="saveable textInput large"/></label></li>
             <li><label for="">State 
-	<select selected="<%= @course_info['address']['state'] %>" name="state">
+	<select selected="<%= @course_info['address']['state'] %>" class='saveable' name="state">
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>
@@ -253,13 +287,13 @@ iframe.invisible_frame{
 				<option value="WY">Wyoming</option>
 	</select>
 	</label></li>
-            <li><label for="">Zip <input name="zip" id="" data-default-value="90703" size="35" maxlength="50" value="<%= @course_info['address']['zip'] %>" type="text" class="textInput large"/</label></li>
+            <li><label for="">Zip <input name="zip" id="" data-default-value="90703" size="35" maxlength="50" value="<%= @course_info['address']['zip'] %>" type="text" class="textInput large saveable"/</label></li>
           </ul>
         </div>
 
         <div class="ctrlHolder">
           <label for=""><em>*</em> Street Address</label>
-          <input name="title" id="" data-default-value="Some Golf Course Title" size="35" maxlength="50" value="<%= @course_info['address']['street'] %>" type="text" class="textInput medium"/>
+          <input name="street" id="" data-default-value="Some Golf Course Title" size="35" maxlength="50" value="<%= @course_info['address']['street'] %>" type="text" class="saveable textInput medium"/>
           <p class="formHint">1600 Pennsylvania Ave</p>
         </div>
 		
@@ -267,34 +301,23 @@ iframe.invisible_frame{
         
         <div class="ctrlHolder">
           <label for=""><em>*</em> Course Website URL</label>
-          <input name="" id="" data-default-value="" value="<%= @course_info['url'] %>" size="35" maxlength="50" type="text" class="textInput medium"/>
+          <input name="url" id="" data-default-value="" value="<%= @course_info['url'] %>" size="35" maxlength="50" type="text" class="saveable textInput medium"/>
           <p class="formHint">http://www.somegolfcourse.com/</p>
         </div>
 
 		<div class="ctrlHolder">
           <label for="">Course Logo</label>
-          <input type="file" id="" style='display:none' name="upload" size="35" class="fileUpload" />
-          <p class="formHint"><iframe src='http://project-eagle.appspot.com/photos/c<%= @course.id.to_s %>,logo' class='invisible_frame'></iframe></p>
+          <iframe src='http://project-eagle.appspot.com/photos/<%= @course.id.to_s %>/logo' class='invisible_frame iframeInput'></iframe>
         </div>
 
 		<div class="ctrlHolder">
           <label for="">Image Gallery</label>
-          <input type="file" id="" style='display:none' name="" size="35" class="fileUpload" />
-          <p class="formHint">
-          	<iframe src='http://project-eagle.appspot.com/photos/c<%= @course.id.to_s %>_gallery' class='invisible_frame'></iframe>
-			
-          </p>
+          <iframe src='http://project-eagle.appspot.com/photos/<%= @course.id.to_s %>/gallery' class='invisible_frame iframeInput'></iframe>
         </div>
 
-        
-
-      </fieldset>
-
-      <fieldset class="inlineLabels" id='settings' style='display:none'>
-
-		<div class="ctrlHolder">
+        <div class="ctrlHolder">
           <label for="">Tee Sheet API</label>
-          <select name="api"  class="selectInput">
+          <select name="api"  class="saveable selectInput">
             <option value="fore" <% if @course.api =='fore' %>SELECTED<%end%>>Fore Reservations</option>
 			<option value="ezlinks" <% if @course.api =='ezlinks' %>SELECTED<%end%>>EZLinks</option>
 			<option value="other" <% if @course.api =='other' %>SELECTED<%end%>>Other</option>
@@ -303,23 +326,55 @@ iframe.invisible_frame{
 
         <div class="ctrlHolder">
           <label for=""><em>*</em> API Course ID</label>
-          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.api_course_id %>" type="text" class="textInput small"/>
+          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.api_course_id %>" type="text" class="saveable textInput small"/>
           <p class="formHint">E.G. 1987654</p>
         </div>
 
         <div class="ctrlHolder">
           <label for=""><em>*</em> Mobile Domain</label>
-          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.mobile_domain %>" type="text" class="textInput medium"/>
+          <input name="mobile_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.mobile_domain %>" type="text" class="saveable textInput medium"/>
           <p class="formHint">http://m.golfcourse.com/</p>
         </div>
 
 
         <div class="ctrlHolder">
           <label for=""><em>*</em> Web Domain</label>
-          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="textInput medium"/>
+          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
           <p class="formHint">http://www.golfcourse.com/</p>
         </div>
 
+      </fieldset>
+
+      <fieldset class="inlineLabels" id='teetimes' style='display:none'>
+		<div class='tab_holder'>
+			<div class='tabber tabactive' show="#booking_settings"  id='pricing_settings_tab'>Booking</div>
+			<div class='tabber tabinactive' show="#pricing_settings"  id='pricing_settings_tab'>Pricing</div>
+			<div class='tabber tabinactive' show="#calendar_box"  id='calendar_settings_tab'>Calendar</div>
+		</div>
+
+		<div id='booking_settings' class='tab_content'>
+			<div class="ctrlHolder">
+	          <label for=""><em>*</em> Booking Via</label>
+	          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
+	          <p class="formHint">http://www.golfcourse.com/</p>
+	        </div>
+			<div class="ctrlHolder">
+	          <label for=""><em>*</em> Advanced Booking </label>
+	          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
+	          <p class="formHint">http://www.golfcourse.com/</p>
+	        </div>
+			<div class="ctrlHolder">
+	          <label for=""><em>*</em> Booking Contact </label>
+	          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
+	          <p class="formHint">http://www.golfcourse.com/</p>
+	        </div>
+			<div class="ctrlHolder">
+	          <label for=""><em>*</em> Payment Information </label>
+	          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
+	          <p class="formHint">http://www.golfcourse.com/</p>
+	        </div>
+		</div>
+		<div id='pricing_settings'  class='tab_content' style='display:none'>
 
         <div class="ctrlHolder">
           <p class="label">
@@ -328,19 +383,19 @@ iframe.invisible_frame{
           <ul class="alternate">
             <li><label for="">Weekday 
 				<% @course_matrix['split'].each_with_index do |t,i| %>
-				<select id="" name="price"><option data-default-value="Placeholder text">Price Until ..</option>
-					<option <% if t==10 %>SELECTED<%end%> >10 AM</option>
-					<option <% if t==11 %>SELECTED<%end%> >11 AM</option>
-					<option <% if t==12 %>SELECTED<%end%> >12 PM</option>
-					<option <% if t==13 %>SELECTED<%end%> >1 PM</option>
-					<option <% if t==14 %>SELECTED<%end%> >2 PM</option>
-					<option <% if t==15 %>SELECTED<%end%> >3 PM</option>
-					<option <% if t==16 %>SELECTED<%end%> >4 PM</option>
-					<option <% if t==17 %>SELECTED<%end%> >5 PM</option>
-					<option <% if t>17 %>SELECTED<%end%> >Until Close</option>
+				<select id="" name="price_until"><option data-default-value="Placeholder text">Price Until ..</option>
+					<option value="10" <% if t==10 %>SELECTED<%end%> >10 AM</option>
+					<option value="11" <% if t==11 %>SELECTED<%end%> >11 AM</option>
+					<option value="12" <% if t==12 %>SELECTED<%end%> >12 PM</option>
+					<option value="13" <% if t==13 %>SELECTED<%end%> >1 PM</option>
+					<option value="14" <% if t==14 %>SELECTED<%end%> >2 PM</option>
+					<option value="15" <% if t==15 %>SELECTED<%end%> >3 PM</option>
+					<option value="16" <% if t==16 %>SELECTED<%end%> >4 PM</option>
+					<option value="17" <% if t==17 %>SELECTED<%end%> >5 PM</option>
+					<option value="18" <% if t>17 %>SELECTED<%end%> >Until Close</option>
 				</select>  <b style='font-size:12pt'>$</b><input style='width:120px;display:inline' type="text" value="<%= @course_matrix['public']['weekday'][i] %>" id="" name="" class="textInput"/>
 				<% end %>
-				<select id="" name="price"><option SELECTED data-default-value="Placeholder text">Until Close</option>
+				<select id="" name="price_until"><option SELECTED data-default-value="Placeholder text">Until Close</option>
 					</select>  <b style='font-size:12pt'>$</b><input style='width:120px;display:inline' type="text" value="<%= @course_matrix['public']['weekday'][-1] %>" id="" name="" class="textInput"/>
 			</label>
 			
@@ -412,15 +467,18 @@ iframe.invisible_frame{
           </ul>
           <p class="formHint"><input type='checkbox' value='dynamic' /> Enable Dynamic Pricing</p>
         </div>
-
-
+		</div>
 		
+		<div id='calendar_box' class='tab_content' style='display:none;padding-top:12px'>
+			
+			<div id='calendar'></div>
+		</div>
 
       </fieldset>
 
       <fieldset class="inlineLabels" id='deals' style='display:none'>
 	
-		<div id='tab_holder'>
+		<div class='tab_holder'>
 			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>New Message</div>
 			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Past Messages</div>
 			<div class='tabber tabinactive' show="#past_deal_content"  id='automation_tab'>Automation</div>
@@ -432,9 +490,8 @@ iframe.invisible_frame{
 			<div class="ctrlHolder">
 	          <label for="">Message Type</label>
 	          <select name="deal_type"  class="selectInput">
-	            <option value="teetime">Tee Time Deal</option>
-				<option value="reward">Combination Deal</option>
-				<option value="announce">Announcement</option>
+	            <option value="deal">Deal / Special</option>
+				<option value="message">Announcement</option>
 	          </select>
 	        </div>
 	
@@ -478,8 +535,10 @@ iframe.invisible_frame{
           <select name="deal_type"  id='deal_type_select' class="selectInput">
             <option value="fcfs">First Come First Served</option>
 			<option value="groupon">Group Coupon</option>
-			<option value="single">Single Tee Time</option>
+			<option value="combo">Combo Deal</option>
+			<option value="reward">Loyalty Reward</option>
 			<option value="custom">Custom</option>
+			<option value="single">Single Tee Time</option>
           </select>
         </div>
 
@@ -587,7 +646,7 @@ iframe.invisible_frame{
       </fieldset>
 
       <fieldset class="inlineLabels" id='analytics' style='display:none'>
-		<div id='tab_holder'>
+		<div class='tab_holder'>
 			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>User Base</div>
 			<div class='tabber tabinactive' show="#past_deal_content"  id='automation_tab'>Bookings</div>
 			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Deal Conversion</div>
@@ -611,12 +670,12 @@ iframe.invisible_frame{
 		
 		<fieldset class="inlineLabels" id='managers' style='display:none'>
 		<div id='tab_holder'>
-			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>Managers</div>
-			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Inbox</div>
-			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Compose</div>
+			<div class='tabber tabactive' show="#manager_view" id='manager_view_tab'>Managers</div>
+			<div class='tabber tabinactive' show="#manager_inbox"  id='manager_inbox_tab'>Inbox</div>
+			<div class='tabber tabinactive' show="#manager_log"  id='manager_log_tab'>Log</div>
 		</div>
 
-		<div id='past_deal_content' style='display:none' class='tab_content'>
+		<div id='manager_view'  class='tab_content'>
 	        <div class="ctrlHolder">
 	          <label for=""><em>*</em> Mobile Domain</label>
 	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.mobile_domain %>" type="text" class="textInput medium"/>
@@ -636,8 +695,8 @@ iframe.invisible_frame{
 
 
       <div class="buttonHolder">
-        <button type="submit" class="secondaryAction">← Cancel and go back</button>
-        <button type="submit" class="primaryAction">Submit</button>
+        <button type="submit" class="secondaryAction">Cancel</button>
+        <button onclick="do_form_action();" type="button" class="primaryAction">Save Changes</button>
       </div>
 
     </form>
@@ -645,9 +704,9 @@ iframe.invisible_frame{
 
     <div class="browse">
       <ul class='browser'>
-        <li class='active browser' which='#info'><a class='browser'  >Information</a> </li>
-        <li class='browser' which='#settings'><a  >Settings</a> </li>
-        <li class='browser' which='#deals'><a >UserCenter</a></li>
+        <li class='active browser' which='#info'><a class='browser'  >Course</a> </li>
+        <li class='browser' which='#teetimes'><a  >Tee Times</a> </li>
+        <li class='browser' which='#deals'><a >Golfers</a></li>
 		<li class='browser' which='#analytics'><a >Analytics</a></li>
 		<li class='browser' which='#managers'><a >Managers</a></li>
       </ul>

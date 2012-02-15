@@ -60,6 +60,7 @@
       .uniForm .textInput,
       .uniForm .fileUpload,
       .uniForm .selectInput,
+	  .uniForm .iframeInput,
       .uniForm select,
       .uniForm textarea{ float: left; width: 53%; margin: 0; }
       
@@ -106,6 +107,7 @@
       .uniForm .inlineLabels .textInput,
       .uniForm .inlineLabels .fileUpload,
       .uniForm .inlineLabels .selectInput,
+	  .uniForm .inlineLabels .iframeInput,
       .uniForm .inlineLabels select,
       .uniForm .inlineLabels textarea{ float: left; width: 64%; }
             

@@ -23,6 +23,7 @@ class Course < ActiveRecord::Base
       "title" => "Default Hills Golf Course",
       "url" => "http://www.presstee.com/",
       "phone" => "(408) 253-5357",
+      "managers" => ["eagle@presstee.com"],
       "address" => {
         "city" => "Default Ville",
         "state" => "CA",

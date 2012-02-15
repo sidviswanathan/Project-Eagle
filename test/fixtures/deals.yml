@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  info: MyText
+  data: MyText
+  code: MyString
+  starting: 2012-02-14 14:06:38
+  ending: 2012-02-14 14:06:38
+  valid: false
+
+two:
+  title: MyString
+  info: MyText
+  data: MyText
+  code: MyString
+  starting: 2012-02-14 14:06:38
+  ending: 2012-02-14 14:06:38
+  valid: false

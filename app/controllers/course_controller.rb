@@ -36,9 +36,61 @@ class CourseController < ApplicationController
   
   end
   
+  
+  def save
+    if !session[:manager].nil?
+      @manager = session[:manager]
+      @new_course = false
+      if params[:id] == 'new'
+        @course = Course.default
+        @new_course = true
+      else
+        @course = Course.find(params[:id].to_s)
+      end
+      if params[:save] == '#info'
+        @course_info = JSON.parse(@course.info)
+        @course_info["title"] = params[:title]
+        @course_info["title_short"] = params[:title_short]
+        @course_info["address"] = {
+          "city" => params[:city],
+          "state" => params[:state],
+          "zip" => params[:zip],
+          "street" => params[:street]
+        }
+        @course_info["url"] = params[:url]
+        
+        @course.info = @course_info.to_json
+        @course.api = params[:api]
+        @course.api_course_id = params[:api_course_id]
+        @course.mobile_domain = params[:mobile_domain]
+        @course.web_domain = params[:web_domain]
+        @course.name = params[:title_short]
+        @course.save
+        
+        
+        @mcourses = JSON.parse(session[:manager].courses)
+        if !@mcourses['list'].include? @course.id
+          @mcourses["list"].push(@course.id)
+          session[:manager].courses = @mcourses.to_json
+          session[:manager].save
+        end
+        render :text => @course.id.to_s
+        #redirect_to "/course/edit/"+params[:id].to_s
+      elsif params[:save] == '#settings'
+        
+        
+      end
+    end
+  end
+  
   def get_times
     
   end
+  
+  def messenger
+    
+  end
+  
   
   def logout
     session[:manager] = nil
@@ -61,7 +113,11 @@ class CourseController < ApplicationController
     if !session[:manager].nil?
       @manager = session[:manager]
       @courses_acl = JSON.parse(session[:manager].courses)
-      @courses = Course.find(@courses_acl['list'])
+      if @courses_acl['list'] == [] 
+        @courses = Course.all
+      else
+        @courses = Course.find(@courses_acl['list'])
+      end
     else
       @courses = nil
     end
