@@ -75,6 +75,8 @@ class CourseController < ApplicationController
         #redirect_to "/course/edit/"+params[:id].to_s
       elsif params[:save] == '#settings'
         
+      elsif params[:save] == "#manager"
+        #m = Manager.create({email})
         
       end
     end

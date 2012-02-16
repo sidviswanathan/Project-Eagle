@@ -26,6 +26,8 @@
 				<link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/css" media="all" />
     <script type="text/javascript" src="/javascripts/uni-form.jquery.js"></script>
 <script type="text/javascript" src="/javascripts/fullcalendar.min.js"></script>
+
+
     <script type="text/javascript">
       $(function(){
         
@@ -33,6 +35,13 @@
         $('form.uniForm').uniform();
         
       });
+	function add_manager(){
+		var manager_email = $('#new_manager_input').val();
+		var manager_type = $('#new_manager_type').val();
+		$.post("/course/save/<%= @course.id.to_s %>",{email:manager_email,type:manager_type},function(data){
+			
+		})
+	}
 	function do_form_action(){
 		var dat = {"save":current_save};
 		var course = "<%= @course.id.to_s %>";
@@ -84,6 +93,20 @@ $(document).ready(function(){
 		$('.deal_specs').hide();
 		$('.'+$(this).val()).show();
 	})
+	
+	$( "#slider" ).slider({
+				value:30,
+				min: 7,
+				max: 365,
+				range: "min",
+				step: 1,
+				slide: function( event, ui ) {
+					$( "#a_days" ).html( ui.value );
+				}
+			});
+			$( "#a_days" ).html( $( "#slider" ).slider( "value" ) );
+			
+			
 	$('#calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -115,6 +138,10 @@ ul.browser li.active{
 	margin-left:-28px;
 	padding-left:12px;
 	font-size:12pt;
+}
+span#a_days{
+	font-weight:bold;
+	color:#336699;
 }
 ul.browser li:hover{
 	background:#EFEFEF;
@@ -363,28 +390,43 @@ iframe.invisible_frame{
 		<div class='tab_holder'>
 			<div class='tabber tabactive' show="#booking_settings"  id='pricing_settings_tab'>Booking</div>
 			<div class='tabber tabinactive' show="#pricing_settings"  id='pricing_settings_tab'>Pricing</div>
+			<div class='tabber tabinactive' show="#deals_center"  id='deals_center_tab'>Run Deal</div>
 			<div class='tabber tabinactive' show="#calendar_box"  id='calendar_settings_tab'>Calendar</div>
 		</div>
 
 		<div id='booking_settings' class='tab_content'>
 			<div class="ctrlHolder">
-	          <label for=""><em>*</em> Booking Via</label>
-	          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
-	          <p class="formHint">http://www.golfcourse.com/</p>
-	        </div>
+	          <p class="label">
+					Booking Via
+	          </p>
+	          <ul class="alternate">
+				<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> iPhone App</label></li>
+				<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Android App</label></li>
+				<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Mobile Web</label></li>
+				<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Facebook Widget</label></li>
+				<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Website Widget</label></li>
+				</ul>	        
+			</div>
 			<div class="ctrlHolder">
 	          <label for=""><em>*</em> Advanced Booking </label>
-	          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
-	          <p class="formHint">http://www.golfcourse.com/</p>
+	          <label for="">
+				<input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Allow (<span id='a_days'></span> Days)	<div class='specialInput'>
+	          <div id="slider" style='width:400px;margin-top:12px'></div></div>
+				</label>
+				
 	        </div>
 			<div class="ctrlHolder">
 	          <label for=""><em>*</em> Booking Contact </label>
-	          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
+	          <input name="web_domain"  data-default-value="booking@golfcourse.com" size="35" maxlength="50" value="<%= @course_info["booking_contact"] %>" type="text" class="saveable textInput medium"/>
 	          <p class="formHint">http://www.golfcourse.com/</p>
 	        </div>
 			<div class="ctrlHolder">
-	          <label for=""><em>*</em> Payment Information </label>
-	          <input name="web_domain"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="saveable textInput medium"/>
+	          <label for=""><em>*</em> Payment </label>
+	          <select name="api"  class="saveable selectInput">
+	            <option value="course" >Collect at Course</option>
+				<option value="card" >Require Credit Card</option>
+				<option value="other" >Other</option>
+	          </select>
 	          <p class="formHint">http://www.golfcourse.com/</p>
 	        </div>
 		</div>
@@ -483,6 +525,147 @@ iframe.invisible_frame{
         </div>
 		</div>
 		
+		
+		
+		<div id='deals_center' style='display:none' class='tab_content'>
+
+
+	
+	
+	
+
+        <div class="ctrlHolder">
+          <p class="label">
+				Channels
+          </p>
+          <ul class="alternate">
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Global</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> iPhone</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> iPad</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Android</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Facebook</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Email</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Website</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Twitter</label></li>
+			</ul>
+		</div>
+		<div class="ctrlHolder">
+          <p class="label">
+				User Tags
+          </p>
+          <ul class="alternate">
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" CHECKED type="checkbox"/> Everyone</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Regulars</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Members</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> New Users</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Males</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Females</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Seniors</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> Juniors</label></li>
+			<li><label for=""><input id="" name="" data-default-value="Placeholder text" type="checkbox"/> <a >+ new tag</a></label></li>
+			</ul>
+		</div>
+		
+		<div class="ctrlHolder">
+          <label for="">Deal Type</label>
+          <select name="deal_type"  id='deal_type_select' class="selectInput">
+            <option value="fcfs">First Come First Served</option>
+			<option value="groupon">Group Coupon</option>
+			<option value="combo">Combo Deal</option>
+			<option value="reward">Loyalty Reward</option>
+			<option value="custom">Custom</option>
+			<option value="single">Single Tee Time</option>
+          </select>
+        </div>
+
+		<div class="ctrlHolder fcfs deal_specs " >
+          <p class="label">
+				Deal Specifics
+          </p>
+          <ul class="alternate">
+			<li><label for=""> Deals Available<input id="" name="" data-default-value="10" class="textInput large"  type="text"/></label></li>
+			<li><label for=""> Price / Golfer<input id="" name="" data-default-value="30" class="textInput large"  type="text"/></label></li>
+			<li style='margin-bottom:12px'><label for=""> Tee Times<select name="deal_type"  class="selectInput">
+            <option value="fcfs"> Until 2 PM</option>
+			<option value="reward">2-4 PM</option>
+			<option value="groupon">After 4 PM</option>
+          </select></label></li>
+		<li><label for=""> Start Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> End Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> Days of Week
+			<div style='padding-top:3px'><input id="" name="" type="checkbox"/>M <input id="" name="" type="checkbox"/>Tu <input id="" name="" type="checkbox"/>W <input id="" name="" type="checkbox"/>Th <input id="" name="" type="checkbox"/>F <br><input id="" name="" type="checkbox"/>Sa <input id="" name="" type="checkbox"/>Su <input id="" name="" type="checkbox"/>Holidays</div>
+			</label></li>
+
+
+			
+			</ul>
+        </div>
+
+		<div class="ctrlHolder groupon deal_specs" style='display:none' >
+          <p class="label">
+				Deal Specifics
+          </p>
+          <ul class="alternate">
+			<li><label for=""> Group Size<input id="" name="" data-default-value="10" class="textInput large"  type="text"/></label></li>
+			<li><label for=""> Price / Golfer<input id="" name="" data-default-value="30" class="textInput large"  type="text"/></label></li>
+			<li style='margin-bottom:12px'><label for=""> Tee Times<select name="deal_type"  class="selectInput">
+            <option value="fcfs"> Until 2 PM</option>
+			<option value="reward">2-4 PM</option>
+			<option value="groupon">After 4 PM</option>
+          </select></label></li>
+		<li><label for=""> Start Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> End Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> Days of Week
+			<div style='padding-top:3px'><input id="" name="" type="checkbox"/>M <input id="" name="" type="checkbox"/>Tu <input id="" name="" type="checkbox"/>W <input id="" name="" type="checkbox"/>Th <input id="" name="" type="checkbox"/>F <br><input id="" name="" type="checkbox"/>Sa <input id="" name="" type="checkbox"/>Su <input id="" name="" type="checkbox"/>Holidays</div>
+			</label></li>
+
+
+			
+			</ul>
+        </div>
+
+		<div class="ctrlHolder single deal_specs" style='display:none' >
+          <p class="label">
+				Deal Specifics
+          </p>
+          <ul class="alternate">
+			<li><label for=""> Price / Golfer<input id="" name="" data-default-value="" class="textInput large"  type="text"/></label></li>
+			<li><label for=""> Book Singles ?
+				<select name="allow_singles"  class="selectInput">
+	            <option value="no"> No 2-4 Only</option>
+				<option value="yes">Allow Singles</option>
+	          </select></label></li>
+
+		
+		<li><label for=""> Tee Date<input id="" name="" data-default-value="" class="textInput large datepick"  type="text"/></label></li>
+		<li><label for=""> Tee Time
+			
+			<select name="teetime"  class="selectInput">
+            <option value=""> Select Date First.. </option>
+          </select>
+			
+			</label></li>
+
+
+
+			
+			</ul>
+        </div>
+
+		
+		
+        <div class="ctrlHolder">
+          <label for="">Message</label>
+          <textarea name="" id="" rows="5" style='height:60px' cols="25"></textarea>
+        </div>
+
+
+
+		</div>
+		
+		
+		
+		
 		<div id='calendar_box' class='tab_content' style='display:none;padding-top:12px'>
 			
 			<div id='calendar'></div>
@@ -501,13 +684,6 @@ iframe.invisible_frame{
 		<div id='new_deal_content' class='tab_content'>
 
 
-			<div class="ctrlHolder">
-	          <label for="">Message Type</label>
-	          <select name="deal_type"  class="selectInput">
-	            <option value="deal">Deal / Special</option>
-				<option value="message">Announcement</option>
-	          </select>
-	        </div>
 	
 	
 	
@@ -683,25 +859,38 @@ iframe.invisible_frame{
 		</fieldset>
 		
 		<fieldset class="inlineLabels" id='managers' style='display:none'>
-		<div id='tab_holder'>
+		<div class='tab_holder'>
+			<div  style='float:right;border:0px'><input type="button" style='padding-bottom:3px' onclick="$('#new_manager_form').show();" value="+ Manager" /></div>
 			<div class='tabber tabactive' show="#manager_view" id='manager_view_tab'>Managers</div>
 			<div class='tabber tabinactive' show="#manager_inbox"  id='manager_inbox_tab'>Inbox</div>
-			<div class='tabber tabinactive' show="#manager_log"  id='manager_log_tab'>Log</div>
+			<div class='tabber tabinactive' show="#manager_log"  id='manager_log_tab'>Activity Log</div>
 		</div>
 
 		<div id='manager_view'  class='tab_content'>
-	        <div class="ctrlHolder">
-	          <label for=""><em>*</em> Mobile Domain</label>
-	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.mobile_domain %>" type="text" class="textInput medium"/>
-	          <p class="formHint">http://m.golfcourse.com/</p>
+			<div class="ctrlHolder" style='background:#d8d8d8;display:none' id='new_manager_form'>
+	          <label for=""><em>*</em> 
+				<select name="manager_type"  class="selectInput">
+	            <option value="owner"> Owner</option>
+				<option value="admin">Admin</option>
+	          </select>
+		</label>
+		<input name="api_course_id" id='new_manager_input' data-default-value="futuremanager@golfcourse.com" size="35" maxlength="50" value="" type="text" class="textInput medium"/><input type='button' value="invite" onclick="add_manager();" />
+	          
+	          	
 	        </div>
+			<% @course_info["managers"].each do |m| %>
+			<% mm = Manager.find_by_email(m) %>
+	        <div class="ctrlHolder">
+	          <label for=""><em>*</em> <%=mm.email%></label>
+	          
+	          	<select name="manager_type"  class="selectInput">
+	            <option value="owner"> Owner</option>
+				<option value="admin">Admin</option>
+	          </select>
+	        </div>
+			<% end %>
 
 
-	        <div class="ctrlHolder">
-	          <label for=""><em>*</em> Web Domain</label>
-	          <input name="api_course_id"  data-default-value="Some Golf Course Name" size="35" maxlength="50" value="<%= @course.web_domain %>" type="text" class="textInput medium"/>
-	          <p class="formHint">http://www.golfcourse.com/</p>
-	        </div>
 		</div>
 		</fieldset>
 
@@ -720,7 +909,7 @@ iframe.invisible_frame{
       <ul class='browser'>
         <li class='active browser' which='#info'><a class='browser'  >Course</a> </li>
         <li class='browser' which='#teetimes'><a  >Tee Times</a> </li>
-        <li class='browser' which='#deals'><a >Golfers</a></li>
+        <li class='browser' which='#deals'><a >Users</a></li>
 		<li class='browser' which='#analytics'><a >Analytics</a></li>
 		<li class='browser' which='#managers'><a >Managers</a></li>
       </ul>

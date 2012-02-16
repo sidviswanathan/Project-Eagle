@@ -108,6 +108,7 @@
       .uniForm .inlineLabels .fileUpload,
       .uniForm .inlineLabels .selectInput,
 	  .uniForm .inlineLabels .iframeInput,
+		.uniForm .inlineLabels .specialInput,
       .uniForm .inlineLabels select,
       .uniForm .inlineLabels textarea{ float: left; width: 64%; }
             
