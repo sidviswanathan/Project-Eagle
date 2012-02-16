@@ -175,7 +175,10 @@ module Fore
 
         bookings.each do |r|
           reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k, :booking_type=>"Standard"}
-          r = Reservation.create(reservation_info)
+          existing = Reservation.find_by_course_id_and_date_and_time_and_created_at(course_id,k,r['t'],(Time.now-5.minute)..Time.now)
+          if existing.nil?
+            r = Reservation.create(reservation_info)
+          end
         end
       end
     end
