@@ -174,8 +174,8 @@ module Fore
         cancels = set_new - set_old
 
         bookings.each do |r|
-          reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k}
-          r = EmailReservation.create(reservation_info)
+          reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k, :booking_type=>"Standard"}
+          r = Reservation.create(reservation_info)
         end
       end
     end
