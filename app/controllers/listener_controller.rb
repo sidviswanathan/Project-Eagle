@@ -6,8 +6,8 @@ class ListenerController < ApplicationController
   
   skip_before_filter :verify_authenticity_token
   
-  COURSE_MAP = {"Deep Cliff Golf Course" => "1"}
-  COURSE_EMAILS = {"1" => "carlcwheatley@gmail.com"}
+  COURSE_MAP = {"Deep Cliff Golf Course" => "2"}
+  COURSE_EMAILS = {"2" => "carlcwheatley@gmail.com"}
   
   def get_value(lab,text)
     return text.split(lab)[1].split("\n")[0].strip

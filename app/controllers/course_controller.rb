@@ -95,6 +95,24 @@ class CourseController < ApplicationController
     client.clientlogin('pressteex@gmail.com', 'presstee1')
   end
   
+  def self.get_slots_left(hours)
+    sum = []
+    hours.each_pair do |time,v|
+      
+      sum[time.split(":")[0].to_i)] = 
+      sum += v['q']
+    end
+    
+  end
+  
+  def analytics
+    c = Course.find(params[:id])
+    dates = JSON.parse(c.available_times)
+    inventory = {}
+    dates.each_pair do |k,v|
+      inventory[k] = get_slots_left(k["hours"])
+    end
+  end
   
   def logout
     session[:manager] = nil
