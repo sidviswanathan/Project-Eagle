@@ -99,7 +99,7 @@ class CourseController < ApplicationController
     sum = []
     hours.each_pair do |time,v|
       
-      sum[time.split(":")[0].to_i)] = 
+      sum[time.split(":")[0].to_i] = d
       sum += v['q']
     end
     
