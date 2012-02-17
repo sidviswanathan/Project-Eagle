@@ -32,7 +32,7 @@ class ListenerController < ApplicationController
       logger.info 'THE NUM GOLFERS IS IS: '+params["text"].split("Number of Players:")[1][1..1]
       logger.info 'THE TEE TIME IS: '+Chronic.parse(time[1..time.length-2]).strftime('%H:%M')
       
-      logger.info make_reservation("1",num_golfers,tee_time,date,confirmation)
+      logger.info make_reservation("2",num_golfers,tee_time,date,confirmation)
       
     elsif params["subject"] == 'Reservation Confirmation - GolfNow.com/San Francisco'
       text = params["text"]
