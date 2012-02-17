@@ -163,17 +163,22 @@ module Fore
       previous_response = JSON.parse(course.available_times)
     end
     
-
     course.available_times = converted_response.to_json
     course.save
     if !previous_response.nil?
       converted_response.each_pair do |k,v|
         set_old = previous_response[k]["day"].to_set
         set_new = v["day"].to_set
+        
         bookings = set_old - set_new
         cancels = set_new - set_old
-
+        
         bookings.each do |r|
+          cancels.each do |c|
+            if c['t'] == r['t']
+              r['q'] = (r['q'].to_i - c['q'].to_i).to_s
+            end
+          end
           reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k, :booking_type=>"Standard"}
           existing = Reservation.find_by_course_id_and_date_and_time_and_created_at(course_id,k,r['t'],(Time.now-5.minute)..Time.now)
           if existing.nil?
