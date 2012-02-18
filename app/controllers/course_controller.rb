@@ -96,15 +96,15 @@ class CourseController < ApplicationController
   end
   
   def add_slots(v)
-    sum = 0
+    s = 0
     v.each do |t|
-      sum += t['q'].to_i
+      s += t['q'].to_i
     end
-    return sum
+    return s
   end
   
   def get_slots_left(hours)
-    sum = []
+    sum = {}
     hours.each_pair do |time,v|
       sum[time.split(":")[0].to_i] = add_slots(v)
     end
