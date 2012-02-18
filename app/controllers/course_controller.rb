@@ -112,12 +112,20 @@ class CourseController < ApplicationController
     
   end
   
+  def get_slots_left_day(day)
+    total = 0
+    day.each do |t|
+      total += t["q"].to_i
+    end
+    return total.to_s
+  end
+  
   def analytics
     c = Course.find(params[:id])
     dates = JSON.parse(c.available_times)
     inventory = {}
     dates.each_pair do |k,v|
-      inventory[k] = get_slots_left(v["hours"])
+      inventory[k] = get_slots_left_day(v["day"])
     end
     render :text => inventory.to_json
   end
