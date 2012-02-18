@@ -162,7 +162,7 @@ class DeviceCommunicationController < ApplicationController
     course_id   = params[:course_id]
     golfers     = params[:golfers]
     time        = params[:time]    
-    date        = params[:date]    
+    date        = params[:date]
     total       = params[:total]
     
     logger.info params
@@ -170,8 +170,14 @@ class DeviceCommunicationController < ApplicationController
     response_object = intitiate_response_object
     
     
+    if date.class() == Date
+      date_date = date
+      date = date_date.strftime("%Y-%m-%d")
+    else
+      date_date = Date.parse(date)
+    end
     
-    if Date.parse(date) > (Date.today+7)
+    if date_date > (Date.today+7)
       reservation = ServerCommunicationController.schedule_booking(email, course_id, golfers, time, date, total)
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
