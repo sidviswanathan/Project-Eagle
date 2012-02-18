@@ -9,8 +9,9 @@
         data.addColumn('string', 'Day');
         data.addColumn('number', 'Slots Left');
         data.addRows([
-		<% @inventory.each_pair do |k,v| %>
-          ['<%=k%>', <%=v%>],
+		<% inv = @inventory.sort_by {|k,v| k} %>
+		<% inv.each do |v| %>
+          ['<%=v[0]%>', <%=v[1]%>],
 		<% end %>
         ]);
 
