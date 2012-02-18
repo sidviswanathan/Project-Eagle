@@ -123,11 +123,11 @@ class CourseController < ApplicationController
   def analytics
     c = Course.find(params[:id])
     dates = JSON.parse(c.available_times)
-    inventory = {}
+    @inventory = {}
     dates.each_pair do |k,v|
-      inventory[k] = get_slots_left_day(v["day"])
+      @inventory[k] = get_slots_left_day(v["day"])
     end
-    render :text => inventory.to_json
+
   end
   
   def logout
