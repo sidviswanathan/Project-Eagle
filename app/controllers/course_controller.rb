@@ -95,10 +95,9 @@ class CourseController < ApplicationController
     client.clientlogin('pressteex@gmail.com', 'presstee1')
   end
   
-  def self.get_slots_left(hours)
+  def get_slots_left(hours)
     sum = []
     hours.each_pair do |time,v|
-      
       sum[time.split(":")[0].to_i] = d
       sum += v['q']
     end
