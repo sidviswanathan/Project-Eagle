@@ -837,10 +837,16 @@ iframe.invisible_frame{
 
       <fieldset class="inlineLabels" id='analytics' style='display:none'>
 		<div class='tab_holder'>
+			<div class='tabber tabactive' show="#active_inventory" id='active_inventory_tab'>Active Inventory</div>
 			<div class='tabber tabactive' show="#new_deal_content" id='new_deal_tab'>User Base</div>
 			<div class='tabber tabinactive' show="#past_deal_content"  id='automation_tab'>Bookings</div>
 			<div class='tabber tabinactive' show="#past_deal_content"  id='past_deal_tab'>Deal Conversion</div>
 		</div>
+		
+		<div id='active_inventory' class='tab_content'>
+			<iframe style="border:0;margin:0;padding:0" src="/course/analytics/<%=@course.id.to_s%>"></iframe>
+		</div>
+		
 	
 		<div id='past_deal_content' style='display:none' class='tab_content'>
 	        <div class="ctrlHolder">
