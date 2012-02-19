@@ -110,7 +110,7 @@ class ReservationsController < ApplicationController
       book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
       teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time
       tt_dt = DateTime.strptime(teetime,"%Y-%m-%d %H:%M")
-      data["early"].push(book_dt-tt_dt)
+      data["early"].push({:dt=>book_dt-tt_dt,:book=>book_dt,:teetime=>tt_dt)
       data["cursor"] = rr.id.to_s
     end
     render :json => data.to_json
