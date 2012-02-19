@@ -118,7 +118,7 @@ class ReservationsController < ApplicationController
     r.each do |rr|
       book_dt = rr.created_at
       tt_dt = DateTime.strptime(rr.date+" "+rr.time,"%Y-%m-%d %H:%M")
-      data["early"].push({""})
+      data["early"].push({})
     end
     
     render :json => r.to_json
