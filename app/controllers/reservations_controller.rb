@@ -103,6 +103,13 @@ class ReservationsController < ApplicationController
     end
   end
   
+  def json_query
+    @cursor = params[:cursor]
+    @course_id = params[:course_id]
+    r = Reservation.all(:conditions=>["id > #{@cursor} AND course_id='#{@course_id}'"])
+    render :json => r.to_json
+  end
+  
   def initiate_twilio_call(params)
     puts "INSIDE INITIATE TWILIO CALL"
     make_twilio_call(params)

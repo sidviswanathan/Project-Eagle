@@ -120,6 +120,10 @@ class CourseController < ApplicationController
     return total.to_s
   end
   
+  def advanced_sale
+    
+  end
+  
   def analytics
     c = Course.find(params[:id])
     dates = JSON.parse(c.available_times)
