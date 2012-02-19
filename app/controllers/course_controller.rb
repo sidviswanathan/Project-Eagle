@@ -120,7 +120,10 @@ class CourseController < ApplicationController
     return total.to_s
   end
   
-  def advanced_sale
+  def advanced_sale(course)
+    dump = Dump.find_by_xkey("course_data_"+course.id.to_s)
+    data = json.parse(dump.data)
+    
     
   end
   

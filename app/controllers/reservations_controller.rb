@@ -103,11 +103,26 @@ class ReservationsController < ApplicationController
     end
   end
   
-  def json_query
-    @cursor = params[:cursor]
+  def update_data
     @course_id = params[:course_id]
-    r = Reservation.all(:conditions=>["id > #{@cursor} AND course_id='#{@course_id}'"])
+    
+    d = Dump.find_by_xkey("course_data_#{@course_id}")
+    if d.nil?
+      d = Dump.create(:xkey=>"course_data_#{@course_id}",:data=>{"cursor"=>"0","early"=>[]}.to_json)
+      r = Reservation.all(:conditions=>["course_id='#{@course_id}'"])
+      data = JSON.parse(d.data)
+    else
+      data = JSON.parse(d.data)
+      r = Reservation.all(:conditions=>["id > #{data['cursor']} AND course_id='#{@course_id}'"])
+    end
+    r.each do |rr|
+      book_dt = rr.created_at
+      tt_dt = DateTime.strptime(rr.date+" "+rr.time,"%Y-%m-%d %H:%M")
+      data["early"].push({""})
+    end
+    
     render :json => r.to_json
+    
   end
   
   def initiate_twilio_call(params)
