@@ -106,9 +106,9 @@ class ReservationsController < ApplicationController
   def update_data
     @course_id = params[:course_id]
     
-    d = Dump.find_by_xkey("course_data_#{@course_id}")
+    #d = Dump.find_by_xkey("course_data_#{@course_id}")
     if d.nil?
-      d = Dump.create(:xkey=>"course_data_#{@course_id}",:data=>{"cursor"=>"0","early"=>[]}.to_json)
+      d = Dump.create(:data=>{"cursor"=>"0","early"=>[]}.to_json)
       r = Reservation.all(:conditions=>["course_id='#{@course_id}'"])
       data = JSON.parse(d.data)
     else
@@ -121,7 +121,8 @@ class ReservationsController < ApplicationController
       data["early"].push(book_dt-tt_dt)
       data["cursor"] = rr.id.to_s
     end
-    
+    #d.data = data.to_json
+    #d.save
     render :json => data.to_json
     
   end
