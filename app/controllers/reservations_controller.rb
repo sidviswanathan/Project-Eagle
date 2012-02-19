@@ -108,7 +108,8 @@ class ReservationsController < ApplicationController
     data = {}
     r.each do |rr|
       book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
-      tt_dt = DateTime.strptime(rr.date+" "+rr.time,"%Y-%m-%d %H:%M")
+      teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time
+      tt_dt = DateTime.strptime(teetime,"%Y-%m-%d %H:%M")
       data["early"].push(book_dt-tt_dt)
       data["cursor"] = rr.id.to_s
     end
