@@ -105,7 +105,7 @@ class ReservationsController < ApplicationController
   
   def test_data
     r = Reservation.all(:conditions=>["course_id='2'"])
-    data = {}
+    data = {"early"=>[],"cursor"=>0}
     r.each do |rr|
       book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
       teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time
