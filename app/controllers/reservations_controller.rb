@@ -106,7 +106,7 @@ class ReservationsController < ApplicationController
   def update_data
     @course_id = params[:course_id]
     
-    #d = Dump.find_by_xkey("course_data_#{@course_id}")
+    d = Dump.find(201302)
     if d.nil?
       d = Dump.create(:data=>{"cursor"=>"0","early"=>[]}.to_json)
       r = Reservation.all(:conditions=>["course_id='#{@course_id}'"])
