@@ -103,6 +103,20 @@ class ReservationsController < ApplicationController
     end
   end
   
+  def test_data
+    r = Reservation.all(:conditions=>["course_id='2'"])
+    data = {}
+    r.each do |rr|
+      book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
+      tt_dt = DateTime.strptime(rr.date+" "+rr.time,"%Y-%m-%d %H:%M")
+      data["early"].push(book_dt-tt_dt)
+      data["cursor"] = rr.id.to_s
+    end
+    render :json => data.to_json
+    
+    
+  end
+  
   def update_data
     @course_id = params[:course_id]
     
