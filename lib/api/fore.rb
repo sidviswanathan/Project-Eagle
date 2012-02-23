@@ -10,6 +10,7 @@ module Fore
   require 'date'
   require 'time'
   require 'parallel'
+  require 'logger'
   
 =begin
 
@@ -53,7 +54,7 @@ module Fore
   
   def self.book(reservation_info,course,user)
     uri = "#{API_BOOK_URI}?CourseID=#{course.api_course_id}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{DEFAULT_EMAIL}&FirstName=#{user[:f_name]}&LastName=#{user[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
-    logger.info uri
+    puts uri
     response = self.http_get(uri)
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
       return XmlSimple.xml_in(response.body)["confirmation"][0]
