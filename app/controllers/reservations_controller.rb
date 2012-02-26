@@ -111,12 +111,12 @@ class ReservationsController < ApplicationController
       book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
       teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time+" PST"
       tt_dt = DateTime.strptime(teetime,"%Y-%m-%d %H:%M %Z")
-      data_bar[((book_dt-tt_dt)/86400).abs].push(book_dt-tt_dt)
+      data_bar[((book_dt-tt_dt)/86400).abs].push((book_dt-tt_dt).abs)
         
       data["early"].push({:dt=>book_dt-tt_dt,:book=>book_dt,:teetime=>tt_dt})
       data["cursor"] = rr.id.to_s
     end
-    render :json => data_bar.to_json
+    @data_bar = data_bar
     
     
   end
