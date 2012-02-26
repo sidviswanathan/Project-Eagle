@@ -113,7 +113,7 @@ class ReservationsController < ApplicationController
       book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
       teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time+" PST"
       tt_dt = DateTime.strptime(teetime,"%Y-%m-%d %H:%M %Z")
-      puts (((book_dt-tt_dt).abs/3600)/24)+1
+      puts (book_dt-tt_dt).abs/3600
       data_bar[((book_dt-tt_dt).abs/3600)%24][(((book_dt-tt_dt).abs/3600)/24)+1]+=1
         
       data["early"].push({:dt=>book_dt-tt_dt,:book=>book_dt,:teetime=>tt_dt})
