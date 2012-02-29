@@ -103,7 +103,7 @@ class ReservationsController < ApplicationController
     end
   end
   
-  def test_data
+  def prebook
     @course_id = params[:course_id]
     d = DataStore.find_by_course_id(@course_id.to_i)
     if d.nil?
@@ -137,30 +137,48 @@ class ReservationsController < ApplicationController
     end
     @data_bar = data["data_bar"]
     
-    
   end
+  
+  def rjson
+    d = DataStore.find_by_course_id(params[:course_id].to_i)
+    render :text => d.data
+  end
+  
+
   
   def update_data
     @course_id = params[:course_id]
     d = DataStore.find_by_course_id(@course_id.to_i)
-    
     if d.nil?
-      d = DataStore.create(:data=>{"cursor"=>"0","early"=>[]}.to_json)
-      r = Reservation.all(:conditions=>["course_id='#{@course_id}'"])
-      data = {}
-    else
-      data = JSON.parse(d.data)
-      r = Reservation.all(:conditions=>["id > #{data['cursor']} AND course_id='#{@course_id}'"])
+      data_bar = [["0",0,0,0,0,0,0,0,0],["1",0,0,0,0,0,0,0,0],["2",0,0,0,0,0,0,0,0],["3",0,0,0,0,0,0,0,0],["4",0,0,0,0,0,0,0,0],["5",0,0,0,0,0,0,0,0],["6",0,0,0,0,0,0,0,0],["7",0,0,0,0,0,0,0,0],["8",0,0,0,0,0,0,0,0],
+                  ["9",0,0,0,0,0,0,0,0],["10",0,0,0,0,0,0,0,0],["11",0,0,0,0,0,0,0,0],["12",0,0,0,0,0,0,0,0],["13",0,0,0,0,0,0,0,0],["14",0,0,0,0,0,0,0,0],["15",0,0,0,0,0,0,0,0],["16",0,0,0,0,0,0,0,0],
+                  ["17",0,0,0,0,0,0,0,0],["18",0,0,0,0,0,0,0,0],["19",0,0,0,0,0,0,0,0],["20",0,0,0,0,0,0,0,0],["21",0,0,0,0,0,0,0,0],["22",0,0,0,0,0,0,0,0],["23",0,0,0,0,0,0,0,0]]
+
+      d = DataStore.create(:data=>{"cursor"=>0,"early"=>[],"json"=>[],"data_bar"=>data_bar}.to_json,:course_id=>@course_id.to_i)
     end
-    r.each do |rr|
-      book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
-      tt_dt = DateTime.strptime(rr.date+" "+rr.time,"%Y-%m-%d %H:%M")
-      data["early"].push(book_dt-tt_dt)
-      data["cursor"] = rr.id.to_s
+      
+    data = JSON.parse(d.data)
+    
+    r = Reservation.all(:conditions=>["id > #{data['cursor']} AND course_id=#{@course_id}"])
+
+    if r != []
+      r.each do |rr|
+        book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
+        teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time+" PST"
+        tt_dt = DateTime.strptime(teetime,"%Y-%m-%d %H:%M %Z")
+
+        data["data_bar"][((book_dt-tt_dt).abs/3600).to_i%24][(((book_dt-tt_dt).abs/3600).to_i/24)+1]+=1
+
+        data["early"].push({:dt=>book_dt-tt_dt,:book=>book_dt,:teetime=>tt_dt})
+        data["cursor"] = rr.id
+       
+      end
+      data["json"] = data["json"] + JSON.parse(r.to_json)
+      d.data = data.to_json
+      d.save
+      
     end
-    #d.data = data.to_json
-    #d.save
-    render :json => data.to_json
+    render :nothing => true
     
   end
   
