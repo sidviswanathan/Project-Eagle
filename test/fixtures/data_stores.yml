@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  data: MyText
+  counter: 1
+  course_id: 1
+
+two:
+  name: MyString
+  data: MyText
+  counter: 1
+  course_id: 1

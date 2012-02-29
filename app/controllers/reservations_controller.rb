@@ -104,34 +104,43 @@ class ReservationsController < ApplicationController
   end
   
   def test_data
-    r = Reservation.all(:conditions=>["course_id='2'"])
+    d = DataStore.find_by_course_id(@course_id.to_i)
+    if d.nil?
+      data_bar = [["0",0,0,0,0,0,0,0,0],["1",0,0,0,0,0,0,0,0],["2",0,0,0,0,0,0,0,0],["3",0,0,0,0,0,0,0,0],["4",0,0,0,0,0,0,0,0],["5",0,0,0,0,0,0,0,0],["6",0,0,0,0,0,0,0,0],["7",0,0,0,0,0,0,0,0],["8",0,0,0,0,0,0,0,0],
+                  ["9",0,0,0,0,0,0,0,0],["10",0,0,0,0,0,0,0,0],["11",0,0,0,0,0,0,0,0],["12",0,0,0,0,0,0,0,0],["13",0,0,0,0,0,0,0,0],["14",0,0,0,0,0,0,0,0],["15",0,0,0,0,0,0,0,0],["16",0,0,0,0,0,0,0,0],
+                  ["17",0,0,0,0,0,0,0,0],["18",0,0,0,0,0,0,0,0],["19",0,0,0,0,0,0,0,0],["20",0,0,0,0,0,0,0,0],["21",0,0,0,0,0,0,0,0],["22",0,0,0,0,0,0,0,0],["23",0,0,0,0,0,0,0,0]]
+      d = DataStore.create(:data=>{"cursor"=>0,"early"=>[],"data_bar"=>data_bar}.to_json)
+      
+    data = JSON.parse(d.data)
+    
+    r = Reservation.all(:conditions=>["id > #{data['cursor']} AND course_id='#{@course_id}'"])
     data = {"early"=>[],"cursor"=>0}
-    data_bar = [["0",0,0,0,0,0,0,0,0],["1",0,0,0,0,0,0,0,0],["2",0,0,0,0,0,0,0,0],["3",0,0,0,0,0,0,0,0],["4",0,0,0,0,0,0,0,0],["5",0,0,0,0,0,0,0,0],["6",0,0,0,0,0,0,0,0],["7",0,0,0,0,0,0,0,0],["8",0,0,0,0,0,0,0,0],
-                ["9",0,0,0,0,0,0,0,0],["10",0,0,0,0,0,0,0,0],["11",0,0,0,0,0,0,0,0],["12",0,0,0,0,0,0,0,0],["13",0,0,0,0,0,0,0,0],["14",0,0,0,0,0,0,0,0],["15",0,0,0,0,0,0,0,0],["16",0,0,0,0,0,0,0,0],
-                ["17",0,0,0,0,0,0,0,0],["18",0,0,0,0,0,0,0,0],["19",0,0,0,0,0,0,0,0],["20",0,0,0,0,0,0,0,0],["21",0,0,0,0,0,0,0,0],["22",0,0,0,0,0,0,0,0],["23",0,0,0,0,0,0,0,0]]
+
     r.each do |rr|
       book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
       teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time+" PST"
       tt_dt = DateTime.strptime(teetime,"%Y-%m-%d %H:%M %Z")
-      puts (book_dt-tt_dt).abs
-      data_bar[((book_dt-tt_dt).abs/3600).to_i%24][(((book_dt-tt_dt).abs/3600).to_i/24)+1]+=1
+
+      data["data_bar"][((book_dt-tt_dt).abs/3600).to_i%24][(((book_dt-tt_dt).abs/3600).to_i/24)+1]+=1
         
       data["early"].push({:dt=>book_dt-tt_dt,:book=>book_dt,:teetime=>tt_dt})
-      data["cursor"] = rr.id.to_s
+      data["cursor"] = rr.id
     end
-    @data_bar = data_bar
+    d.data = data.to_json
+    d.save
+    @data_bar = data["data_bar"]
     
     
   end
   
   def update_data
     @course_id = params[:course_id]
+    d = DataStore.find_by_course_id(@course_id.to_i)
     
-    d = Dump.find(201302)
     if d.nil?
-      d = Dump.create(:data=>{"cursor"=>"0","early"=>[]}.to_json)
+      d = DataStore.create(:data=>{"cursor"=>"0","early"=>[]}.to_json)
       r = Reservation.all(:conditions=>["course_id='#{@course_id}'"])
-      data = JSON.parse(d.data)
+      data = {}
     else
       data = JSON.parse(d.data)
       r = Reservation.all(:conditions=>["id > #{data['cursor']} AND course_id='#{@course_id}'"])
