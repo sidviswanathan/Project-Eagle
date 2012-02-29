@@ -117,20 +117,22 @@ class ReservationsController < ApplicationController
     
     r = Reservation.all(:conditions=>["id > #{data['cursor']} AND course_id=#{@course_id}"])
 
+    if r != []
+      r.each do |rr|
+        book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
+        teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time+" PST"
+        tt_dt = DateTime.strptime(teetime,"%Y-%m-%d %H:%M %Z")
 
-    r.each do |rr|
-      book_dt = rr.created_at.in_time_zone("Pacific Time (US & Canada)")
-      teetime = rr.date.strftime("%Y-%m-%d")+" "+rr.time+" PST"
-      tt_dt = DateTime.strptime(teetime,"%Y-%m-%d %H:%M %Z")
+        data["data_bar"][((book_dt-tt_dt).abs/3600).to_i%24][(((book_dt-tt_dt).abs/3600).to_i/24)+1]+=1
 
-      data["data_bar"][((book_dt-tt_dt).abs/3600).to_i%24][(((book_dt-tt_dt).abs/3600).to_i/24)+1]+=1
-        
-      data["early"].push({:dt=>book_dt-tt_dt,:book=>book_dt,:teetime=>tt_dt})
-      data["cursor"] = rr.id
+        data["early"].push({:dt=>book_dt-tt_dt,:book=>book_dt,:teetime=>tt_dt})
+        data["cursor"] = rr.id
+      end
+
+      d.data = data.to_json
+      d.save
+      @data_bar = data["data_bar"]
     end
-    d.data = data.to_json
-    d.save
-    @data_bar = data["data_bar"]
     
     
   end
