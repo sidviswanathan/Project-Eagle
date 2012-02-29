@@ -114,7 +114,7 @@ class ReservationsController < ApplicationController
       
     data = JSON.parse(d.data)
     
-    r = Reservation.all(:conditions=>["id > #{data['cursor']} AND course_id='#{@course_id}'"])
+    r = Reservation.all(:conditions=>["id > #{data['cursor']} AND course_id=#{@course_id}"])
     data = {"early"=>[],"cursor"=>0}
 
     r.each do |rr|
