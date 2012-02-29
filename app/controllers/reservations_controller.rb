@@ -104,6 +104,7 @@ class ReservationsController < ApplicationController
   end
   
   def test_data
+    @course_id = params[:course_id]
     d = DataStore.find_by_course_id(@course_id.to_i)
     if d.nil?
       data_bar = [["0",0,0,0,0,0,0,0,0],["1",0,0,0,0,0,0,0,0],["2",0,0,0,0,0,0,0,0],["3",0,0,0,0,0,0,0,0],["4",0,0,0,0,0,0,0,0],["5",0,0,0,0,0,0,0,0],["6",0,0,0,0,0,0,0,0],["7",0,0,0,0,0,0,0,0],["8",0,0,0,0,0,0,0,0],
