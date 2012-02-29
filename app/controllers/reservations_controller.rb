@@ -131,8 +131,9 @@ class ReservationsController < ApplicationController
 
       d.data = data.to_json
       d.save
-      @data_bar = data["data_bar"]
+      
     end
+    @data_bar = data["data_bar"]
     
     
   end
