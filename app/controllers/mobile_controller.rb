@@ -50,7 +50,7 @@ class MobileController < ApplicationController
     @app = MobileApp.new(params,request,session)
   end
   def index
-    if params[:xui] == "true"
+    if params[:xui] == "true" or android? or blackberry?
       redirect_to @app.get_url("index_xui",{:xui=>"true"})
     end
   end
@@ -68,6 +68,12 @@ class MobileController < ApplicationController
   end
   def mobile_agent?
     request.user_agent =~ /Mobile|webOS/
+  end
+  def android?
+    request.user_agent =~ /Android/
+  end
+  def blackberry?
+    request.user_agent =~ /BlackBerry/
   end
   def iframe
     @is_mobile = mobile_agent?
