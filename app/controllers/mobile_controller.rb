@@ -49,8 +49,19 @@ class MobileController < ApplicationController
     end
     @app = MobileApp.new(params,request,session)
   end
+  
+  def booking
+    if params[:exp] == "true"
+      redirect_to @app.get_url("index_exp",{:xui=>"true",:exp=>"true"})
+    elsif params[:xui] == "true" or android? or blackberry?
+      redirect_to @app.get_url("index_xui",{:xui=>"true"})
+    end
+  end
+  
   def index
-    if params[:xui] == "true" or android? or blackberry?
+    if params[:exp] == "true"
+      redirect_to @app.get_url("index_exp",{:xui=>"true",:exp=>"true"})
+    elsif params[:xui] == "true"
       redirect_to @app.get_url("index_xui",{:xui=>"true"})
     end
   end
@@ -59,6 +70,9 @@ class MobileController < ApplicationController
     @app.more_days(params[:last])
   end
   
+  def index_exp
+    
+  end
   def index_xui
     @render_head = true
     @app.params[:xui] = "true"

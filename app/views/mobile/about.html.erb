@@ -3,12 +3,17 @@
 		<%= render :partial => "header", :locals => { :app => @app } %>
 		<div class="content" id='content' style='background:#e8e8e8 important;position:relative' data-role="content">
 			
+			
 			<div class='container' >
 				<div  id='gbox' style='position:relative ;'>
 					<img id='gboxi' src='<%= @app.course_info['gallery'][0] %>' />
+					<img src='/images/contentbox_shadow.png' style='position:absolute;bottom:0px'>
+					
 				</div>
 				<div class='boxes' >
+					
 				<div class='box' id='topbox'>
+					
 					<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
 					<div class='title' style='padding-top:66px;font-size:18px'>
 					<b><%= @app.course_info['title'] %></b>
@@ -26,6 +31,7 @@
 				</div>
 
 				<div class='box' style='margin-top:0px' onclick='slideDown();'>
+					
 					<div class='pad'>
 
 						
