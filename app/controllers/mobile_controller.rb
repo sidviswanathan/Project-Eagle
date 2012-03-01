@@ -45,7 +45,7 @@ class MobileController < ApplicationController
   def get_mobile_app
     course = Course.find_by_mobile_domain(request.url)
     if !course.nil?
-      params[:course_id] = course.id_to_s
+      params[:course_id] = course.id.to_s
     end
     @app = MobileApp.new(params,request,session)
   end
