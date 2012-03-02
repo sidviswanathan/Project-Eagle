@@ -29,6 +29,7 @@ class VoiceController < ApplicationController
       if params[:Digits] == "1"
         if params[:sorry] == "true"
           prepend = "Sorry, we didn't quite get that .. "
+        end
         r.Say "Now say something like .. tuesday at 2pm for 4 golfers ", :voice => 'man'
         r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 7, :timeout => 2
       else
