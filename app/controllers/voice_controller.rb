@@ -68,7 +68,7 @@ class VoiceController < ApplicationController
     reverse.each do |r|
       golfers = r.to_i
       counter += 1
-      break if golfers > 1 or counter > 3
+      break if golfers > 1
     end
     
     golfers = golfers.to_s
@@ -148,7 +148,11 @@ class VoiceController < ApplicationController
               dt = Chronic.parse(slot["t"])
               t = dt.strftime("%M")
               if t[0,1] == "0"
-                t = "Oh "+t[1,1]
+                if t[1,1] == "0"
+                  t = " "
+                else
+                  t = "Oh "+t[1,1]
+                end
               end
               d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
               d.Pause :length => 2
