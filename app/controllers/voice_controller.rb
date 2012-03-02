@@ -49,8 +49,8 @@ class VoiceController < ApplicationController
     data = JSON.parse(d.data)
 
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "Please wait about 30 seconds while we process your request", :voice => 'man'
-      r.Pause :length=>30
+      r.Say "Please wait about 15 seconds while we process your request", :voice => 'man'
+      r.Pause :length=>15
       r.Redirect "/voice/gettime"
     end
     render :text => response.text
