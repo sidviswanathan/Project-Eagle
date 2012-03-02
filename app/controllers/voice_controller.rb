@@ -138,6 +138,7 @@ class VoiceController < ApplicationController
         r.Gather :action => "/voice/book" do |d|
           counter = 0
           d.Say greeting
+          d.Pause :length => 3
           slots.each do |slot|
             counter += 1
             d.Say counter.to_s
@@ -145,7 +146,7 @@ class VoiceController < ApplicationController
             dt = Chronic.parse(slot["t"])
             t = dt.strftime("%M")
             if t[0] == "0"
-              t[0] = "O"
+              t = "Oh "+t[1]
             end
             d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
             d.Pause :length => 2
