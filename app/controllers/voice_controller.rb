@@ -213,18 +213,20 @@ class VoiceController < ApplicationController
   
   def time_select
     greeting = 'Sorry we didnt quite get the hour you wanted .. Please select from the following '
-    r.Gather :action => "/voice/time_select_callback" do |d|
-      d.Say greeting, :voice => 'man'
-      counter = 0
-      hours = ["6 A.M.","7 A.M.","8 A.M.","9 A.M.","10 A.M.","11 A.M.","12 P.M.","1 P.M.","2 p.M.","3 P.M.","4 P.M."]
-      hours.each do |h|
-        counter += 1
-        if counter == 1
-          d.Say "Press "
+    response = Twilio::TwiML::Response.new do |r|
+      r.Gather :action => "/voice/time_select_callback" do |d|
+        d.Say greeting, :voice => 'man'
+        counter = 0
+        hours = ["6 A.M.","7 A.M.","8 A.M.","9 A.M.","10 A.M.","11 A.M.","12 P.M.","1 P.M.","2 p.M.","3 P.M.","4 P.M."]
+        hours.each do |h|
+          counter += 1
+          if counter == 1
+            d.Say "Press "
+          end
+          d.Say counter
+          d.Say " fore "
+          d.Say h
         end
-        d.Say counter
-        d.Say " fore "
-        d.Say h
       end
     end
   end
