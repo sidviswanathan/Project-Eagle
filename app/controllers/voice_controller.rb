@@ -10,6 +10,8 @@ require 'pp'
 
 class VoiceController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  T_SID = 'ACc6377a248c5300434e40041d2bd1b9c3'
+  T_TOKEN = '8fcabbf06e89b828c7d5b59fb583e38a'
   def recieve
     course = Course.find(params[:course_id].to_s)
     phone = params[:From].sub("+1","")
@@ -89,6 +91,9 @@ class VoiceController < ApplicationController
     
     d.data = data.to_json
     d.save
+    @client = Twilio::REST::Client.new T_SID, T_TOKEN
+    @call = @client.account.calls.get(params[:CallSid]
+    @call.redirect_to('http://www.presstee.com/voice/gettime')
     render :nothing => true
   end
   
@@ -97,9 +102,8 @@ class VoiceController < ApplicationController
     data = JSON.parse(d.data)
 
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "Please wait about 15 seconds while we process your request", :voice => 'man'
-      r.Pause :length=>15
-      r.Redirect "/voice/gettime"
+      r.Say "Please wait a few seconds while we process your request", :voice => 'man'
+      r.Play "http://fozzy42.com/SoundClips/Themes/TV/jeapordy.wav", :loop => 0
     end
     render :text => response.text
     
@@ -146,7 +150,7 @@ class VoiceController < ApplicationController
           greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")
 
           if !slots.nil?
-            r.Gather :action => "/voice/book" do |d|
+            r.Gather :action => "/voice/book", :timeout => 15 do |d|
               counter = 0
               d.Say greeting
               d.Pause :length => 3
@@ -156,7 +160,7 @@ class VoiceController < ApplicationController
                   d.Say "Press "
                 end
                 d.Say counter.to_s
-                d.Say " for "
+                d.Say " fore "
                 d.Pause :length => 1
                 dt = Chronic.parse(slot["t"])
                 t = dt.strftime("%M")
