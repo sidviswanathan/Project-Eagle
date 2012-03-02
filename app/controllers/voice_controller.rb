@@ -25,12 +25,14 @@ class VoiceController < ApplicationController
   
   def options
     response = Twilio::TwiML::Response.new do |r|
-
+      prepend = ""
       if params[:Digits] == "1"
-        r.Say "Now say something like .. next tuesday at 2pm for 4 golfers ", :voice => 'man'
+        if params[:sorry] == "true"
+          prepend = "Sorry, we didn't quite get that .. "
+        r.Say "Now say something like .. tuesday at 2pm for 4 golfers ", :voice => 'man'
         r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 7, :timeout => 2
       else
-        r.Say "Too bad, you lose", :voice => 'woman'
+        r.Dial "4082535357"
       end
     end
     render :text => response.text
@@ -159,10 +161,10 @@ class VoiceController < ApplicationController
             end
           end
         else
-          r.Redirect "/voice/options?Digits=1"
+          r.Redirect "/voice/options?Digits=1&sorry=true"
         end
       rescue
-        r.Redirect "/voice/options?Digits=1"
+        r.Redirect "/voice/options?Digits=1&sorry=true"
       end
       
       
