@@ -70,7 +70,8 @@ class VoiceController < ApplicationController
     
     golfers = golfers.to_s
     
-    puts data["text"]
+    puts golfers
+    puts date.to_s
     
     d.data = data.to_json
     d.save
