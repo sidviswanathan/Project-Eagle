@@ -18,8 +18,8 @@ class VoiceController < ApplicationController
     user = User.find_or_create_by_phone(phone)
     response = Twilio::TwiML::Response.new do |r|
       d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"","voice"=>"","golfers"=>"2"}.to_json})
-      greeting = 'Welcome to Deep Cliff Golf Course.  To book a Tee Time, press 1.  To speak with the course, press 2'
-      r.Gather :action => "/voice/options" do |d|
+      greeting = 'Welcome to Deep Cliff Golf Course.  To book a Tee Time, press 1.  To sign up to recieve exclusive deals, press 2. To speak with the course, press 3'
+      r.Gather :action => "/voice/options", :numDigits => 1 do |d|
         d.Say greeting, :voice => 'man'
       end
 
@@ -34,14 +34,25 @@ class VoiceController < ApplicationController
         if params[:sorry].to_i > 0
           prepend = "Sorry, we didn't quite get that .. "
         end
-        r.Say "Now say something like .. tuesday at 2pm for 4 golfers ", :voice => 'man'
+        r.Say "After the beep, say something like .. Tuesday at 2 P.M. fohr 3 golfers ", :voice => 'man'
+        r.Pause :length => 2
         r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 8, :timeout => 2
+      elsif params[:Digits] == "2"
+        r.Gather :action => "/voice/deal_signup", :numDigits => 1 do |d|
+          d.Say "If you would like to be notified by text message, Press 1 .. by Phone Press 2"
+        end
       else
         r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
         r.Dial "4082535357"
       end
     end
     render :text => response.text
+  end
+  
+  def deal_signup
+    response = Twilio::TwiML::Response.new do |r|
+      r.Say "Thanks for signing up.  In addition to exclusive deals you are now entered in Deep Cliff's weekly Free Tee Time lottery.  Please tell your friends!"
+    end
   end
   
   def transcribe_callback
