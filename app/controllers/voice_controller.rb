@@ -11,8 +11,9 @@ require 'pp'
 class VoiceController < ApplicationController
   skip_before_filter :verify_authenticity_token
   def recieve
+    course = Course.find(params[:course_id].to_s)
     response = Twilio::TwiML::Response.new do |r|
-      d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"text"=>"monday","voice"=>"10:15"}.to_json})
+      d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"monday","voice"=>"10:15"}.to_json})
       greeting = 'Welcome to Deep Cliff Golf Course.  To book a Tee Time, press 1.  To speak with the course, press 2'
       r.Gather :action => "/voice/options" do |d|
         d.Say greeting, :voice => 'man'
@@ -96,15 +97,54 @@ class VoiceController < ApplicationController
     
   end
   
+  def get_slots(data)
+    course_id    = data["course"]
+    dt = Chronic.parse(data["date"])
+    time         = dt.strftime("%H:%M")   
+    date         = dt.strftime("%Y-%m-%d")
+    
+    updated_course = Rails.cache.fetch("Updated_Course_"+course_id.to_s) {Course.find(course_id)}
+    
+    dates = JSON.parse(updated_course.available_times)
+    if dates.has_key?(date)
+       if dates[date]["hours"].has_key?(time.split(":")[0].to_i.to_s)
+         avail   = dates[date]["hours"][time.split(":")[0].to_i.to_s]
+       else
+         avail   = nil
+       end
+    else
+      avail = nil
+    end
+    
+    return avail
+      
+      
+      
+    
+  end
+  
   def gettime
     d = DataStore.find_by_name("call_"+params[:CallSid])
     data = JSON.parse(d.data)
-    puts "Please confirm your slot for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" at "+Chronic.parse(data["date"]).strftime("%I %p")
+    puts "Please confirm your slot for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" at "+Chronic.parse(data["date"]).strftime("%l %p")
+    
+    slots = get_slots(data)
+    
+    
     response = Twilio::TwiML::Response.new do |r|
-      greeting = "Please confirm your slot for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" at "+Chronic.parse(data["date"]).strftime("%I %p")+"by pressing 1 for yes or 2 for no"
-            
-      r.Gather :action => "/voice/book" do |d|
-        d.Say greeting, :voice => 'man'
+      greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" by pressing the number preceding the slot"
+      
+      if !slots.nil?
+        r.Gather :action => "/voice/book" do |d|
+          counter = 0
+          slots.each do |slot|
+            counter += 1
+            d.Say counter.to_s+" "+Chronic.parse(slot["t"]).strftime("%l %p"), :voice => 'man'
+            d.Pause :length => 2
+          end
+        end
+      else
+        r.Redirect "/voice/options?Digits=1"
       end
       
     end
@@ -112,8 +152,16 @@ class VoiceController < ApplicationController
   end
   
   def book
+    d = DataStore.find_by_name("call_"+params[:CallSid])
+    data = JSON.parse(d.data)
+    dt = Chronic.parse(data["date"])
+    date = dt.strftime("%Y-%m-%d")
+    slots = get_slots(data)
+    slot = slots[params[:Digits].to_i-1]
+    total = (slot["p"] * data["golfers"].to_i).to_s
+    reservation = Reservation.book_tee_time("carlcwheatley@gmail.com", data["course"], data["golfers"], slot["t"], date, total)
     response = Twilio::TwiML::Response.new do |r|
-      greeting = "Thanks for your business, have a good day!"
+      greeting = "Thanks for your business, your cost is "+total+" dollars due at course"
       r.Say greeting, :voice => 'man'
     end
     render :text => response.text
