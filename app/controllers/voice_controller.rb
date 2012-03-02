@@ -47,7 +47,7 @@ class VoiceController < ApplicationController
   def transcribe_callback
     d = DataStore.find_by_name("call_"+params[:CallSid])
     data = JSON.parse(d.data)
-    data["text"]  = params[:TranscriptionText]
+    data["text"]  = params[:TranscriptionText].downcase
     data["voice"] = params[:RecordingUrl]
     data["day"] = nil
     data["time"] = nil
@@ -170,7 +170,7 @@ class VoiceController < ApplicationController
           if counter == 1
             d.Say "Press "
           end
-          d.Say counterassume
+          d.Say counter
           d.Say " fore "
           if counter == 1 or counter == 8
             d.Say today.strftime(" %A %B %-d ")
