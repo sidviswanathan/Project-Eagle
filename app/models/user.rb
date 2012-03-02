@@ -5,9 +5,10 @@ class User < ActiveRecord::Base
   has_many :reservations
   has_many :courses
   
-  validates_presence_of :email
+  #validates_presence_of :email
   validates_uniqueness_of :email  
-  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email format"
+  validates_uniqueness_of :phone  
+  #validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email format"
   
   # Login method for user, creates a User record in database
   # INPUT: User.login("Sid","Viswanathan","sid@gmail.com","iPhone","5.0","1.0")   
@@ -17,6 +18,10 @@ class User < ActiveRecord::Base
     login_info = {:email=>email, :f_name=>f_name, :l_name=>l_name, :device_name=>device_name, :os_version=>os_version, :app_version=>app_version}
     u = User.find_or_create_by_email(login_info) 
     if u.save; return u else return nil end
+  end
+  
+  def self.phone_login(phone_info)
+    
   end
   
 end

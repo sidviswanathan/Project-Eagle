@@ -12,6 +12,8 @@ class VoiceController < ApplicationController
   skip_before_filter :verify_authenticity_token
   def recieve
     course = Course.find(params[:course_id].to_s)
+    phone = params[:From].sub("+1","")
+    user = User.find_or_create_by_phone(phone)
     response = Twilio::TwiML::Response.new do |r|
       d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"monday","voice"=>"10:15","golfers"=>"2"}.to_json})
       greeting = 'Welcome to Deep Cliff Golf Course.  To book a Tee Time, press 1.  To speak with the course, press 2'
@@ -56,22 +58,23 @@ class VoiceController < ApplicationController
     nexter = false
     count = 0
     substring = ""
+    remain = data["text"]
     split.each do |s|
       substring += s+" "
       date = Chronic.parse(substring)
       if !date.nil?
         xdate = date
+        remain = data["text"].sub(substring,"")
       end
       if s == 'next'
         nexter = true
       end
     end
-    reverse = split.reverse
+    left = remain.split(" ")
     
     counter = 0
-    reverse.each do |r|
+    left.each do |r|
       golfers = r.to_i
-      counter += 1
       break if golfers > 1
     end
     
@@ -122,58 +125,68 @@ class VoiceController < ApplicationController
     
     return avail
       
-      
-      
-    
   end
   
   def gettime
     d = DataStore.find_by_name("call_"+params[:CallSid])
-    data = JSON.parse(d.data)
-    puts "Please confirm your slot for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" at "+Chronic.parse(data["date"]).strftime("%l %p")
-    
-
-    
-    
-    response = Twilio::TwiML::Response.new do |r|
-      begin
-        slots = get_slots(data)
-        greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" by pressing the number preceding the slot"
-
-        if !slots.nil?
-          r.Gather :action => "/voice/book" do |d|
-            counter = 0
-            d.Say greeting
-            d.Pause :length => 3
-            slots.each do |slot|
-              counter += 1
-              d.Say counter.to_s
-              d.Pause :length => 1
-              dt = Chronic.parse(slot["t"])
-              t = dt.strftime("%M")
-              if t[0,1] == "0"
-                if t[1,1] == "0"
-                  t = " "
-                else
-                  t = "Oh "+t[1,1]
-                end
-              end
-              d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
-              d.Pause :length => 2
-            end
-            d.Say " If you would like to repeat this menu, press 0 now"
-          end
-        else
-          r.Redirect "/voice/options?Digits=1&sorry=1"
-        end
-      rescue
-        r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
-        r.Dial "4082535357"
-      end
-      
-      
+    data = JSON.parse(d.data)   
+    if params[:add] == "golfers"
+      data["golfers"] = params[:Digits]
     end
+    
+    if data["golfers"].to_i == 0
+      response = Twilio::TwiML::Response.new do |r|
+        r.Redirect "/voice/golfers"
+      end
+    else
+      response = Twilio::TwiML::Response.new do |r|
+        begin
+          slots = get_slots(data)
+          greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")
+
+          if !slots.nil?
+            r.Gather :action => "/voice/book" do |d|
+              counter = 0
+              d.Say greeting
+              d.Pause :length => 3
+              slots.each do |slot|
+                counter += 1
+                d.Say counter.to_s
+                d.Pause :length => 1
+                dt = Chronic.parse(slot["t"])
+                t = dt.strftime("%M")
+                if t[0,1] == "0"
+                  if t[1,1] == "0"
+                    t = " "
+                  else
+                    t = "Oh "+t[1,1]
+                  end
+                end
+                d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
+                d.Pause :length => 2
+              end
+              d.Say " If you would like to repeat this menu, press 0 now"
+            end
+          else
+            r.Redirect "/voice/options?Digits=1&sorry=1"
+          end
+        rescue
+          r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
+          r.Dial "4082535357"
+        end
+
+
+      end
+    end
+    
     render :text => response.text
+  end
+  
+  def golfers
+    response = Twilio::TwiML::Response.new do |r|
+      r.Say "Sorry we didn't quite get the number of golfers in your party.  Please press a number from 2-4 to continue"
+      r.Gather :action =>"/voice/gettime?add=golfers"
+    end
   end
   
   def book
