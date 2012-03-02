@@ -185,9 +185,9 @@ class VoiceController < ApplicationController
           d.Say counter
           d.Say " fore "
           if counter == 1 or counter == 8
-            d.Say today.strftime(" %A %B %-d ")
+            d.Say day.strftime(" %A %B %-d ")
           else
-            d.Say today.strftime(" %A ")
+            d.Say day.strftime(" %A ")
           end
         end
       end
