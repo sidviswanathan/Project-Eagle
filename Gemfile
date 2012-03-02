@@ -16,6 +16,7 @@ gem "aws-s3"
 gem "twiliolib", "~> 2.0.7"
 gem "chronic", "~> 0.3.0"
 gem "xml-simple", "~> 1.1.0"
+gem "twilio-ruby"
 
 gem "parallel"
 gem "pony"

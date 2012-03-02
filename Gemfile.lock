@@ -31,6 +31,8 @@ GEM
     fattr (2.2.0)
     i18n (0.6.0)
     json (1.6.3)
+    jwt (0.1.4)
+      json (>= 1.2.4)
     mail (2.4.1)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -39,6 +41,7 @@ GEM
       arrayfields (>= 4.7.4)
       fattr (>= 2.1.0)
     mime-types (1.16)
+    multi_json (1.0.4)
     orderedhash (0.0.6)
     parallel (0.5.12)
     polyglot (0.3.3)
@@ -62,6 +65,10 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    twilio-ruby (3.5.1)
+      builder (>= 2.1.2)
+      jwt (>= 0.1.2)
+      multi_json (>= 1.0.3)
     twiliolib (2.0.7)
       builder (>= 2.1.2)
     xml-simple (1.1.0)
@@ -84,5 +91,6 @@ DEPENDENCIES
   rails (~> 2.3.5)
   sqlite3-ruby
   subdomain_routes
+  twilio-ruby
   twiliolib (~> 2.0.7)
   xml-simple (~> 1.1.0)
