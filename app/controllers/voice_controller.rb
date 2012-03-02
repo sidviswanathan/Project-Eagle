@@ -239,7 +239,7 @@ class VoiceController < ApplicationController
     data = JSON.parse(d.data)
     hours = {"6"=>"6 AM","7"=>"7 AM","8"=>"8 AM","9"=>"9 AM","10"=>"10 AM","11"=>"11 AM","12"=>"12 PM","1"=>"1 PM","2"=>"2 PM","3"=>"3 PM","4"=>"4 PM"}
     if hours.has_key? params[:Digits]
-      data["time"] = hours[params[:Digits].to_i]
+      data["time"] = hours[params[:Digits]]
       redirect = ""
 
       if data["date"].nil?
