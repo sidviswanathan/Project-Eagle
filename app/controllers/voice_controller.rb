@@ -27,7 +27,7 @@ class VoiceController < ApplicationController
 
       if params[:Digits] == "1"
         r.Say "Now say something like .. next tuesday at 2pm for 4 golfers ", :voice => 'man'
-        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback'
+        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 10
       else
         r.Say "Too bad, you lose", :voice => 'woman'
       end
@@ -71,7 +71,7 @@ class VoiceController < ApplicationController
     golfers = golfers.to_s
     
     puts golfers
-    puts date.to_s
+    puts xdate.to_s
     
     data["golfers"] = golfers
     data["date"] = xdate.to_s
