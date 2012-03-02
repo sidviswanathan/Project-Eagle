@@ -89,6 +89,7 @@ class VoiceController < ApplicationController
     
     d.data = data.to_json
     d.save
+    render :nothing => true
   end
   
   def getdate
@@ -190,6 +191,7 @@ class VoiceController < ApplicationController
       r.Say "Sorry we didn't quite get the number of golfers in your party.  Please press a number from 2-4 to continue"
       r.Gather :action =>"/voice/gettime?add=golfers"
     end
+    render :nothing => true
   end
   
   def book
