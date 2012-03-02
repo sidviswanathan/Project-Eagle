@@ -3,6 +3,7 @@ require 'json'
 require 'apns'
 require 'xmlsimple'
 require 'date'
+require 'chronic'
 require 'twiliolib'
 require 'twilio-ruby'
 require 'pp'
@@ -41,6 +42,33 @@ class VoiceController < ApplicationController
     data["voice"] = params[:RecordingUrl]
     
     split = data["text"].split(" ")
+    
+    golfers = "2"
+    xdate = nil
+    time = "2"
+    
+    days = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
+    nexter = false
+    count = 0
+    substring = ""
+    split.each do |s|
+      substring += s+" "
+      date = Chronic.parse(s)
+      if !date.nil?
+        xdate = date
+      end
+      if s == 'next'
+        nexter = true
+      end
+    end
+    reverse = split.reverse
+    
+    reverse.each do |r|
+      golfers = r.to_i
+      break if !golfers.nil?
+    end
+    
+    golfers = golfers.to_s
     
     puts data["text"]
     
