@@ -303,7 +303,7 @@ class VoiceController < ApplicationController
                 d.Say "Press "
               end
               d.Say counter.to_s
-              d.Say " fore "
+              d.Say " fohr "
               d.Pause :length => 1
               dt = Chronic.parse(slot["t"])
               t = dt.strftime("%M")
@@ -346,7 +346,7 @@ class VoiceController < ApplicationController
     else
       d = DataStore.find_by_name("call_"+params[:CallSid])
       data = JSON.parse(d.data)
-      dt = Chronic.parse(data["date"])
+      dt = Time.parse(data["date"])
       date = dt.strftime("%Y-%m-%d")
       slots = get_slots(data)
       slot = slots[params[:Digits].to_i-1]
