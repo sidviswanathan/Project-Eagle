@@ -15,7 +15,7 @@ class VoiceController < ApplicationController
     response = Twilio::TwiML::Response.new do |r|
       d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"monday","voice"=>"10:15","golfers"=>"2"}.to_json})
       greeting = 'Welcome to Deep Cliff Golf Course.  To book a Tee Time, press 1.  To speak with the course, press 2'
-      r.Gather :action => "/voice/options" do |d|
+      r.Gather :action => "/voice/options", :finishOnKey => "1" do |d|
         d.Say greeting, :voice => 'man'
       end
 
