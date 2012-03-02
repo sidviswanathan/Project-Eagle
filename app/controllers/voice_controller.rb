@@ -76,7 +76,7 @@ class VoiceController < ApplicationController
     count = 0
     substring = ""
     
-    if data["text"].include? "P.M." or data["text"].include? "A.M."
+    if data["text"].include? "p. m." or data["text"].include? "a. m." or data["text"].include? "am" or data["text"].include? "pm" or data["text"].include? "a.m." or data["text"].include? "p.m."
       data["time"] = true
     end
     
@@ -120,7 +120,7 @@ class VoiceController < ApplicationController
       @call.redirect_to('http://www.presstee.com/voice/date_select')
     elsif data["time"].nil?
       @call.redirect_to('http://www.presstee.com/voice/time_select')
-    elsif data["golfers"] == 0
+    elsif data["golfers"].to_i == 0
       @call.redirect_to('http://www.presstee.com/voice/golfers')
     else
       @call.redirect_to('http://www.presstee.com/voice/gettime')
