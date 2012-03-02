@@ -40,6 +40,10 @@ class VoiceController < ApplicationController
     data["text"]  = params[:TranscriptionText]
     data["voice"] = params[:RecordingUrl]
     
+    split = data["text"].split(" ")
+    
+    puts data["text"]
+    
     d.data = data.to_json
     d.save
   end
