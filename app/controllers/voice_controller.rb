@@ -180,6 +180,7 @@ class VoiceController < ApplicationController
         end
       end
     end
+    render :text => response.text
   end
   
   def date_select_callback
@@ -208,7 +209,7 @@ class VoiceController < ApplicationController
     response = Twilio::TwiML::Response.new do |r|
       r.Redirect "/voice/#{redirect}"
     end
-    
+    render :text => response.text
   end
   
   def time_select
@@ -229,6 +230,7 @@ class VoiceController < ApplicationController
         end
       end
     end
+    render :text => response.text
   end
   
   def time_select_callback
@@ -253,6 +255,7 @@ class VoiceController < ApplicationController
     response = Twilio::TwiML::Response.new do |r|
       r.Redirect "/voice/#{redirect}"
     end
+    render :text => response.text
   end
   
   
