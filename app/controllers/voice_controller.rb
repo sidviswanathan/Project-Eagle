@@ -145,8 +145,8 @@ class VoiceController < ApplicationController
             d.Pause :length => 1
             dt = Chronic.parse(slot["t"])
             t = dt.strftime("%M")
-            if t[0] == "0"
-              t = "Oh "+t[1]
+            if t[0,1] == "0"
+              t = "Oh "+t[1,1]
             end
             d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
             d.Pause :length => 2
