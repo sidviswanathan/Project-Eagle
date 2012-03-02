@@ -65,7 +65,7 @@ class VoiceController < ApplicationController
     
     reverse.each do |r|
       golfers = r.to_i
-      break if !golfers.nil?
+      break if golfers > 0
     end
     
     golfers = golfers.to_s
