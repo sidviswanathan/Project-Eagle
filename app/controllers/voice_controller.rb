@@ -151,6 +151,9 @@ class VoiceController < ApplicationController
               d.Pause :length => 3
               slots.each do |slot|
                 counter += 1
+                if counter == 1
+                  d.Say "Press "
+                end
                 d.Say counter.to_s
                 d.Pause :length => 1
                 dt = Chronic.parse(slot["t"])
