@@ -244,10 +244,10 @@ class VoiceController < ApplicationController
     if data["date"].nil?
       redirect = "date_select"
     elsif data["golfers"].to_i == 0
-      data["date"] = Chronic.parse(xdate.strftime("%A %B %d "+data["time"]))
+      data["date"] = Chronic.parse(data["date"].strftime("%A %B %d "+data["time"]))
       redirect = "golfers"
     else
-      data["date"] = Chronic.parse(xdate.strftime("%A %B %d "+data["time"]))
+      data["date"] = Chronic.parse(data["date"].strftime("%A %B %d "+data["time"]))
       redirect = "gettime"
     end
     d.data = data.to_json
