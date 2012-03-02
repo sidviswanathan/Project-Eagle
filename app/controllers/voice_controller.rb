@@ -144,7 +144,9 @@ class VoiceController < ApplicationController
   
   def get_slots(data)
     course_id    = data["course"]
+    puts data["date"]
     dt = Chronic.parse(data["date"])
+    puts dt
     time         = dt.strftime("%H:%M")   
     date         = dt.strftime("%Y-%m-%d")
     
@@ -287,9 +289,10 @@ class VoiceController < ApplicationController
       r.Redirect "/voice/date_select"
     else
       response = Twilio::TwiML::Response.new do |r|
-        puts data
+        puts data.to_json
         slots = get_slots(data)
         greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")
+        puts greeting
 
         if !slots.nil?
           r.Gather :action => "/voice/book", :timeout => 15 do |d|
