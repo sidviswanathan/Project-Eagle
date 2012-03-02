@@ -142,7 +142,12 @@ class VoiceController < ApplicationController
             counter += 1
             d.Say counter.to_s
             d.Pause :length => 1
-            d.Say " "+Chronic.parse(slot["t"]).strftime("%l %p %M")
+            dt = Chronic.parse(slot["t"])
+            t = dt.strftime("%M")
+            if t[0] == "0"
+              t[0] = "O"
+            end
+            d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
             d.Pause :length => 2
           end
         end
