@@ -36,8 +36,9 @@ class VoiceController < ApplicationController
   
   def transcribe_callback
     d = DataStore.find_by_name("call_"+params[:CallSid])
-    #data = JSON.parse(d.data)
-    #data[params[:save]]  = params[:TranscriptionText]
+    data = JSON.parse(d.data)
+    data["text"]  = params[:TranscriptionText]
+    data["voice"] = params[:RecordingUrl]
     
     d.data = data.to_json
     d.save
