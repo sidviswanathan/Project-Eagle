@@ -27,7 +27,7 @@ class VoiceController < ApplicationController
 
       if params[:Digits] == "1"
         r.Say "Now say something like .. next tuesday at 2pm for 4 golfers ", :voice => 'man'
-        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 10
+        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 5, :timeout => 2
       else
         r.Say "Too bad, you lose", :voice => 'woman'
       end
@@ -53,7 +53,7 @@ class VoiceController < ApplicationController
     substring = ""
     split.each do |s|
       substring += s+" "
-      date = Chronic.parse(s)
+      date = Chronic.parse(substring)
       if !date.nil?
         xdate = date
       end
@@ -71,7 +71,7 @@ class VoiceController < ApplicationController
     golfers = golfers.to_s
     
     puts golfers
-    puts xdate.to_s
+    puts xdate
     
     data["golfers"] = golfers
     data["date"] = xdate.to_s
