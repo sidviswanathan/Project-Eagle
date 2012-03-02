@@ -161,6 +161,7 @@ class VoiceController < ApplicationController
               d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
               d.Pause :length => 2
             end
+            d.Say " If you would like to repeat this menu, press 0 now"
           end
         else
           r.Redirect "/voice/options?Digits=1&sorry=1"
@@ -176,18 +177,26 @@ class VoiceController < ApplicationController
   end
   
   def book
-    d = DataStore.find_by_name("call_"+params[:CallSid])
-    data = JSON.parse(d.data)
-    dt = Chronic.parse(data["date"])
-    date = dt.strftime("%Y-%m-%d")
-    slots = get_slots(data)
-    slot = slots[params[:Digits].to_i-1]
-    total = (slot["p"] * data["golfers"].to_i).to_s
-    reservation = Reservation.book_tee_time("carlcwheatley@gmail.com", data["course"], data["golfers"], slot["t"], date, total)
-    response = Twilio::TwiML::Response.new do |r|
-      greeting = "Thanks for your business, your cost is "+total+" dollars due at course"
-      r.Say greeting, :voice => 'man'
+    if params[:Digits].to_i == 0
+      response = Twilio::TwiML::Response.new do |r|
+        r.Redirect "/voice/gettime"
+      end
+    else
+      d = DataStore.find_by_name("call_"+params[:CallSid])
+      data = JSON.parse(d.data)
+      dt = Chronic.parse(data["date"])
+      date = dt.strftime("%Y-%m-%d")
+      slots = get_slots(data)
+      slot = slots[params[:Digits].to_i-1]
+      total = (slot["p"] * data["golfers"].to_i).to_s
+      reservation = Reservation.book_tee_time("carlcwheatley@gmail.com", data["course"], data["golfers"], slot["t"], date, total)
+      response = Twilio::TwiML::Response.new do |r|
+        greeting = "Thanks for your business, your cost is "+total+" dollars due at course"
+        r.Say greeting, :voice => 'man'
+      end
     end
+      
+    
     render :text => response.text
   end
 
