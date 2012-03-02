@@ -98,7 +98,7 @@ class VoiceController < ApplicationController
     d = DataStore.find_by_name("call_"+params[:CallSid])
     data = JSON.parse(d.data)
     response = Twilio::TwiML::Response.new do |r|
-      greeting = "Please confirm your slot for "+data["text"]+" by pressing 1 for yes or 2 for no"
+      greeting = "Please confirm your slot for "+data["golfers"]+" on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" at "+Chronic.parse(data["date"]).strftime("%I %p")+"by pressing 1 for yes or 2 for no"
             
       r.Gather :action => "/voice/book" do |d|
         d.Say greeting, :voice => 'man'
