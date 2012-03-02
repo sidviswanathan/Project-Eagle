@@ -284,9 +284,10 @@ class VoiceController < ApplicationController
         r.Redirect "/voice/golfers"
       end
     elsif data["date"].nil?
-      r.Redirect "/voice/golfers"
+      r.Redirect "/voice/date_select"
     else
       response = Twilio::TwiML::Response.new do |r|
+        puts data
         slots = get_slots(data)
         greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")
 
