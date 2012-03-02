@@ -27,7 +27,7 @@ class VoiceController < ApplicationController
 
       if params[:Digits] == "1"
         r.Say "Now say something like .. next tuesday at 2pm for 4 golfers ", :voice => 'man'
-        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 5, :timeout => 2
+        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 7, :timeout => 2
       else
         r.Say "Too bad, you lose", :voice => 'woman'
       end
@@ -63,9 +63,11 @@ class VoiceController < ApplicationController
     end
     reverse = split.reverse
     
+    counter = 0
     reverse.each do |r|
       golfers = r.to_i
-      break if golfers > 0
+      counter += 1
+      break if golfers > 1 or counter > 3
     end
     
     golfers = golfers.to_s
