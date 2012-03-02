@@ -27,12 +27,13 @@ class VoiceController < ApplicationController
     response = Twilio::TwiML::Response.new do |r|
       prepend = ""
       if params[:Digits] == "1"
-        if params[:sorry] == "true"
+        if params[:sorry].to_i > 0
           prepend = "Sorry, we didn't quite get that .. "
         end
         r.Say "Now say something like .. tuesday at 2pm for 4 golfers ", :voice => 'man'
         r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 7, :timeout => 2
       else
+        r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
         r.Dial "4082535357"
       end
     end
@@ -162,10 +163,11 @@ class VoiceController < ApplicationController
             end
           end
         else
-          r.Redirect "/voice/options?Digits=1&sorry=true"
+          r.Redirect "/voice/options?Digits=1&sorry=1"
         end
       rescue
-        r.Redirect "/voice/options?Digits=1&sorry=true"
+        r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
+        r.Dial "4082535357"
       end
       
       
