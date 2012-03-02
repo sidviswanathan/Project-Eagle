@@ -283,48 +283,44 @@ class VoiceController < ApplicationController
       response = Twilio::TwiML::Response.new do |r|
         r.Redirect "/voice/golfers"
       end
-    elsif data[""]
+    elsif data["date"].nil?
+      r.Redirect "/voice/golfers"
     else
       response = Twilio::TwiML::Response.new do |r|
-        begin
-          slots = get_slots(data)
-          greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")
+        slots = get_slots(data)
+        greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")
 
-          if !slots.nil?
-            r.Gather :action => "/voice/book", :timeout => 15 do |d|
-              counter = 0
-              d.Say greeting
-              d.Pause :length => 3
-              slots.each do |slot|
-                counter += 1
-                if counter == 1
-                  d.Say "Press "
-                end
-                d.Say counter.to_s
-                d.Say " fore "
-                d.Pause :length => 1
-                dt = Chronic.parse(slot["t"])
-                t = dt.strftime("%M")
-                if t[0,1] == "0"
-                  if t[1,1] == "0"
-                    t = " "
-                  else
-                    t = "Oh "+t[1,1]
-                  end
-                end
-                d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
-                d.Pause :length => 2
+        if !slots.nil?
+          r.Gather :action => "/voice/book", :timeout => 15 do |d|
+            counter = 0
+            d.Say greeting
+            d.Pause :length => 3
+            slots.each do |slot|
+              counter += 1
+              if counter == 1
+                d.Say "Press "
               end
-              d.Say " If you would like to repeat this menu, press 0 now"
+              d.Say counter.to_s
+              d.Say " fore "
+              d.Pause :length => 1
+              dt = Chronic.parse(slot["t"])
+              t = dt.strftime("%M")
+              if t[0,1] == "0"
+                if t[1,1] == "0"
+                  t = " "
+                else
+                  t = "Oh "+t[1,1]
+                end
+              end
+              d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
+              d.Pause :length => 2
             end
-          else
-            r.Redirect "/voice/options?Digits=1&sorry=1"
+            d.Say " If you would like to repeat this menu, press 0 now"
           end
-        rescue
-          r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
-          r.Dial "4082535357"
+        else
+          r.Say "We couldn't find any slots for #{data['golfers']} on "+data["date"].strftime("%A %B %d ")+data["date"].strftime(" at %l %m %p")
+          r.Redirect "/voice/options?Digits=1&sorry=1"
         end
-
 
       end
     end
