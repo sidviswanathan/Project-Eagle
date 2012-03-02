@@ -137,9 +137,12 @@ class VoiceController < ApplicationController
       if !slots.nil?
         r.Gather :action => "/voice/book" do |d|
           counter = 0
+          d.Say greeting
           slots.each do |slot|
             counter += 1
-            d.Say counter.to_s+" "+Chronic.parse(slot["t"]).strftime("%l %p"), :voice => 'man'
+            d.Say counter.to_s
+            d.Pause :length => 1
+            d.Say " "+Chronic.parse(slot["t"]).strftime("%l %p %M")
             d.Pause :length => 2
           end
         end
