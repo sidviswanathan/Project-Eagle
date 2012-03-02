@@ -25,8 +25,8 @@ class VoiceController < ApplicationController
     response = Twilio::TwiML::Response.new do |r|
 
       if params[:Digits] == "1"
-        r.Say "Now say something like next tuesday at 2pm for 4 golfers ", :voice => 'man'
-        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback?save=date', :timeout => "3"
+        r.Say "Now say something like .. next tuesday at 2pm for 4 golfers ", :voice => 'man'
+        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback'
       else
         r.Say "Too bad, you lose", :voice => 'woman'
       end
@@ -61,12 +61,22 @@ class VoiceController < ApplicationController
     d = DataStore.find_by_name("call_"+params[:CallSid])
     data = JSON.parse(d.data)
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "Please confirm your slot for ", :voice => 'man'
-      r.Say data["text"]
-      r.Say "Please say Yes or No"
+      greeting = "Please confirm your slot for "+data["text"]+" by pressing 1 for yes or 2 for no"
+            
+      r.Gather :action => "/voice/book" do |d|
+        d.Say greeting, :voice => 'man'
+      end
+      
     end
     render :text => response.text
-    
+  end
+  
+  def book
+    response = Twilio::TwiML::Response.new do |r|
+      greeting = "Thanks for your business, have a good day!"
+      r.Say greeting, :voice => 'man'
+    end
+    render :text => response.text
   end
 
 end
