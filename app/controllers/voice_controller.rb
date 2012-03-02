@@ -49,6 +49,9 @@ class VoiceController < ApplicationController
     data = JSON.parse(d.data)
     data["text"]  = params[:TranscriptionText]
     data["voice"] = params[:RecordingUrl]
+    data["day"] = nil
+    data["time"] = nil
+    data["date"] = nil
     
     split = data["text"].split(" ")
     
@@ -60,13 +63,21 @@ class VoiceController < ApplicationController
     nexter = false
     count = 0
     substring = ""
+    
+    if data["text"].include? "P.M." or data["text"].include? "A.M."
+      data["time"] = true
+    end
+    
     remain = data["text"]
     split.each do |s|
       substring += s+" "
       date = Chronic.parse(substring)
       if !date.nil?
-        xdate = date
+         data["date"] = date.to_s
         remain = data["text"].sub(substring,"")
+      end
+      if days.include? s
+        data["day"] = s
       end
       if s == 'next'
         nexter = true
@@ -83,17 +94,27 @@ class VoiceController < ApplicationController
     golfers = golfers.to_s
     
     puts golfers
-    puts xdate
+
     
     data["golfers"] = golfers
-    data["date"] = xdate.to_s
+    
     
     
     d.data = data.to_json
     d.save
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
     @call = @client.account.calls.get(params[:CallSid])
-    @call.redirect_to('http://www.presstee.com/voice/gettime')
+    if data["day"].nil?
+      @call.redirect_to('http://www.presstee.com/voice/date_select')
+    elsif data["time"].nil?
+      @call.redirect_to('http://www.presstee.com/voice/time_select')
+    elsif data["golfers"] == 0
+      @call.redirect_to('http://www.presstee.com/voice/golfers')
+    else
+      @call.redirect_to('http://www.presstee.com/voice/gettime')
+    end
+      
+    
     render :nothing => true
   end
   
@@ -132,6 +153,107 @@ class VoiceController < ApplicationController
       
   end
   
+  def date_select
+    greeting = 'Sorry we didnt quite get the date you wanted .. Please select from the following '
+    today = Date.today
+    if now > Time.parse("17:00")
+      today += 1
+    end
+    
+    response = Twilio::TwiML::Response.new do |r|
+      r.Gather :action => "/voice/date_select_callback" do |d|
+        d.Say greeting, :voice => 'man'
+        counter = 0
+        [today,today+1,today+2,today+3,today+4,today+5,today+6,today+7].each do |day|
+          counter += 1
+          if counter == 1
+            d.Say "Press "
+          end
+          d.Say counter
+          d.Say " fore "
+          if counter == 1 or counter == 8
+            d.Say today.strftime(" %A %B %-d ")
+          else
+            d.Say today.strftime(" %A ")
+          end
+        end
+      end
+    end
+  end
+  
+  def date_select_callback
+    d = DataStore.find_by_name("call_"+params[:CallSid])
+    data = JSON.parse(d.data)
+    
+    today = Date.today
+    if now > Time.parse("17:00")
+      today += 1
+    end
+    xdate = [today,today+1,today+2,today+3,today+4,today+5,today+6,today+7][params[:Digits].to_i-1]
+    
+    redirect = ""
+    if data["time"].nil?
+      data["temp_date"] = xdate.to_s
+      redirect = "time_select"
+    elsif data["golfers"] == 0
+      data["date"] = Chronic.parse(xdate.strftime("%A %B %d "+data["time"]))
+      redirect = "golfers"
+    else
+      data["date"] = Chronic.parse(xdate.strftime("%A %B %d "+data["time"]))
+      redirect = "gettime"
+    end
+    d.data = data.to_json
+    d.save
+    response = Twilio::TwiML::Response.new do |r|
+      r.Redirect "/voice/#{redirect}"
+    end
+    
+  end
+  
+  def time_select
+    greeting = 'Sorry we didnt quite get the hour you wanted .. Please select from the following '
+    r.Gather :action => "/voice/time_select_callback" do |d|
+      d.Say greeting, :voice => 'man'
+      counter = 0
+      hours = ["6 A.M.","7 A.M.","8 A.M.","9 A.M.","10 A.M.","11 A.M.","12 P.M.","1 P.M.","2 p.M.","3 P.M.","4 P.M."]
+      hours.each do |h|
+        counter += 1
+        if counter == 1
+          d.Say "Press "
+        end
+        d.Say counter
+        d.Say " fore "
+        d.Say h
+      end
+    end
+  end
+  
+  def time_select_callback
+    d = DataStore.find_by_name("call_"+params[:CallSid])
+    data = JSON.parse(d.data)
+    hours = ["6 A.M.","7 A.M.","8 A.M.","9 A.M.","10 A.M.","11 A.M.","12 P.M.","1 P.M.","2 p.M.","3 P.M.","4 P.M."]
+    data["time"] = hours[params[:Digits].to_i-1]
+
+    redirect = ""
+
+    if data["date"].nil?
+      redirect = "date_select"
+    elsif data["golfers"].to_i == 0
+      data["date"] = Chronic.parse(xdate.strftime("%A %B %d "+data["time"]))
+      redirect = "golfers"
+    else
+      data["date"] = Chronic.parse(xdate.strftime("%A %B %d "+data["time"]))
+      redirect = "gettime"
+    end
+    d.data = data.to_json
+    d.save
+    response = Twilio::TwiML::Response.new do |r|
+      r.Redirect "/voice/#{redirect}"
+    end
+  end
+  
+  
+  
   def gettime
     d = DataStore.find_by_name("call_"+params[:CallSid])
     data = JSON.parse(d.data)   
@@ -143,6 +265,7 @@ class VoiceController < ApplicationController
       response = Twilio::TwiML::Response.new do |r|
         r.Redirect "/voice/golfers"
       end
+    elsif data[""]
     else
       response = Twilio::TwiML::Response.new do |r|
         begin
