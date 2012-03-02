@@ -53,6 +53,7 @@ class VoiceController < ApplicationController
     response = Twilio::TwiML::Response.new do |r|
       r.Say "Thanks for signing up.  In addition to exclusive deals you are now entered in Deep Cliff's weekly Free Tee Time lottery.  Please tell your friends!"
     end
+    render :text => response.text
   end
   
   def transcribe_callback
