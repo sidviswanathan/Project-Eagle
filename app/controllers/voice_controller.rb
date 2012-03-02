@@ -15,7 +15,7 @@ class VoiceController < ApplicationController
     phone = params[:From].sub("+1","")
     user = User.find_or_create_by_phone(phone)
     response = Twilio::TwiML::Response.new do |r|
-      d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"monday","voice"=>"10:15","golfers"=>"2"}.to_json})
+      d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"","voice"=>"","golfers"=>"2"}.to_json})
       greeting = 'Welcome to Deep Cliff Golf Course.  To book a Tee Time, press 1.  To speak with the course, press 2'
       r.Gather :action => "/voice/options" do |d|
         d.Say greeting, :voice => 'man'
@@ -33,7 +33,7 @@ class VoiceController < ApplicationController
           prepend = "Sorry, we didn't quite get that .. "
         end
         r.Say "Now say something like .. tuesday at 2pm for 4 golfers ", :voice => 'man'
-        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 7, :timeout => 2
+        r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 8, :timeout => 2
       else
         r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
         r.Dial "4082535357"
@@ -156,6 +156,7 @@ class VoiceController < ApplicationController
                   d.Say "Press "
                 end
                 d.Say counter.to_s
+                d.Say " for "
                 d.Pause :length => 1
                 dt = Chronic.parse(slot["t"])
                 t = dt.strftime("%M")
