@@ -128,33 +128,39 @@ class VoiceController < ApplicationController
     data = JSON.parse(d.data)
     puts "Please confirm your slot for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" at "+Chronic.parse(data["date"]).strftime("%l %p")
     
-    slots = get_slots(data)
+
     
     
     response = Twilio::TwiML::Response.new do |r|
-      greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" by pressing the number preceding the slot"
-      
-      if !slots.nil?
-        r.Gather :action => "/voice/book" do |d|
-          counter = 0
-          d.Say greeting
-          d.Pause :length => 3
-          slots.each do |slot|
-            counter += 1
-            d.Say counter.to_s
-            d.Pause :length => 1
-            dt = Chronic.parse(slot["t"])
-            t = dt.strftime("%M")
-            if t[0,1] == "0"
-              t = "Oh "+t[1,1]
+      begin
+        slots = get_slots(data)
+        greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")+" by pressing the number preceding the slot"
+
+        if !slots.nil?
+          r.Gather :action => "/voice/book" do |d|
+            counter = 0
+            d.Say greeting
+            d.Pause :length => 3
+            slots.each do |slot|
+              counter += 1
+              d.Say counter.to_s
+              d.Pause :length => 1
+              dt = Chronic.parse(slot["t"])
+              t = dt.strftime("%M")
+              if t[0,1] == "0"
+                t = "Oh "+t[1,1]
+              end
+              d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
+              d.Pause :length => 2
             end
-            d.Say " "+dt.strftime("%l")+" "+t+" "+dt.strftime("%p")
-            d.Pause :length => 2
           end
+        else
+          r.Redirect "/voice/options?Digits=1"
         end
-      else
+      rescue
         r.Redirect "/voice/options?Digits=1"
       end
+      
       
     end
     render :text => response.text
