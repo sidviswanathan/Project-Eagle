@@ -191,7 +191,7 @@ class VoiceController < ApplicationController
       r.Say "Sorry we didn't quite get the number of golfers in your party.  Please press a number from 2-4 to continue"
       r.Gather :action =>"/voice/gettime?add=golfers"
     end
-    render :nothing => true
+    render :text => response.text
   end
   
   def book
