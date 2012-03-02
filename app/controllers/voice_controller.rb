@@ -225,21 +225,10 @@ class VoiceController < ApplicationController
   end
   
   def time_select
-    greeting = 'Sorry we didnt quite get the hour you wanted .. Please select from the following '
+    greeting = 'Sorry we didnt quite get the hour you wanted.  Please press the key or keys corresponding the the intended hour between 6 AM and 4 PM.  For example, press 6 for 6 A.M. 1 1 for 11 AM or 2 for 2 P.M. '
     response = Twilio::TwiML::Response.new do |r|
       r.Gather :action => "/voice/time_select_callback" do |d|
         d.Say greeting, :voice => 'man'
-        counter = 0
-        hours = ["6 A.M.","7 A.M.","8 A.M.","9 A.M.","10 A.M.","11 A.M.","12 P.M.","1 P.M.","2 p.M.","3 P.M.","4 P.M."]
-        hours.each do |h|
-          counter += 1
-          if counter == 1
-            d.Say "Press "
-          end
-          d.Say counter
-          d.Say " fore "
-          d.Say h
-        end
       end
     end
     render :text => response.text
@@ -248,25 +237,36 @@ class VoiceController < ApplicationController
   def time_select_callback
     d = DataStore.find_by_name("call_"+params[:CallSid])
     data = JSON.parse(d.data)
-    hours = ["6 A.M.","7 A.M.","8 A.M.","9 A.M.","10 A.M.","11 A.M.","12 P.M.","1 P.M.","2 p.M.","3 P.M.","4 P.M."]
-    data["time"] = hours[params[:Digits].to_i-1]
+    hours = {"6"=>"6 AM","7"=>"7 AM","8"=>"8 AM","9"=>"9 AM","10"=>"10 AM","11"=>"11 AM","12"=>"12 PM","1"=>"1 PM","2"=>"2 PM","3"=>"3 PM","4"=>"4 PM"}
+    if hours.has_key? params[:Digits]
+      data["time"] = hours[params[:Digits].to_i]
+      redirect = ""
 
-    redirect = ""
-
-    if data["date"].nil?
-      redirect = "date_select"
-    elsif data["golfers"].to_i == 0
-      data["date"] = Chronic.parse(data["date"].strftime("%A %B %d "+data["time"]))
-      redirect = "golfers"
+      if data["date"].nil?
+        redirect = "date_select"
+      elsif data["golfers"].to_i == 0
+        data["date"] = Chronic.parse(data["date"].strftime("%A %B %d "+data["time"]))
+        redirect = "golfers"
+      else
+        data["date"] = Chronic.parse(data["date"].strftime("%A %B %d "+data["time"]))
+        redirect = "gettime"
+      end
+      d.data = data.to_json
+      d.save
+      response = Twilio::TwiML::Response.new do |r|
+        r.Redirect "/voice/#{redirect}"
+      end
     else
-      data["date"] = Chronic.parse(data["date"].strftime("%A %B %d "+data["time"]))
-      redirect = "gettime"
+      greeting = 'Try again .. for example,  press 6 for 6 A.M. 1 1 for 11 AM or 2 for 2 P.M. '
+      response = Twilio::TwiML::Response.new do |r|
+        r.Gather :action => "/voice/time_select_callback" do |d|
+          d.Say greeting, :voice => 'man'
+        end
+      end
     end
-    d.data = data.to_json
-    d.save
-    response = Twilio::TwiML::Response.new do |r|
-      r.Redirect "/voice/#{redirect}"
-    end
+
+
+    
     render :text => response.text
   end
   
