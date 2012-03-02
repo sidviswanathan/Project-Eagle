@@ -92,7 +92,7 @@ class VoiceController < ApplicationController
     d.data = data.to_json
     d.save
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
-    @call = @client.account.calls.get(params[:CallSid]
+    @call = @client.account.calls.get(params[:CallSid])
     @call.redirect_to('http://www.presstee.com/voice/gettime')
     render :nothing => true
   end
