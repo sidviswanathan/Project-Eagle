@@ -156,6 +156,7 @@ class VoiceController < ApplicationController
   def date_select
     greeting = 'Sorry we didnt quite get the date you wanted .. Please select from the following '
     today = Date.today
+    now = Time.now
     if now > Time.parse("17:00")
       today += 1
     end
@@ -169,7 +170,7 @@ class VoiceController < ApplicationController
           if counter == 1
             d.Say "Press "
           end
-          d.Say counter
+          d.Say counterassume
           d.Say " fore "
           if counter == 1 or counter == 8
             d.Say today.strftime(" %A %B %-d ")
