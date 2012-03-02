@@ -62,7 +62,7 @@ class VoiceController < ApplicationController
     data = JSON.parse(d.data)
     response = Twilio::TwiML::Response.new do |r|
       r.Say "Please confirm your slot for ", :voice => 'man'
-      r.Play data["voice"]
+      r.Say data["text"]
       r.Say "Please say Yes or No"
     end
     render :text => response.text
