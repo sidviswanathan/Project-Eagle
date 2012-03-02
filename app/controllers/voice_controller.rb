@@ -144,12 +144,11 @@ class VoiceController < ApplicationController
   
   def get_slots(data)
     course_id    = data["course"]
-    puts data["date"]
-    dt = Chronic.parse(data["date"])
-    puts dt
-    time         = dt.strftime("%H:%M")   
+
+    dt = Time.parse(data["date"])
+    time         = dt.strftime("%H:%M")
     date         = dt.strftime("%Y-%m-%d")
-    
+
     updated_course = Rails.cache.fetch("Updated_Course_"+course_id.to_s) {Course.find(course_id)}
     
     dates = JSON.parse(updated_course.available_times)
@@ -289,9 +288,8 @@ class VoiceController < ApplicationController
       r.Redirect "/voice/date_select"
     else
       response = Twilio::TwiML::Response.new do |r|
-        puts data.to_json
         slots = get_slots(data)
-        greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Chronic.parse(data["date"]).strftime("%A %B %d")
+        greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Time.parse(data["date"]).strftime("%A %B %d")
         puts greeting
 
         if !slots.nil?
@@ -353,9 +351,9 @@ class VoiceController < ApplicationController
       slots = get_slots(data)
       slot = slots[params[:Digits].to_i-1]
       total = (slot["p"] * data["golfers"].to_i).to_s
-      reservation = Reservation.book_tee_time("carlcwheatley@gmail.com", data["course"], data["golfers"], slot["t"], date, total)
+      #reservation = Reservation.book_tee_time("carlcwheatley@gmail.com", data["course"], data["golfers"], slot["t"], date, total)
       response = Twilio::TwiML::Response.new do |r|
-        greeting = "Thanks for your business, your cost is "+total+" dollars due at course"
+        greeting = "Thanks for your business, please note that your total due at course is "+total+" dollars .  If you would like to return to the main menu, press 1.  If you would like to cancel this reservation, press 2.  To speak with Deep Cliff Staff, press 3. "
         r.Say greeting, :voice => 'man'
       end
     end
