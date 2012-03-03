@@ -34,7 +34,7 @@ class VoiceController < ApplicationController
         if params[:sorry].to_i > 0
           prepend = "Sorry, we didn't quite get that .. "
         end
-        r.Say " After the Beeep, say something like .. Tuesday at 2 P.M. fohr 3 golfers ", :voice => 'man'
+        r.Say " After the Beep, say something like .. Tuesday at 2 P.M. fohr 3 golfers ", :voice => 'man'
         r.Pause :length => 2
         r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 8, :timeout => 2
       elsif params[:Digits] == "2"
@@ -87,6 +87,7 @@ class VoiceController < ApplicationController
       date = Chronic.parse(substring)
       if !date.nil?
          data["date"] = date.to_s
+         data["time"] = date.strftime("%H:%M")
         remain = data["text"].sub(substring,"")
       end
       if days.include? s
