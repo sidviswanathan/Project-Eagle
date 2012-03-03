@@ -34,7 +34,7 @@ class VoiceController < ApplicationController
         if params[:sorry].to_i > 0
           prepend = "Sorry, we didn't quite get that .. "
         end
-        r.Say "After the beep, say something like .. Tuesday at 2 P.M. fohr 3 golfers ", :voice => 'man'
+        r.Say " After the Beeep, say something like .. Tuesday at 2 P.M. fohr 3 golfers ", :voice => 'man'
         r.Pause :length => 2
         r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 8, :timeout => 2
       elsif params[:Digits] == "2"
@@ -367,7 +367,7 @@ class VoiceController < ApplicationController
       data = JSON.parse(d.data)
       dt = Time.parse(data["date"])
       date = dt.strftime("%Y-%m-%d")
-      clean_date = dt.strftme("%A %B %d")
+      clean_date = dt.strftime("%A %B %d")
       clean_time = dt.strftime(" at %l %m %p")
       slots = get_slots(data)
       slot = slots[params[:Digits].to_i-1]
