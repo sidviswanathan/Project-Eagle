@@ -201,6 +201,7 @@ class VoiceController < ApplicationController
     data = JSON.parse(d.data)
     
     today = Date.today
+    now = Time.now
     if now > Time.parse("17:00")
       today += 1
     end
@@ -211,10 +212,10 @@ class VoiceController < ApplicationController
       data["temp_date"] = xdate.to_s
       redirect = "time_select"
     elsif data["golfers"] == 0
-      data["date"] = Chronic.parse(xdate.strftime("%A %B %d "+data["time"]))
+      data["date"] = Time.parse(xdate.strftime("%Y-%m-%d "+data["time"])).to_s
       redirect = "golfers"
     else
-      data["date"] = Chronic.parse(xdate.strftime("%A %B %d "+data["time"]))
+      data["date"] = Time.parse(xdate.strftime("%Y-%m-%d "+data["time"])).to_s
       redirect = "gettime"
     end
     d.data = data.to_json
