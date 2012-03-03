@@ -358,6 +358,7 @@ class VoiceController < ApplicationController
       r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
       r.Dial "4082535357"
     end
+    render :text => response.text
   end
   
   def book
