@@ -64,6 +64,7 @@ class VoiceController < ApplicationController
     data["day"] = nil
     data["time"] = nil
     data["date"] = nil
+    data["golfers"] = "0"
     
     split = data["text"].split(" ")
     
@@ -107,8 +108,9 @@ class VoiceController < ApplicationController
     
     puts golfers
 
-    
-    data["golfers"] = golfers
+    if golfers.to_i < 5 and golfers.to_i > 1
+      data["golfers"] = golfers
+    end
     
     
     
