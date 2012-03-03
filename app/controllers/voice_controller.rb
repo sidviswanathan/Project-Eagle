@@ -343,20 +343,21 @@ class VoiceController < ApplicationController
   end
   
   def confirm
-    
-    if params[:Digits] == "1"
-      d = DataStore.find_by_name("call_"+params[:CallSid])
-      data = JSON.parse(d.data)
-      dt = Time.parse(data["date"])
-      date = dt.strftime("%Y-%m-%d")
-      total = (data['slot']["p"] * data["golfers"].to_i).to_s
-      reservation = Reservation.book_tee_time("carlcwheatey@gmail.com", data["course"], data["golfers"], data['slot']["t"], date, total)
-      r.Say "Thanks for your business, please note your Reservation number is #{reservation.confirmation_code}"
-    elsif params[:Digits] == "2"
-      r.Redirect "/voice/options"
-    else
-      r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
-      r.Dial "4082535357"
+    response = Twilio::TwiML::Response.new do |r|
+      if params[:Digits] == "1"
+        d = DataStore.find_by_name("call_"+params[:CallSid])
+        data = JSON.parse(d.data)
+        dt = Time.parse(data["date"])
+        date = dt.strftime("%Y-%m-%d")
+        total = (data['slot']["p"] * data["golfers"].to_i).to_s
+        reservation = Reservation.book_tee_time("carlcwheatey@gmail.com", data["course"], data["golfers"], data['slot']["t"], date, total)
+        r.Say "Thanks for your business, please note your Reservation number is #{reservation.confirmation_code}.  It will be texted to you shortly if you have a text-capable phone.  "
+      elsif params[:Digits] == "2"
+        r.Redirect "/voice/options"
+      else
+        r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
+        r.Dial "4082535357"
+      end
     end
     render :text => response.text
   end
