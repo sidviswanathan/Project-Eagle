@@ -349,7 +349,7 @@ class VoiceController < ApplicationController
       data = JSON.parse(d.data)
       dt = Time.parse(data["date"])
       date = dt.strftime("%Y-%m-%d")
-      total = (slot["p"] * data["golfers"].to_i).to_s
+      total = (data['slot']["p"] * data["golfers"].to_i).to_s
       reservation = Reservation.book_tee_time("carlcwheatey@gmail.com", data["course"], data["golfers"], data['slot']["t"], date, total)
       r.Say "Thanks for your business, please note your Reservation number is #{reservation.confirmation_code}"
     elsif params[:Digits] == "2"
@@ -379,10 +379,8 @@ class VoiceController < ApplicationController
       d.data = data.to_json
       d.save
       total = (slot["p"] * data["golfers"].to_i).to_s
-      #reservation = Reservation.book_tee_time("carlcwheatley@gmail.com", data["course"], data["golfers"], slot["t"], date, total)
       response = Twilio::TwiML::Response.new do |r|
         greeting = "Your total due at course for #{data['golfers']} golfers on #{clean_date} at #{clean_time} is #{total} dollars.  Please confirm by pressing 1, cancel by pressing 2 or press 3 to speak with a Deep Cliff Staff Member"
-        #greeting = "Thanks for your business, please note that your total due at course is "+total+" dollars .  If you would like to return to the main menu, press 1.  If you would like to cancel this reservation, press 2.  To speak with Deep Cliff Staff, press 3. "
         r.Gather :action => "/voice/confirm" do |d|
           r.Say greeting, :voice => 'man'
         end
