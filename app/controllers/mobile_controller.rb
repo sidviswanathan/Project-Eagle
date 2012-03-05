@@ -43,7 +43,8 @@ class MobileController < ApplicationController
   skip_before_filter :verify_authenticity_token 
 
   def get_mobile_app
-    course = Course.find_by_mobile_domain(request.url)
+    mdomain = request.url.sub("http://","").split("/")[0]
+    course = Course.find_by_mobile_domain(mdomain)
     if !course.nil?
       params[:course_id] = course.id.to_s
     end

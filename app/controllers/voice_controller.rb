@@ -351,7 +351,7 @@ class VoiceController < ApplicationController
         date = dt.strftime("%Y-%m-%d")
         total = (data['slot']["p"] * data["golfers"].to_i).to_s
         reservation = Reservation.book_tee_time("carlcwheatey@gmail.com", data["course"], data["golfers"], data['slot']["t"], date, total)
-        r.Say "Thanks for your business, please note your Reservation number is #{reservation.confirmation_code}.  It will be texted to you shortly if you have a text-capable phone.  "
+        r.Say "Thanks for your business, please note your Reservation number is #{reservation.confirmation_code}.  Here it is again, #{reservation.confirmation_code}.  It will be texted to you shortly if you have a text-capable phone.  "
       elsif params[:Digits] == "2"
         r.Redirect "/voice/options"
       else

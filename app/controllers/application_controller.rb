@@ -211,12 +211,7 @@ class ApplicationController < ActionController::Base
   end
 
   def cancel_reservation(email, date, tee_slot)
-    @tee_slots_for_cancel = []
-
-    #user = User.find_by_email(email)
-    #puts "USER IS #{user}"
-    #uid = user.id
-    ## ALLOWING CANCELLATION FOR ANY USER ##
+    @tee_slots_for_cancel  = []
 
     puts "Info for deletion email #{email} date #{date} and tee slot #{tee_slot}"
     if !Reservation.find_all_by_date(date, :conditions => {:time => tee_slot}).nil?
