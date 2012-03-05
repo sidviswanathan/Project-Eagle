@@ -40,6 +40,7 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   
   map.connect '/', :controller => 'mobile'
+  map.connect '/:action', :controller => 'mobile'
   
   map.connect "/listener", :controller => "listener", :action => "index"
   map.connect "/cancel", :controller => "device_communication", :action => "cancel_reservation"
