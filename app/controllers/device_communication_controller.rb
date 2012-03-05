@@ -98,6 +98,7 @@ class DeviceCommunicationController < ApplicationController
     app_version  = params[:app_version]
     redirect     = params[:redirect]
     send_deals   = params[:send_deals]
+    password     = params[:password]
     
     response_object = intitiate_response_object
     
@@ -107,7 +108,7 @@ class DeviceCommunicationController < ApplicationController
       session[:current_user_id] = customer.id
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
-      response_object[:message]    = "The server successfully created a User record"
+      response_object[:message]    = "The server successfully created a Customer record"
       if !redirect.nil?
         puts customer.id
         render :nothing => true
