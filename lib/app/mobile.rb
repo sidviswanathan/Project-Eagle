@@ -123,7 +123,7 @@ class MobileApp
   
   def get_url(action,new_params)
     @params = @params.merge(new_params)
-    uri = "/mobile/#{action}#{get_query}"
+    uri = "/#{action}#{get_query}"
   end
   
   def is_active(act)
