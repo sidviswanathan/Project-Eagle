@@ -60,7 +60,7 @@ module Fore
     response = self.http_get(uri)
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
       ccode = XmlSimple.xml_in(response.body)["confirmation"][0]
-      ServerCommunicationController.schedule_cancel(ccode,TESTING_AUTO_CANCEL)
+      ServerCommunicationController.schedule_cancel(ccode,course.id.to_s,TESTING_AUTO_CANCEL)
       return ccode
       
     else
