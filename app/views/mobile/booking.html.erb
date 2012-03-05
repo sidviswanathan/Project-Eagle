@@ -3,7 +3,7 @@
 	<head> 
 	<title>Deep Cliff Golf Course</title> 
 	
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"> 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
 
@@ -42,7 +42,23 @@
 	*/
 	
 	<% end %>
-
+	
+	var user_agent = navigator.userAgent;
+	if(user_agent.match('/webOS/i')){
+		user_agent = 'webOS'
+	}else if(user_agent.match('/BlackBerry/i')){
+		user_agent = 'BlackBerry'
+	}else if(user_agent.match('/Android/i')){
+		user_agent = 'Android'
+	}else if(user_agent.match('/Windows/i')){
+		user_agent = 'Windows'
+	}else if(user_agent.match('/iPhone/i')){
+		user_agent = 'iPhone'
+	}else if(user_agent.match('/iPod/i')){
+		user_agent = 'iPod'
+	}else if(user_agent.match('/iPad/i')){
+		user_agent = 'iPad'
+	}
 
 	$(document).bind("mobileinit", function(){
 
@@ -62,7 +78,7 @@
 		}else{
 			$.mobile.defaultPageTransition = "slide";
 		}
-		
+
 		
 		
 
@@ -79,6 +95,13 @@
 			setTimeout("gflipIn()",4000);
 			gallery_not_started = false;
 		}
+		$('#contact_method').change(function(){
+			if($(this).val()=='email'){
+				$('#contact_value').attr("placeholder","Email Address");
+			}else{
+				$('#contact_value').attr("placeholder","Phone Number");
+			}
+		})
 	});
 
 	function callUserSignIn(){
@@ -129,20 +152,21 @@
 	function submitform(){
 	    var first_name = $('#first_name').val();
 		var last_name  = $('#last_name').val();
-		var email_address = $('#email_address').val();
+		var contact = $('#contact_value').val();
 		app.first_name=$('#first_name').val();
 		app.last_name=$('#last_name').val();
 		app.email = $('#email_address').val();
+		app.contact_method = $('#contact_method').val();
 		$.post("/device_communication/login",{
 			"f_name":first_name,
 			"l_name":last_name,
-			"email":email_address,
-			"device_name":"iphone",
+			"contact_method":app.contact_method,
+			"contact":contact,
+			"device_name":"mobile_web/"+user_agent,
 			"redirect":"true",
-			"os_version":"4.0",
-			"app_version":"web"},function(data){
+			"os_version":"NA",
+			"app_version":"mobile_web"},function(data){
 				confirmTime();
-			
 		})
 	}
 	var app =new Object();
@@ -157,11 +181,19 @@
 			
 		}
 	}
+	function update_contact_placeholder(){
+		if($('#contact_method').val()=='email'){
+			$('#contact_value').attr("placeholder","Email Address");
+		}else{
+			$('#contact_value').attr("placeholder","Phone Number");
+		}
+		
+	}
 	function reserveTime(){
 		$.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
 			"golfers":app.golfers,
-			"email":app.email,
+			"contact":app.email,
 			"date":app.date,
 			"time":app.timer,
 			"total":app.total},function(data){
