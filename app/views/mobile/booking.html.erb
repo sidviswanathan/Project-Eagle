@@ -157,7 +157,7 @@
 		app.last_name=$('#last_name').val();
 		app.email = $('#email_address').val();
 		app.contact_method = $('#contact_method').val();
-		$.post("/device_communication/login",{
+		$.post("/device_communication/customer_login",{
 			"f_name":first_name,
 			"l_name":last_name,
 			"contact_method":app.contact_method,
@@ -201,7 +201,16 @@
 			
 		});
 	}
+	function check_deals(){
 
+		if($('#send_deals').is(':checked')){
+			$('#send_deals').attr('checked',false)
+			$('#sd_label').css("color","#444")
+		}else{
+			$('#send_deals').attr("checked",true);
+			$('#sd_label').css("color","green")
+		}
+	}
     </script>
 	<script type='text/javascript'>
 

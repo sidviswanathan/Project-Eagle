@@ -87,6 +87,40 @@ class DeviceCommunicationController < ApplicationController
     end    
   end  
   
+  def customer_login
+    email        = params[:email]
+    phone        = params[:phone]
+    contact_via  = params[:contact_via]
+    f_name       = params[:f_name]
+    l_name       = params[:l_name]
+    device_name  = params[:device_name]
+    os_version   = params[:os_version]
+    app_version  = params[:app_version]
+    redirect     = params[:redirect]
+    send_deals   = params[:send_deals]
+    
+    response_object = intitiate_response_object
+    
+    customer = Customer.login(f_name, l_name, contact_via, email, phone, password, device_name, os_version, app_version, send_deals)
+    
+    if customer
+      session[:current_user_id] = customer.id
+      response_object[:status]     = "success"
+      response_object[:statusCode] = 200
+      response_object[:message]    = "The server successfully created a User record"
+      if !redirect.nil?
+        puts customer.id
+        render :nothing => true
+      else
+        render :json => response_object.to_json
+      end
+      
+    else
+      response_object[:message] = "The server failed to make the User.login() request"
+      render :json => response_object.to_json               
+    end
+  end
+  
   # ===================================================================
   # = httpo://presstee.com/device_communication/get_available_times ===
   # ===================================================================
