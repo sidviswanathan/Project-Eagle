@@ -75,7 +75,7 @@ class Reservation < ActiveRecord::Base
     if !confirmation_code.nil?
       if user 
         r = Reservation.create(reservation_info)
-        user_data = JSON.prse(user.data)
+        user_data = JSON.parse(user.data)
         r.booking_type = user_data[:device_name]
         r.confirmation_code = confirmation_code
         r.user = user
