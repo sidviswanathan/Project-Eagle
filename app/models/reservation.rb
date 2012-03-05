@@ -8,7 +8,7 @@ class Reservation < ActiveRecord::Base
   Reservation::BOOKING_SUCCESS_STATUS_CODE  = 1
   
   belongs_to :course
-  belongs_to :user
+  belongs_to :customer
 
   validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
   
