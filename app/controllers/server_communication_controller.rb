@@ -82,7 +82,7 @@ class ServerCommunicationController < ApplicationController
   
   def self.schedule_cancel(confirmation_code,countdown)
     r = Reservation.find_by_confirmation_code(confirmation_code)
-    data = {"confirmation_code"=>confirmation_code,"course_id"=>Reservation.course_id}
+    data = {"confirmation_code"=>confirmation_code,"course_id"=>r.course_id}
     eta_day = Date.today.strftime("%Y-%m-%d")
     eta_time = (Time.now+countdown).strftime("%H:%M")
     dump = Dump.create({:data => data.to_json})
