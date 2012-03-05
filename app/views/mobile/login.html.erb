@@ -7,25 +7,27 @@
 	
   	<form method="POST" id="signInForm" action="/device_communication/login">
     	<div style="height:15px;"></div>
-		<ul style='border-radius:6px'>
-      		<li><input placeholder="First Name" style='font-size:20px' data-role="none" id="first_name" value="" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
-      		<li><input placeholder="Last Name" style='font-size:20px'  data-role="none" id="last_name" type="text" value=""  name="lname1" onfocus="$('#token').attr('value', '')"/></li>
-    	</ul>  
 		<select id='contact_method'  data-role="none" style='width:100%;font-size:20px;margin-bottom:11px;margin-top:-4px' onchange="update_contact_placeholder" name='contact_method'>
 			<option value='email'>Contact via Email</option>
 			<option value='phone'>Contact via Phone</option>
 			<option value='text'>Contact via Text (SMS)</option>
 		</select>
-    	<ul style='border-radius:6px'>
-      		<li><input placeholder="Email Address" style='font-size:20px' data-role="none" id="contact_value" type="text" value=""  name="contact" /></li>
-    	</ul>
-		<fieldset >
+		<fieldset style='margin-bottom:18px;margin-top:6px' >
 		<input type="checkbox"  CHECKED name="send_deals" data-role="none"  id="send_deals" class="custom" />
-		<label onclick="check_deals();" id='sd_label' for="send_deals"><b style='color:green'>Send Exclusives from Deep Cliff!</b></label>
+		<label onclick="check_deals();" id='sd_label' for="send_deals"><b style='color:green'>Send Me Exclusives from Deep Cliff</b></label>
 		</fieldset>
+		<ul style='border-radius:6px'>
+      		<li><input placeholder="First Name" style='font-size:20px' data-role="none" id="first_name" value="" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
+      		<li><input placeholder="Last Name" style='font-size:20px'  data-role="none" id="last_name" type="text" value=""  name="lname1" onfocus="$('#token').attr('value', '')"/></li>
+<li><input placeholder="Email Address" style='font-size:20px' data-role="none" id="contact_value" type="text" value=""  name="contact" /></li>
+    	</ul>  
+
+		
     	<input type='hidden' name='redirect' value="true" />
+		<a href='javascript:submitform();'  style='margin:0px;border-radius:6px' class='book_button'>Book Tee Time</a>
 		<p align="center">
-			<a href="javascript: submitform()"><img border="0" width="300" style="padding-top:0px" src="/images/button.png"/></a>
+			
+			
     	</p>
   	</form>
 

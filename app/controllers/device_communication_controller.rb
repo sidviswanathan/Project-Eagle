@@ -90,6 +90,11 @@ class DeviceCommunicationController < ApplicationController
   def customer_login
     email        = params[:email]
     phone        = params[:phone]
+    if email.nil?
+      email = ""
+    elsif phone.nil?
+      phone = ""
+    end
     contact_via  = params[:contact_via]
     f_name       = params[:f_name]
     l_name       = params[:l_name]
@@ -213,22 +218,39 @@ class DeviceCommunicationController < ApplicationController
       date_date = Date.parse(date)
     end
     
-    if date_date > (Date.today+7)
-      reservation = ServerCommunicationController.schedule_booking(email, course_id, golfers, time, date, total)
-      response_object[:status]     = "success"
-      response_object[:statusCode] = 200
-      response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
-      response_object[:confirmation_code] = "none"
-    else
-      reservation = Reservation.book_tee_time(email, course_id, golfers, time, date, total)
-      if reservation
+    conditions = []
+    if !phone.nil? or phone != ""
+      conditions.push("phone = '#{phone}'")
+    end
+    if !email.nil? or email != ""
+      conditions.push("email = '#{email}'")
+    end
+    
+    
+    customer = Customer.find(:all, :conditions => conditions.join(" or "))[0]
+
+    
+    if !customer.nil?
+      if date_date > (Date.today+7)
+        reservation = ServerCommunicationController.schedule_booking(email, course_id, golfers, time, date, total)
         response_object[:status]     = "success"
         response_object[:statusCode] = 200
         response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
-        response_object[:confirmation_code] = reservation.confirmation_code      
+        response_object[:confirmation_code] = "none"
       else
-        response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"    
+        reservation = Reservation.book_tee_time(customer, course_id, golfers, time, date, total)
+        if reservation
+          response_object[:status]     = "success"
+          response_object[:statusCode] = 200
+          response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
+          response_object[:confirmation_code] = reservation.confirmation_code      
+        else
+          response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"    
+        end
       end
+    
+    else
+      response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"  
     end
     render :json => response_object.to_json
     

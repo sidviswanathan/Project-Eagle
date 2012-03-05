@@ -155,12 +155,12 @@
 		var contact = $('#contact_value').val();
 		app.first_name=$('#first_name').val();
 		app.last_name=$('#last_name').val();
-		app.email = $('#email_address').val();
+		app.email = $('#contact_value').val();
 		app.contact_method = $('#contact_method').val();
 		$.post("/device_communication/customer_login",{
 			"f_name":first_name,
 			"l_name":last_name,
-			"contact_method":app.contact_method,
+			"contact_via":app.contact_method,
 			"contact":contact,
 			"device_name":"mobile_web/"+user_agent,
 			"redirect":"true",

@@ -64,10 +64,10 @@ class Reservation < ActiveRecord::Base
   
 
   
-  def self.book_tee_time(email, course_id, golfers, time, date, total)
+  def self.book_tee_time(user, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
     
-    user = User.find_by_email(email)
+    
     course = Course.find(course_id.to_i)
 
     confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)
@@ -75,7 +75,8 @@ class Reservation < ActiveRecord::Base
     if !confirmation_code.nil?
       if user 
         r = Reservation.create(reservation_info)
-        r.booking_type = user.device_name
+        user_data = JSON.prse(user.data)
+        r.booking_type = user_data[:device_name]
         r.confirmation_code = confirmation_code
         r.user = user
         r.save
