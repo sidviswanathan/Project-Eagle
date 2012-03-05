@@ -35,6 +35,8 @@ module Fore
   DEFAULT_PHONE    = "5628884454"
   DEFAULT_EMAIL    = 'pressteex@gmail.com'  
   
+  TESTING_AUTO_CANCEL = 480
+  
   # Deep Cliff Fee Matrix = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
   
   def self.http_get(uri)
@@ -57,7 +59,10 @@ module Fore
     puts uri
     response = self.http_get(uri)
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
-      return XmlSimple.xml_in(response.body)["confirmation"][0]
+      ccode = XmlSimple.xml_in(response.body)["confirmation"][0]
+      ServerCommunicationController.schedule_cancel(ccode,TESTING_AUTO_CANCEL)
+      return ccode
+      
     else
       return nil
     end

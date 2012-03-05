@@ -80,6 +80,30 @@ class ServerCommunicationController < ApplicationController
     
   end
   
+  def self.schedule_cancel(confirmation_code,countdown)
+    r = Reservation.find_by_confirmation_code(confirmation_code)
+    data = {"confirmation_code"=>confirmation_code,"course_id"=>Reservation.course_id}
+    eta_day = Date.today.strftime("%Y-%m-%d")
+    eta_time = (Time.now+countdown).strftime("%H:%M")
+    dump = Dump.create({:data => data.to_json})
+
+    query = "#{ADD_TASK_URI}perform_cancel?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+    
+    url = URI.parse(ADD_TASK_HOST)
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = false
+    headers = {}
+
+    response = http.get(query, headers)
+    
+  end
+  
+  def self.perform_cancel
+    dump = Dump.find(params[:key].to_i)
+    data = JSON.parse(dump.data)
+    Reservation.cancel(data["confirmation_code"],data["course_id"])
+  end
+  
   
   def self.schedule_mailing(user,subject,body,date,time)
     data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email,"subject"=>subject,"body"=>body}
