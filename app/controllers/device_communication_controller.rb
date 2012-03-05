@@ -194,6 +194,7 @@ class DeviceCommunicationController < ApplicationController
   def book_reservation
     
     email       = params[:email]
+    phone       = params[:phone]
     course_id   = params[:course_id]
     golfers     = params[:golfers]
     time        = params[:time]    

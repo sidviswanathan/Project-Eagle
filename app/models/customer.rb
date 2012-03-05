@@ -25,8 +25,12 @@ class Customer < ActiveRecord::Base
         :app_version         => app_version,
         :prefs               => {:send_deals=>send_deals}.to_json
     }
+    c = Customer.find(:all, :conditions => ["phone = '#{phone}' or email = '#{email}'"])
+    if c.nil?
+      c = Customer.create(login_info) 
+    end
+      
     
-    c = Customer.create(login_info) 
     return c
   end
   
