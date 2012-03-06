@@ -8,8 +8,8 @@
   	<form method="POST" id="signInForm" action="/device_communication/login">
     	<div style="height:15px;"></div>
 		<select id='contact_method'  data-role="none" style='width:100%;font-size:20px;margin-bottom:11px;margin-top:-4px' onchange="update_contact_placeholder" name='contact_method'>
+			<option value='phone' SELECTED>Contact via Phone</option>
 			<option value='email'>Contact via Email</option>
-			<option value='phone'>Contact via Phone</option>
 			<option value='text'>Contact via Text (SMS)</option>
 		</select>
 		<fieldset style='margin-bottom:18px;margin-top:6px' >
@@ -19,7 +19,7 @@
 		<ul style='border-radius:6px'>
       		<li><input placeholder="First Name" style='font-size:20px' data-role="none" id="first_name" value="" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
       		<li><input placeholder="Last Name" style='font-size:20px'  data-role="none" id="last_name" type="text" value=""  name="lname1" onfocus="$('#token').attr('value', '')"/></li>
-<li><input placeholder="Email Address" style='font-size:20px' data-role="none" id="contact_value" type="text" value=""  name="contact" /></li>
+<li><input placeholder="Phone Number" style='font-size:20px' data-role="none" id="contact_value" type="text" value=""  name="contact" /></li>
     	</ul>  
 
 		
