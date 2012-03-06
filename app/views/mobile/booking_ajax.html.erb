@@ -50,16 +50,16 @@
 		  	<%end%>
 
 			<!--##########################################-->
-			<!--Reserve Button-->
+			<!--style='margin:8px;margin-top:12px;border-radius:6px;width: 86%; ' --> 
 			<!--##########################################-->
 			<center>
 		  	<% if @app.time == nil or @app.time == "" %>
-					<a href='javascript:callNoTeeTimeSelected()'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%; ' class='book_button'>Book Tee Time</a>
+					<a href='javascript:callNoTeeTimeSelected()'  class='book_button'>Book Tee Time</a>
 		  	<% else%>
 		    	<% if @app.user == nil or !@app.user %>
-	`				<a href='<%= @app.get_url('login',{}) %>'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;;' class='book_button'>Book Tee Time</a>
+	`				<a href='<%= @app.get_url('login',{}) %>'  class='book_button'>Book Tee Time</a>
 		    	<% else %>
-					<a href='javascript:confirmTime()'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;' class='book_button'>Book Tee Time</a>
+					<a href='javascript:confirmTime()'   class='book_button'>Book Tee Time</a>
 				<% end %>
 		  	<% end %>
 			</center>
