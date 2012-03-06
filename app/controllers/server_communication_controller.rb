@@ -132,7 +132,7 @@ class ServerCommunicationController < ApplicationController
   
 
   
-  def self.perform_phone
+  def perform_phone
     dump = Dump.find(params[:key].to_i)
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
     @call = @client.account.calls.create(
@@ -145,7 +145,7 @@ class ServerCommunicationController < ApplicationController
   
 
   
-  def self.perform_text
+  def perform_text
     dump = Dump.find(params[:key].to_i)
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
     @client.account.sms.messages.create(
