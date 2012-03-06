@@ -66,6 +66,9 @@ class Reservation < ActiveRecord::Base
   def self.mail_sub(data,template)
     body = template
     data.each_pair do |k,v|
+      if v.nil?
+        v = ""
+      end
       body = body.gsub("<#{k}>",v)
     end
     return body
