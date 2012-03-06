@@ -38,7 +38,7 @@ class MobileApp
       @reservation = Reservation.find(params[:view].to_i)
     end
     
-    @user ||= session[:current_user_id] && User.find_by_id(session[:current_user_id])
+    @user ||= session[:current_user_id] && Customer.find_by_id(session[:current_user_id])
     
     if !@user.nil?
       @reservations = Reservation.find_all_by_user_id_and_course_id_and_status_code(

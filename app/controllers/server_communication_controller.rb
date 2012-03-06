@@ -119,7 +119,7 @@ class ServerCommunicationController < ApplicationController
     eta_time = time
     dump = Dump.create({:data => data.to_json})
     
-    query = "#{ADD_TASK_URI}perform_#{customer.contact_via}?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+    query = "#{ADD_TASK_URI}perform_#{user.contact_via}?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
     
     url = URI.parse(ADD_TASK_HOST)
     http = Net::HTTP.new(url.host, url.port)
