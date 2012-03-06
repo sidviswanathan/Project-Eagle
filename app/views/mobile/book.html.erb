@@ -6,11 +6,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"> 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
-
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-
-	
-	
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 	
 	
@@ -212,11 +208,9 @@
 		}
 	}
     </script>
-	<script type='text/javascript'>
 
-	</script>
 	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
-	<%= stylesheet_link_tag "iphone" %>
+
 	<style type='text/css'>
 	    .ui-page {
 	        -webkit-backface-visibility: hidden;
@@ -225,8 +219,7 @@
 		text-shadow:0px 0px 0px !important;
 	}
 	.ui-page { outline: none; }
-	</style>
-	<style type='text/css'>
+
 
 	div.box{
 		background-color:#fff;
@@ -257,6 +250,7 @@
 	}
 	div.content{
 			text-shadow:0px 0px 0px !important;
+			width:100%;
 	}
 	div.title{
 		margin-left:100px;
@@ -264,7 +258,7 @@
 	}
 	div#gbox{
 		height:120px;
-		background-image:url('/imgages/holes/hole1.png') no-repeat center center fixed; 
+		background-image:url('/images/holes/hole1.png') no-repeat center center fixed; 
 		        -webkit-background-size: cover;
 		        -moz-background-size: cover;
 		        -o-background-size: cover;
@@ -296,6 +290,73 @@
 
 
 	}
+	
+
+	
+	
+	.book_button {
+		background-color: #7FBF4D;
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7FBF4D), color-stop(100%, #63A62F));
+		background-image: -webkit-linear-gradient(top, #7FBF4D, #63A62F);
+		background-image: -moz-linear-gradient(top, #7FBF4D, #63A62F);
+		background-image: -ms-linear-gradient(top, #7FBF4D, #63A62F);
+		background-image: -o-linear-gradient(top, #7FBF4D, #63A62F);
+		background-image: linear-gradient(top, #7FBF4D, #63A62F);
+		border: 1px solid #63A62F;
+		border-bottom: 1px solid #5B992B;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		-ms-border-radius: 6px;
+		-o-border-radius: 6px;
+		border-radius: 6px;
+		-webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
+		-moz-box-shadow: inset 0 1px 0 0 #96ca6d;
+		box-shadow: inset 0 1px 0 0 #96ca6d;
+		color: white !important;
+		font-size:  28px ;
+		
+		
+		line-height: 1.5;
+		padding: 12px;
+		padding-bottom:13px;
+		text-align: center;
+		text-shadow: 0 -1px 0 #4C9021;
+
+		display:inline-block;
+		margin:0px;
+
+		border-radius:6px;
+	
+	}
+	
+	.book_button:hover {
+	    background-color: #76b347;
+	    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #76b347), color-stop(100%, #5e9e2e));
+	    background-image: -webkit-linear-gradient(top, #76b347, #5e9e2e);
+	    background-image: -moz-linear-gradient(top, #76b347, #5e9e2e);
+	    background-image: -ms-linear-gradient(top, #76b347, #5e9e2e);
+	    background-image: -o-linear-gradient(top, #76b347, #5e9e2e);
+	    background-image: linear-gradient(top, #76b347, #5e9e2e);
+	    -webkit-box-shadow: inset 0 1px 0 0 #8dbf67;
+	    -moz-box-shadow: inset 0 1px 0 0 #8dbf67;
+	    box-shadow: inset 0 1px 0 0 #8dbf67;
+	    cursor: pointer; }
+	 .book_button:active {
+	    border: 1px solid #5b992b;
+	    border-bottom: 1px solid #538c27;
+	    -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+	    -moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+	    box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; }
+	
+	div.button_container{
+
+		padding:12px;
+	}
+	
+	ul.book li{
+		position:absolute;
+	}
+	
 	</style>
 
 </head> 
@@ -305,15 +366,15 @@
 
 	<%= render :partial => "header", :locals => { :app => @app } %>
 	  <div class="content">
+		
 
 
-		<ul>
+		<ul class='book'>
 
-			<!--##########################################-->
-			<!--Number of Golfers-->
-			<!--##########################################-->
 
-			<li>				
+			<li>
+				<a href="<%= @app.get_url('num',{}) %>" ><%= @app.golfers %> Golfers</a>
+				
 		  		<a href="<%= @app.get_url('num',{}) %>" ><%= image_tag "iphone/icons/Icon_3.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @app.golfers %> Golfers</span><span class="disclosure_indicator"/></a>
 		  	</li>
 
@@ -344,35 +405,27 @@
 
 			<% if @app.time == nil or @app.time == ""  %>
 		    	<li>
-		    		<a href="<%= @app.get_url('time',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title">Tee Time</span><span class="disclosure_indicator"/></a>
+		    		<a href="<%= @app.get_url('time',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title">Tee Time</span><span class="disclosure_indicator" /></a>
 		    	</li>
 		  	<% else %>
 		    	<li>
-					<a href="<%= @app.get_url('time',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @app.time12 %> <%= @app.ampm %></span><span class="disclosure_indicator"/></a>
+					<a href="<%= @app.get_url('time',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @app.time12 %> <%= @app.ampm %></span><span class="disclosure_indicator" /></a>
 		    	</li>
 		  	<%end%>
 
-			<!--##########################################-->
-			<!--Reserve Button-->
-			<!--##########################################-->
-
-		  	<% if @app.time == nil or @app.time == "" %>
-		    	<center>
-					<a href='javascript:callNoTeeTimeSelected()'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%; ' class='book_button'>Book Tee Time</a>
-		    	</center>
-		  	<% else%>
-		    	<% if @app.user == nil or !@app.user %>
-		      		<center>
-						<a href='<%= @app.get_url('login',{}) %>'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;;' class='book_button'>Book Tee Time</a>
-		      		</center>
-		    	<% else %>
-		      		<center>
-					<a href='javascript:confirmTime()'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;' class='book_button'>Book Tee Time</a>
-
-		    		</center>
-					<% end %>
-		  	<% end %>
 		</ul>
+
+		<div class='button_container'>
+			  	<% if @app.time == nil or @app.time == "" %>
+						<a href='javascript:callNoTeeTimeSelected()'  class='book_button'>Book Tee Time</a>
+			  	<% else%>
+			    	<% if @app.user == nil or !@app.user %>
+		`				<a href='<%= @app.get_url('login',{}) %>'  class='book_button'>Book Tee Time</a>
+			    	<% else %>
+						<a href='javascript:confirmTime()'   class='book_button'>Book Tee Time</a>
+					<% end %>
+			  	<% end %>
+		</div>
 
 	  </div>			
 

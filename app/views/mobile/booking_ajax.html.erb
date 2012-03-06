@@ -49,21 +49,19 @@
 		    	</li>
 		  	<%end%>
 
-			<!--##########################################-->
-			<!--style='margin:8px;margin-top:12px;border-radius:6px;width: 86%; ' --> 
-			<!--##########################################-->
-			<center>
-		  	<% if @app.time == nil or @app.time == "" %>
-					<a href='javascript:callNoTeeTimeSelected()'  class='book_button'>Book Tee Time</a>
-		  	<% else%>
-		    	<% if @app.user == nil or !@app.user %>
-	`				<a href='<%= @app.get_url('login',{}) %>'  class='book_button'>Book Tee Time</a>
-		    	<% else %>
-					<a href='javascript:confirmTime()'   class='book_button'>Book Tee Time</a>
-				<% end %>
-		  	<% end %>
-			</center>
 		</ul>
+		<div style='clear:both'></div>
+		<div class='button_container'>
+			  	<% if @app.time == nil or @app.time == "" %>
+						<a href='javascript:callNoTeeTimeSelected()'  class='book_button'>Book Tee Time</a>
+			  	<% else%>
+			    	<% if @app.user == nil or !@app.user %>
+		`				<a href='<%= @app.get_url('login',{}) %>'  class='book_button'>Book Tee Time</a>
+			    	<% else %>
+						<a href='javascript:confirmTime()'   class='book_button'>Book Tee Time</a>
+					<% end %>
+			  	<% end %>
+		</div>
 
 	  </div>			
 
