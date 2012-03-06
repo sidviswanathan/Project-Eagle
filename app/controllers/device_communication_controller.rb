@@ -88,14 +88,15 @@ class DeviceCommunicationController < ApplicationController
   end  
   
   def customer_login
-    email        = params[:email]
-    phone        = params[:phone]
-    if email.nil?
-      email = ""
+    
+    contact_via = params[:contact_via]
+    if contact_via == 'text' or contact_via == 'phone'
+      phone = params[:contact]
+    else
+      email = params[:contact]
     end
-    if phone.nil?
-      phone = ""
-    end
+    
+    
     
     
     contact_via  = params[:contact_via]
@@ -110,11 +111,12 @@ class DeviceCommunicationController < ApplicationController
     
     response_object = intitiate_response_object
     
+    
     if phone == '' and email == ''
       response_object[:message] = "The server failed to make the User.login() request"
       render :json => response_object.to_json
     else
-      customer = Customer.login(f_name, l_name, contact_via, email, phone, password, device_name, os_version, app_version, send_deals)
+      customer = Customer.login(f_name, l_name, contact_via, contact, password, device_name, os_version, app_version, send_deals)
 
       if customer
         session[:current_user_id] = customer.id

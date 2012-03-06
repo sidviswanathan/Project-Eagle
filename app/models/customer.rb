@@ -10,16 +10,14 @@ class Customer < ActiveRecord::Base
   #validates_format_of :phone, :with => /^[\(\)0-9\- \+\.]{10,20}$/ , :message => "Invalid phone format"
   
 
-  def self.login(f_name, l_name, contact_via, email,phone,password, device_name, os_version, app_version, send_deals)  
+  def self.login(f_name, l_name, contact_via, contact,password, device_name, os_version, app_version, send_deals)  
          
-    login_info = {
-        :email               => email, 
+    login_info = { 
         :f_name              => f_name, 
         :l_name              => l_name, 
         :name                => f_name+" "+l_name,
         :password            => password,
         :contact_via         => contact_via,
-        :phone               => phone,
         :data                => {
             :device_name=>device_name,
             :os_version=>os_version,
@@ -29,17 +27,15 @@ class Customer < ActiveRecord::Base
           :send_deals=>send_deals
         }.to_json
     }
-    conditions = []
-    if !phone.nil? and phone != ""
-      conditions.push("phone = '#{phone}'")
+    if contact_via == 'email'
+      login_info[:email] = contact
+      conditions = "email = '#{contact}'"
+    else
+      login_info[:phone] = contact
+      conditions = "phone = '#{contact}'"
     end
-    if !email.nil? and email != ""
-      conditions.push("email = '#{email}'")
-    end
-    puts conditions
-    puts email
-    puts phone
-    c = Customer.find(:all, :conditions => conditions.join(" or "))
+
+    c = Customer.find(:all, :conditions => conditions)
     if c.length == 0
       c = Customer.create(login_info)
     else
