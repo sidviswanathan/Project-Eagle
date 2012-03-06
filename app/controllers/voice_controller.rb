@@ -29,7 +29,7 @@ class VoiceController < ApplicationController
   
   def reminder
     response = Twilio::TwiML::Response.new do |r|
-      r.Say params[reminder]
+      r.Say "Hello this is Deep Cliff Golf Course calling to remind you about your teetime reservation.  Press 7 to cancel or 0 to talk to a Deep Cliff Staff Member"
     end
     render :text => response.text
   end

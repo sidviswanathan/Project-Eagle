@@ -127,8 +127,6 @@ class ServerCommunicationController < ApplicationController
     headers = {}
 
     response = http.get(query, headers)
-    
-    
 
   end
   
@@ -136,6 +134,7 @@ class ServerCommunicationController < ApplicationController
   
   def self.perform_phone
     dump = Dump.find(params[:key].to_i)
+    @client = Twilio::REST::Client.new T_SID, T_TOKEN
     @call = @client.account.calls.create(
       :from => '+14087035664',
       :to => dump["phone"],
