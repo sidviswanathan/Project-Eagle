@@ -134,10 +134,11 @@ class ServerCommunicationController < ApplicationController
   
   def perform_phone
     dump = Dump.find(params[:key].to_i)
+    data = JSON.parse(dump.data)
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
     @call = @client.account.calls.create(
       :from => '+14087035664',
-      :to => dump["phone"],
+      :to => data["phone"],
       :url => "http://www.presstee.com/voice/reminder?d=#{dump.id.to_s}"
     )
   end
@@ -147,10 +148,11 @@ class ServerCommunicationController < ApplicationController
   
   def perform_text
     dump = Dump.find(params[:key].to_i)
+    data = JSON.parse(dump.data)
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
     @client.account.sms.messages.create(
       :from => '+14087035664',
-      :to => "#{dump['phone']}",
+      :to => "#{data['phone']}",
       :body => dump["sms"]
     )
   end
