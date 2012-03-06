@@ -92,9 +92,12 @@ class DeviceCommunicationController < ApplicationController
     phone        = params[:phone]
     if email.nil?
       email = ""
-    elsif phone.nil?
+    end
+    if phone.nil?
       phone = ""
     end
+    
+    
     contact_via  = params[:contact_via]
     f_name       = params[:f_name]
     l_name       = params[:l_name]
@@ -107,24 +110,31 @@ class DeviceCommunicationController < ApplicationController
     
     response_object = intitiate_response_object
     
-    customer = Customer.login(f_name, l_name, contact_via, email, phone, password, device_name, os_version, app_version, send_deals)
-    
-    if customer
-      session[:current_user_id] = customer.id
-      response_object[:status]     = "success"
-      response_object[:statusCode] = 200
-      response_object[:message]    = "The server successfully created a Customer record"
-      if !redirect.nil?
-        puts customer.id
-        render :nothing => true
-      else
-        render :json => response_object.to_json
-      end
-      
-    else
+    if phone == '' and email == ''
       response_object[:message] = "The server failed to make the User.login() request"
-      render :json => response_object.to_json               
+      render :json => response_object.to_json
+    else
+      customer = Customer.login(f_name, l_name, contact_via, email, phone, password, device_name, os_version, app_version, send_deals)
+
+      if customer
+        session[:current_user_id] = customer.id
+        response_object[:status]     = "success"
+        response_object[:statusCode] = 200
+        response_object[:message]    = "The server successfully created a Customer record"
+        if !redirect.nil?
+          puts customer.id
+          render :nothing => true
+        else
+          render :json => response_object.to_json
+        end
+
+      else
+        response_object[:message] = "The server failed to make the User.login() request"
+        render :json => response_object.to_json               
+      end
     end
+    
+    
   end
   
   # ===================================================================
