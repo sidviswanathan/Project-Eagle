@@ -153,15 +153,12 @@
 	    var first_name = $('#first_name').val();
 		var last_name  = $('#last_name').val();
 		var contact = $('#contact_value').val();
-		app.first_name=$('#first_name').val();
-		app.last_name=$('#last_name').val();
-		app.email = $('#contact_value').val();
-		app.contact_method = $('#contact_method').val();
+		
 		$.post("/device_communication/customer_login",{
-			"f_name":first_name,
-			"l_name":last_name,
+			"f_name":app.first_name,
+			"l_name":app.last_name,
 			"contact_via":app.contact_method,
-			"contact":contact,
+			"contact":app.contact,
 			"device_name":"mobile_web/"+user_agent,
 			"redirect":"true",
 			"os_version":"NA",
@@ -193,7 +190,8 @@
 		$.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
 			"golfers":app.golfers,
-			"contact":app.email,
+			"contact_via":app.contact_via,
+			"contact":app.contact,
 			"date":app.date,
 			"time":app.timer,
 			"total":app.total},function(data){

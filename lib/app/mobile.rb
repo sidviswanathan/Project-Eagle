@@ -93,6 +93,26 @@ class MobileApp
     end
   end
   
+  def get_user_contact
+    if !@user.nil?
+      if @user.contact_via == 'email'
+        return @user.email
+      else
+        return @user.phone
+      end
+    else
+      return ""
+    end
+  end
+  
+  def get_user_contact_via
+    if !@user.nil?
+      return @user.contact_via
+    else
+      return ""
+    end
+  end
+  
   def get_user_fname
     if !@user.nil? 
       return @user.f_name
