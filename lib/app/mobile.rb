@@ -42,7 +42,7 @@ class MobileApp
     
     if !@user.nil?
       @reservations = Reservation.find_all_by_user_id_and_course_id_and_status_code(
-        @user.id.to_s,
+        @user.id,
         @course.id,
         Reservation::BOOKING_SUCCESS_STATUS_CODE,
         :order=>"date DESC,time DESC"
