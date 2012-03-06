@@ -44,7 +44,7 @@ class Customer < ActiveRecord::Base
       c = c[0]
     end
       
-    
+    c.save
     return c
   end
   
