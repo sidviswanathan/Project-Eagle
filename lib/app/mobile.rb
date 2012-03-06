@@ -41,7 +41,7 @@ class MobileApp
     @user ||= session[:current_user_id] && Customer.find_by_id(session[:current_user_id])
     
     if !@user.nil?
-      @reservations = Reservation.find_all_by_user_id_and_course_id_and_status_code(
+      @reservations = Reservation.find_all_by_customer_id_and_course_id_and_status_code(
         @user.id,
         @course.id,
         Reservation::BOOKING_SUCCESS_STATUS_CODE,
