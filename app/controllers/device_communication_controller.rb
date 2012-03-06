@@ -209,9 +209,8 @@ class DeviceCommunicationController < ApplicationController
   # OUTPUT: {"status":"success","message":"The server successfully made the Reservation.book_tee_time() request","response":"","statusCode":200}
   
   def book_reservation
-    
-    email       = params[:email]
-    phone       = params[:phone]
+    contact_via = params[:contact_via]
+    contact     = params[:contact]
     course_id   = params[:course_id]
     golfers     = params[:golfers]
     time        = params[:time]    
@@ -230,21 +229,20 @@ class DeviceCommunicationController < ApplicationController
       date_date = Date.parse(date)
     end
     
-    conditions = []
-    if !phone.nil? or phone != ""
-      conditions.push("phone = '#{phone}'")
-    end
-    if !email.nil? or email != ""
-      conditions.push("email = '#{email}'")
+    if contact_via == 'email'
+      conditions = "email = '#{contact}'"
+    else
+      conditions = "phone = '#{contact}'"
     end
     
     
-    customer = Customer.find(:all, :conditions => conditions.join(" or "))[0]
+    
+    customer = Customer.find(:all, :conditions => conditions)[0]
 
     
     if !customer.nil?
       if date_date > (Date.today+7)
-        reservation = ServerCommunicationController.schedule_booking(email, course_id, golfers, time, date, total)
+        reservation = ServerCommunicationController.schedule_booking(customer, course_id, golfers, time, date, total)
         response_object[:status]     = "success"
         response_object[:statusCode] = 200
         response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
