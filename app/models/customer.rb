@@ -30,10 +30,10 @@ class Customer < ActiveRecord::Base
         }.to_json
     }
     conditions = []
-    if !phone.nil? or phone != ""
+    if !phone.nil? and phone != ""
       conditions.push("phone = '#{phone}'")
     end
-    if !email.nil? or email != ""
+    if !email.nil? and email != ""
       conditions.push("email = '#{email}'")
     end
     
@@ -44,7 +44,6 @@ class Customer < ActiveRecord::Base
       c = c[0]
     end
       
-    c.save
     return c
   end
   
