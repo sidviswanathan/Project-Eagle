@@ -150,14 +150,20 @@
 	}
 	
 	function submitform(){
-	    var first_name = $('#first_name').val();
-		var last_name  = $('#last_name').val();
-		var contact = $('#contact_value').val();
+	    
+		
+		if(!app.first_name && $('#first_name').val()){
+			app.first_name = $('#first_name').val();
+			app.last_name  = $('#last_name').val();
+			app.contact = $('#contact_value').val();
+			app.contact_via = $('#contact_method').val();
+			app.send_deals = $('#send_deals').val();
+		}
 		
 		$.post("/device_communication/customer_login",{
 			"f_name":app.first_name,
 			"l_name":app.last_name,
-			"contact_via":app.contact_method,
+			"contact_via":app.contact_via,
 			"contact":app.contact,
 			"device_name":"mobile_web/"+user_agent,
 			"redirect":"true",
