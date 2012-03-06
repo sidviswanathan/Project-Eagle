@@ -116,7 +116,7 @@ class DeviceCommunicationController < ApplicationController
       response_object[:message] = "The server failed to make the User.login() request"
       render :json => response_object.to_json
     else
-      customer = Customer.login(f_name, l_name, contact_via, contact, password, device_name, os_version, app_version, send_deals)
+      customer = Customer.login(f_name, l_name, contact_via, params[:contact], password, device_name, os_version, app_version, send_deals)
 
       if customer
         session[:current_user_id] = customer.id
