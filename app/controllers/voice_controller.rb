@@ -27,6 +27,14 @@ class VoiceController < ApplicationController
     render :text => response.text
   end
   
+  def reminder
+    response = Twilio::TwiML::Response.new do |r|
+      r.Say params[reminder]
+    end
+    render :text => response.text
+  end
+  
+  
   def options
     response = Twilio::TwiML::Response.new do |r|
       prepend = ""

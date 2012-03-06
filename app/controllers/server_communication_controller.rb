@@ -6,6 +6,9 @@ require 'date'
 require 'lib/api/fore.rb'
 require "net/http"
 require "net/https"
+require 'chronic'
+require 'twiliolib'
+require 'twilio-ruby'
 
 
 
@@ -14,6 +17,12 @@ class ServerCommunicationController < ApplicationController
 
   ADD_TASK_HOST                         = 'http://project-eagle.appspot.com'
   ADD_TASK_URI                          = '/schedule/'
+  
+  T_SID = 'ACc6377a248c5300434e40041d2bd1b9c3'
+  T_TOKEN = '8fcabbf06e89b828c7d5b59fb583e38a'
+
+  # set up a client to talk to the Twilio REST API
+  
   
   def intitiate_response_object    
     response_object              = Hash.new
@@ -104,14 +113,13 @@ class ServerCommunicationController < ApplicationController
     Reservation.cancel(data["confirmation_code"],data["course_id"])
   end
   
-  
-  def self.schedule_mailing(user,subject,body,date,time)
-    data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email,"subject"=>subject,"body"=>body}
+  def self.schedule_contact(user,subject,body,date,time,sms,voice)
+    data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email,"subject"=>subject,"body"=>body,"sms"=>sms,"voice"=>voice,"phone"=>user.phone}
     eta_day = date
     eta_time = time
     dump = Dump.create({:data => data.to_json})
-
-    query = "#{ADD_TASK_URI}perform_reminder?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+    
+    query = "#{ADD_TASK_URI}perform_#{customer.contact_via}?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
     
     url = URI.parse(ADD_TASK_HOST)
     http = Net::HTTP.new(url.host, url.port)
@@ -119,9 +127,38 @@ class ServerCommunicationController < ApplicationController
     headers = {}
 
     response = http.get(query, headers)
+    
+    
+
   end
   
-  def perform_reminder
+
+  
+  def self.perform_phone
+    dump = Dump.find(params[:key].to_i)
+    @call = @client.account.calls.create(
+      :from => '+14087035664',
+      :to => dump["phone"],
+      :url => 'http://www.presstee.com/voice/'
+    )
+  end
+  
+  
+
+  
+  def self.perform_text
+    dump = Dump.find(params[:key].to_i)
+    @client = Twilio::REST::Client.new T_SID, T_TOKEN
+    @client.account.sms.messages.create(
+      :from => '+14087035664',
+      :to => "#{dump['phone']}",
+      :body => dump["sms"]
+    )
+  end
+  
+
+  
+  def perform_email
     dump = Dump.find(params[:key].to_i)
     Mailer.deliver_reminder(JSON.parse(dump.data))
     render :nothing => true

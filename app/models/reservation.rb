@@ -30,6 +30,10 @@ class Reservation < ActiveRecord::Base
       
     eos
     
+  
+  CONFIRMATION_SMS = "Deep Cliff Booking (<confirm>) <golfers> golfers on <teetime>.  Reply with '1' to cancel. "
+  CONFIRMATION_VOICE = "This is Deep Cliff Golf Course calling about your Tee Time Reservation for <golfers> Golfers on <teetime>.  Your confirmation code is <confirm>.  I repeat, <confirm>.  If you would like to cancel this reservation, please press 9 now.  If you would like to talk with a course staff member, please press 0 now.  Thanks again for your business and have a wonderful day!"
+    
   REMINDER_SUBJECT = "Tee Time Reminder"
   REMINDER_BODY = <<-eos
       This is a reminder that you have a tee time reservation for tomorrow.  For your convenience 
@@ -42,6 +46,11 @@ class Reservation < ActiveRecord::Base
       
       Thanks again for your business.  
     eos
+    
+  
+  REMINDER_SMS = "Tee Time Reminder: For <golfers> Golfers on <teetime>.  Reply with '1' to cancel ."
+  REMINDER_VOICE = "This is Deep Cliff Golf Course reminding you about your Tee Time Reservation for <golfers> Golfers on <teetime>.  Your confirmation code is <confirm>.  I repeat, <confirm>.  If you would like to cancel this reservation, please press 9 now.  If you would like to talk with a course staff member, please press 0 now.  Thanks again for your business and have a wonderful day!"
+  
   
   def self.cancel(confirmation_code,course_id)
     reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
@@ -78,7 +87,7 @@ class Reservation < ActiveRecord::Base
         user_data = JSON.parse(user.data)
         r.booking_type = user_data[:device_name]
         r.confirmation_code = confirmation_code
-        r.user = user
+        r.customer = user
         r.save
         puts "date ----------------------"
         puts date
@@ -107,9 +116,10 @@ class Reservation < ActiveRecord::Base
         }
         
         # Schedule Tee Time Reminder
-        ServerCommunicationController.schedule_mailing(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now)
+
+        ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,CONFIRMATION_SMS,CONFIRMATION_VOICE)
         if day_before_tt > Date.today
-          ServerCommunicationController.schedule_mailing(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time)
+          ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,REMINDER_SMS,REMINDER_VOICE)
         end
       else 
         logger.info "Did not find a user record with the email #{email}"
