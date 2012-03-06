@@ -56,6 +56,8 @@ class MobileController < ApplicationController
       redirect_to @app.get_url("index_exp",{:xui=>"true",:exp=>"true"})
     elsif params[:xui] == "true" or android? or blackberry?
       redirect_to @app.get_url("index_xui",{:xui=>"true"})
+    elsif params[:ajax] == "true"
+      render :template => "mobile/booking_ajax"
     end
   end
   
