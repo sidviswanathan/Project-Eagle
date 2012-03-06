@@ -36,7 +36,9 @@ class Customer < ActiveRecord::Base
     if !email.nil? and email != ""
       conditions.push("email = '#{email}'")
     end
-    
+    puts conditions
+    puts email
+    puts phone
     c = Customer.find(:all, :conditions => conditions.join(" or "))
     if c.length == 0
       c = Customer.create(login_info)
