@@ -138,7 +138,7 @@ class ServerCommunicationController < ApplicationController
     @call = @client.account.calls.create(
       :from => '+14087035664',
       :to => dump["phone"],
-      :url => 'http://www.presstee.com/voice/'
+      :url => "http://www.presstee.com/voice/reminder?d=#{dump.id.to_s}"
     )
   end
   

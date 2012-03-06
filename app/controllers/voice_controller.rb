@@ -28,8 +28,13 @@ class VoiceController < ApplicationController
   end
   
   def reminder
+    d = Dump.find(params[:d])
+    data = JSON.parse(d.data)
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "Hello this is Deep Cliff Golf Course calling to remind you about your teetime reservation.  Press 7 to cancel or 0 to talk to a Deep Cliff Staff Member"
+      r.Say data["voice"]
+      r.Gather :action => "/voice/options" do |d|
+        d.Say greeting, :voice => 'man'
+      end
     end
     render :text => response.text
   end
@@ -49,6 +54,8 @@ class VoiceController < ApplicationController
         r.Gather :action => "/voice/deal_signup", :numDigits => 1 do |d|
           d.Say "If you would like to be notified by text message, Press 1 .. by Phone Press 2"
         end
+      elsif params[:Digits] == '9'
+        r.Say "Your Reservation has been cancelled.  Thanks again for your business and hope to see you soon at Deep Cliff!"
       else
         r.Say "Connecting to Deep Cliff Golf Course ", :voice => 'man'
         r.Dial "4082535357"
