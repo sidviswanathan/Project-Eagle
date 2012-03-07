@@ -9,7 +9,7 @@
 			<%= render :partial => "login", :locals => { :app => @app } %>
 		</div>
 	</div>
-	<div data-role="collapsible" data-theme="c">
+	<div data-role="collapsible" id='tee_time_reservations' data-theme="c">
 	   <h3>Tee Time Bookings</h3>
 	   <% if !@app.reservations.nil? %>
 
