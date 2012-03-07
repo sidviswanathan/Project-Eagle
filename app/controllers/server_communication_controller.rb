@@ -113,13 +113,19 @@ class ServerCommunicationController < ApplicationController
     Reservation.cancel(data["confirmation_code"],data["course_id"])
   end
   
-  def self.schedule_contact(user,subject,body,date,time,sms,voice)
+  def self.schedule_contact(user,subject,body,date,time,sms,voice,is_now)
     data = {"f_name"=>user.f_name,"l_name"=>user.l_name,"email"=>user.email,"subject"=>subject,"body"=>body,"sms"=>sms,"voice"=>voice,"phone"=>user.phone}
     eta_day = date
     eta_time = time
     dump = Dump.create({:data => data.to_json})
     
-    query = "#{ADD_TASK_URI}perform_#{user.contact_via}?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+    if is_now and user.contact_via == 'phone'
+      perform = 'text'
+    else
+      perform = user.contact_via
+    end
+    
+    query = "#{ADD_TASK_URI}perform_#{perform}?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
     
     url = URI.parse(ADD_TASK_HOST)
     http = Net::HTTP.new(url.host, url.port)

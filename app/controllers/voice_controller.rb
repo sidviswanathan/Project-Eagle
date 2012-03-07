@@ -30,6 +30,7 @@ class VoiceController < ApplicationController
   def reminder
     d = Dump.find(params[:d])
     data = JSON.parse(d.data)
+    greeting = "Thanks for signing up for exclusive deals from Deep Cliff. In addition, you are now entered in Deep Cliff's weekly Free Tee Time lottery.  Please tell your friends!"
     response = Twilio::TwiML::Response.new do |r|
       r.Say data["voice"]
       r.Gather :action => "/voice/options" do |d|
