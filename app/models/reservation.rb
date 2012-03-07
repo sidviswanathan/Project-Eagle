@@ -1,6 +1,8 @@
 require "net/http"
 require "net/https"
 require "date"
+require 'chronic'
+require 'time'
 
 class Reservation < ActiveRecord::Base
   
@@ -73,28 +75,58 @@ class Reservation < ActiveRecord::Base
     return body
   end
   
+  def send_confirmations(user,reservation)
+    if date.class() == Date
+      day_before_tt = date - 1
+      date_date = date
+    else
+      date_date = Date.parse(date)
+      day_before_tt = date_date - 1
+
+    end
+
+    today = Date.today.strftime("%F")
+    now = Time.now.strftime("%R")
+
+    subs = {
+      "first"      => user.f_name.capitalize,
+      "last"       => user.l_name.capitalize,
+      "email"      => user.email,
+      "confirm"    => confirmation_code,
+      "teetime"    => date_date.strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
+      "golfers"    => golfers,
+      "coursename" => course.name,
+      "course_id"  => course.id.to_s
+    }
+
+    # Schedule Tee Time Reminder
+
+    ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
+    if day_before_tt > Date.today
+      ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
+    end
+  end
+  
 
   
   def self.book_tee_time(user, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
     
-    
+
     course = Course.find(course_id.to_i)
+    if user
+      r = Reservation.new(reservation_info)
+      user_data = JSON.parse(user.data)
+      r.booking_type = user_data[:device_name]
+      r.customer = user
 
-    confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)
-
-    if !confirmation_code.nil?
-      if user 
-        r = Reservation.create(reservation_info)
-        if r.valid?
-          user_data = JSON.parse(user.data)
-          r.booking_type = user_data[:device_name]
+      if r.valid?
+        confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)
+        if !confirmation_code.nil?
           r.confirmation_code = confirmation_code
-          r.customer = user
           r.save
-          puts "date ----------------------"
-          puts date
-
+          
+          
           if date.class() == Date
             day_before_tt = date - 1
             date_date = date
@@ -124,21 +156,27 @@ class Reservation < ActiveRecord::Base
           if day_before_tt > Date.today
             ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
           end
+          return r,true,"Congrats, you succesfully booked a tee time at Deep Cliff!"
+          
+          
         else
-          logger.info "Did not find a user record with the email #{email}"
-          return nil
+          logger.info "Sorry, request to Tee Sheet Server Failed.  Please call the course to schedule a time.."
+          return nil,false,"Sorry, request to Tee Sheet Server Failed.  Please call the course to schedule a time.."
         end
         
-      else 
-        logger.info "Did not find a user record with the email #{email}"
-        return nil 
+        
+      else
+        logger.info "Only one reservation per date per user is allowed.  Please select a different date and try again!"
+        return nil,false,"Only one reservation per date per user is allowed.  Please select a different date and try again!"
       end
-    
-      if r.save; return r else return nil end
+      
     else
-      logger.info "Did not successfully book reservation via API"
-      return nil
-    end  
+      logger.info "Did not find a user record with the email #{email}"
+      return nil,false,"Did not find a user record with the email #{email}"
+    end
+    
+    
+     
   end 
   
   

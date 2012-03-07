@@ -162,6 +162,7 @@
 			app.contact_via = $('#contact_method').val();
 			app.send_deals = $('#send_deals').val();
 		}
+
 		
 		$.post("/device_communication/customer_login",{
 			"f_name":app.first_name,
@@ -226,8 +227,8 @@
 	
 	function confirmTime(){
 		if(app.golfers && app.contact && app.date && app.timer){
-			var confirm_time = confirm(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
-			if(confirm_time==true){
+			var cxtime = confirm(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
+			if(cxtime==true){
 				reserveTime()
 			}else{
 
@@ -260,8 +261,12 @@
 			"time":app.timer,
 			"total":app.total
 			},function(data){
+				if(data.status == 'success'){
+					$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
+				}else{
+					alert(data.message);
+				}
 				
-				$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
 			
 			}
 		).error(function() { alert("Sorry we were unable to book this tee time.  Please try again later, or with a different time, date or # golfers."); });

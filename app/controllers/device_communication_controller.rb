@@ -252,14 +252,14 @@ class DeviceCommunicationController < ApplicationController
         response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
         response_object[:confirmation_code] = "none"
       else
-        reservation = Reservation.book_tee_time(customer, course_id, golfers, time, date, total)
-        if !reservation.nil?
+        reservation,res,message = Reservation.book_tee_time(customer, course_id, golfers, time, date, total)
+        if res
           response_object[:status]     = "success"
           response_object[:statusCode] = 200
           response_object[:message]    = "The server successfully made the Reservation.book_tee_time() request"
           response_object[:confirmation_code] = reservation.confirmation_code      
         else
-          response_object[:message] = "The server failed to make the Reservation.book_tee_time() request"    
+          response_object[:message] = message
         end
       end
     
