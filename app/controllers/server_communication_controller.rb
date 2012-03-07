@@ -147,6 +147,7 @@ class ServerCommunicationController < ApplicationController
       :to => data["phone"],
       :url => "http://www.presstee.com/voice/reminder?d=#{dump.id.to_s}"
     )
+    render :nothing => true
   end
   
   
@@ -161,6 +162,7 @@ class ServerCommunicationController < ApplicationController
       :to => "#{data['phone']}",
       :body => data["sms"]
     )
+    render :nothing => true
   end
   
 
