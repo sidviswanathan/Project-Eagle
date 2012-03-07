@@ -118,21 +118,25 @@ class DeviceCommunicationController < ApplicationController
     else
       customer = Customer.login(f_name, l_name, contact_via, params[:contact], password, device_name, os_version, app_version, send_deals)
 
-      if customer
+      if !customer.nil?
         session[:current_user_id] = customer.id
         response_object[:status]     = "success"
         response_object[:statusCode] = 200
         response_object[:message]    = "The server successfully created a Customer record"
         if !redirect.nil?
           puts customer.id
-          render :nothing => true
+          render :text => customer.id.to_s
         else
           render :json => response_object.to_json
         end
 
       else
-        response_object[:message] = "The server failed to make the User.login() request"
-        render :json => response_object.to_json               
+        if !redirect.nil?
+          render :text => "fail"
+        else
+          response_object[:message] = "The server failed to make the User.login() request"
+          render :json => response_object.to_json
+        end            
       end
     end
     

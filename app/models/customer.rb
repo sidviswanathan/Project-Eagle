@@ -3,15 +3,15 @@ class Customer < ActiveRecord::Base
   has_many :reservations
   has_many :courses
   
-  #validates_presence_of :email
-  #validates_uniqueness_of :email  
-  #validates_uniqueness_of :phone  
-  #validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email format"
-  #validates_format_of :phone, :with => /^[\(\)0-9\- \+\.]{10,20}$/ , :message => "Invalid phone format"
+  validates_format_of :email,:allow_blank=>true,:allow_nil=>true, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "Invalid email format"
+  validates_format_of :phone,:allow_blank=>true,:allow_nil=>true, :with => /^[\(\)0-9\- \+\.]{10,20}$/ , :message => "Invalid phone format"
   
 
   def self.login(f_name, l_name, contact_via, contact,password, device_name, os_version, app_version, send_deals)  
-         
+
+    if password.nil?
+      password = "deepcliff_"+f_name[0,1].upcase+l_name[0,1].upcase+"_"+(Customer.last.id+1).to_s
+    end
     login_info = { 
         :f_name              => f_name, 
         :l_name              => l_name, 
@@ -24,7 +24,8 @@ class Customer < ActiveRecord::Base
             :app_version=>app_version
         }.to_json,
         :prefs               => {
-          :send_deals=>send_deals
+          :send_deals=>send_deals,
+          :is_password_temp=>true
         }.to_json
     }
     if contact_via == 'email'
@@ -34,12 +35,13 @@ class Customer < ActiveRecord::Base
       login_info[:phone] = contact
       conditions = "phone = '#{contact}'"
     end
-    if login_info[:password].nil?
-      login_info[:password] = login_info[:f_name]+login_info[:l_name]
-    end
+
     c = Customer.find(:all, :conditions => conditions)
     if c.length == 0
       c = Customer.create(login_info)
+      if !c.valid?
+        c = nil
+      end
     else
       c = c[0]
     end

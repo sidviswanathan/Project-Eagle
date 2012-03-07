@@ -20,18 +20,15 @@ class Reservation < ActiveRecord::Base
       Tee Time       : <teetime> for <golfers> golfers.
       Confirmation   : <confirm>
       
-      For your convenience and security, we do not require credit card information to book via our 
-      mobile app.  Therefore, if you do not plan on showing up to your teetime, please be sure to 
-      cancel via the link below so we can make your slots available to other customers.  
+      For your convenience and security, we do not require credit card information to book via our mobile app.  Therefore, if you do not plan on showing up to your teetime, please be sure to cancel via the link below so we can make your slots available to other customers.  
       
       Cancel         :  http://www.presstee.com/cancel?course_id=<course_id>&confirmation_code=<confirm>
       
       Thanks for your business, and hope to see you soon!
       
     eos
-    
   
-  CONFIRMATION_SMS = "Deep Cliff Booking (<confirm>) <golfers> golfers on <teetime>.  Reply with '1' to cancel. "
+  CONFIRMATION_SMS = "Deep Cliff Booking (<confirm>) <golfers> golfers on <teetime>.  Reply with '1' to cancel"
   CONFIRMATION_VOICE = "This is Deep Cliff Golf Course calling about your Tee Time Reservation for <golfers> Golfers on <teetime>.  Your confirmation code is <confirm>.  I repeat, <confirm>.  If you would like to cancel this reservation, please press 9 now.  If you would like to talk with a course staff member, please press 0 now.  Thanks again for your business and have a wonderful day!"
     
   REMINDER_SUBJECT = "Tee Time Reminder"
@@ -117,7 +114,7 @@ class Reservation < ActiveRecord::Base
           "coursename" => course.name,
           "course_id"  => course.id.to_s
         }
-        
+
         # Schedule Tee Time Reminder
 
         ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
