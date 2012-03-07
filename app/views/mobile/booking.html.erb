@@ -150,8 +150,9 @@
 			setTimeout("gflipIn()",2500);
 		});
 	}
-	
-	function submitform(){
+	var confirm_time = true;
+	function submitform(ctime){
+		confirm_time = ctime;
 	    
 		
 		if($('#first_name').val()){
@@ -194,7 +195,12 @@
 					
 					alert("Sorry please check if the highlighted fields are not blank and are properly formatted.");
 				}else{
-					confirmTime();
+					if(ctime){
+						confirmTime();
+					}else{
+						ctime = true;
+					}
+					
 				}
 				
 		})
