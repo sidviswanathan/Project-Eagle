@@ -3,16 +3,23 @@
   <%= render :partial => "header", :locals => { :app => @app } %>
 
   <div class="content">
-  	
-	<% if !@app.reservations.nil? %>
-	
+	<div data-role="collapsible" data-theme='c'>
+		<h3>Account Settings</h3>
+		<div id='account_settings'>
+			<%= render :partial => "login", :locals => { :app => @app } %>
+		</div>
+	</div>
+	<div data-role="collapsible" data-theme="c">
+	   <h3>Tee Time Bookings</h3>
+	   <% if !@app.reservations.nil? %>
 
-		
+
+
 		<div class= "postheader">
 			<h1><b>UPCOMING TEE TIMES</b></h1> 
 		</div>
 
-		
+
 		<ul>	
 			<% @app.reservations.reverse.each do |r| %>
 				<% if (r.date - Date.today) > 0%>
@@ -26,7 +33,7 @@
 							</div>
 							<div id="date"><%= r.date.strftime('%d') %></div>
 						</div>
-						
+
 						<div id ="wrapper4" style='margin-right:32px'><%=Time.parse(r.time).strftime('%I:%M') %>
 							<span class="title5"><%= r.golfers %> Golfers</span>
 						</div>
@@ -34,11 +41,11 @@
 				</li>
 				<% end %>
 			<% end %>
-			
+
 			<div class= "postheader">
 				<h1><b>PREVIOUS BOOKINGS</b></h1> 
 			</div>
-			
+
 			<% @app.reservations.reverse.each do |r| %>
 				<% if (r.date - Date.today) <= 0%>
 					<li>	
@@ -51,7 +58,7 @@
 								</div>
 								<div id="date"><%= r.date.strftime('%d') %></div>
 							</div>
-							
+
 							<div id ="wrapper4" style='margin-right:32px'><%=Time.parse(r.time).strftime('%I:%M') %>
 								<span class="title5"><%= r.golfers %> Golfers</span>
 							</div>
@@ -60,10 +67,13 @@
 				<%end%>
 			<% end %>
 		</ul>     
-		          
+
 	<%else%>
 		<a href="<% @app.get_url('',{}) %>"><img  style='width:100%;height:85%' src='/images/empty_data_set.png' /></a>
 	<%end%>
+	</div>
+  	
+	
 
  </div>
 	<%= render :partial => "footer", :locals => { :app => @app } %>

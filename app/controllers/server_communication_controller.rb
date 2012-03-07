@@ -159,7 +159,7 @@ class ServerCommunicationController < ApplicationController
     @client.account.sms.messages.create(
       :from => '+14087035664',
       :to => "#{data['phone']}",
-      :body => dump["sms"]
+      :body => data["sms"]
     )
   end
   

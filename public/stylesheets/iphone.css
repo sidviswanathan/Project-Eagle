@@ -1019,7 +1019,9 @@ ul.edit li.login_token{
 	.switcher .ls-disabled a {
 		color:#f0f0f0;
 	}
-	
+	.ui-collapsible {
+	margin: 0em 0;
+	}
 	.book_button {
 		background-color: #7FBF4D;
 		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7FBF4D), color-stop(100%, #63A62F));
