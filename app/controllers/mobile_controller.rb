@@ -44,11 +44,16 @@ class MobileController < ApplicationController
 
   def get_mobile_app
     mdomain = request.url.sub("http://","").split("/")[0]
-    course = Course.find_by_mobile_domain(mdomain)
-    if !course.nil?
-      params[:course_id] = course.id.to_s
+    if mdomain == 'pric.io'
+      render :template => "web/pricio"
+    else
+      course = Course.find_by_mobile_domain(mdomain)
+      if !course.nil?
+        params[:course_id] = course.id.to_s
+      end
+      @app = MobileApp.new(params,request,session)
     end
-    @app = MobileApp.new(params,request,session)
+    
   end
   
   def booking
