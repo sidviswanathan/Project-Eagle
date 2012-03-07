@@ -3,6 +3,13 @@
   <%= render :partial => "header", :locals => { :app => @app } %>
 
   <div class="content">
+	<% if @app.user.nil? %>
+	<h1 style='color:#333;padding:8px'>Register or Login</h1>
+	<div id='account_settings'>
+		<%= render :partial => "login", :locals => { :app => @app } %>
+	</div>
+	
+	<% else %>
 	<div data-role="collapsible" data-theme='c'>
 		<h3>Account Settings</h3>
 		<div id='account_settings'>
@@ -72,6 +79,7 @@
 		<a href="<% @app.get_url('',{}) %>"><img  style='width:100%;height:85%' src='/images/empty_data_set.png' /></a>
 	<%end%>
 	</div>
+	<% end %>
   	
 	
 

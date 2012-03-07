@@ -34,7 +34,9 @@ class Customer < ActiveRecord::Base
       login_info[:phone] = contact
       conditions = "phone = '#{contact}'"
     end
-
+    if login_info[:password].nil?
+      login_info[:password] = login_info[:f_name]+login_info[:l_name]
+    end
     c = Customer.find(:all, :conditions => conditions)
     if c.length == 0
       c = Customer.create(login_info)

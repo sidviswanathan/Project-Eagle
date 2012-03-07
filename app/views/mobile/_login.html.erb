@@ -10,9 +10,9 @@
 		<label onclick="check_deals();" id='sd_label' for="send_deals"><b style='color:green'>Send Me Exclusives from Deep Cliff</b></label>
 		</fieldset>
 		<ul style='border-radius:6px'>
-      		<li><input placeholder="First Name" style='font-size:20px' data-role="none" id="first_name" value="" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
-      		<li><input placeholder="Last Name" style='font-size:20px'  data-role="none" id="last_name" type="text" value=""  name="lname1" onfocus="$('#token').attr('value', '')"/></li>
-<li><input placeholder="Phone Number" style='font-size:20px' data-role="none" id="contact_value" type="text" value=""  name="contact" /></li>
+      		<li><input placeholder="First Name" style='font-size:20px' data-role="none" id="first_name" value="<%= @app.get_user_fname %>" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
+      		<li><input placeholder="Last Name" style='font-size:20px'  data-role="none" id="last_name" type="text" value="<%= @app.get_user_lname %>"  name="lname1" onfocus="$('#token').attr('value', '')"/></li>
+<li><input placeholder="Phone Number" style='font-size:20px' data-role="none" id="contact_value" type="text" value="<%= @app.get_user_contact %>"  name="contact" /></li>
     	</ul>  
 
 		
