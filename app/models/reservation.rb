@@ -12,6 +12,8 @@ class Reservation < ActiveRecord::Base
 
   validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
   
+  validates_uniqueness_of :customer_id, :scope => :date
+  
   CONFIRMATION_SUBJECT = "Tee Time Confirmation"
   CONFIRMATION_BODY = <<-eos
       This message is to confirm your teetime reservation at <coursename>. 
@@ -84,43 +86,49 @@ class Reservation < ActiveRecord::Base
     if !confirmation_code.nil?
       if user 
         r = Reservation.create(reservation_info)
-        user_data = JSON.parse(user.data)
-        r.booking_type = user_data[:device_name]
-        r.confirmation_code = confirmation_code
-        r.customer = user
-        r.save
-        puts "date ----------------------"
-        puts date
-        
-        if date.class() == Date
-          day_before_tt = date - 1
-          date_date = date
+        if r.valid?
+          user_data = JSON.parse(user.data)
+          r.booking_type = user_data[:device_name]
+          r.confirmation_code = confirmation_code
+          r.customer = user
+          r.save
+          puts "date ----------------------"
+          puts date
+
+          if date.class() == Date
+            day_before_tt = date - 1
+            date_date = date
+          else
+            date_date = Date.parse(date)
+            day_before_tt = date_date - 1
+
+          end
+
+          today = Date.today.strftime("%F")
+          now = Time.now.strftime("%R")
+
+          subs = {
+            "first"      => user.f_name.capitalize,
+            "last"       => user.l_name.capitalize,
+            "email"      => user.email,
+            "confirm"    => confirmation_code,
+            "teetime"    => date_date.strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
+            "golfers"    => golfers,
+            "coursename" => course.name,
+            "course_id"  => course.id.to_s
+          }
+
+          # Schedule Tee Time Reminder
+
+          ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
+          if day_before_tt > Date.today
+            ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
+          end
         else
-          date_date = Date.parse(date)
-          day_before_tt = date_date - 1
-          
+          logger.info "Did not find a user record with the email #{email}"
+          return nil
         end
         
-        today = Date.today.strftime("%F")
-        now = Time.now.strftime("%R")
-        
-        subs = {
-          "first"      => user.f_name.capitalize,
-          "last"       => user.l_name.capitalize,
-          "email"      => user.email,
-          "confirm"    => confirmation_code,
-          "teetime"    => date_date.strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
-          "golfers"    => golfers,
-          "coursename" => course.name,
-          "course_id"  => course.id.to_s
-        }
-
-        # Schedule Tee Time Reminder
-
-        ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
-        if day_before_tt > Date.today
-          ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
-        end
       else 
         logger.info "Did not find a user record with the email #{email}"
         return nil 

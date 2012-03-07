@@ -225,12 +225,22 @@
 	
 	
 	function confirmTime(){
-		var confirm_time = confirm(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
-		if(confirm_time==true){
-			reserveTime()
+		if(app.golfers && app.contact && app.date && app.timer){
+			var confirm_time = confirm(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
+			if(confirm_time==true){
+				reserveTime()
+			}else{
+
+			}
 		}else{
-			
+			var errors = [];
+			if(!app.golfers){
+				alert("Please choose a number of golfers!");
+			}else if(!app.timer){
+				alert("Please choose a teetime!");
+			}
 		}
+		
 	}
 	function update_contact_placeholder(){
 		if($('#contact_method').val()=='email'){
@@ -241,17 +251,20 @@
 		
 	}
 	function reserveTime(){
-		$.post("/device_communication/book_reservation",{
+		var did_it = $.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
 			"golfers":app.golfers,
 			"contact_via":app.contact_via,
 			"contact":app.contact,
 			"date":app.date,
 			"time":app.timer,
-			"total":app.total},function(data){
-				$.mobile.changePage("/reservations?course_id=1");
+			"total":app.total
+			},function(data){
+				
+				$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
 			
-		});
+			}
+		).error(function() { alert("Sorry we were unable to book this tee time.  Please try again later, or with a different time, date or # golfers."); });
 	}
 	function check_deals(){
 
