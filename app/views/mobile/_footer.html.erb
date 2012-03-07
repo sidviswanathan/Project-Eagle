@@ -1,9 +1,9 @@
 <div data-role="footer" data-transition="fade" data-id="footer_bottom" data-touch-toggle="false"  data-theme="a" data-position="fixed" class='footer'>		
 	<div data-role="navbar"  data-theme="a">
 			<ul>
-				<li style='border-right:0px solid white !important;' <% if @app.is_active('') %> class="active"<% end %> ><a <% if @app.is_active('') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('about',{}) %>">Course</a></li>
-				<li <% if @app.is_active('booking') or @app.is_active('index_xui') %> class="active"<% end %>><a <% if @app.is_active('booking') or @app.is_active('index_xui') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('booking',{}) %>">Tee Times</a></li>
-				<li <% if @app.is_active('reservations') %> class="active last"<% else %>class='last'<% end %>><a <% if @app.is_active('reservations') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('reservations',{}) %>">Account</a></li>
+				<li style='border-right:0px solid white !important;' <% if @app.is_active('') %> class="active"<% end %> ><a <% if @app.is_active('') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('about',{}) %>" data-transition="fade">Course</a></li>
+				<li <% if @app.is_active('booking') or @app.is_active('index_xui') %> class="active"<% end %>><a <% if @app.is_active('booking') or @app.is_active('index_xui') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('booking',{}) %>" data-transition="fade">Tee Times</a></li>
+				<li <% if @app.is_active('reservations') %> class="active last"<% else %>class='last'<% end %>><a <% if @app.is_active('reservations') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('reservations',{}) %>" data-transition="fade">Account</a></li>
 				
 			</ul>
 		</div><!-- /navbar -->
