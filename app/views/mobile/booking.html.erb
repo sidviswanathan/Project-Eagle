@@ -261,6 +261,7 @@
 		$('span.cgolfers').html(app.golfers);
 		$('span.cdate').html(app.date);
 		$('span.ctime').html(app.timer);
+		$('h1').html("Confirming Reservation .. ");
 		
 		var did_it = $.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
@@ -272,7 +273,9 @@
 			"total":app.total
 			},function(data){
 				if(data.status == 'success'){
-					$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
+					//$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
+					$('h1').html("<%= @app.course_info['title_short] %>");
+					$('span.confirm_waiting').css("color","green").html(data.confirmation_code);
 				}else{
 					alert(data.message);
 				}
@@ -378,6 +381,10 @@
 	}
 	div.temp_booking{
 		display:none;
+	}
+	span.confirm_waiting{
+		font-weight:bold;
+		color:orange;
 	}
 	</style>
 
