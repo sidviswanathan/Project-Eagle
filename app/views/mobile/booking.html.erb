@@ -277,6 +277,7 @@
 					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
 					$('span.confirm_waiting').css("color","green").html(data.confirmation_code);
 				}else{
+					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
 					$('div.temp_booking').hide();
 					$('div.main_booking').show();
 					alert(data.message);
