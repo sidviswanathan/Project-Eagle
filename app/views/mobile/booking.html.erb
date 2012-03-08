@@ -274,13 +274,13 @@
 			},function(data){
 				if(data.status == 'success'){
 					//$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
-					$('h1').html("<%= @app.course_info['title_short'] %>");
+					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
 					$('span.confirm_waiting').css("color","green").html(data.confirmation_code);
 				}else{
+					$('div.temp_booking').hide();
+					$('div.main_booking').show();
 					alert(data.message);
 				}
-				
-			
 			}
 		).error(function() { alert("Sorry we were unable to book this tee time.  Please try again later, or with a different time, date or # golfers."); });
 	}
