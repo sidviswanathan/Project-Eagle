@@ -97,6 +97,12 @@ class MobileController < ApplicationController
   def blackberry?
     request.user_agent =~ /BlackBerry/
   end
+  def windows?
+    request.user_agent =~ /Windows/
+  end
+  def symbian?
+    request.user_agent =~ /Symbian/
+  end
   def iframe
     @is_mobile = mobile_agent?
     @request = request
