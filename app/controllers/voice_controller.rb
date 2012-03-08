@@ -302,6 +302,8 @@ class VoiceController < ApplicationController
     data = JSON.parse(d.data)   
     if params[:add] == "golfers"
       data["golfers"] = params[:Digits]
+      d.data = data.to_json
+      d.save
     end
     
     if data["golfers"].to_i == 0
