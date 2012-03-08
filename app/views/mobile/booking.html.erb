@@ -252,7 +252,16 @@
 		
 	}
 	function reserveTime(){
-		$('div.content').hide();
+		$('div.main_booking').hide();
+		
+		$('div.temp_booking').show();
+		$('span.cfname').html(app.first_name);
+		$('span.clname').html(app.last_name);
+		$('span.ccontact').html(app.contact);
+		$('span.cgolfers').html(app.golfers);
+		$('span.cdate').html(app.date);
+		$('span.ctime').html(app.timer);
+		
 		var did_it = $.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
 			"golfers":app.golfers,
@@ -379,9 +388,35 @@
 
 	<%= render :partial => "header", :locals => { :app => @app } %>
 	<div class='temp_booking'>
-		Booking Status: Confirming...
+		<div class="content">
+	  		<div class='box' id='topbox'>
+				<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
+				<div class='title' style='padding-top:66px;font-size:18px'>
+				<b><%= @app.course_info['title'] %></b>
+				<div style='margin-top:-2px'>
+					<span style='font-size:14px;color:#555'><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></span>
+				</div>
+
+				<div style='margin-top:3px;border-top:1px solid gray;font-weight:normal;font-size:14px;padding-top:4px'>
+					<b style='color:green'>Booking #</b>: <span id='confirm_waiting'>Awaiting Confirmation .. </span>
+				</div>
+
+
+
+				</div>
+				<div style='clear:both;height:4px'></div>
+
+				<div style='margin-top:12px'>
+					Customer: <span class='cfname'></span> <span class='clname'></span> (<span class='ccontact'></span>)<br>
+					For : <span class='cgolfers'></span> On: <span class='cdate'></span> At: <span class='ctime'></span>
+				</div>
+
+				<a data-role="button" data-icon="delete" href='/device_communication/cancel_reservation?course_id=<%=@app.course.id.to_s%>&confirmation_code=<%=@app.reservation.confirmation_code%>'>Cancel Reservation</a>
+
+			</div>
+	  </div>
 	</div>  
-	
+	<div class='main_booking'>
 	<div class="content">
 
 
@@ -453,7 +488,7 @@
 		</ul>
 
 	  </div>			
-
+		</div>
 
 	<%= render :partial => "footer", :locals => { :app => @app } %>
 </div><!-- /page -->
