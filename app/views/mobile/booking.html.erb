@@ -252,9 +252,10 @@
 		
 	}
 	function reserveTime(){
+		$('div.temp_booking').show();
 		$('div.content').hide();
 		
-		$('div.temp_booking').show();
+		
 		$('span.cfname').html(app.first_name);
 		$('span.clname').html(app.last_name);
 		$('span.ccontact').html(app.contact);
@@ -278,8 +279,9 @@
 					$('span#confirm_waiting').css("color","green").html(data.confirmation_code);
 				}else{
 					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
-					$('div.temp_booking').hide();
 					$('div.content').show();
+					$('div.temp_booking').hide();
+					
 					alert(data.message);
 				}
 			}
