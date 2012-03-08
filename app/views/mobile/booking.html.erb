@@ -252,6 +252,7 @@
 		
 	}
 	function reserveTime(){
+		$('div.content').hide();
 		var did_it = $.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
 			"golfers":app.golfers,
@@ -366,6 +367,9 @@
 
 
 	}
+	div.temp_booking{
+		display:none;
+	}
 	</style>
 
 </head> 
@@ -374,7 +378,11 @@
 <div data-role="page" class='type-interior'>
 
 	<%= render :partial => "header", :locals => { :app => @app } %>
-	  <div class="content">
+	<div class='temp_booking'>
+		Booking Status: Confirming...
+	</div>  
+	
+	<div class="content">
 
 
 		<ul>
