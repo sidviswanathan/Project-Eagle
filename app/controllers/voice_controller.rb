@@ -15,7 +15,7 @@ class VoiceController < ApplicationController
   def recieve
     course = Course.find(params[:course_id].to_s)
     phone = params[:From].sub("+1","")
-    user = User.find_or_create_by_phone(phone)
+    user = Customer.find_or_create_by_phone(phone)
     response = Twilio::TwiML::Response.new do |r|
       d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"","voice"=>"","golfers"=>"2"}.to_json})
       greeting = 'Welcome to Deep Cliff Golf Course.  To book a Tee Time, press 1.  To sign up to recieve exclusive deals, press 2. To speak with the course, press 3'
@@ -366,7 +366,9 @@ class VoiceController < ApplicationController
         dt = Time.parse(data["date"])
         date = dt.strftime("%Y-%m-%d")
         total = (data['slot']["p"] * data["golfers"].to_i).to_s
-        reservation,res,message = Reservation.book_tee_time("carlcwheatey@gmail.com", data["course"], data["golfers"], data['slot']["t"], date, total)
+        phone = params[:From].sub("+1","")
+        user = Customer.find_by_phone(phone)
+        reservation,res,message = Reservation.book_tee_time(user, data["course"], data["golfers"], data['slot']["t"], date, total)
         r.Say "Thanks for your business, please note your Reservation number is #{reservation.confirmation_code}.  Here it is again, #{reservation.confirmation_code}.  It will be texted to you shortly if you have a text-capable phone.  "
       elsif params[:Digits] == "2"
         r.Redirect "/voice/options"
