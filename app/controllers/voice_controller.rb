@@ -23,7 +23,7 @@ class VoiceController < ApplicationController
     response = Twilio::TwiML::Response.new do |r|
       d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"","voice"=>"","golfers"=>"2"}.to_json})
       greeting = "Welcome to Deep Cliff Golf Course,#{uname}.  To book a Tee Time, press 1.  To sign up to recieve exclusive deals, press 2. To speak with the course, press 3"
-      r.Gather :action => "/voice/options" do |d|
+      r.Gather :action => "/voice/options", :numDigits => 1 do |d|
         d.Say greeting, :voice => 'man'
       end
 
@@ -360,7 +360,7 @@ class VoiceController < ApplicationController
   
   def golfers
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "Sorry we didn't quite get the number of golfers in your party.  Please press a number from 2-4 to continue"
+      r.Say "Sorry we didn't quite get the number of golfers in your party.  Please press two, three or 4, followed by the pound sign"
       r.Gather :action =>"/voice/gettime?add=golfers"
     end
     render :text => response.text
