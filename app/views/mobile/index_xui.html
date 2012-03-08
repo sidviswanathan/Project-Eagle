@@ -56,22 +56,23 @@
 			<!--Reserve Button-->
 			<!--##########################################-->
 
-		  	<% if @app.time == nil or @app.time == "" %>
-		    	<center>
-		    	<a no_script="true" href="javascript:callNoTeeTimeSelected()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+		  	
+
+		</ul>
+		<div style='text-align:center;padding-bottom:500px'>
+			<% if @app.time == nil or @app.time == "" %>
+
+		    	<a no_script="true" style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;' class='book_button' href="javascript:callNoTeeTimeSelected()">Book Tee Time</a>
 		  	<% else%>
 		    	<% if @app.user == nil or !@app.user %>
-		      		<center>
-	<!--
-	                   <a href="javascript:callReserveTime()"><img border="0" width="300" style="padding-top:28px" src="/public/images/button.png"/></a>
-	-->
-		      		<a href="<%= @app.get_url('login',{}) %>"><%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+
+		      		<a href="<%= @app.get_url('login',{}) %>" no_script="true" style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;' class='book_button' >Book Tee Time</a>
 		    	<% else %>
-		      		<center>
-	                   <a no_script="true" href="javascript:confirmTime()">	<%= image_tag "button.png",  :style=>"width: 300px; padding-top: 28px;" %></a>
+						<a href='javascript:confirmTime()' no_script="true" style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;' class='book_button'>Book Tee Time</a>
+	                   
 		    	<% end %>
 		  	<% end %>
-		</ul>
+		</div>
 
 	  </div>			
 
