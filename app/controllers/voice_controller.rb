@@ -346,7 +346,7 @@ class VoiceController < ApplicationController
             d.Say " If you would like to repeat this menu, press 0 now"
           end
         else
-          r.Say "We couldn't find any slots for #{data['golfers']} on "+data["date"].strftime("%A %B %d ")+data["date"].strftime(" at %l %m %p")
+          r.Say "We couldn't find any slots for #{data['golfers']} on "+Time.parse(data["date"]).strftime("%A %B %d ")+Time.parse(data["time"]).strftime(" at %l %m %p")
           r.Redirect "/voice/options?Digits=1&sorry=1"
         end
 
