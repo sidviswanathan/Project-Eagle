@@ -15,10 +15,14 @@ class VoiceController < ApplicationController
   def recieve
     course = Course.find(params[:course_id].to_s)
     phone = params[:From].sub("+1","")
+    uname = ""
     user = Customer.find_or_create_by_phone(phone)
+    if !user.f_name.nil?
+      uname = user.f_name
+    end
     response = Twilio::TwiML::Response.new do |r|
       d = DataStore.create({:name=>"call_"+params[:CallSid],:data=>{"course"=>course.id,"text"=>"","voice"=>"","golfers"=>"2"}.to_json})
-      greeting = 'Welcome to Deep Cliff Golf Course.  To book a Tee Time, press 1.  To sign up to recieve exclusive deals, press 2. To speak with the course, press 3'
+      greeting = "Welcome to Deep Cliff Golf Course,#{uname}.  To book a Tee Time, press 1.  To sign up to recieve exclusive deals, press 2. To speak with the course, press 3"
       r.Gather :action => "/voice/options" do |d|
         d.Say greeting, :voice => 'man'
       end
