@@ -275,7 +275,7 @@
 				if(data.status == 'success'){
 					//$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
 					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
-					$('span.confirm_waiting').css("color","green").html(data.confirmation_code);
+					$('span#confirm_waiting').css("color","green").html(data.confirmation_code);
 				}else{
 					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
 					$('div.temp_booking').hide();
@@ -380,9 +380,7 @@
 
 
 	}
-	div.temp_booking{
-		display:none;
-	}
+
 	span.confirm_waiting{
 		font-weight:bold;
 		color:orange;
