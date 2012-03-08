@@ -13,7 +13,7 @@ try{
 	if(page_loaded){
 		x$('a').each(function(element, index, xui) {
 			
-			if(x$(this).attr("href").indexOf('javascript') ==-1){
+			if(x$(this).attr("href").indexOf('javascript') ==-1 && !x$(this).attr("onclick")){
 				x$(element).attr("onclick","get_page('"+x$(this).attr("href")+"')").attr("href","#"+x$(this).attr("href").replace("#","")).attr("no_script","true");
 			}
 		    
