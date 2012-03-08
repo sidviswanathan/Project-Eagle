@@ -318,7 +318,7 @@ class VoiceController < ApplicationController
         greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Time.parse(data["date"]).strftime("%A %B %d")
         puts greeting
 
-        if !slots.nil?
+        if !slots.nil? and slots.length !=0
           r.Gather :action => "/voice/book", :timeout => 15 do |d|
             counter = 0
             d.Say greeting
