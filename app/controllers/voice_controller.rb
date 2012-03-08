@@ -55,9 +55,8 @@ class VoiceController < ApplicationController
         r.Pause :length => 2
         r.Record :action => "/voice/getdate", :transcribeCallback => '/voice/transcribe_callback', :maxLength => 8, :timeout => 2
       elsif params[:Digits] == "2"
-        r.Gather :action => "/voice/deal_signup", :numDigits => 1 do |d|
-          d.Say "If you would like to be notified by text message, Press 1 .. by Phone Press 2"
-        end
+        d.Say "If you would like to be notified by text message, Press 1 .. by Phone Press 2"
+        r.Gather :action => "/voice/deal_signup", :numDigits => 1
       elsif params[:Digits] == '9'
         r.Say "Your Reservation has been cancelled.  Thanks again for your business and hope to see you soon at Deep Cliff!"
       else
