@@ -313,8 +313,10 @@ class VoiceController < ApplicationController
     elsif data["date"].nil?
       r.Redirect "/voice/date_select"
     else
+      
       response = Twilio::TwiML::Response.new do |r|
         slots = get_slots(data)
+        
         greeting = "Please choose from the following slots for "+data["golfers"]+" golfers on "+ Time.parse(data["date"]).strftime("%A %B %d")
         puts greeting
 
@@ -397,7 +399,7 @@ class VoiceController < ApplicationController
       dt = Time.parse(data["date"])
       date = dt.strftime("%Y-%m-%d")
       clean_date = dt.strftime("%A %B %d")
-      clean_time = dt.strftime(" at %l %m %p")
+      clean_time = dt.strftime(" at %l %M %p")
       slots = get_slots(data)
       slot = slots[params[:Digits].to_i-1]
       data["slot"] = slot
