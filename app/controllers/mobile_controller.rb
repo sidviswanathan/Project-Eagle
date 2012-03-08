@@ -44,7 +44,7 @@ class MobileController < ApplicationController
 
   def get_mobile_app
     mdomain = request.url.sub("http://","").split("/")[0]
-    if mdomain == 'pric.io'
+    if mdomain == 'pric.io' or params[:pricio] == "true"
       render :template => "web/pricio"
     else
       course = Course.find_by_mobile_domain(mdomain)
