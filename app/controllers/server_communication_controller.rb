@@ -168,6 +168,7 @@ class ServerCommunicationController < ApplicationController
 
   
   def perform_phone
+    begin
     dump = Dump.find(params[:key].to_i)
     data = JSON.parse(dump.data)
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
@@ -176,6 +177,7 @@ class ServerCommunicationController < ApplicationController
       :to => data["phone"],
       :url => "http://www.presstee.com/voice/reminder?d=#{dump.id.to_s}"
     )
+    end
     render :nothing => true
   end
   
@@ -183,6 +185,7 @@ class ServerCommunicationController < ApplicationController
 
   
   def perform_text
+    begin
     dump = Dump.find(params[:key].to_i)
     data = JSON.parse(dump.data)
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
@@ -191,14 +194,17 @@ class ServerCommunicationController < ApplicationController
       :to => "#{data['phone']}",
       :body => data["sms"]
     )
+    end
     render :nothing => true
   end
   
 
   
   def perform_email
+    begin
     dump = Dump.find(params[:key].to_i)
     Mailer.deliver_reminder(JSON.parse(dump.data))
+    end
     render :nothing => true
   end
   

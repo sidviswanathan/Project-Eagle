@@ -308,11 +308,11 @@ class DeviceCommunicationController < ApplicationController
     
     if !email.nil?
       user = Customer.find_by_email(email)
-      logger.info user.to_s
+
     
     elsif !phone.nil?
       user = Customer.find_by_phone(phone)
-      logger.info user.to_s
+
     end
   
     
