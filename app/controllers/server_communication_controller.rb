@@ -140,6 +140,7 @@ class ServerCommunicationController < ApplicationController
     dump = Dump.find(params[:key].to_i)
     data = JSON.parse(dump.data)
     Reservation.cancel(data["confirmation_code"],data["course_id"])
+    render :nothing => true
   end
   
   def self.schedule_contact(user,subject,body,date,time,sms,voice,is_now)
