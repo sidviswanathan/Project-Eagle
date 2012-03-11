@@ -136,7 +136,7 @@ class ServerCommunicationController < ApplicationController
     
   end
   
-  def self.perform_cancel
+  def perform_cancel
     dump = Dump.find(params[:key].to_i)
     data = JSON.parse(dump.data)
     Reservation.cancel(data["confirmation_code"],data["course_id"])
