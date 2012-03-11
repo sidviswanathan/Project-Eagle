@@ -60,6 +60,35 @@ class ServerCommunicationController < ApplicationController
     render :nothing => true
   end
   
+  def self.schedule_push(who,what)
+    dump = Dump.create({:data=>{:message=>what}.to_json})
+    who.each do |w|
+      eta_day = Date.parse(date) - 7
+      eta_time = "06:00"
+      query = "#{ADD_TASK_URI}perform_#{w}?key=#{dump.id.to_s}&d=#{eta_day}&t=#{eta_time}"
+      url = URI.parse(ADD_TASK_HOST)
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = false
+      headers = {}
+
+      response = http.get(query, headers)
+      return {"confirmation_code"=>"none"}
+    end
+  end
+  
+  
+  def perform_voice
+    dump = Dump.find(params[:key].to_i)
+    data = JSON.parse(dump.data)
+    @client = Twilio::REST::Client.new T_SID, T_TOKEN
+    @call = @client.account.calls.create(
+      :from => '+14087035664',
+      :to => data["phone"],
+      :url => "http://www.presstee.com/voice/reminder?d=#{dump.id.to_s}"
+    )
+    render :nothing => true
+  end
+  
   def self.schedule_booking(email, course_id, golfers, time, date, total)
     data = {"email"=>email,"course_id"=>course_id,"golfers"=>golfers,"time"=>time,"date"=>date,"total"=>total}
     course = Course.find(course_id.to_i)

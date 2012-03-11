@@ -82,6 +82,12 @@ class CourseController < ApplicationController
     end
   end
   
+  def push_all
+    message = params[:message]
+    ServerCommunicationController.schedule_push(['web','push','sms','voice','fb'],message)
+    render :text => "Success"
+  end
+  
   def get_times
     
   end

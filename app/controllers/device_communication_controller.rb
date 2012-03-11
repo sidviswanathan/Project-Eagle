@@ -100,6 +100,7 @@ class DeviceCommunicationController < ApplicationController
     
     
     contact_via  = params[:contact_via]
+    contact      = params[:contact]
     f_name       = params[:f_name]
     l_name       = params[:l_name]
     device_name  = params[:device_name]
@@ -306,7 +307,7 @@ class DeviceCommunicationController < ApplicationController
     user = User.find_by_email(email)
     
     if user
-      reservations = Reservation.find_all_by_user_id_and_course_id_and_status_code(user.id.to_s,course_id,Reservation::BOOKING_SUCCESS_STATUS_CODE,:order=>"date DESC,time DESC")
+      reservations = Reservation.find_all_by_customer_id_and_course_id_and_status_code(user.id.to_s,course_id,Reservation::BOOKING_SUCCESS_STATUS_CODE,:order=>"date DESC,time DESC")
       response_object[:status]     = "success"
       response_object[:statusCode] = 200
       response_object[:message]    = "The server succesfully made the get_reservations() request"
