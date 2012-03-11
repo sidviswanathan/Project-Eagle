@@ -302,9 +302,19 @@ class DeviceCommunicationController < ApplicationController
   def get_reservations
     course_id           = params[:course_id]
     email               = params[:email]
+    phone               = params[:phone]
     response_object = intitiate_response_object
     
-    user = User.find_by_email(email)
+    
+    if !email.nil?
+      user = Customer.find_by_email(email)
+    
+    elsif !phone.nil?
+      user = Customer.find_by_phone(phone)
+    end
+  
+    
+    
     
     if user
       reservations = Reservation.find_all_by_customer_id_and_course_id_and_status_code(user.id.to_s,course_id,Reservation::BOOKING_SUCCESS_STATUS_CODE,:order=>"date DESC,time DESC")
