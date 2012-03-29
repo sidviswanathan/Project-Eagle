@@ -10,13 +10,18 @@ app.contact_via = "<%= @app.get_user_contact_via %>";
 app.contact = "<%= @app.get_user_contact %>";
 function more_days_scroller(){
 	if(!is_xui){
-		$(window).unbind("scroll").scroll(function() {
-		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-		       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
-					$('#more_days').before(data);
-				})
-		   }
-		});
+		try{
+			$(window).unbind("scroll").scroll(function() {
+			   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+			       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
+						$('#more_days').before(data);
+					})
+			   }
+			});
+		}catch(err){
+			var dog = "nothing";
+		}
+		
 	}else{
 		x$('a').each(function(element, index, xui) {
 			
