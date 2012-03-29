@@ -56,6 +56,7 @@ class MobileController < ApplicationController
     
   end
   def confirm
+    dog = "nothing"
   end
   def booking
     if params[:exp] == "true"
