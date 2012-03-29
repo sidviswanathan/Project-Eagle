@@ -10,6 +10,7 @@ app.contact_via = "<%= @app.get_user_contact_via %>";
 app.contact = "<%= @app.get_user_contact %>";
 function more_days_scroller(){
 	if(!is_xui){
+		/*
 		try{
 			$(window).unbind("scroll").scroll(function() {
 			   if($(window).scrollTop() + $(window).height() == $(document).height()) {
@@ -21,6 +22,7 @@ function more_days_scroller(){
 		}catch(err){
 			var dog = "nothing";
 		}
+		*/
 		
 	}else{
 		x$('a').each(function(element, index, xui) {
