@@ -451,7 +451,6 @@
 
 		  	<% if @app.time == nil or @app.time == "" %>
 		    	<center>
-			<a href="foo.html" data-rel="dialog">Open dialog</a>
 					<a href='javascript:callNoTeeTimeSelected()'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%; ' class='book_button'>Book Tee Time</a>
 		    	</center>
 		  	<% else%>
@@ -461,7 +460,7 @@
 		      		</center>
 		    	<% else %>
 		      		<center>
-					<a href='<%= @app.get_url('confirm',{}) %>'  data-rel="dialog" style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;' class='book_button'>Book Tee Time</a>
+					<a href='javascript:confirmTime()'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;' class='book_button'>Book Tee Time</a>
 
 		    		</center>
 					<% end %>
