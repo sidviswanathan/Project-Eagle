@@ -35,8 +35,8 @@ function more_days_scroller(){
 		<h1 ><%= @app.date %></h1>
 		<a href="<%= @app.get_url('time',{:date=>@app.next_date}) %>" data-icon="arrow-r" data-iconpos="notext" data-theme="b"></a>
 	<% else %>
-		<div>
-		<h1 style="font-size:1.4em;text-align:center;"><%= @app.course_info['title_short'] %> Golf Course</h1>
+		<div style='padding:0px;margin:0px'>
+		<h1 style="text-align:center;"><%= @app.course_info['title_short'] %> Golf Course</h1>
 		</div>
 	<% end %>
 </div><!-- /header -->
