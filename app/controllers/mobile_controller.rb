@@ -55,7 +55,8 @@ class MobileController < ApplicationController
     end
     
   end
-  
+  def confirm
+  end
   def booking
     if params[:exp] == "true"
       redirect_to @app.get_url("index_exp",{:xui=>"true",:exp=>"true"})
