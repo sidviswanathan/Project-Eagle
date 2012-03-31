@@ -46,7 +46,7 @@ class TextController < ApplicationController
     @client = Twilio::REST::Client.new T_SID, T_TOKEN
     @client.account.sms.messages.create(
       :from => '+14087035664',
-      :to => "#{data['phone']}",
+      :to => params[:From],
       :body => sms
     )
 
