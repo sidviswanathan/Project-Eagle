@@ -162,7 +162,7 @@ class TextController < ApplicationController
         @times[i-2,5].each do |tt|
           avail.push(tt['t'])
         end
-
+        break
       end
     end
 
