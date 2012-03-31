@@ -35,10 +35,11 @@ class TextController < ApplicationController
       end
       
       clean_date = booking[:date].strftime("%A %B %d")
-      clean_time = booking[:time].strftime("%l %M %p")
+      clean_time = booking[:time].strftime("%l:%M%p")
       
+      slots = get_slots(course,cdate,ctime)      
       
-      sms = "Book tee time for #{booking[:golfers]} golfers on #{clean_date} at #{clean_time}?  Reply 1 to confirm, 2 to cancel."
+      sms = "Book tee time for #{booking[:golfers]} golfers on #{clean_date} at #{slots[3]}?  Reply 1 to confirm, 2 to cancel."
     else
       sms = "Sorry we didn't quite get that!  Text something like 'for 4 golfers on sunday at 10', or call us at 408-703-5664. Thanks!"
     end
