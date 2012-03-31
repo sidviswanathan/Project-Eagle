@@ -37,9 +37,24 @@ class TextController < ApplicationController
       clean_date = booking[:date].strftime("%A %B %d")
       clean_time = booking[:time].strftime("%l:%M%p")
       
-      slots = get_slots(course,cdate,ctime)      
       
-      sms = "Book tee time for #{booking[:golfers]} golfers on #{clean_date} at #{slots[3]}?  Reply 1 to confirm, 2 to cancel."
+      
+      closest,avail = get_slots(course,cdate,ctime)
+      if avail.length > 0
+        clean_time = Time.parse(closest).strftime("%l:%M%p")
+        slot_list = ", OR "
+        
+        slots.each_with_index do |ss,ii|
+          slot_list += (ii+2).to_s " for "+Time.parse(ss).strftime("%l:%M%p")
+        end
+        sms = "#{booking[:golfers]} golfers on #{clean_date} at #{clean_time}?  Reply 1 to confirm #{slot_list}."
+        
+        
+      else
+        sms = "Sorry, there don't seem to be any available slots for around #{clean_time} on #{clean_date}.  Please try for a different date/time.  "
+      end 
+      
+      
     else
       sms = "Sorry we didn't quite get that!  Text something like 'for 4 golfers on sunday at 10', or call us at 408-703-5664. Thanks!"
     end
@@ -110,13 +125,20 @@ class TextController < ApplicationController
     dates = JSON.parse(course.available_times)
     @times = dates[date]["day"]
     ret = []
+    closest = nil
+    avail = []
     @times.each_with_index do |t, i|
       if t['t'] > time
-        avail =  @times[i-2,5]
+        closest = t['t']
+        avail = []
+        @times[i-2,5].each do |tt|
+          avail.push(tt['t'])
+        end
+
       end
     end
 
-    return avail
+    return closest,avail
       
   end
   
