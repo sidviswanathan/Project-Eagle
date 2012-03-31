@@ -120,7 +120,16 @@ class TextController < ApplicationController
       elsif s == 'on'
         date = Chronic.parse(split[i+1])
       elsif s == 'at'
-        time = Time.parse(split[i+1])
+        xt = split[i+1].to_i
+
+        if xt < 6
+          xt = xt.to_s+"pm"
+        end
+          
+        
+        time = Time.parse(xt)
+      elsif s.include? ":"
+        time = Time.parse(s)
       elsif ampm.include? s
         time = Time.parse(split[i-1]+s)
       elsif s == 'golfers'
