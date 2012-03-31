@@ -124,6 +124,8 @@ class TextController < ApplicationController
 
         if xt < 6
           xt = xt.to_s+"pm"
+        else
+          xt = xt.to_s+"am"
         end
           
         
