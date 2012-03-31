@@ -46,7 +46,7 @@ class TextController < ApplicationController
         d = DataStore.find_by_name("sms_"+params[:From])
         if !d.nil?
           cdate = booking[:date].strftime("%Y-%m-%d")
-          ctime = booking[:time].strftime("%l:%p")
+          ctime = booking[:time].strftime("%H:%M")
           d.update_attributes :data => {"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{ctime}","golfers"=>"#{booking[:golfers]}"}.to_json
         else
           booking_info = {:name=>"sms_"+params[:From],:data=>{"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{ctime}","golfers"=>"#{booking[:golfers]}"}.to_json}
