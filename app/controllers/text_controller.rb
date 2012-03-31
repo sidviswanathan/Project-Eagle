@@ -104,20 +104,7 @@ class TextController < ApplicationController
   
   
   
-  def get_slots(course,date,time)
 
-    dates = JSON.parse(course.available_times)
-    @times = dates[date]["day"]
-    ret = []
-    @times.each_with_index do |t, i|
-      if t['t'] > time
-        avail =  @times[i-2,5]
-      end
-    end
-
-    return avail
-      
-  end
   
 end
 
