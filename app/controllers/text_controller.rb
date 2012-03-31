@@ -32,7 +32,7 @@ class TextController < ApplicationController
         @client.account.sms.messages.create(
           :from => '+14087035664',
           :to => params[:From],
-          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{data['time']} has been confirmed, thanks for your business!"
+          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{data['clean_time']} has been confirmed, thanks for your business!"
         )
       end
       
@@ -50,6 +50,8 @@ class TextController < ApplicationController
 
         clean_date = booking[:date].strftime("%A %B %d")
         clean_time = booking[:time].strftime("%l:%M%p")
+        cdate = booking[:date].strftime("%Y-%m-%d")
+        ctime = booking[:time].strftime("%H:%M")
 
 
 
@@ -64,9 +66,8 @@ class TextController < ApplicationController
           
           d = DataStore.find_by_name("sms_"+params[:From])
           if !d.nil?
-            cdate = booking[:date].strftime("%Y-%m-%d")
-            ctime = booking[:time].strftime("%H:%M")
-            d.update_attributes :data => {"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","avail"=>avail,"golfers"=>"#{booking[:golfers]}"}.to_json
+            
+            d.update_attributes :data => {"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","clean_time"=>clean_time,"avail"=>avail,"golfers"=>"#{booking[:golfers]}"}.to_json
           else
             booking_info = {:name=>"sms_"+params[:From],:data=>{"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","avail"=>avail,"golfers"=>"#{booking[:golfers]}"}.to_json}
             d = DataStore.create(booking_info)
