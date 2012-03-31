@@ -23,13 +23,16 @@ class TextController < ApplicationController
         @client.account.sms.messages.create(
           :from => '+14087035664',
           :to => params[:From],
-          :body => "Sorry you weren't able to complete your booking.  Please call us if you'd still like to play golf at Deep Cliff!"
+          :body => "Sorry sorry you had to cancel your booking attempt.  Please call us if you'd still like to play golf at Deep Cliff!"
         )
       else
+        d = DataStore.find_by_name("sms_"+params[:From])
+        data = JSON.parse(d.data)
+        
         @client.account.sms.messages.create(
           :from => '+14087035664',
           :to => params[:From],
-          :body => "Your tee time has been confirmed, thanks for your business!"
+          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{data['time']} has been confirmed, thanks for your business!"
         )
       end
       
