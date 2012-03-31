@@ -44,7 +44,7 @@ class TextController < ApplicationController
         clean_time = Time.parse(closest).strftime("%l:%M%p")
         slot_list = ", OR "
         
-        slots.each_with_index do |ss,ii|
+        avail.each_with_index do |ss,ii|
           slot_list += (ii+2).to_s " for "+Time.parse(ss).strftime("%l:%M%p")
         end
         sms = "#{booking[:golfers]} golfers on #{clean_date} at #{clean_time}?  Reply 1 to confirm #{slot_list}."
