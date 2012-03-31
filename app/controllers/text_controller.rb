@@ -164,7 +164,7 @@ class TextController < ApplicationController
     closest = nil
     avail = []
     @times.each_with_index do |t, i|
-      if t['t'] > time
+      if t['t'] >= time
         closest = t['t']
         avail = []
         @times[i-2,5].each do |tt|
