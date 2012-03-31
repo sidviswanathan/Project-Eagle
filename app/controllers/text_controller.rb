@@ -119,7 +119,7 @@ class TextController < ApplicationController
         date = Chronic.parse(s)
       elsif s == 'on'
         date = Chronic.parse(split[i+1])
-      elsif s == 'at'
+      elsif s == 'at' or s == 'around'
         xt = split[i+1].to_i
 
         if xt < 6
