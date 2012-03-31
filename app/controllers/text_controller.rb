@@ -56,7 +56,7 @@ class TextController < ApplicationController
   
   def parse_booking(text)
     
-    split = data["text"].split(" ")
+    split = text.split(" ")
     days = ["monday","mon","tuesday","tue","tues","wednesday","wed","thursday","thurs","th","thu","friday","fri","saturday","sat","sunday","sun","today","tomorrow","day after tomorrow"]
     ampm = ["am","pm","a.m.","p.m."]
     date = nil
