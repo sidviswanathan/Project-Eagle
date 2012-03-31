@@ -43,15 +43,7 @@ class TextController < ApplicationController
 
       booking = parse_booking(body)
       if !booking.nil?
-        d = DataStore.find_by_name("sms_"+params[:From])
-        if !d.nil?
-          cdate = booking[:date].strftime("%Y-%m-%d")
-          ctime = booking[:time].strftime("%H:%M")
-          d.update_attributes :data => {"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{ctime}","golfers"=>"#{booking[:golfers]}"}.to_json
-        else
-          booking_info = {:name=>"sms_"+params[:From],:data=>{"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{ctime}","golfers"=>"#{booking[:golfers]}"}.to_json}
-          d = DataStore.create(booking_info)
-        end
+
 
         clean_date = booking[:date].strftime("%A %B %d")
         clean_time = booking[:time].strftime("%l:%M%p")
@@ -66,6 +58,18 @@ class TextController < ApplicationController
           avail.each_with_index do |ss,ii|
             slot_list +=  "#{(ii+2).to_s} for #{Time.parse(ss).strftime('%l:%M%p')}, "
           end
+          
+          d = DataStore.find_by_name("sms_"+params[:From])
+          if !d.nil?
+            cdate = booking[:date].strftime("%Y-%m-%d")
+            ctime = booking[:time].strftime("%H:%M")
+            d.update_attributes :data => {"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","avail"=>avail,"golfers"=>"#{booking[:golfers]}"}.to_json
+          else
+            booking_info = {:name=>"sms_"+params[:From],:data=>{"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","avail"=>avail,"golfers"=>"#{booking[:golfers]}"}.to_json}
+            d = DataStore.create(booking_info)
+          end
+          
+          
           sms = "#{booking[:golfers]} golfers on #{clean_date} at #{clean_time}?  Reply 1 to confirm, 0 to cancel#{slot_list}"
 
 
