@@ -43,9 +43,27 @@ class TextController < ApplicationController
       if !user.f_name.nil?
         uname = user.f_name
       end
-
-      booking = parse_booking(body)
-      if !booking.nil?
+      
+      d = DataStore.find_by_name("sms_recheck_"+params[:From])
+      if !d.nil?
+        booking = JSON.parse(d.data)
+        if booking[:recheck][0] == 'date'
+          booking[:date] = Chronic.parse(body)
+          booking[:time] = Time.parse(booking[:time])
+        elsif booking[:recheck][0] == 'time'
+          booking[:time] = Time.parse(body)
+          booking[:date] = Date.parse(booking[:date])
+        elsif booking[:recheck][0] == 'golfers'
+          booking[:golfers] = body.to_i.to_s
+        end
+        booking[:recheck] = []
+        
+      else
+        booking = parse_booking(body)
+      end
+      recheck = booking[:recheck]
+      
+      if !booking.nil? and recheck.length == 0
 
 
         clean_date = booking[:date].strftime("%A %B %d")
@@ -80,7 +98,10 @@ class TextController < ApplicationController
         else
           sms = "Sorry, there don't seem to be any available slots for around #{clean_time} on #{clean_date}.  Please try for a different date/time.  "
         end 
-
+        
+      elsif recheck.length == 1
+        d = DataStore.create({:name=>"sms_recheck_"+params[:From],:data=>booking_info)
+        
 
       else
         sms = "Sorry we didn't quite get that!  Text something like 'for 4 golfers on sunday at 10', or call us at 408-703-5664. Thanks!"
@@ -105,7 +126,7 @@ class TextController < ApplicationController
     render :nothing => true
   end
   
-  
+
   def parse_booking(text)
     
     split = text.split(" ")
@@ -147,22 +168,26 @@ class TextController < ApplicationController
         end
       end
     end
+    
+    recheck = []
     if date.nil?
       date = Date.today
-      
+      recheck.push("date")
     end
     
     if time.nil?
       time = Time.now + (60*30)
       time = time.strftime("%l:%p")
+      recheck.push("time")
     end
     
     if golfers.nil?
       golfers = 2
+      recheck.push("golfers")
     end
     
     
-    return {:golfers=>golfers,:date=>date,:time=>time}
+    return {:golfers=>golfers,:date=>date,:time=>time,:recheck=>recheck}
   end
   
   
