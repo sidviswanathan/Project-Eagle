@@ -142,7 +142,7 @@ class TextController < ApplicationController
         
 
       else
-        sms = "Sorry we didn't quite get that!  Text something like 'for 4 golfers on sunday at 10', or call us at 408-703-5664. Thanks!"
+        sms = "Welcome to Deep Cliff Golf Course. To book a tee time, text something like 'for 4 golfers on sunday at 10', or call us at 408-703-5664. Thanks!"
       end
 
       @client = Twilio::REST::Client.new T_SID, T_TOKEN
@@ -156,7 +156,7 @@ class TextController < ApplicationController
       @client.account.sms.messages.create(
         :from => '+14087035664',
         :to => params[:From],
-        :body => "Text 14087035664 something like 'Sunday at 3pm for 2 golfers' to book a tee time at Deep Cliff."
+        :body => "Welcome to Deep Cliff Golf Course.  To book a tee time, text something like 'Sunday at 3pm for 2 golfers', or call us at 408-703-5664."
       )
     end
     
