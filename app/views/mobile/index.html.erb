@@ -100,8 +100,14 @@
 			next_gallery_image = next_gallery_image.next();
 			if(!next_gallery_image.attr("src")){
 				next_gallery_image = $('.gboxi').first();
+				$('.gboxi').last().fadeOut(1500,function(){
+					gflipIn();
+				})
+				
+			}else{
+					setTimeout("gflipIn()",2500);
 			}
-			setTimeout("gflipIn()",2500);
+		
 		});
 	}
 	function gflipOut(){
