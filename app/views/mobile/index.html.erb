@@ -116,9 +116,9 @@
 		*/
 	}
 	function gflipOut(){
-		next_gallery_image.fadeOut(1500,function(){
+		setTimeout("gflipIn()",1500);
+		next_gallery_image.fadeOut(1480,function(){
 			next_gallery_image = next_gallery_image.next();
-			setTimeout("gflipIn()",2500);
 		});
 	}
 	
