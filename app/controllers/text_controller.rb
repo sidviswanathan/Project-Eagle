@@ -33,6 +33,7 @@ class TextController < ApplicationController
           time = data["time"]
         else
           time = data["avail"][params[:Body].to_i-2]
+          time = Time.parse(time).strftime("%l:%M%p")
         end
         
         @client.account.sms.messages.create(
