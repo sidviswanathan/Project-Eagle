@@ -17,6 +17,11 @@ class TextController < ApplicationController
     phone = params[:From].sub("+1","")
     body = params[:Body].downcase
     dd = DataStore.find_by_name("sms_recheck_"+params[:From])
+    uname = ""
+    user = Customer.find_or_create_by_phone(phone)
+    if !user.f_name.nil?
+      uname = user.f_name
+    end
     if body.length == 1 and dd.nil?
       @client = Twilio::REST::Client.new T_SID, T_TOKEN
       d = DataStore.find_by_name("sms_"+params[:From])
@@ -24,32 +29,39 @@ class TextController < ApplicationController
         @client.account.sms.messages.create(
           :from => '+14087035664',
           :to => params[:From],
-          :body => "Sorry sorry you had to cancel your booking attempt.  Please call us if you'd still like to play golf at Deep Cliff!"
+          :body => "Sorry you had to cancel your booking attempt.  Please call us if you'd still like to play golf at Deep Cliff!"
         )
       else
         d = DataStore.find_by_name("sms_"+params[:From])
         data = JSON.parse(d.data)
         if params[:Body] == "1"
           time = data["time"]
+          t = Time.parse(time)
         else
           time = data["avail"][params[:Body].to_i-2]
           time = Time.parse(time).strftime("%l:%M%p")
+          t = Time.parse(time)
         end
+
+        date = dt.strftime("%Y-%m-%d")
+        total = (data["avail_full"][params[:Body].to_i-2]["p"] * data["golfers"].to_i).to_s
+
+        phone = params[:From].sub("+1","")
+        user = Customer.find_by_phone(phone)
+        reservation,res,message = Reservation.book_tee_time(user, course.id.to_s, data["golfers"], t.strftime("%H:%M"), Date.parse(data["date"]).strftime("%Y-%m-%d"), total)
+        
+        
         
         @client.account.sms.messages.create(
           :from => '+14087035664',
           :to => params[:From],
-          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{time} has been confirmed, thanks for your business!"
+          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{time} has been confirmed (#{reservation.confirmation_code})! Your total due at course is $#{total}, thanks for your business."
         )
       end
       
       
     elsif body.length > 1 or !dd.nil?
-      uname = ""
-      user = Customer.find_or_create_by_phone(phone)
-      if !user.f_name.nil?
-        uname = user.f_name
-      end
+
       
       
       if !dd.nil?
@@ -77,13 +89,12 @@ class TextController < ApplicationController
       
       if !booking.nil? and recheck.length == 0
 
-
         clean_date = booking[:date].strftime("%A %B %d")
         clean_time = booking[:time].strftime("%l:%M%p")
         cdate = booking[:date].strftime("%Y-%m-%d")
         ctime = booking[:time].strftime("%H:%M")
 
-        closest,avail = get_slots(course,cdate,ctime)
+        closest,avail,avail_full = get_slots(course,cdate,ctime)
         if avail.length > 0
           clean_time = Time.parse(closest).strftime("%l:%M%p")
           slot_list = " OR "
@@ -95,9 +106,9 @@ class TextController < ApplicationController
           d = DataStore.find_by_name("sms_"+params[:From])
           if !d.nil?
             
-            d.update_attributes :data => {"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","clean_time"=>clean_time,"avail"=>avail,"golfers"=>"#{booking[:golfers]}"}.to_json
+            d.update_attributes :data => {"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","clean_time"=>clean_time,"avail_full"=>avail_full,"avail"=>avail,"golfers"=>"#{booking[:golfers]}"}.to_json
           else
-            booking_info = {:name=>"sms_"+params[:From],:data=>{"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","avail"=>avail,"golfers"=>"#{booking[:golfers]}"}.to_json}
+            booking_info = {:name=>"sms_"+params[:From],:data=>{"course"=>course.id,"text"=>"","date"=>"#{cdate}","time"=>"#{closest}","avail"=>avail,"avail_full"=>avail_full,"golfers"=>"#{booking[:golfers]}"}.to_json}
             d = DataStore.create(booking_info)
           end
           
@@ -217,18 +228,20 @@ class TextController < ApplicationController
     ret = []
     closest = nil
     avail = []
+    avail_full = []
     @times.each_with_index do |t, i|
       if t['t'] >= time
         closest = t['t']
         avail = []
         @times[i-2,5].each do |tt|
           avail.push(tt['t'])
+          avail_full.push(tt)
         end
         break
       end
     end
 
-    return closest,avail
+    return closest,avail,avail_full
       
   end
   
