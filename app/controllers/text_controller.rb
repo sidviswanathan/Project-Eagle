@@ -29,11 +29,16 @@ class TextController < ApplicationController
       else
         d = DataStore.find_by_name("sms_"+params[:From])
         data = JSON.parse(d.data)
+        if params[:Body] == "1"
+          time = data["time"]
+        else
+          time = data["avail"][params[:Body].to_i-2]
+        end
         
         @client.account.sms.messages.create(
           :from => '+14087035664',
           :to => params[:From],
-          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{data['time']} has been confirmed, thanks for your business!"
+          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{time} has been confirmed, thanks for your business!"
         )
       end
       
