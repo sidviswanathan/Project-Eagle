@@ -38,7 +38,7 @@ class TextController < ApplicationController
       end
       
       
-    elsif body.length > 1
+    elsif body.length > 1 or !dd.nil?
       uname = ""
       user = Customer.find_or_create_by_phone(phone)
       if !user.f_name.nil?
