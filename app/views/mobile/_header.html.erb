@@ -10,7 +10,7 @@ try{
 	app.contact_via = "<%= @app.get_user_contact_via %>";
 	app.contact = "<%= @app.get_user_contact %>";
 }catch(err){
-	window.location = "http://m.playdeepcliff.com/booking"
+	window.location = "<%= @app.get_url('booking',{}) %>";
 }
 
 
