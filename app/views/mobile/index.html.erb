@@ -73,8 +73,10 @@
 	}
 
 	var gallery_not_started = true;
+	var next_gallery_image = "";
 	$( document ).bind( "pagechange", function( event, data ){
 		if (($("#gbox").length > 0) && gallery_not_started){
+			next_gallery_image = $('.gboxi').first();
 		  	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
 			setTimeout("gflipIn()",4000);
 			gallery_not_started = false;
@@ -91,6 +93,12 @@
 		alert("Please select a Tee Time first!");
 	}
 	function gflipIn(){
+		next_gallery_image.fadeIn(1500,function(){
+			next_gallery_image = next_gallery_image.next();
+			setTimeout("gflipIn()",2500);
+		});
+		
+		/*
 		g1 += 2;
 		g2 += 2;
 		$('#gboxi').fadeIn(1500,function(){
@@ -106,6 +114,7 @@
 			setTimeout("gflipOut()",2500);
 
 		});
+		*/
 	}
 	function gflipOut(){
 		$('#gboxi').fadeOut(1500,function(){
@@ -231,7 +240,7 @@
 		top:0px;
 		width:100%;
 	}
-	img#gboxi{
+	img.gboxi{
 		width:100%;
 		height:100%;
 		display:none;
@@ -326,7 +335,10 @@
 
 				<div class='container' >
 					<div  id='gbox' style='position:relative ;'>
-						<img id='gboxi' src='<%= @app.course_info['gallery'][0] %>' />
+						
+						 <% @app.course_info['gallery'].each do |i| %>
+						<img class='gboxi' src='<%= i %>' />
+						<% end %>
 						<img src='/images/contentbox_shadow.png' style='position:absolute;bottom:0px'>
 
 					</div>
@@ -493,18 +505,7 @@
 							<a target=_blank href='<%= @app.course_info['url'] %>?rho_open_target=_blank' style='color:#336699;text-decoration:none'>www.playdeepcliff.com</a>
 						</div>
 					</div>
-					<div class='box'>
-						<div class='pad'>
-							<table style='padding-left:6%'>
-								<tbody>
-									<tr>
-										<td style='color:gray;text-align:right'><a  style='color:#336699;text-decoration:none'>Hours</a></td>
-										<td><a rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'>Mon-Sun 6:00AM-8:00PM</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+
 					<div class='box last'>
 						<table style='padding-left:20%'>
 							<tbody>
