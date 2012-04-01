@@ -57,6 +57,8 @@ class TextController < ApplicationController
           booking[:time] = Time.parse(body)
           booking[:date] = Date.parse(booking[:date])
         elsif booking[:recheck][0] == 'golfers'
+          booking[:time] = Time.parse(booking[:time])
+          booking[:date] = Date.parse(booking[:date])
           booking[:golfers] = body.to_i.to_s
         end
         booking[:recheck] = []
