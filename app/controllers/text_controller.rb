@@ -57,6 +57,7 @@ class TextController < ApplicationController
           booking[:golfers] = body.to_i.to_s
         end
         booking[:recheck] = []
+        d.destroy
         
       else
         booking = parse_booking(body)
@@ -100,7 +101,15 @@ class TextController < ApplicationController
         end 
         
       elsif recheck.length == 1
-        d = DataStore.create({:name=>"sms_recheck_"+params[:From],:data=>booking_info)
+        d = DataStore.create({:name=>"sms_recheck_"+params[:From],:data=>booking_info})
+        if recheck[0] == 'golfers'
+          sms = "Please reply with the number of golfers in your party between 2-4, for example '4' or '4 golfers'"
+        elsif recheck[0] == 'date'
+          sms = "Please reply with the day you want to play.  For example 'tomorrow' or 'tuesday' "
+        else
+          sms = "Please reply with the time you'd like to start.  For example '10am' or '3'"
+        end
+
         
 
       else
