@@ -16,7 +16,8 @@ class TextController < ApplicationController
     course = Course.find(params[:course_id].to_s)
     phone = params[:From].sub("+1","")
     body = params[:Body].downcase
-    if body.length == 1
+    d = DataStore.find_by_name("sms_recheck_"+params[:From])
+    if body.length == 1 and d.nil?
       @client = Twilio::REST::Client.new T_SID, T_TOKEN
       d = DataStore.find_by_name("sms_"+params[:From])
       if body == '0'
@@ -44,7 +45,7 @@ class TextController < ApplicationController
         uname = user.f_name
       end
       
-      d = DataStore.find_by_name("sms_recheck_"+params[:From])
+      
       if !d.nil?
         booking = JSON.parse(d.data)
         if booking[:recheck][0] == 'date'
