@@ -43,7 +43,7 @@ class TextController < ApplicationController
           t = Time.parse(time)
         end
 
-        date = dt.strftime("%Y-%m-%d")
+
         total = (data["avail_full"][params[:Body].to_i-2]["p"] * data["golfers"].to_i).to_s
 
         phone = params[:From].sub("+1","")
