@@ -117,19 +117,7 @@
 	}
 	function gflipOut(){
 		next_gallery_image.fadeOut(1500,function(){
-			//showing 8
-			if(g2>(gallery.length-1)){
-					if(gflip){
-						g2 = 1;
-						gflip = false;
-					}else{
-						g2 = 0;
-						gflip = true;
-					}
-			}
-
-			$('#gboxi').attr("src",gallery[g2]);
-
+			next_gallery_image = next_gallery_image.next();
 			setTimeout("gflipIn()",2500);
 		});
 	}
