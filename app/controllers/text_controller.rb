@@ -50,13 +50,22 @@ class TextController < ApplicationController
         user = Customer.find_by_phone(phone)
         reservation,res,message = Reservation.book_tee_time(user, course.id.to_s, data["golfers"], t.strftime("%H:%M"), Date.parse(data["date"]).strftime("%Y-%m-%d"), total)
         
+        if !reservation.nil?
+          @client.account.sms.messages.create(
+            :from => '+14087035664',
+            :to => params[:From],
+            :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{time} has been confirmed (#{reservation.confirmation_code})! Your total due at course is $#{total}, thanks for your business."
+          )
+        else
+          @client.account.sms.messages.create(
+            :from => '+14087035664',
+            :to => params[:From],
+            :body => "Sorry, #{message}.  Or you can call us at 408-703-5664.  Thanks!"
+          )
+        end
         
         
-        @client.account.sms.messages.create(
-          :from => '+14087035664',
-          :to => params[:From],
-          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{time} has been confirmed (#{reservation.confirmation_code})! Your total due at course is $#{total}, thanks for your business."
-        )
+
       end
       
       
