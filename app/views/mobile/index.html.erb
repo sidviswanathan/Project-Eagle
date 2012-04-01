@@ -94,8 +94,7 @@
 	}
 	function gflipIn(){
 		next_gallery_image.fadeIn(1500,function(){
-			next_gallery_image = next_gallery_image.next();
-			setTimeout("gflipIn()",2500);
+			setTimeout("gflipOut()",2500);
 		});
 		
 		/*
@@ -117,7 +116,7 @@
 		*/
 	}
 	function gflipOut(){
-		$('#gboxi').fadeOut(1500,function(){
+		next_gallery_image.fadeOut(1500,function(){
 			//showing 8
 			if(g2>(gallery.length-1)){
 					if(gflip){
@@ -241,6 +240,8 @@
 		width:100%;
 	}
 	img.gboxi{
+		position:absolute;
+		top:0px;
 		width:100%;
 		height:100%;
 		display:none;
