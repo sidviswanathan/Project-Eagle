@@ -94,14 +94,15 @@
 	}
 	var current_gallery_image = false;
 	function gflipIn(){
-		$('.gboxi').css("zIndex","0");
+		//$('.gboxi').css("zIndex","0");
 		next_gallery_image.fadeIn(1500,function(){
+			next_gallery_image.prev().hide();
 			next_gallery_image = next_gallery_image.next();
 			if(!next_gallery_image.attr("src")){
 				next_gallery_image = $('.gboxi').first();
 			}
 			setTimeout("gflipIn()",2500);
-		}).css("zIndex","1");
+		});
 	}
 	function gflipOut(){
 		current_gallery_image.fadeOut(1500,function(){
@@ -321,7 +322,6 @@
 						 <% @app.course_info['gallery'].each do |i| %>
 						<img class='gboxi' src='<%= i %>' />
 						<% end %>
-						<img src='/images/contentbox_shadow.png' style='position:absolute;bottom:0px'>
 
 					</div>
 					<div class='boxes' >
