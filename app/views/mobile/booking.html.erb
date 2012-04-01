@@ -227,6 +227,7 @@
 	function confirmTime(){
 		if(app.golfers && app.contact && app.date && app.timer){
 			$('#confirm_body').html(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
+			$.mobile.changePage("#popup");
 			//var cxtime = confirm();
 			//if(cxtime==true){
 			//	reserveTime()
