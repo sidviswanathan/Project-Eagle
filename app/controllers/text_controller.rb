@@ -49,6 +49,7 @@ class TextController < ApplicationController
       if !dd.nil?
         puts dd.data
         booking = JSON.parse(dd.data)
+        booking = {:golfers=>booking['golfers'],:date=>booking['date'],:time=>booking["time"],:recheck=>booking["recheck"]}
         if booking[:recheck][0] == 'date'
           booking[:date] = Chronic.parse(body)
           booking[:time] = Time.parse(booking[:time])
@@ -73,8 +74,6 @@ class TextController < ApplicationController
         clean_time = booking[:time].strftime("%l:%M%p")
         cdate = booking[:date].strftime("%Y-%m-%d")
         ctime = booking[:time].strftime("%H:%M")
-
-
 
         closest,avail = get_slots(course,cdate,ctime)
         if avail.length > 0
