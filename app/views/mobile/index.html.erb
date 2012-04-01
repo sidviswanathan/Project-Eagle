@@ -92,11 +92,25 @@
 	function callNoTeeTimeSelected(){
 		alert("Please select a Tee Time first!");
 	}
+	var current_gallery_image = false;
 	function gflipIn(){
-		next_gallery_image.fadeIn(1500,function(){
-			next_gallery_image = next_gallery_image.next();
-			setTimeout("gflipIn()",2500);
-		});
+		if(current_gallery_image){
+			current_gallery_image.fadeOut();
+		}
+		if(next_gallery_image.attr("src")){
+			next_gallery_image.fadeIn(1500,function(){
+				current_gallery_image = next_gallery_image;
+				next_gallery_image = next_gallery_image.next();
+				setTimeout("gflipIn()",2500);
+			});
+		}else{
+			next_gallery_image = $('.gboxi').first();
+			next_gallery_image.fadeIn(1500,function(){
+				next_gallery_image = next_gallery_image.next();
+				setTimeout("gflipIn()",2500);
+			});
+		}
+		
 		
 	}
 	function gflipOut(){
