@@ -47,7 +47,7 @@ class TextController < ApplicationController
       
       
       if !dd.nil?
-        puts dd
+        puts dd.data
         booking = JSON.parse(dd.data)
         if booking[:recheck][0] == 'date'
           booking[:date] = Chronic.parse(body)
