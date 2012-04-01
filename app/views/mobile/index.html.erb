@@ -95,7 +95,7 @@
 	var current_gallery_image = false;
 	function gflipIn(){
 		if(current_gallery_image){
-			current_gallery_image.fadeOut();
+			setTimeout("gflipOut()",1500);
 		}
 		if(next_gallery_image.attr("src")){
 			next_gallery_image.fadeIn(1500,function(){
@@ -114,10 +114,13 @@
 		
 	}
 	function gflipOut(){
+		current_gallery_image.fadeOut(1500);
+		/*
 		setTimeout("gflipIn()",1500);
 		next_gallery_image.fadeOut(1480,function(){
 			next_gallery_image = next_gallery_image.next();
 		});
+		*/
 	}
 	
 	function submitform(){
