@@ -99,7 +99,6 @@
 			next_gallery_image.prev().hide();
 			next_gallery_image = next_gallery_image.next();
 			if(!next_gallery_image.attr("src")){
-				alert("hi")
 				next_gallery_image = $('.gboxi').first();
 				$('.gboxi').last().fadeOut(1500,function(){
 					gflipIn();
