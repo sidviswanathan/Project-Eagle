@@ -94,27 +94,19 @@
 	}
 	var current_gallery_image = false;
 	function gflipIn(){
-		if(current_gallery_image){
-			setTimeout("gflipOut()",1500);
-		}
-		if(next_gallery_image.attr("src")){
-			next_gallery_image.fadeIn(1500,function(){
-				current_gallery_image = next_gallery_image;
-				next_gallery_image = next_gallery_image.next();
-				setTimeout("gflipIn()",2500);
-			});
-		}else{
-			next_gallery_image = $('.gboxi').first();
-			next_gallery_image.fadeIn(1500,function(){
-				next_gallery_image = next_gallery_image.next();
-				setTimeout("gflipIn()",2500);
-			});
-		}
-		
-		
+		$('.gboxi').css("zIndex","0");
+		next_gallery_image.fadeIn(1500,function(){
+			next_gallery_image = next_gallery_image.next();
+			if(!next_gallery_image.attr("src")){
+				next_gallery_image = $('.gboxi').first();
+			}
+			setTimeout("gflipIn()",2500);
+		}).css("zIndex","100");
 	}
 	function gflipOut(){
-		current_gallery_image.fadeOut(1500);
+		current_gallery_image.fadeOut(1500,function(){
+			current_gallery_image.hide();
+		});
 		/*
 		setTimeout("gflipIn()",1500);
 		next_gallery_image.fadeOut(1480,function(){
