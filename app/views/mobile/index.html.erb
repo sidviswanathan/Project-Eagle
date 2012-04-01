@@ -94,26 +94,10 @@
 	}
 	function gflipIn(){
 		next_gallery_image.fadeIn(1500,function(){
-			setTimeout("gflipOut()",2500);
+			next_gallery_image = next_gallery_image.next();
+			setTimeout("gflipIn()",2500);
 		});
 		
-		/*
-		g1 += 2;
-		g2 += 2;
-		$('#gboxi').fadeIn(1500,function(){
-			//showing 7
-			if(g1>(gallery.length-1)){
-				if(gflip){
-					g1 = 0;
-				}else{
-					g1 = 1;
-				}
-			}
-			$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
-			setTimeout("gflipOut()",2500);
-
-		});
-		*/
 	}
 	function gflipOut(){
 		setTimeout("gflipIn()",1500);
