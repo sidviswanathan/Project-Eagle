@@ -33,7 +33,7 @@ class TextController < ApplicationController
         @client.account.sms.messages.create(
           :from => '+14087035664',
           :to => params[:From],
-          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{data['clean_time']} has been confirmed, thanks for your business!"
+          :body => "Your tee time for #{data['golfers']} golfers on #{data['date']} at #{data['time']} has been confirmed, thanks for your business!"
         )
       end
       
