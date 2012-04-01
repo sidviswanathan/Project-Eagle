@@ -47,7 +47,7 @@ class TextController < ApplicationController
       
       
       if !dd.nil?
-        booking = JSON.parse(d.data)
+        booking = JSON.parse(dd.data)
         if booking[:recheck][0] == 'date'
           booking[:date] = Chronic.parse(body)
           booking[:time] = Time.parse(booking[:time])
@@ -58,7 +58,7 @@ class TextController < ApplicationController
           booking[:golfers] = body.to_i.to_s
         end
         booking[:recheck] = []
-        d.destroy
+        dd.destroy
         
       else
         booking = parse_booking(body)
