@@ -181,7 +181,7 @@ class TextController < ApplicationController
       elsif s == 'at' or s == 'around'
         xt = split[i+1].to_i
 
-        if xt < 6
+        if xt < 6 or xt == 12
           xt = xt.to_s+"pm"
         else
           xt = xt.to_s+"am"
