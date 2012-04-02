@@ -76,6 +76,14 @@ class MobileController < ApplicationController
     end
   end
   
+  def book
+    if params[:exp] == "true"
+      redirect_to @app.get_url("index_exp",{:xui=>"true",:exp=>"true"})
+    elsif params[:xui] == "true"
+      redirect_to @app.get_url("index_xui",{:xui=>"true"})
+    end
+  end
+  
   def more_days
     @app.more_days(params[:last])
   end
