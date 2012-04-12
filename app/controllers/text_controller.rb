@@ -177,7 +177,13 @@ class TextController < ApplicationController
     time = nil
     split.each_with_index do |s,i|
       if s.include? ":"
-        s = s[0]
+        ap = ""
+        if s.include? "am"
+          ap = "am"
+        elsif s.include? "pm"
+          ap = "pm"
+        end
+        s = s[0] + ap
       end
       if days.include? s
         date = Chronic.parse(s)
