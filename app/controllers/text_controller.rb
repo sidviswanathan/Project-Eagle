@@ -176,6 +176,9 @@ class TextController < ApplicationController
     golfers = nil
     time = nil
     split.each_with_index do |s,i|
+      if s.include? ":"
+        s = s[0]
+      end
       if days.include? s
         date = Chronic.parse(s)
       elsif s == 'on'
