@@ -183,7 +183,7 @@ class TextController < ApplicationController
         elsif s.include? "pm"
           ap = "pm"
         end
-        s = s[0] + ap
+        s = s[0].to_s + ap
       end
       if days.include? s
         date = Chronic.parse(s)
