@@ -176,15 +176,6 @@ class TextController < ApplicationController
     golfers = nil
     time = nil
     split.each_with_index do |s,i|
-      if s.include? ":"
-        ap = ""
-        if s.include? "am"
-          ap = "am"
-        elsif s.include? "pm"
-          ap = "pm"
-        end
-        s = s.split(":")[0] + ap
-      end
       if days.include? s
         date = Chronic.parse(s)
       elsif s == 'on'
