@@ -122,7 +122,7 @@ class TextController < ApplicationController
           end
           
           
-          sms = "#{booking[:golfers]} golfers on #{clean_date} at #{clean_time}? Press:\n(1) Confirm, \n(2) Cancel #{slot_list}"
+          sms = "#{booking[:golfers]} golfers on #{clean_date} at #{clean_time}? Press:\n(1) Confirm \n(2) Cancel #{slot_list}"
 
 
         else
@@ -181,7 +181,13 @@ class TextController < ApplicationController
       elsif s == 'on'
         date = Chronic.parse(split[i+1])
       elsif s == 'at' or s == 'around'
-        xt = split[i+1].to_i
+        if split[i+1].include? ":"
+          xt = split[i+1].split(":")[0].to_i
+        else
+          xt = split[i+1].to_i
+        end
+        
+        
 
         if xt < 6 or xt == 12
           xt = xt.to_s+"pm"
@@ -192,7 +198,14 @@ class TextController < ApplicationController
         
         time = Time.parse(xt)
       elsif s.include? ":"
-        time = Time.parse(s)
+        xt = s.split(":")[0].to_i
+        if xt < 6 or xt == 12
+          xt = xt.to_s+"pm"
+        else
+          xt = xt.to_s+"am"
+        end
+        
+        time = Time.parse(xt)
       elsif ampm.include? s
         time = Time.parse(split[i-1]+s)
       elsif s == 'golfers'
