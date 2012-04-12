@@ -106,7 +106,7 @@ class TextController < ApplicationController
         closest,avail,avail_full = get_slots(course,cdate,ctime)
         if avail.length > 0
           clean_time = Time.parse(closest).strftime("%l:%M%p")
-          slot_list = " OR "
+          slot_list = ""
 
           avail.each_with_index do |ss,ii|
             slot_list +=  "\n(#{(ii+2).to_s})#{Time.parse(ss).strftime('%l:%M%p')}"
@@ -122,7 +122,7 @@ class TextController < ApplicationController
           end
           
           
-          sms = "#{booking[:golfers]} golfers on #{clean_date} at #{clean_time}? Press \n(1)confirm, \n(2)cancel #{slot_list}"
+          sms = "#{booking[:golfers]} golfers on #{clean_date} at #{clean_time}? Press:\n(1) Confirm, \n(2) Cancel #{slot_list}"
 
 
         else
@@ -168,6 +168,7 @@ class TextController < ApplicationController
   def parse_booking(text)
     text = text.gsub(","," ")
     text = text.gsub(".","")
+    text = text.gsub("  "," ")
     split = text.split(" ")
     days = ["monday","mon","tuesday","tue","tues","wednesday","wed","thursday","thurs","th","thu","friday","fri","saturday","sat","sunday","sun","today","tomorrow","day after tomorrow"]
     ampm = ["am","pm","a.m.","p.m."]
