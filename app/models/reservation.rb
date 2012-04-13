@@ -14,7 +14,7 @@ class Reservation < ActiveRecord::Base
 
   validates_numericality_of :golfers, :greater_than => 1, :less_than => 5, :message => "Invalid number of golfers"
   
-  validates_uniqueness_of :customer_id, :scope => :date
+  #validates_uniqueness_of :customer_id, :scope => :date
   
   CONFIRMATION_SUBJECT = "Tee Time Confirmation"
   CONFIRMATION_BODY = <<-eos
