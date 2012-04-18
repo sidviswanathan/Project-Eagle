@@ -279,7 +279,10 @@
 					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
 					$('span#confirm_waiting').css("color","green").html(data.confirmation_code);
 					$('#cancel_res').click(function(){
-						$.mobile.changePage($("#cancel_res").attr("ref")+data.confirmation_code);
+						$.get($("#cancel_res").attr("ref")+data.confirmation_code,{},function(data){
+							alert("Reservation Cancelled");
+						})
+						//$.mobile.changePage($("#cancel_res").attr("ref")+data.confirmation_code);
 					})
 					//$('#cancel_res').attr("href",$("#cancel_res").attr("href")+data.confirmation_code);
 				}else{
