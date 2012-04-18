@@ -252,6 +252,12 @@
 		}
 		
 	}
+	function cancelRes(){
+		$.get("/device_communication/cancel_reservation",{"course_id":app.course_id,"confirmation_code":$('span#confirm_waiting').html()},function(data){
+			alert("Reservation Cancelled");
+			$.mobile.changePage("http://m.playdeepcliff.com/booking");
+		})
+	}
 	function reserveTime(){
 		$('div.temp_booking').show();
 		$('div.content').hide();
@@ -278,12 +284,14 @@
 					//$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
 					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
 					$('span#confirm_waiting').css("color","green").html(data.confirmation_code);
+					/*
 					$('#cancel_res').click(function(){
 						$.get($("#cancel_res").attr("ref")+data.confirmation_code,{},function(data){
 							alert("Reservation Cancelled");
 						})
-						//$.mobile.changePage($("#cancel_res").attr("ref")+data.confirmation_code);
+						$.mobile.changePage($("#cancel_res").attr("ref")+data.confirmation_code);
 					})
+					*/
 					//$('#cancel_res').attr("href",$("#cancel_res").attr("href")+data.confirmation_code);
 				}else{
 					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
