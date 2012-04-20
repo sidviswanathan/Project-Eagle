@@ -109,7 +109,7 @@ class TextController < ApplicationController
           slot_list = ""
 
           avail.each_with_index do |ss,ii|
-            slot_list +=  "\n(#{(ii+2).to_s})#{Time.parse(ss).strftime('%l:%M%p')}"
+            slot_list +=  "\n(#{(ii+3).to_s})#{Time.parse(ss).strftime('%l:%M%p')}"
           end
           
           d = DataStore.find_by_name("sms_"+params[:From])
