@@ -6,7 +6,9 @@ require 'date'
 require 'lib/api/fore.rb'
 
 class MobileApp
+  
   attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation, :time12
+  
   def initialize(params,request,session)
     @course = Course.find(params[:course_id].to_i)
     
@@ -17,14 +19,13 @@ class MobileApp
       params[:date] = Date.today.strftime("%Y-%m-%d")
     end
     
-    @time = params[:time]
-    @time12 = Time.parse(@time).strftime("%I:%M")
-    @ampm = Time.parse(@time).strftime("%p")
-    @golfers = params[:golfers]
-    @date = params[:date]
-    @params = params
-    @request = request
-    
+    @time         = params[:time]
+    @time12       = Time.parse(@time).strftime("%I:%M")
+    @ampm         = Time.parse(@time).strftime("%p")
+    @golfers      = params[:golfers]
+    @date         = params[:date]
+    @params       = params
+    @request      = request
     @reservations = []
     
     begin
@@ -42,10 +43,10 @@ class MobileApp
     
     if !@user.nil?
       @reservations = Reservation.find_all_by_customer_id_and_course_id_and_status_code(
-        @user.id,
-        @course.id,
-        Reservation::BOOKING_SUCCESS_STATUS_CODE,
-        :order=>"date DESC,time DESC"
+      @user.id,
+      @course.id,
+      Reservation::BOOKING_SUCCESS_STATUS_CODE,
+      :order=>"date DESC,time DESC"
       )
     end
     
@@ -53,7 +54,6 @@ class MobileApp
     
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
     @d = (0..6).map {|x| (today+x).strftime("%Y-%m-%d")}
-    
     
     dates = JSON.parse(@course.available_times)
     if !dates.has_key?(date)
