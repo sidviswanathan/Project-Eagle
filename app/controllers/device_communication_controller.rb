@@ -158,7 +158,7 @@ class DeviceCommunicationController < ApplicationController
     date         = params[:date]
     
     response_object = intitiate_response_object
-    updated_course = Rails.cache.fetch("Updated_Course_"+course_id) {Course.find(course_id.to_i)}
+    updated_course = Rails.cache.fetch("Updated_Course_"+course_id) {Course.find(course_id.to_i)} #If it cannot find something in the cache, sets it to the value in the curly brace
     
     if updated_course
       if date

@@ -76,6 +76,7 @@ module Fore
     end
   end
   
+  #Loops through every course and runs the API module
   def self.update(course)
     today = Date.today
     now = Time.now
