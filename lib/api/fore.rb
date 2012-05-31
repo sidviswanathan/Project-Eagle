@@ -93,6 +93,8 @@ module Fore
       
       begin
         response = http.get(query, headers)
+        puts "The vallue of of response in the self.update method is:"
+        puts response
         dat = response.body.gsub("\n","").split("<avail>")[1]
         if dat.index("teetime").nil?:
   				response = ""
