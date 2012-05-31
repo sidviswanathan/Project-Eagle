@@ -150,9 +150,6 @@ class MobileApp
   def get_url(action,new_params)
     @params = @params.merge(new_params)
     uri = "/#{action}#{get_query}"
-    puts "5555555555555555555555555555555555555555555555555555"
-    pp uri
-    puts "5555555555555555555555555555555555555555555555555555"
   end
   
   def is_active(act)
