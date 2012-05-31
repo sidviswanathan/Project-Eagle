@@ -12,16 +12,13 @@ module Fore
   require 'parallel'
   require 'logger'
   
-=begin
-
-    *** All API Modules should implement the following methods ***
-    
-    self.book(reservation_info,course,user)   =>  Makes a booking via https and returns a confirmation_code (string) or nil
-    self.cancel(reservation)                  =>  Sends a cancel request returns true or false
-    self.update(course)                       =>  Queries and updates the latest available tee times data 
-    
-=end
+  # All API Modules should implement the following methods
   
+  # self.book(reservation_info,course,user)   =>  Makes a booking via https and returns a confirmation_code (string) or nil
+  # self.cancel(reservation)                  =>  Sends a cancel request returns true or false
+  # self.update(course)                       =>  Queries and updates the latest available tee times data 
+  
+
   API_AFFILIATE_ID                     = 'PressTee'
   API_PASSWORD                         = '4PTee1nc'
   API_HOST                             = 'https://www.forereservations.com'
@@ -37,7 +34,8 @@ module Fore
   
   TESTING_AUTO_CANCEL = 480
   
-  # Deep Cliff Fee Matrix = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
+  # split 14/16 refers to 2pm and 4 pm changes in price, holiday is jan 1, december 25
+  # DEEP_CLIFF_FEE_MATRIX = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
   
   def self.http_get(uri)
     url = URI.parse(API_HOST)
@@ -132,9 +130,10 @@ module Fore
   end
   
   
-  ## Processes the latest queried data from Course APIs
+  # Processes the latest queried data from Course APIs
   def self.process_tee_times_data(response,course)
     ## Convert response to hash
+    puts response
     object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
     converted_response = Hash.new
     dates = object['avail'].keys

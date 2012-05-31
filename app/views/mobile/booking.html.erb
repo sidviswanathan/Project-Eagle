@@ -227,7 +227,7 @@
 	function confirmTime(){
 		if(app.golfers && app.contact && app.date && app.timer){
 			$('#confirm_body').html(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
-			//$.mobile.changePage("#popup");
+			// Confirm method throws up an aler with 2 options Ok/Canel
 			var cxtime = confirm("Confirm Booking\n----------------\n"+app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n----------------\n$"+app.total+" (due at course)");
 			if(cxtime==true){
 				reserveTime()
@@ -280,8 +280,9 @@
 			"time":app.timer,
 			"total":app.total
 			},function(data){
+				
+				
 				if(data.status == 'success'){
-					//$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
 					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
 					$('span#confirm_waiting').css("color","green").html(data.confirmation_code);
 					/*

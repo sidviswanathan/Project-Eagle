@@ -39,8 +39,6 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
   
-
-  
   map.connect "/listener", :controller => "listener", :action => "index"
   map.connect "/cancel", :controller => "device_communication", :action => "cancel_reservation"
   
@@ -51,7 +49,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
   map.connect ':controller/:action/:id', :conditions => { :method => :post }
   map.connect ':controller/:action/:id.:format', :conditions => { :method => :post }
-  
- 
   
 end

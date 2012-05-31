@@ -34,6 +34,7 @@ class MobileApp
       @total = ""
     end
     
+    #View is which reservation to look at by reservation id
     @reservation = nil
     if !params[:view].nil?
       @reservation = Reservation.find(params[:view].to_i)
@@ -43,11 +44,11 @@ class MobileApp
     
     if !@user.nil?
       @reservations = Reservation.find_all_by_customer_id_and_course_id_and_status_code(
-      @user.id,
-      @course.id,
-      Reservation::BOOKING_SUCCESS_STATUS_CODE,
-      :order=>"date DESC,time DESC"
-      )
+        @user.id,
+        @course.id,
+        Reservation::BOOKING_SUCCESS_STATUS_CODE,
+        :order=>"date DESC,time DESC"
+        )
     end
     
     today = Date.today
@@ -55,6 +56,8 @@ class MobileApp
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
     @d = (0..6).map {|x| (today+x).strftime("%Y-%m-%d")}
     
+    # Theres a good reason why date may not have a key in the hash
+    # This block of code allows tee time bookings any time int he futrue
     dates = JSON.parse(@course.available_times)
     if !dates.has_key?(date)
       dates = JSON.parse(@course.future_dates)
@@ -129,10 +132,12 @@ class MobileApp
     end
   end
   
+  # When you click on the golfers link for example, the params that are past in are done 
   def get_query
     kvs = []
-    @params.each_pair do |k,v|
-      kvs.push(k+"="+v)
+    @params.each do |k,v|
+      #kvs.push(k+"="+v)
+      kvs.push(k.to_s+"="+v.to_s)
     end
     return "?#{kvs.join('&')}"
   end
@@ -141,9 +146,13 @@ class MobileApp
     return JSON.parse(@course.info)
   end
   
+  # get_query is another method that can be run by calling it like this
   def get_url(action,new_params)
     @params = @params.merge(new_params)
     uri = "/#{action}#{get_query}"
+    puts "5555555555555555555555555555555555555555555555555555"
+    pp uri
+    puts "5555555555555555555555555555555555555555555555555555"
   end
   
   def is_active(act)
