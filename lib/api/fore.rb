@@ -94,7 +94,9 @@ module Fore
       begin
         response = http.get(query, headers)
         puts query
+        puts '----------------------------------------'
         puts headers
+        puts '----------------------------------------'
         puts "The vallue of of response in the self.update method is:"
         puts response
         
