@@ -227,7 +227,8 @@
 	function confirmTime(){
 		if(app.golfers && app.contact && app.date && app.timer){
 			$('#confirm_body').html(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
-			// Confirm method throws up an aler with 2 options Ok/Canel
+			//$.mobile.changePage("#popup");
+			//confirm is a built-in JS function that throws a pop-up message
 			var cxtime = confirm("Confirm Booking\n----------------\n"+app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n----------------\n$"+app.total+" (due at course)");
 			if(cxtime==true){
 				reserveTime()
@@ -259,17 +260,17 @@
 		})
 	}
 	function reserveTime(){
-		$('div.temp_booking').show();
-		$('div.content').hide();
+		// $('div.temp_booking').show();
+		// $('div.content').hide();
 		
 		
-		$('span.cfname').html(app.first_name);
-		$('span.clname').html(app.last_name);
-		$('span.ccontact').html(app.contact);
-		$('span.cgolfers').html(app.golfers);
-		$('span.cdate').html(app.date);
-		$('span.ctime').html(app.timer);
-		$('h1').html("Confirming Reservation .. ");
+		// $('span.cfname').html(app.first_name);
+		// $('span.clname').html(app.last_name);
+		// $('span.ccontact').html(app.contact);
+		// $('span.cgolfers').html(app.golfers);
+		// $('span.cdate').html(app.date);
+		// $('span.ctime').html(app.timer);
+		// $('h1').html("Confirming Reservation .. ");
 		
 		var did_it = $.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
@@ -280,11 +281,11 @@
 			"time":app.timer,
 			"total":app.total
 			},function(data){
-				
-				
 				if(data.status == 'success'){
-					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
-					$('span#confirm_waiting').css("color","green").html(data.confirmation_code);
+					$.mobile.changePage("/reservations");
+					//$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
+					//$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
+					//$('span#confirm_waiting').css("color","green").html(data.confirmation_code);
 					/*
 					$('#cancel_res').click(function(){
 						$.get($("#cancel_res").attr("ref")+data.confirmation_code,{},function(data){
@@ -295,11 +296,15 @@
 					*/
 					//$('#cancel_res').attr("href",$("#cancel_res").attr("href")+data.confirmation_code);
 				}else{
-					$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
-					$('div.content').show();
-					$('div.temp_booking').hide();
 					
-					alert(data.message);
+					alert("Haha you suck, this failed!");
+					$.mobile.changePage("/reservations");
+					
+					// $('h1').html("<%= @app.course_info['title_short'] %> Mobile");
+					// 	$('div.content').show();
+					// 	$('div.temp_booking').hide();
+					// 	
+					// 	alert(data.message);
 				}
 			}
 		).error(function() { alert("Sorry we were unable to book this tee time.  Please try again later, or with a different time, date or # golfers."); });
