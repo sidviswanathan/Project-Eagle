@@ -3,6 +3,7 @@ require "net/https"
 require "date"
 require 'chronic'
 require 'time'
+require 'pp'
 
 class Reservation < ActiveRecord::Base
   
@@ -100,7 +101,6 @@ class Reservation < ActiveRecord::Base
     }
 
     # Schedule Tee Time Reminder
-
     ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
     if day_before_tt > Date.today
       ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
@@ -122,7 +122,7 @@ class Reservation < ActiveRecord::Base
 
       if r.valid?
         confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)                      #Makes the booking call to the API for the golf course        
-        if !confirmation_code.nil?
+        if !confirmation_code.nil?                                                                                                            # Returns confirmation code if booked successfully, else returns the entire response
           r.confirmation_code = confirmation_code
           r.save
           if date.class() == Date
@@ -155,10 +155,11 @@ class Reservation < ActiveRecord::Base
           return r,true,"Congrats, you succesfully booked a tee time at Deep Cliff!"
 
         else
-          logger.info "Sorry, request to Tee Sheet Server Failed.  Please call the course to schedule a time.."                               # This is the exact message that is sent back tot he cleint when a tee time is booked
-          return nil,false,"We were unable to book this tee time. PLease try again later or call Deep Cliff Golf Course at (408)-253-5357."
-          #Give user the exact reason why the booking failed
-          #Send email to us that the booking failed with the exact reason
+          # There API call failed for some reasons
+          logger.info "----- #{Time.now} ----- BOOKING FAILURE | #{user.name} | #{course_id.to_s} | #{golfers.to_s} | #{time.to_s} | #{date.to_s} | #{total.to_s}"                               # This is the exact message that is sent back tot he cleint when a tee time is booked
+          #In the future, Give user the exact reason why the booking failed
+          Mailer.deliver_api_booking_error(PP.pp(confirmation_code, ""))
+          return nil,false,"We were unable to book this tee time. PLease try again later or call Deep Cliff Golf Course at (408)-253-5357."          
         end
         
       else

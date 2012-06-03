@@ -15,6 +15,20 @@ class Mailer < ActionMailer::Base
   end
   
   def api_booking_error(response)
-  end  
-
+    recipients        "carlcwheatley@gmail.com,sid.viswanathan@gmail.com"
+    from              "Prestee<info@prestee.com>"
+    subject           "Error from Fore API"
+    body              :response => response
+    content_type      "text/html"
+  end
+  
+  def test_email(c)
+    recipients        "carlcwheatley@gmail.com,sid.viswanathan@gmail.com"
+    from              "Prestee<info@prestee.com>"
+    subject           "Test Email"
+    body              :customer => c
+    content_type      "text/html"
+  end
+  
+  
 end
