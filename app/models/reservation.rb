@@ -117,6 +117,7 @@ class Reservation < ActiveRecord::Base
     puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
     puts user.class
     puts user
+    puts user.name
     puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
     course = Course.find(course_id.to_i)
     if user
@@ -133,8 +134,8 @@ class Reservation < ActiveRecord::Base
         puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         if !confirmation_code.nil?                                                                                                            # Returns confirmation code if booked successfully, else returns the entire response
           r.confirmation_code = confirmation_code
-          r.save
-          puts "Just saved the reservation record"
+          g = r.save
+          puts "Just saved the reservation record" if g
           if date.class() == Date
             day_before_tt = date - 1
             date_date = date
