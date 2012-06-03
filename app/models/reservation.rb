@@ -112,9 +112,15 @@ class Reservation < ActiveRecord::Base
   # If successfully created Reservation record, makes the book tee time call to the API for the course            
   def self.book_tee_time(user, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
-    
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    pp reservation_info
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    puts user.class
+    puts user
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
     course = Course.find(course_id.to_i)
     if user
+      puts "got into the if user block"
       r = Reservation.new(reservation_info)
       user_data = JSON.parse(user.data)
       r.booking_type = user_data[:device_name]
@@ -122,9 +128,13 @@ class Reservation < ActiveRecord::Base
 
       if r.valid?
         confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)                      #Makes the booking call to the API for the golf course        
+        puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+        puts confirmation_code
+        puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         if !confirmation_code.nil?                                                                                                            # Returns confirmation code if booked successfully, else returns the entire response
           r.confirmation_code = confirmation_code
           r.save
+          puts "Just saved the reservation record"
           if date.class() == Date
             day_before_tt = date - 1
             date_date = date
