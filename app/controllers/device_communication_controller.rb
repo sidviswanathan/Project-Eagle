@@ -51,11 +51,9 @@ class DeviceCommunicationController < ApplicationController
     return response_object
   end  
   
-  
   # ===================================================================
   # = http://presstee.com/device_communication/login =================
   # ===================================================================
-
   
   def login 
     email        = params[:email]
@@ -87,17 +85,13 @@ class DeviceCommunicationController < ApplicationController
     end    
   end  
   
-  def customer_login
-    
+  def customer_login 
     contact_via = params[:contact_via]
     if contact_via == 'text' or contact_via == 'phone'
       phone = params[:contact]
     else
       email = params[:contact]
     end
-    
-    
-    
     
     contact_via  = params[:contact_via]
     contact      = params[:contact]
@@ -111,7 +105,6 @@ class DeviceCommunicationController < ApplicationController
     password     = params[:password]
     
     response_object = intitiate_response_object
-    
     
     if phone == '' and email == ''
       response_object[:message] = "The server failed to make the User.login() request"
@@ -140,8 +133,6 @@ class DeviceCommunicationController < ApplicationController
         end            
       end
     end
-    
-    
   end
   
   # ===================================================================
@@ -223,9 +214,7 @@ class DeviceCommunicationController < ApplicationController
     total       = params[:total]
     
     logger.info params
-    
     response_object = intitiate_response_object
-    
     
     if date.class() == Date
       date_date = date
@@ -239,12 +228,9 @@ class DeviceCommunicationController < ApplicationController
     else
       conditions = "phone = '#{contact}'"
     end
-    
-    
-    
+        
     customer = Customer.find(:all, :conditions => conditions)[0]
 
-    
     if !customer.nil?
       if date_date > (Date.today+7)
         reservation = ServerCommunicationController.schedule_booking(customer, course_id, golfers, time, date, total)

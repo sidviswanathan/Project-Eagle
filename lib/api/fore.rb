@@ -12,13 +12,20 @@ module Fore
   require 'parallel'
   require 'logger'
   
-  # All API Modules should implement the following methods
-  
   # self.book(reservation_info,course,user)   =>  Makes a booking via https and returns a confirmation_code (string) or nil
   # self.cancel(reservation)                  =>  Sends a cancel request returns true or false
   # self.update(course)                       =>  Queries and updates the latest available tee times data 
-  
 
+  # ==========================================
+  # = DSAMPLE API CALLS ======================
+  # ==========================================
+  
+  #Get available tee times for Deep Cliff Golf course, change date to valid date 
+  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-06-10&t=06:00&et=19:00  
+  
+  #Get available tee times for Fore Reservation test facility, change date to valid date 
+  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-05-31&t=06:00&et=19:00  
+  
   API_AFFILIATE_ID                     = 'PressTee'
   API_PASSWORD                         = '4PTee1nc'
   API_HOST                             = 'https://www.forereservations.com'
@@ -34,7 +41,7 @@ module Fore
   
   TESTING_AUTO_CANCEL = 480
   
-  # split 14/16 refers to 2pm and 4 pm changes in price, holiday is jan 1, december 25
+  # split 14/16 refers to 2pm and 4 pm changes in price, holiday is Jan 1, December 25
   # DEEP_CLIFF_FEE_MATRIX = {"split" => [14,16],"holidays" => [1,360],"public" => {"weekday" => [28,21,18],"weekend" => [38,28,22]},"member" => {"weekday" => [21,17,15],"weekend" => [31,22,17]}}
   
   def self.http_get(uri)
@@ -52,20 +59,23 @@ module Fore
     end
   end
   
+  # Makes a tee time booking at the golf course
   def self.book(reservation_info,course,user)
     uri = "#{API_BOOK_URI}?CourseID=#{course.api_course_id}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{DEFAULT_EMAIL}&FirstName=#{user[:f_name]}&LastName=#{user[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
+    puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     puts uri
+    puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     response = self.http_get(uri)
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
       ccode = XmlSimple.xml_in(response.body)["confirmation"][0]
       ServerCommunicationController.schedule_cancel(ccode,course.id.to_s,TESTING_AUTO_CANCEL)
       return ccode
-      
     else
       return nil
     end
   end
   
+  # Cancels a tee time reservation at the course
   def self.cancel(reservation)
     uri = "#{API_CANCEL_URI}?cn=#{reservation.confirmation_code}&a=#{API_AFFILIATE_ID}&p=#{API_PASSWORD}"
     response = self.http_get(uri)
@@ -76,7 +86,9 @@ module Fore
     end
   end
   
-  #Loops through every course and runs the API module
+  # This method Loops through every course and runs the API module for this course
+  # This method is called form the ServerCommunication controller which is called by teh Google App engine cron that is running
+  # This cron runs once every minute to update all the available tee times for the particular course
   def self.update(course)
     today = Date.today
     now = Time.now
@@ -94,12 +106,12 @@ module Fore
       
       begin
         response = http.get(query, headers)
-        puts query
-        puts '----------------------------------------'
-        puts headers
-        puts '----------------------------------------'
-        puts "The vallue of of response in the self.update method is:"
-        puts response
+        # puts query
+        # puts '----------------------------------------'
+        # puts headers
+        # puts '----------------------------------------'
+        # puts "The vallue of of response in the self.update method is:"
+        # puts response
         
         dat = response.body.gsub("\n","").split("<avail>")[1]
         if dat.index("teetime").nil?:
@@ -116,6 +128,7 @@ module Fore
     self.process_tee_times_data("<results>#{results.join}</results>",course)
   end
   
+  # Returns the price for a tee time
   def self.get_green_fee(date,time,fee_matrix)
     d = Date.strptime(date,"%Y-%m-%d").strftime("%u").to_i
     t = time.split(":")[0].to_i
@@ -137,10 +150,8 @@ module Fore
     return price
   end
   
-  
-  # Processes the latest queried data from Course APIs
+  # Processes the latest queried data from Course APIs and modifies it into a new hash structure 
   def self.process_tee_times_data(response,course)
-    ## Convert response to hash
     puts response
     object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
     converted_response = Hash.new
@@ -171,7 +182,6 @@ module Fore
       converted_response.store(date,{"day"=>val,"hours"=>hours})
     end
 
-    # Note use of JSON.parse rather than the Rails method json.decode.  This is because json.decode converts the string date to a DateTime...
     previous_response = nil
     if !course.available_times.nil?
       previous_response = JSON.parse(course.available_times)
@@ -203,10 +213,7 @@ module Fore
     end
     
     Rails.cache.write("Updated_Course_"+course_id,course)
-    
     return converted_response   
-  end
-  
-  
+  end    
   
 end

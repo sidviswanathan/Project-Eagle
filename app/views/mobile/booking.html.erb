@@ -2,17 +2,12 @@
 <html> 
 	<head> 
 	<title>Deep Cliff Golf Course</title> 
-	
+
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"> 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
-
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-
-	
-	
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-	
 	
     <script type="text/javascript">
 	var is_main_page = true;
@@ -37,11 +32,7 @@
 	 <% @app.course_info['gallery'].each do |i| %>
 	gallery.push("<%= i %>");
 	<% end %>
-	<% else %>
-	/*
-	<%= @app.course_info.to_s %>
-	*/
-	
+	<% else %>	
 	<% end %>
 	
 	var user_agent = navigator.userAgent;
@@ -63,7 +54,6 @@
 
 	$(document).bind("mobileinit", function(){
 
-
 		$.extend($.mobile, {
 		metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
 		});
@@ -79,13 +69,7 @@
 		}else{
 			$.mobile.defaultPageTransition = "slide";
 		}
-
-		
-		
-
 	});
-
-
 
 	var gallery_not_started = true;
 	$( document ).bind( "pagechange", function( event, data ){
@@ -133,7 +117,7 @@
 	}
 	function gflipOut(){
 		$('#gboxi').fadeOut(1500,function(){
-			//showing 8
+			//Showing 8 images in the About Us gallery
 			if(g2>(gallery.length-1)){
 					if(gflip){
 						g2 = 1;
@@ -149,11 +133,14 @@
 			setTimeout("gflipIn()",2500);
 		});
 	}
+	
 	var confirm_time = true;
+	
+	//This method submits the form that the user fills out when booking a tee time for the first time 
+	// User can currently fill out this form using phone number or email address
 	function submitform(ctime){
 		confirm_time = ctime;
-	    
-		
+
 		if($('#first_name').val()){
 			app.first_name = $('#first_name').val();
 			app.last_name  = $('#last_name').val();
@@ -161,8 +148,8 @@
 			app.contact_via = $('#contact_method').val();
 			app.send_deals = $('#send_deals').val();
 		}
-
 		
+		//Store the customer's information into the Customer table in the database
 		$.post("/device_communication/customer_login",{
 			"f_name":app.first_name,
 			"l_name":app.last_name,
@@ -200,10 +187,8 @@
 					}else{
 						alert("Your Preferences have been Saved!")
 						ctime = true;
-					}
-					
+					}	
 				}
-				
 		})
 	}
 	function validateEmail(email) { 
@@ -221,15 +206,13 @@
 	}
 	
 	var app =new Object();
-
-	
 	
 	function confirmTime(){
 		if(app.golfers && app.contact && app.date && app.timer){
 			$('#confirm_body').html(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
-			//$.mobile.changePage("#popup");
-			//confirm is a built-in JS function that throws a pop-up message
+			//confirm() is a built-in JS function that throws a pop-up message with default Ok/Cancel buttons
 			var cxtime = confirm("Confirm Booking\n----------------\n"+app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n----------------\n$"+app.total+" (due at course)");
+			//If the user clicks ok, then the reserveTime() function is called, which makes the tee time booking
 			if(cxtime==true){
 				reserveTime()
 			}else{
@@ -238,39 +221,31 @@
 		}else{
 			var errors = [];
 			if(!app.golfers){
-				alert("Please choose a number of golfers!");
+				alert("Please select number of golfers!");
 			}else if(!app.timer){
-				alert("Please choose a teetime!");
+				alert("Please select a tee time!");
 			}
-		}
-		
+		}	
 	}
+	
 	function update_contact_placeholder(){
 		if($('#contact_method').val()=='email'){
 			$('#contact_value').attr("placeholder","Email Address");
 		}else{
 			$('#contact_value').attr("placeholder","Phone Number");
-		}
-		
+		}	
 	}
+	
 	function cancelRes(){
 		$.get("/device_communication/cancel_reservation",{"course_id":app.course_id,"confirmation_code":$('span#confirm_waiting').html()},function(data){
 			alert("Reservation Cancelled");
 			$.mobile.changePage("http://m.playdeepcliff.com/booking");
 		})
 	}
+	
+	//This method makes the reservation in the database and books agianst the Course API
+	//Once the reservation has been made, the user is routed to the /reservations page
 	function reserveTime(){
-		// $('div.temp_booking').show();
-		// $('div.content').hide();
-		
-		
-		// $('span.cfname').html(app.first_name);
-		// $('span.clname').html(app.last_name);
-		// $('span.ccontact').html(app.contact);
-		// $('span.cgolfers').html(app.golfers);
-		// $('span.cdate').html(app.date);
-		// $('span.ctime').html(app.timer);
-		// $('h1').html("Confirming Reservation .. ");
 		
 		var did_it = $.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
@@ -283,32 +258,14 @@
 			},function(data){
 				if(data.status == 'success'){
 					$.mobile.changePage("/reservations");
-					//$.mobile.changePage("<%= @app.get_url('reservations',{}) %>");
-					//$('h1').html("<%= @app.course_info['title_short'] %> Mobile");
-					//$('span#confirm_waiting').css("color","green").html(data.confirmation_code);
-					/*
-					$('#cancel_res').click(function(){
-						$.get($("#cancel_res").attr("ref")+data.confirmation_code,{},function(data){
-							alert("Reservation Cancelled");
-						})
-						$.mobile.changePage($("#cancel_res").attr("ref")+data.confirmation_code);
-					})
-					*/
-					//$('#cancel_res').attr("href",$("#cancel_res").attr("href")+data.confirmation_code);
 				}else{
-					
 					alert("Haha you suck, this failed!");
 					$.mobile.changePage("/reservations");
-					
-					// $('h1').html("<%= @app.course_info['title_short'] %> Mobile");
-					// 	$('div.content').show();
-					// 	$('div.temp_booking').hide();
-					// 	
-					// 	alert(data.message);
 				}
 			}
 		).error(function() { alert("Sorry we were unable to book this tee time.  Please try again later, or with a different time, date or # golfers."); });
 	}
+	
 	function check_deals(){
 
 		if($('#send_deals').is(':checked')){
@@ -320,11 +277,10 @@
 		}
 	}
     </script>
-	<script type='text/javascript'>
 
-	</script>
 	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 	<%= stylesheet_link_tag "iphone" %>
+
 	<style type='text/css'>
 	    .ui-page {
 	        -webkit-backface-visibility: hidden;
@@ -348,8 +304,6 @@
 		text-shadow:0px 0px 0px !important;
 		color:#333 !important;
 	}
-
-
 	div.last{
 		margin-bottom:10px;
 	}
@@ -384,7 +338,6 @@
 		width:100%;
 		height:100%;
 		display:none;
-
 	}
 	div.boxes{
 		position: relative;
@@ -400,11 +353,7 @@
 			background: rgb(255, 255, 255);
 			background: rgba(255, 255, 255, 0);
 			border:1px transparent;
-
-
-
 	}
-
 	span.confirm_waiting{
 		font-weight:bold;
 		color:orange;
@@ -415,6 +364,7 @@
 	</style>
 
 </head> 
+
 <body> 
 
 <div data-role="page" class='type-interior'>

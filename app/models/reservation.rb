@@ -106,13 +106,13 @@ class Reservation < ActiveRecord::Base
       ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
     end
   end
-  
 
-  
+  # This method is called from DeviceCommunication Controller which is called by the clients (mobile web, SMS< etc.)
+  # Validates users, creates a reservation record in db, links it with Customer (Customer is the end-user)
+  # If successfully created Reservation record, makes the book tee time call to the API for the course            
   def self.book_tee_time(user, course_id, golfers, time, date, total)
     reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
     
-
     course = Course.find(course_id.to_i)
     if user
       r = Reservation.new(reservation_info)
@@ -121,19 +121,16 @@ class Reservation < ActiveRecord::Base
       r.customer = user
 
       if r.valid?
-        confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)
+        confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)                      #Makes the booking call to the API for the golf course        
         if !confirmation_code.nil?
           r.confirmation_code = confirmation_code
           r.save
-          
-          
           if date.class() == Date
             day_before_tt = date - 1
             date_date = date
           else
             date_date = Date.parse(date)
             day_before_tt = date_date - 1
-
           end
 
           today = Date.today.strftime("%F")
@@ -151,32 +148,28 @@ class Reservation < ActiveRecord::Base
           }
 
           # Schedule Tee Time Reminder
-
           ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
           if day_before_tt > Date.today
             ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
           end
           return r,true,"Congrats, you succesfully booked a tee time at Deep Cliff!"
-          
-          
+
         else
-          logger.info "Sorry, request to Tee Sheet Server Failed.  Please call the course to schedule a time.."
-          return nil,false,"Sorry, request to Tee Sheet Server Failed.  Please call the course to schedule a time.."
+          logger.info "Sorry, request to Tee Sheet Server Failed.  Please call the course to schedule a time.."                               # This is the exact message that is sent back tot he cleint when a tee time is booked
+          return nil,false,"We were unable to book this tee time. PLease try again later or call Deep Cliff Golf Course at (408)-253-5357."
+          #Give user the exact reason why the booking failed
+          #Send email to us that the booking failed with the exact reason
         end
-        
         
       else
         logger.info "Only one reservation per date per user is allowed.  Please select a different date and try again!"
-        return nil,false,"Only one reservation per date per user is allowed.  Please select a different date and try again!"
+        return nil,false,"We're sorry, only one reservation per day is allowed. Please choose another day and time and try again!"
       end
       
     else
       logger.info "Did not find a user record with the email #{email}"
       return nil,false,"Did not find a user record with the email #{email}"
-    end
-    
-    
-     
+    end   
   end 
   
   

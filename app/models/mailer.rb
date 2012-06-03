@@ -5,6 +5,7 @@ class Mailer < ActionMailer::Base
       Cupertino, California 95014
       Phone # 408.253.5357 / FAX # 408.253.4521
     eos
+  
   def reminder(data)
     recipients "#{data['f_name']} #{data['l_name']} <#{data['email']}>"
     from       "Deep Cliff Golf Course <deepcliff@presstee.com>"
@@ -12,5 +13,8 @@ class Mailer < ActionMailer::Base
     sent_on    Time.now
     body       "Dear #{data['f_name'].capitalize} #{data['l_name'].capitalize}\n\n#{data['body']}\n\n#{SIGNATURE}"
   end
+  
+  def api_booking_error(response)
+  end  
 
 end

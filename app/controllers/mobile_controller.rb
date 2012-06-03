@@ -6,7 +6,7 @@ require 'date'
 require 'lib/api/fore.rb'
 require 'lib/app/mobile.rb'
 
-# This is the controller for the mobile web app version
+# This is the controller for the mobile web app version that allows tee time bookings
 # Below is the expected format for paramters received from all client devices
 
 # ==========================================
@@ -25,13 +25,13 @@ require 'lib/app/mobile.rb'
 # =========== Controller Actions ===========
 # ==========================================
 
-# booking             => '/mobile/'         
-# golfer_select       => '/mobile/num'   
-# date_select         => '/mobile/date'   
-# time_select         => '/mobile/time'   
-# reservations        => '/mobile/reservations'   
-# view reservation    => '/mobile/view'   
-# about us            => '/mobile/about'   
+# booking             => '/mobile/'               (This is the main page of the booking expereince, wihich contains the Golfers, Date, Tee Time, ANd Book Reservation button)
+# golfer_select       => '/mobile/num'            (This is the page where you select between 2,3,4 golfers)
+# date_select         => '/mobile/date'           (This is the page where you select the date)
+# time_select         => '/mobile/time'           (This is the page where you select the tee time you want to play)
+# reservations        => '/mobile/reservations'   (This is the page where you can see you past/upcoming reservations as well as account details)
+# view reservation    => '/mobile/view'           (THis is the page where you can see details aout a specific reservation)
+# about us            => '/mobile/about'          (This is the page where you can see all the relevant information about a course) 
 
 class MobileController < ApplicationController
   
@@ -69,46 +69,23 @@ class MobileController < ApplicationController
   end
   
   # http://localhost:3000/booking?course_id=1
+  # http://m.playdeepcliff.com/booking
   def booking
-    # if params[:exp] == "true"
-    #   redirect_to @app.get_url("index_exp",{:xui=>"true",:exp=>"true"})
-    # elsif params[:xui] == "true"
-    #   redirect_to @app.get_url("index_xui",{:xui=>"true"})
-    # elsif params[:ajax] == "true"
-    #   render :template => "mobile/booking_ajax"
-    # end
   end
   
+  # This is the landing page experience for all courses
+  # Users can see general course info, and the primary call to action here to to 'Book Tee Time'
+  # 'Book Tee Time' routes user to /booking view page
   def index
-    # You can ignore everything realted to XUI/EXP -> they are for another JS library that is not being used                                                                 # def get_mobile_app is run before index method
-    if params[:exp] == "true"                                               # http://localhost:3000/ routes to this method based on routes.rb => map.connect '/', :controller => 'mobile' 
-      redirect_to @app.get_url("index_exp",{:xui=>"true",:exp=>"true"})
-    elsif params[:xui] == "true"
-      redirect_to @app.get_url("index_xui",{:xui=>"true"})
-    end
   end
   
   def book
-    if params[:exp] == "true"
-      redirect_to @app.get_url("index_exp",{:xui=>"true",:exp=>"true"})
-    elsif params[:xui] == "true"
-      redirect_to @app.get_url("index_xui",{:xui=>"true"})
-    end
   end
   
   def more_days
     @app.more_days(params[:last])
-  end
-  
-  def index_exp    
-  end
-  def index_xui
-    @render_head = true
-    @app.params[:xui] = "true"
-    if params[:xhr] == 'true'
-      @render_head = false
-    end
-  end
+  end 
+ 
   def mobile_agent?
     request.user_agent =~ /Mobile|webOS/
   end
@@ -130,8 +107,6 @@ class MobileController < ApplicationController
     #puts request.user_agent
   end
   def iframe_test
-    
   end
-  
   
 end
