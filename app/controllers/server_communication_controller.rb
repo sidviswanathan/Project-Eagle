@@ -54,6 +54,10 @@ class ServerCommunicationController < ApplicationController
   end
   
   def perform_booking
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    puts "i'm inside the perform booking method"
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    
     dump = Dump.find(params[:key].to_i)
     data = JSON.parse(dump.data)
     r,res,message = Reservation.book_tee_time(data["email"], data["course_id"], data["golfers"], data["time"], data["date"], data["total"])
