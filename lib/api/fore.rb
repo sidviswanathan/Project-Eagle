@@ -213,6 +213,8 @@ module Fore
           existing = Reservation.find_by_course_id_and_date_and_time_and_created_at(course_id,k,r['t'],((Time.now+7.hours)-5.minute)..(Time.now+7.hours))
           puts "---------------------------------------------------"
           puts Time.now
+          puts (Time.now+7.hours)-5.minute
+          puts Time.now+7.hours
           puts "---------------------------------------------------"
           if existing.nil?
             r = Reservation.create(reservation_info)
