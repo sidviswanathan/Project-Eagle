@@ -205,7 +205,13 @@ module Fore
             end
           end
           reservation_info = {:course_id=>course_id, :golfers=>r['q'], :time=>r['t'], :date=>k, :booking_type=>"Standard"}
+          # This is checking for an edge case where someone walks in and books a tee time in the last 60 seconds
+          # We suspect that Time.now time zone in the app instance != created_at time zone in DB
+          # Also note that in environment.rb, config.time_zone is set to UTC
           existing = Reservation.find_by_course_id_and_date_and_time_and_created_at(course_id,k,r['t'],(Time.now-5.minute)..Time.now)
+          puts "---------------------------------------------------"
+          puts Time.now
+          puts "---------------------------------------------------"
           if existing.nil?
             r = Reservation.create(reservation_info)
           end
