@@ -15,7 +15,7 @@
 					<% if @app.params[:today] == "true" %>			
 						<% if i['q'].to_i > 1 && @timenow.strftime("%H") <= @time12hr.strftime("%H") && @timenow.strftime("%M") <= @time12hr.strftime("%M")  %>		
 							<li>
-								<a  href="<%= @app.get_url('booking',{:time=>@time24hr,:price=> i['p'].to_s,:date=>@app.date}) %>"><span class="title"><%=@timeview%>AA<%=@timenow.strftime("%H")%>::<%=@time12hr.strftime("%H")%></span><span class ="disclosure_indicator"></span></a>
+								<a  href="<%= @app.get_url('booking',{:time=>@time24hr,:price=> i['p'].to_s,:date=>@app.date}) %>"><span class="title"><%=@timeview%></span><span class ="disclosure_indicator"></span></a>
 								<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-58px;padding:10px 40px 0 0;" src="/images/iphone/icons/<%= i['q'] %>_bubble.png"/>
 							</li>
 						<% end %>	
