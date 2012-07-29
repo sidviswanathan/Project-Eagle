@@ -27,7 +27,7 @@ class MobileApp
     @params       = params
     @request      = request
     @reservations = []
-    
+      
     begin
       @total = (params[:golfers].to_i * params[:price].to_i).to_s
     rescue
@@ -57,7 +57,7 @@ class MobileApp
     @d = (0..6).map {|x| (today+x).strftime("%Y-%m-%d")}
     
     # Theres a good reason why date may not have a key in the hash
-    # This block of code allows tee time bookings any time int he futrue
+    # This block of code allows tee time bookings any time in the futrue
     dates = JSON.parse(@course.available_times)
     if !dates.has_key?(date)
       dates = JSON.parse(@course.future_dates)

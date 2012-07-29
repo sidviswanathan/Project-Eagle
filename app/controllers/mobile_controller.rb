@@ -26,12 +26,12 @@ require 'lib/app/mobile.rb'
 # ==========================================
 
 # booking             => '/mobile/'               (This is the main page of the booking expereince, wihich contains the Golfers, Date, Tee Time, ANd Book Reservation button)
-# golfer_select       => '/mobile/num'            (This is the page where you select between 2,3,4 golfers)
-# date_select         => '/mobile/date'           (This is the page where you select the date)
-# time_select         => '/mobile/time'           (This is the page where you select the tee time you want to play)
-# reservations        => '/mobile/reservations'   (This is the page where you can see you past/upcoming reservations as well as account details)
-# view reservation    => '/mobile/view'           (THis is the page where you can see details aout a specific reservation)
-# about us            => '/mobile/about'          (This is the page where you can see all the relevant information about a course) 
+# golfer_select       => '/mobile/num'            (Select between 2,3,4 golfers)
+# date_select         => '/mobile/date'           (Select the date)
+# time_select         => '/mobile/time'           (Select the tee time you want to play)
+# reservations        => '/mobile/reservations'   (View previous/upcoming reservations as well as account details)
+# view reservation    => '/mobile/view'           (View details aout a specific reservation)
+# about us            => '/mobile/about'          (View all course information) 
 
 class MobileController < ApplicationController
   
@@ -74,7 +74,7 @@ class MobileController < ApplicationController
   end
   
   # This is the landing page experience for all courses
-  # Users can see general course info, and the primary call to action here to to 'Book Tee Time'
+  # Users can see general course info, and the primary call to action here is to 'Book Tee Time'
   # 'Book Tee Time' routes user to /booking view page
   def index
   end

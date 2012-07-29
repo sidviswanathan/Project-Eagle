@@ -65,9 +65,7 @@ class WebController < ApplicationController
     @request = request
     #puts request.user_agent
   end
-  def iframe_test
-    
+  def iframe_test  
   end
-  
   
 end
