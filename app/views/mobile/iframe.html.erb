@@ -1,7 +1,7 @@
 <% if @is_mobile %>
 	<script type="text/javascript">
 	    if (top != self) {
-	        try { top.location = 'http://<%= @app.course.id %>'; }
+	        try { top.location = 'http://<%= @app.course.mobile_domain %>'; }
 	        catch (err) { self.location = '/404.html'; }
 	    }
 	</script>
