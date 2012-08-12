@@ -75,15 +75,13 @@ class Reservation < ActiveRecord::Base
         confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)                      #Makes the booking call to the API for the golf course        
         puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         puts confirmation_code
-        puts confirmation_code.class
-        puts confirmation_code.keys
         puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        if !confirmation_code.nil?
-          if !confirmation_code.has_key?("errors")                                                                                                             # Returns confirmation code if booked successfully, else returns the entire response
-            puts ""
+        if !confirmation_code.nil? 
+          # When API suceeds returns a confirmation code (String)
+          # When API fails returns a hash {"errors" => "Description of error"}
+          if confirmation_code.class == String                                                                                                             # Returns confirmation code if booked successfully, else returns the entire response
             r.confirmation_code = confirmation_code
             g = r.save
-            puts "Just saved the reservation record" if g
             if date.class() == Date
               day_before_tt = date - 1
               date_date = date
