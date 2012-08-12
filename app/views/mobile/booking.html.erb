@@ -8,6 +8,7 @@
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
 	
     <script type="text/javascript">
 	var is_main_page = true;
@@ -51,24 +52,25 @@
 	}else if(user_agent.match('/iPad/i')){
 		user_agent = 'iPad'
 	}
-
+	
+	//initializes when the page is loaded
 	$(document).bind("mobileinit", function(){
 
-		$.extend($.mobile, {
-		metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
-		});
+		// $.extend($.mobile, {
+		// metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
+		// });
 		
-		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
+		//$.mobile.fixedToolbars.setTouchToggleEnabled(false);
 		
-		if(navigator.userAgent.match(/webOS/i) ||
-		 navigator.userAgent.match(/BlackBerry/)
-		 ){
-		 $.mobile.defaultPageTransition = "none";
-		}else if( navigator.userAgent.match(/Android/i) ){
-			$.mobile.defaultPageTransition = "fade";
-		}else{
-			$.mobile.defaultPageTransition = "slide";
-		}
+		// if(navigator.userAgent.match(/webOS/i) ||
+		// 	 navigator.userAgent.match(/BlackBerry/)
+		// 	 ){
+		// 	 $.mobile.defaultPageTransition = "none";
+		// 	}else if( navigator.userAgent.match(/Android/i) ){
+		// 		$.mobile.defaultPageTransition = "fade";
+		// 	}else{
+		// 		$.mobile.defaultPageTransition = "slide";
+		// 	}
 	});
 
 	var gallery_not_started = true;
@@ -160,6 +162,7 @@
 			"os_version":"NA",
 			"app_version":"mobile_web"},function(data){
 				if(data=='fail'){
+					alert ("the save customer and login method FAILED");
 					var errors = [];
 					if(app.first_name==""){
 						$('#first_name').css("borderBottom","2px solid red");
@@ -182,7 +185,9 @@
 					
 					alert("Sorry please check if the highlighted fields are not blank and are properly formatted.");
 				}else{
+					alert ("the save customer and login method SUCCESS");
 					if(ctime){
+						alert("About to book the time");
 						confirmTime();
 					}else{
 						alert("Your Preferences have been Saved!")
@@ -209,15 +214,15 @@
 	
 	function confirmTime(){
 		if(app.golfers && app.contact && app.date && app.timer){
-			$('#confirm_body').html(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
+			//$('#confirm_body').html(app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
 			//confirm() is a built-in JS function that throws a pop-up message with default Ok/Cancel buttons
-			var cxtime = confirm("Confirm Booking\n----------------\n"+app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n----------------\n$"+app.total+" (due at course)");
+			//var cxtime = confirm("Confirm Booking\n----------------\n"+app.first_name+" "+app.last_name+" ("+app.contact+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n----------------\n$"+app.total+" (due at course)");
 			//If the user clicks ok, then the reserveTime() function is called, which makes the tee time booking
-			if(cxtime==true){
+			//if(cxtime==true){
 				reserveTime()
-			}else{
+			//}else{
 
-			}
+			//}
 		}else{
 			var errors = [];
 			if(!app.golfers){
@@ -246,6 +251,9 @@
 	//This method makes the reservation in the database and books agianst the Course API
 	//Once the reservation has been made, the user is routed to the /reservations page
 	function reserveTime(){
+		$.mobile.showPageLoadingMsg();     
+		
+		//alert("Hi, I'm inside the reserve time method now");	
 		
 		var did_it = $.post("/device_communication/book_reservation",{
 			"course_id":app.course_id,
@@ -256,12 +264,15 @@
 			"time":app.timer,
 			"total":app.total
 			},function(data){
+				alert(data.status);
 				if(data.status == 'success'){
+					//alert("yo");
 					$.mobile.changePage("/reservations");
 				}else{
 					alert("Haha you suck, this failed!");
 					$.mobile.changePage("/reservations");
 				}
+				
 			}
 		).error(function() { alert("Sorry we were unable to book this tee time.  Please try again later, or with a different time, date or # golfers."); });
 	}
@@ -278,7 +289,7 @@
 	}
     </script>
 
-	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+	
 	<%= stylesheet_link_tag "iphone" %>
 
 	<style type='text/css'>

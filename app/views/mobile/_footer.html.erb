@@ -1,4 +1,4 @@
-<div data-role="footer" data-transition="fade" data-id="footer_bottom" data-touch-toggle="false"  data-theme="a" data-position="fixed" class='footer'>		
+<div data-role="footer" data-transition="fade" data-id="persistent" data-theme="a" data-position="fixed" class='footer'>		
 	<div data-role="navbar"  data-theme="a">
 			<ul>
 				<li style='border-right:0px solid white !important;' <% if @app.is_active('about') %> class="active"<% end %> ><a <% if @app.is_active('about') %> class="ui-btn-active"<% end %> href="<%= @app.get_url('about',{}) %>" data-transition="fade">Course</a></li>

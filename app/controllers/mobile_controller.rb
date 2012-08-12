@@ -13,13 +13,13 @@ require 'lib/app/mobile.rb'
 # = DEFINE STANDARD PARAMETER FORMATS ======
 # ==========================================
 
-# course_id           => '1'                (String, Required)   
-# golfers             => '2'                (String)   
-# time                => '07:14'            (String)   
-# date                => '2011-05-11'       (String)
-# f_name              => 'first_name'       (String)
-# l_name              => 'last_name'        (String)
-# email               => 'name@domain.com'  (String)
+# course_id           => '1'                      (String, Required)   
+# golfers             => '2'                      (String)   
+# time                => '07:14'                  (String)   
+# date                => '2011-05-11'             (String)
+# f_name              => 'first_name'             (String)
+# l_name              => 'last_name'              (String)
+# email               => 'name@domain.com'        (String)
 
 # ==========================================
 # =========== Controller Actions ===========

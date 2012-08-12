@@ -30,5 +30,4 @@ class Mailer < ActionMailer::Base
     content_type      "text/html"
   end
   
-  
 end

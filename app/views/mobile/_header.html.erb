@@ -1,47 +1,37 @@
 <script type='text/javascript'>
 try{
-	app.course_id = "<%= @app.course.id %>";
-	app.golfers = "<%= @app.golfers %>";
-	app.date = "<%= @app.date %>";
-	app.timer = "<%= @app.time %>";
-	app.total = "<%= @app.total %>";
-	app.first_name = "<%= @app.get_user_fname %>";
-	app.last_name = "<%= @app.get_user_lname %>";
+	app.course_id 	= "<%= @app.course.id %>";
+	app.golfers 	= "<%= @app.golfers %>";
+	app.date 		= "<%= @app.date %>";
+	app.timer 		= "<%= @app.time %>";
+	app.total 		= "<%= @app.total %>";
+	app.first_name 	= "<%= @app.get_user_fname %>";
+	app.last_name 	= "<%= @app.get_user_lname %>";
 	app.contact_via = "<%= @app.get_user_contact_via %>";
-	app.contact = "<%= @app.get_user_contact %>";
+	app.contact 	= "<%= @app.get_user_contact %>";
 }catch(err){
 	window.location = "<%= @app.get_url('booking',{}) %>";
 }
 
 
 
-function more_days_scroller(){
-	if(!is_xui){
-		try{
-			$(window).unbind("scroll").scroll(function() {
-			   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-			       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
-						$('#more_days').before(data);
-					})
-			   }
-			});
-		}catch(err){
-			var dog = "nothing";
-		}
-		
-	}else{
-		x$('a').each(function(element, index, xui) {
-			
-			if(x$(this).attr("no_script")!="true"){
-				x$(element).attr("onclick","get_page('"+x$(this).attr("href")+"')").attr("href","#"+x$(this).attr("href")).attr("no_script","true");
-			}
-		    
-		});
-	}
-}
+// function more_days_scroller(){
+// 	try{
+// 		$(window).unbind("scroll").scroll(function() {
+// 		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+// 		       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
+// 					$('#more_days').before(data);
+// 				})
+// 		   }
+// 		});
+// 	}catch(err){
+// 	have to put something in the catch	
+	//var dog = "nothing";
+// 	}
+// }
 
 </script>
-<div data-role="header" class='topheader' data-tap-toggle="false" data-id="header_top">
+<div data-role="header" class='topheader' data-id="persistent" data-position="fixed">
 	<% if @app.params[:action] == 'time' %>
 		<a href="<%= @app.get_url('time',{:date=>@app.prev_date}) %>" data-transition="reverse slide" data-icon="arrow-l" data-iconpos="notext"></a>
 		<h1 ><%= @app.date %></h1>

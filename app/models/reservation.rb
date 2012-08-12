@@ -101,10 +101,10 @@ class Reservation < ActiveRecord::Base
     }
 
     # Schedule Tee Time Reminder
-    ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
-    if day_before_tt > Date.today
-      ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
-    end
+    # ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
+    # if day_before_tt > Date.today
+    #   ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
+    # end
   end
 
   # This method is called from DeviceCommunication Controller which is called by the clients (mobile web, SMS< etc.)
@@ -159,11 +159,11 @@ class Reservation < ActiveRecord::Base
             "course_id"  => course.id.to_s
           }
 
-          # Schedule Tee Time Reminder
-          ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
-          if day_before_tt > Date.today
-            ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
-          end
+          # # Schedule Tee Time Reminder
+          # ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
+          # if day_before_tt > Date.today
+          #   ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)
+          # end
           return r,true,"Congrats, you succesfully booked a tee time at Deep Cliff!"
 
         else

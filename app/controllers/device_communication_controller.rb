@@ -101,6 +101,9 @@ class DeviceCommunicationController < ApplicationController
     os_version   = params[:os_version]
     app_version  = params[:app_version]
     redirect     = params[:redirect]
+    puts '000000000000000000000000000000000000000'
+    puts redirect
+    puts '000000000000000000000000000000000000000'
     send_deals   = params[:send_deals]
     password     = params[:password]
     
@@ -111,8 +114,14 @@ class DeviceCommunicationController < ApplicationController
       render :json => response_object.to_json
     else
       customer = Customer.login(f_name, l_name, contact_via, params[:contact], password, device_name, os_version, app_version, send_deals)
+      
+      puts "55555555555555555555555555555555555"
+      puts customer
+      puts "55555555555555555555555555555555555"
 
       if !customer.nil?
+        puts "inside the customer if conditional"
+        # Set the session cookie
         session[:current_user_id] = customer.id
         response_object[:status]     = "success"
         response_object[:statusCode] = 200
