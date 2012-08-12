@@ -13,24 +13,22 @@ try{
 	window.location = "<%= @app.get_url('booking',{}) %>";
 }
 
-
-
-// function more_days_scroller(){
-// 	try{
-// 		$(window).unbind("scroll").scroll(function() {
-// 		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-// 		       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
-// 					$('#more_days').before(data);
-// 				})
-// 		   }
-// 		});
-// 	}catch(err){
-// 	have to put something in the catch	
-	//var dog = "nothing";
-// 	}
-// }
+function more_days_scroller(){
+	try{
+		$(window).unbind("scroll").scroll(function() {
+		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+		       $.get( "<%= @app.get_url('more_days',{:last=>@app.d[6]}) %>",function(data){
+					$('#more_days').before(data);
+				})
+		   }
+		});
+	}catch(err){
+	var dog = "nothing";
+	}
+}
 
 </script>
+
 <div data-role="header" class='topheader' data-id="persistent" data-position="fixed">
 	<% if @app.params[:action] == 'time' %>
 		<a href="<%= @app.get_url('time',{:date=>@app.prev_date}) %>" data-transition="reverse slide" data-icon="arrow-l" data-iconpos="notext"></a>
@@ -41,29 +39,28 @@ try{
 		<h1><%= @app.course_info['title_short'] %> Mobile</h1>
 
 	<% end %>
-</div><!-- /header -->
+</div>
+
 <div class='temp_booking' style='background:#ffffff'>
 	<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
 	<div class='title' style='padding-top:66px;font-size:18px'>
-	<b><%= @app.course_info['title'] %></b>
-	<div style='margin-top:-2px'>
-		<span style='font-size:14px;color:#555'><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></span>
-	</div>
+		<b><%= @app.course_info['title'] %></b>
+		<div style='margin-top:-2px'>
+			<span style='font-size:14px;color:#555'><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></span>
+			</div>
 
-	<div style='margin-top:3px;border-top:1px solid gray;font-weight:normal;font-size:14px;padding-top:4px'>
-		<b style='color:green'>Booking #</b>: <span id='confirm_waiting'>Awaiting Confirmation .. </span>
-	</div>
+			<div style='margin-top:3px;border-top:1px solid gray;font-weight:normal;font-size:14px;padding-top:4px'>
+				<b style='color:green'>Booking #</b>: <span id='confirm_waiting'>Awaiting Confirmation .. </span>
+			</div>
 
+		</div>
+		
+		<div style='clear:both;height:4px'></div>
 
+		<div style='margin-top:12px'>
+			Customer: <span class='cfname'></span> <span class='clname'></span> (<span class='ccontact'></span>)<br>
+			For : <span class='cgolfers'></span> On: <span class='cdate'></span> At: <span class='ctime'></span>
+		</div>
 
-	</div>
-	<div style='clear:both;height:4px'></div>
-
-	<div style='margin-top:12px'>
-		Customer: <span class='cfname'></span> <span class='clname'></span> (<span class='ccontact'></span>)<br>
-		For : <span class='cgolfers'></span> On: <span class='cdate'></span> At: <span class='ctime'></span>
-	</div>
-
-	<a data-role="button" data-icon="delete" id='cancel_res' href="javascript:cancelRes()" onclick="cancelRes();">Cancel Reservation</a>
-
+		<a data-role="button" data-icon="delete" id='cancel_res' href="javascript:cancelRes()" onclick="cancelRes();">Cancel Reservation</a>
 </div>

@@ -21,7 +21,7 @@ module Fore
   # ==========================================
   
   # Get available tee times for Deep Cliff Golf course, change date to valid date 
-  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-07-31&t=06:00&et=19:00  
+  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-08-31&t=06:00&et=19:00  
   
   # Get available tee times for Fore Reservation test facility, change date to valid date 
   # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-05-31&t=06:00&et=19:00  
@@ -35,6 +35,8 @@ module Fore
   API_BOOK_URI                         = '/cgi-bin/bk.pl'
   API_CANCEL_URI                       = '/cgi-bin/cancel.pl'
   API_GET_AVAILABLE_URI                = '/cgi-bin/avail2.pl'
+  DEEP_CLIFF_API_COURSE_ID             = '1095014'
+  FORE_TEST_FACILITY_COURSE_ID         = '1987654'
   
   DEFAULT_CC_NUM   = "4217639662603493"  
   DEFAULT_CC_YEAR  = "15"
@@ -61,10 +63,12 @@ module Fore
       return nil
     end
   end
-  
-  # Makes a tee time booking at the golf course
+    
+  # ==========================================
+  # = BOOK A TEE TIME ========================
+  # ==========================================
+
   def self.book(reservation_info,course,user)
-    puts "I'm inside the fore.rb book method now!"
     uri = "#{API_BOOK_URI}?CourseID=#{course.api_course_id}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{DEFAULT_EMAIL}&FirstName=#{user[:f_name]}&LastName=#{user[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
     response = self.http_get(uri)
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
@@ -76,7 +80,10 @@ module Fore
     end
   end
   
-  # Cancels a tee time reservation at the course
+  # ==========================================
+  # = CANCEL A TEE TIME ======================
+  # ==========================================
+  
   def self.cancel(reservation)
     uri = "#{API_CANCEL_URI}?cn=#{reservation.confirmation_code}&a=#{API_AFFILIATE_ID}&p=#{API_PASSWORD}"
     response = self.http_get(uri)
@@ -87,9 +94,14 @@ module Fore
     end
   end
   
+  # ==========================================
+  # = UPDATE AVAILABLE TEE TIMES =============
+  # ==========================================
+  
   # This method Loops through every course and runs the API module for this course
-  # This method is called form the ServerCommunication controller which is called by teh Google App engine cron that is running
+  # This method is called form the ServerCommunication controller which is called by the Google App engine cron that is running
   # This cron runs once every minute to update all the available tee times for the particular course
+  
   def self.update(course)
     today = Date.today
     now = Time.now
@@ -107,20 +119,12 @@ module Fore
       
       begin
         response = http.get(query, headers)
-        # puts query
-        # puts '----------------------------------------'
-        # puts headers
-        # puts '----------------------------------------'
-        # puts "The vallue of of response in the self.update method is:"
-        # puts response
-        
         dat = response.body.gsub("\n","").split("<avail>")[1]
         if dat.index("teetime").nil?:
   				response = ""
 				else
 				  response = "<avail date='#{day.strftime("%Y-%m-%d")}'>"+dat
   			end
-        
       rescue
         response = ""
       end
@@ -188,6 +192,7 @@ module Fore
       previous_response = JSON.parse(course.available_times)
     end
     
+    #Saves/updates the modified hash structure into the databse for the Course record
     course.available_times = converted_response.to_json
     course.save
     if !previous_response.nil?
@@ -210,15 +215,10 @@ module Fore
           # Also note that in environment.rb, config.time_zone is set to UTC
           # This block of code allows the app to track all bookings that came in to the course outside of the app, and also tracks when the booking was created in comparison to the actual tee time (i.e. how far in advance do people book?)
           # This call becomes very expensive over time as the number of Reservation records increases
-          existing = Reservation.find_by_course_id_and_date_and_time_and_created_at(course_id,k,r['t'],((Time.now+7.hours)-5.minute)..(Time.now+7.hours))
-          puts "---------------------------------------------------"
-          puts Time.now
-          puts (Time.now+7.hours)-5.minute
-          puts Time.now+7.hours
-          puts "---------------------------------------------------"
-          if existing.nil?
-            r = Reservation.create(reservation_info)
-          end
+          # existing = Reservation.find_by_course_id_and_date_and_time_and_created_at(course_id,k,r['t'],((Time.now+7.hours)-5.minute)..(Time.now+7.hours))
+          # if existing.nil?
+          #   r = Reservation.create(reservation_info)
+          # end
         end
       end
     end

@@ -21,6 +21,16 @@ MOBILE WEB:
 SMS BOOKING:
 
 =======================================================
+= GOOGLE APP ENGINE CODE ==============================
+=======================================================
+
+# Very critical cron job running on Google App Engine (Heroku does not support crons every minute)
+# Every minute, this cron called an endpoint in this code base which fetches available tee time data from Deep Cliff Golf Course
+# The cron hits the following URL -> http://www.presstee.com/server_communication/update_courses (passes in course id)
+# Code running on App Engine is in Python, main files are main.py, dc.py, and cron.yaml 
+# class Pinger(IHandler): is the class method that pings the URL every minute
+
+=======================================================
 = MOBILE URL REDIRECTS ================================
 =======================================================
 

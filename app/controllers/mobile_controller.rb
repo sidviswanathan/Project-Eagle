@@ -50,17 +50,8 @@ class MobileController < ApplicationController
       course = Course.find_by_mobile_domain(mdomain)                        
       params[:course_id] = course.id.to_s if !course.nil?  
       params[:course_id] = 1 if Rails.env.to_s =="development"
-      
-      puts "##################################################"
-      puts mdomain
-      puts course
-      pp params
-      puts "##################################################"
   
-      @app = MobileApp.new(params,request,session)
-      puts "99999999999999999999999999999999999999999999999999"
-      pp @app
-      puts "99999999999999999999999999999999999999999999999999"
+      @app = MobileApp.new(params,request,session)    
     end
   end
   
