@@ -79,7 +79,7 @@ class Reservation < ActiveRecord::Base
         if !confirmation_code.nil? 
           # When API suceeds returns a confirmation code (String)
           # When API fails returns a hash {"errors" => "Description of error"}
-          if confirmation_code.class == String                                                                                                             # Returns confirmation code if booked successfully, else returns the entire response
+          if confirmation_code.class != String                                                                                                             # Returns confirmation code if booked successfully, else returns the entire response
             r.confirmation_code = confirmation_code
             g = r.save
             if date.class() == Date
@@ -134,7 +134,11 @@ class Reservation < ActiveRecord::Base
   def self.cancel(confirmation_code,course_id)
     reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
     course = Course.find(course_id.to_i)
-    if DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(reservation)
+    cancel = DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(reservation)
+    puts "888888888888888888888888888888888888888"
+    pp cancel
+    puts "888888888888888888888888888888888888888"
+    if cancel
       reservation.update_attributes(:status_code => Reservation::BOOKING_CANCEL_STATUS_CODE)
       return true
     else

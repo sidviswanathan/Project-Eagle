@@ -1,3 +1,7 @@
+<script type="text/javascript">
+
+</script>
+
 <div data-role="page" data-theme="a">
 
   <%= render :partial => "header", :locals => { :app => @app } %>
@@ -15,8 +19,6 @@
 				<b style='color:green'>Booking #</b>: <%=@app.reservation.confirmation_code%>
 			</div>
 			
-			
-			
 			</div>
 			<div style='clear:both;height:4px'></div>
 			
@@ -25,10 +27,13 @@
 				For : <%=@app.reservation.golfers%> On: <%=@app.reservation.date%> At: <%=@app.reservation.time%>
 			</div>
 			
-			<a data-role="button" data-icon="delete" href='/device_communication/cancel_reservation?course_id=<%=@app.course.id.to_s%>&confirmation_code=<%=@app.reservation.confirmation_code%>'>Cancel Reservation</a>
-
+			<%= @app.reservation.confirmation_code %>
+			<% @hello = "Hello World" %>
+			
+			<a href="javascript:cancelTime(<%= @app.reservation.confirmation_code %>);" data-role="button" data-icon="delete" >Cancel Reservation</a>
 		</div>
   </div>	
-<%= render :partial => "footer", :locals => { :app => @app } %>
+
+	<%= render :partial => "footer", :locals => { :app => @app } %>
 
 </div>

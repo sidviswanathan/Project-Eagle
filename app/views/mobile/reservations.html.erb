@@ -20,12 +20,9 @@
 	   <h3>Tee Time Bookings</h3>
 	   <% if !@app.reservations.nil? %>
 
-
-
 		<div class= "postheader">
 			<h1><b>UPCOMING TEE TIMES</b></h1> 
 		</div>
-
 
 		<ul>	
 			<% @app.reservations.reverse.each do |r| %>
@@ -80,9 +77,8 @@
 	<%end%>
 	</div>
 	<% end %>
-  	
-	
-
  </div>
+
 	<%= render :partial => "footer", :locals => { :app => @app } %>
+
 </div>

@@ -20,7 +20,6 @@
 			$('#pricing_details').slideUp();
 			details_open = false;
 		}
-
 	}
 	var is_xui = false;
 	var gallery = [];
@@ -260,6 +259,30 @@
 				
 			}
 		).error(function() { alert("Sorry we were unable to book this tee time, please try again later."); });
+	}
+	
+	//This method cancels a tee time reservation
+	//After canceling the reservation takes the user to the reservations page
+	function cancelTime(confirmation_code){
+		alert(confirmation_code);
+		//alert("Your tee time have been successfully canceled. We hope to see you again soon!");					
+		$.mobile.changePage("/booking");
+		
+		// var did_it = $.post("/device_communication/cancel_reservation",{
+		// 			"course_id":app.course_id,
+		// 			"confirmation_code":confirmation_code
+		// 			},function(data){
+		// 				if(data.status == 'success'){
+		// 					$.mobile.hidePageLoadingMsg();     		
+		// 					alert("Your tee time have been successfully canceled. We hope to see you again soon!");					
+		// 					$.mobile.changePage("/booking");
+		// 				}else{
+		// 					alert("We were unable to cancel this tee time. Please try again later or call Deep Cliff Golf Course at (408)-253-5357");
+		// 					$.mobile.changePage("/reservations");
+		// 				}
+		// 		
+		// 			}
+		// 		).error(function() { alert("Sorry we were unable to cancel this tee time, please try again later."); });
 	}
 	
 	function check_deals(){
