@@ -75,12 +75,13 @@ class Reservation < ActiveRecord::Base
         puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         puts confirmation_code
         puts confirmation_code.class
-        puts confirmation_code.keys
+        puts confirmation_code.keys if confirmation_code.class == Hash 
         puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         if !confirmation_code.nil? 
-          # When API suceeds returns a confirmation code (String)
-          # When API fails returns a hash {"errors" => "Description of error"}
-          if confirmation_code.class != String                                                                                                             # Returns confirmation code if booked successfully, else returns the entire response
+          # When API suceeds returns a confirmation code 
+          # In one scenario, When API fails returns a hash {"errors" => "Description of error"}
+          # In another scenario when the API fails, returns a String "error - error description"
+          if confirmation_code.class != String || confirmation_code.has_key?("errors") != true                                                                                                             # Returns confirmation code if booked successfully, else returns the entire response
             r.confirmation_code = confirmation_code
             g = r.save
             if date.class() == Date
