@@ -258,7 +258,10 @@
 				}
 				
 			}
-		).error(function() { alert("Sorry we were unable to book this tee time, please try again later."); });
+		).error(function() { 
+			alert("Sorry we were unable to book this tee time, please try again later.");
+			$.mobile.hidePageLoadingMsg();     		 
+			});
 	}
 	
 	//This method cancels a tee time reservation
