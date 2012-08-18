@@ -64,11 +64,9 @@ class Reservation < ActiveRecord::Base
     puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
     course = Course.find(course_id.to_i)
     if user
-      puts "got into the if user block"
-      r = Reservation.new(reservation_info)
-      
-      user_data = JSON.parse(user.data)
-      r.booking_type = user_data[:device_name]
+      r = Reservation.new(reservation_info)      
+      #user_data = JSON.parse(user.data)
+      #r.booking_type = user_data[:device_name]
       r.customer = user
 
       if r.valid?
