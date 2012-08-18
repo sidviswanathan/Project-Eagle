@@ -71,11 +71,13 @@ module Fore
   def self.book(reservation_info,course,user)
     uri = "#{API_BOOK_URI}?CourseID=#{course.api_course_id}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{DEFAULT_EMAIL}&FirstName=#{user[:f_name]}&LastName=#{user[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
     response = self.http_get(uri)
+    puts "got the response, now tryring to put it through XML siple"
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
       ccode = XmlSimple.xml_in(response.body)["confirmation"][0]
       ServerCommunicationController.schedule_cancel(ccode,course.id.to_s,TESTING_AUTO_CANCEL)
       return ccode
     else
+      puts "Got into the else block of if XMLSimple response body has_key? confrimation"
       return XmlSimple.xml_in(response.body)
     end
   end
