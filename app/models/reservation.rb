@@ -70,10 +70,12 @@ class Reservation < ActiveRecord::Base
       r.customer = user
 
       if r.valid?
+        puts "Got into the r.valid method"
         confirmation_code = DeviceCommunicationController::API_MODULE_MAP[course.api].book(reservation_info,course,user)                      #Makes the booking call to the API for the golf course        
         puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         puts confirmation_code
         puts confirmation_code.class
+        puts confirmation_code.keys
         puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         if !confirmation_code.nil? 
           # When API suceeds returns a confirmation code (String)
