@@ -73,6 +73,7 @@ module Fore
     response = self.http_get(uri)
     puts "got the response, now tryring to put it through XML siple"
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
+      puts "Got into the if response body has_key? confirmation method"
       ccode = XmlSimple.xml_in(response.body)["confirmation"][0]
       ServerCommunicationController.schedule_cancel(ccode,course.id.to_s,TESTING_AUTO_CANCEL)
       return ccode
