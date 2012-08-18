@@ -6,15 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
-
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-
-	
-	
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 	
-	
     <script type="text/javascript">    
+	
 	var details_open = false;
 	function slideDown(){
 		if(!details_open){
@@ -26,6 +22,7 @@
 		}
 
 	}
+	
 	var is_xui = false;
 	var gallery = [];
 	var i_counter = 0;
@@ -40,12 +37,9 @@
 	/*
 	<%= @app.course_info.to_s %>
 	*/
-	
 	<% end %>
 
-
 	$(document).bind("mobileinit", function(){
-
 
 		$.extend($.mobile, {
 		metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
@@ -62,12 +56,10 @@
 		}else{
 			$.mobile.defaultPageTransition = "slide";
 		}
-		
-		
-		
-
+			
 	});
 	var date_scroll = false;
+	
 	function window_scroll_bottom(){
 
 	}
@@ -141,9 +133,8 @@
 			
 		})
 	}
-	var app =new Object();
-
 	
+	var app =new Object();
 	
 	function confirmTime(){
 		var confirm_time = confirm(app.first_name+" "+app.last_name+" ("+app.email+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
@@ -167,20 +158,20 @@
 	}
 
     </script>
-	<script type='text/javascript'>
 
-	</script>
 	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 	<%= stylesheet_link_tag "iphone" %>
+	
 	<style type='text/css'>
-	    .ui-page {
+		.ui-page {
 	        -webkit-backface-visibility: hidden;
 	    } 
-	.content{
+		.content{
 		text-shadow:0px 0px 0px !important;
-	}
-	.ui-page { outline: none; }
+		}
+		.ui-page { outline: none; }
 	</style>
+	
 	<style type='text/css'>
 
 	div.box{
@@ -195,7 +186,6 @@
 		text-shadow:0px 0px 0px !important;
 		color:#333 !important;
 	}
-
 
 	div.last{
 		margin-bottom:10px;
@@ -233,7 +223,6 @@
 		width:100%;
 		height:100%;
 		display:none;
-
 	}
 	div.boxes{
 		position: relative;
@@ -249,9 +238,6 @@
 			background: rgb(255, 255, 255);
 			background: rgba(255, 255, 255, 0);
 			border:1px transparent;
-
-
-
 	}
 	.book_button {
 		background-color: #7FBF4D;
@@ -279,15 +265,10 @@
 		text-align: center;
 		text-shadow: 0 -1px 0 #4C9021;
 		margin-top:6px;
-
 		margin-left:4%;
 		width:84.5%;
 		display:inline-block;
 		color:white !important;
-		
-		
-
-		
 	}
 	
 	.book_button:hover {
@@ -309,18 +290,14 @@
 	    -moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
 	    box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; }
 	
-	
-	
-
 	</style>
-
 </head> 
+
 <body> 
 	
 	    <div data-role="page" data-theme="a" style='background:#e8e8e8'>
 			<%= render :partial => "header", :locals => { :app => @app } %>
 			<div class="content" id='content' style='background:#e8e8e8 important;position:relative' data-role="content">
-
 
 				<div class='container' >
 					<div  id='gbox' style='position:relative ;'>
@@ -343,22 +320,16 @@
 						<div style='margin-top:3px;border-top:1px solid gray;font-weight:normal;font-size:14px;padding-top:4px'>
 							<b style='color:green'>OPEN</b>: 6:00 AM to 8:00 PM
 						</div>
-						
-
-
-
-						</div>
-						<div style='clear:both;height:4px'></div>
-
 					</div>
+						<div style='clear:both;height:4px'></div>
+					</div>
+					
 					<!-- <a href='tel:408-253-5357' rel='external' class='book_button'>Book Tee Time</a> -->
 					<a href='http://www.playdeepcliff.com/page.php?page_id=705' rel='external' class='book_button'>Book Tee Time</a>
 
 					<div style='' class='box'>
 						<div class='pad' style='text-align:center'>
 							<a href="sms:1-408-703-5664">Sign Up For Exclusive Deals</a>
-
-
 						</div>
 					</div>
 					<div style='' class='box'>
@@ -371,16 +342,12 @@
 									</tr>
 								</tbody>
 							</table>
-
-
 						</div>
 					</div>
 					
 					<div class='box'  onclick='slideDown();'>
 
 						<div class='pad'>
-
-
 							<img style='float:right;padding-top:3px' src='http://pushspot.appspot.com/assets/img/ud.png' />
 							<table style='padding-left:6%;'>
 								<tbody>

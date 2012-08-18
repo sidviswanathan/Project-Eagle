@@ -132,7 +132,13 @@ class Reservation < ActiveRecord::Base
   end
   
   def self.cancel(confirmation_code,course_id)
+    puts "--------888888888888888888888888888888888888888"
+    pp confirmation_code
+    puts "-------888888888888888888888888888888888888888"
+    puts course_id
+    puts "-------888888888888888888888888888888888888888"
     reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
+
     course = Course.find(course_id.to_i)
     cancel = DeviceCommunicationController::API_MODULE_MAP[course.api].cancel(reservation)
     puts "888888888888888888888888888888888888888"

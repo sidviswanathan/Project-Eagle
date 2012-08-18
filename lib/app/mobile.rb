@@ -52,11 +52,7 @@ class MobileApp
         :order=>"date DESC,time DESC"
         )
     end
-    
-    puts "9999999999999999999999999999999"
-    pp @reservations
-    puts "9999999999999999999999999999999"
-    
+        
     today = Date.today
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
     @d = (0..6).map {|x| (today+x).strftime("%Y-%m-%d")}

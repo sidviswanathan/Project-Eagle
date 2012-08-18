@@ -14,7 +14,7 @@
 			<div style='margin-top:-2px'>
 				<span style='font-size:14px;color:#555'><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></span>
 			</div>
-			
+
 			<div style='margin-top:3px;border-top:1px solid gray;font-weight:normal;font-size:14px;padding-top:4px'>
 				<b style='color:green'>Booking #</b>: <%=@app.reservation.confirmation_code%>
 			</div>
@@ -28,9 +28,9 @@
 			</div>
 			
 			<%= @app.reservation.confirmation_code %>
-			<% @hello = "Hello World" %>
+			<% @code = "12345678" %>
 			
-			<a href="javascript:cancelTime(<%= @app.reservation.confirmation_code %>);" data-role="button" data-icon="delete" >Cancel Reservation</a>
+			<a href="javascript:cancelTime('<%= @code %>');" data-role="button" data-icon="delete" >Cancel Reservation</a>
 		</div>
   </div>	
 
