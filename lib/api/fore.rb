@@ -24,10 +24,10 @@ module Fore
   # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-08-31&t=06:00&et=19:00  
   
   # Get available tee times for Fore Reservation test facility, change date to valid date 
-  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-05-31&t=06:00&et=19:00  
+  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=987654&q=0&p=4PTee1nc&d=2012-08-21&t=06:00&et=19:00  
   
   # Book a tee time for Deep CLiff Golf course, change date to a valid date 
-  # https://www.forereservations.com/cgi-bin/bk.pl?CourseID=1095014&Date=2012-06-01&Time=06:52&Price=66.00&EMail=pressteex@gmail.com&FirstName=carl&LastName=w&ExpMnth=11&ExpYear=15&CreditCard=4217639662603493&Phone=5628884454&Quantity=3&AffiliateID=PressTee&Password=4PTee1nc
+  # https://www.forereservations.com/cgi-bin/bk.pl?CourseID=1095014&Date=2012-09-01&Time=06:52&Price=35.00&EMail=pressteex@gmail.com&FirstName=carl&LastName=w&ExpMnth=11&ExpYear=15&CreditCard=4217639662603493&Phone=5628884454&Quantity=1&AffiliateID=PressTee&Password=4PTee1nc
   
   API_AFFILIATE_ID                     = 'PressTee'
   API_PASSWORD                         = '4PTee1nc'
@@ -36,7 +36,7 @@ module Fore
   API_CANCEL_URI                       = '/cgi-bin/cancel.pl'
   API_GET_AVAILABLE_URI                = '/cgi-bin/avail2.pl'
   DEEP_CLIFF_API_COURSE_ID             = '1095014'
-  FORE_TEST_FACILITY_COURSE_ID         = '987654'
+  FORE_TEST_FACILITY_COURSE_ID         = '1987654'
   
   DEFAULT_CC_NUM   = "4217639662603493"  
   DEFAULT_CC_YEAR  = "15"
@@ -84,11 +84,7 @@ module Fore
   # = CANCEL A TEE TIME ======================
   # ==========================================
   
-  def self.cancel(reservation)
-    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    pp reservation
-    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    
+  def self.cancel(reservation)    
     uri = "#{API_CANCEL_URI}?cn=#{reservation.confirmation_code}&a=#{API_AFFILIATE_ID}&p=#{API_PASSWORD}"
     response = self.http_get(uri)
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
@@ -161,9 +157,13 @@ module Fore
   
   # Processes the latest queried data from Course APIs and modifies it into a new hash structure 
   def self.process_tee_times_data(response,course)
-    puts response
     object = XmlSimple.xml_in(response, { 'KeyAttr' => 'date' })
     converted_response = Hash.new
+    if !object.has_key?('avail') 
+      puts "ERROR: The update tee time method failed for course with id: #{course.id.to_s}"
+      #Send an admin email out to notify of failed update times API call 
+      return converted_response
+    end  
     dates = object['avail'].keys
     course_id = course.id.to_s
     fee_matrix = JSON.parse(course.fee_matrix)
