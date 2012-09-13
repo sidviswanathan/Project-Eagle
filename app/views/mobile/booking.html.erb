@@ -8,395 +8,313 @@
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+	<%= stylesheet_link_tag "iphone" %>
 	
     <script type="text/javascript">
-	var is_main_page = true;
-	var details_open = false;
-	function slideDown(){
-		if(!details_open){
-			$('#pricing_details').slideDown();
-			details_open = true;
-		}else{
-			$('#pricing_details').slideUp();
-			details_open = false;
+
+		var is_main_page = true;
+		var details_open = false;
+		function slideDown(){
+			if(!details_open){
+				$('#pricing_details').slideDown();
+				details_open = true;
+			}else{
+				$('#pricing_details').slideUp();
+				details_open = false;
+			}
 		}
-	}
-	var is_xui = false;
-	var gallery = [];
-	var i_counter = 0;
-	var g1 = 0;
-	var g2 = 1;
-	var gflip = true;
-	<% if !@app.course_info['gallery'].nil? %>
-	 <% @app.course_info['gallery'].each do |i| %>
-	gallery.push("<%= i %>");
-	<% end %>
-	<% else %>	
-	<% end %>
+		var is_xui = false;
+		var gallery = [];
+		var i_counter = 0;
+		var g1 = 0;
+		var g2 = 1;
+		var gflip = true;
+		<% if !@app.course_info['gallery'].nil? %>
+		 <% @app.course_info['gallery'].each do |i| %>
+		gallery.push("<%= i %>");
+		<% end %>
+		<% else %>	
+		<% end %>
 	
-	var user_agent = navigator.userAgent;
-	if(user_agent.match('/webOS/i')){
-		user_agent = 'webOS'
-	}else if(user_agent.match('/BlackBerry/i')){
-		user_agent = 'BlackBerry'
-	}else if(user_agent.match('/Android/i')){
-		user_agent = 'Android'
-	}else if(user_agent.match('/Windows/i')){
-		user_agent = 'Windows'
-	}else if(user_agent.match('/iPhone/i')){
-		user_agent = 'iPhone'
-	}else if(user_agent.match('/iPod/i')){
-		user_agent = 'iPod'
-	}else if(user_agent.match('/iPad/i')){
-		user_agent = 'iPad'
-	}
+		var user_agent = navigator.userAgent;
+		if(user_agent.match('/webOS/i')){
+			user_agent = 'webOS'
+		}else if(user_agent.match('/BlackBerry/i')){
+			user_agent = 'BlackBerry'
+		}else if(user_agent.match('/Android/i')){
+			user_agent = 'Android'
+		}else if(user_agent.match('/Windows/i')){
+			user_agent = 'Windows'
+		}else if(user_agent.match('/iPhone/i')){
+			user_agent = 'iPhone'
+		}else if(user_agent.match('/iPod/i')){
+			user_agent = 'iPod'
+		}else if(user_agent.match('/iPad/i')){
+			user_agent = 'iPad'
+		}
 
-	$(document).bind("mobileinit", function(){
+		$(document).bind("mobileinit", function(){
 
-		$.extend($.mobile, {
-		metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
+			$.extend($.mobile, {
+			metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
+			});
+		
+			$.mobile.fixedToolbars.setTouchToggleEnabled(false);
+		
+			if(navigator.userAgent.match(/webOS/i) ||
+			 navigator.userAgent.match(/BlackBerry/)
+			 ){
+			 $.mobile.defaultPageTransition = "none";
+			}else if( navigator.userAgent.match(/Android/i) ){
+				$.mobile.defaultPageTransition = "fade";
+			}else{
+				$.mobile.defaultPageTransition = "slide";
+			}
 		});
-		
-		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
-		
-		if(navigator.userAgent.match(/webOS/i) ||
-		 navigator.userAgent.match(/BlackBerry/)
-		 ){
-		 $.mobile.defaultPageTransition = "none";
-		}else if( navigator.userAgent.match(/Android/i) ){
-			$.mobile.defaultPageTransition = "fade";
-		}else{
-			$.mobile.defaultPageTransition = "slide";
-		}
-	});
 
-	var gallery_not_started = true;
-	$( document ).bind( "pagechange", function( event, data ){
-		if (($("#gbox").length > 0) && gallery_not_started){
-		  	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
-			setTimeout("gflipIn()",4000);
-			gallery_not_started = false;
-		}
-		$('#contact_method').val(app.contact_via);
+		var gallery_not_started = true;
+		$( document ).bind( "pagechange", function( event, data ){
+			if (($("#gbox").length > 0) && gallery_not_started){
+			  	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
+				setTimeout("gflipIn()",4000);
+				gallery_not_started = false;
+			}
+			$('#contact_method').val(app.contact_via);
 		
-		$('#contact_method').change(function(){
-			if($(this).val()=='email'){
+			$('#contact_method').change(function(){
+				if($(this).val()=='email'){
+					$('#contact_value').attr("placeholder","Email Address");
+				}else{
+					$('#contact_value').attr("placeholder","Phone Number");
+				}
+			})
+		});
+
+		function callUserSignIn(){
+			alert("Hello New User");
+		}
+		function changePage(where){
+			$.mobile.changePage(where, {transition: 'slide', showLoadMsg:false});
+		}
+		function callNoTeeTimeSelected(){
+			alert("Please select a Tee Time first!");
+		}
+		function gflipIn(){
+			g1 += 2;
+			g2 += 2;
+			$('#gboxi').fadeIn(1500,function(){
+				//showing 7
+				if(g1>(gallery.length-1)){
+					if(gflip){
+						g1 = 0;
+					}else{
+						g1 = 1;
+					}
+				}
+				$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
+				setTimeout("gflipOut()",2500);
+
+			});
+		}
+		function gflipOut(){
+			$('#gboxi').fadeOut(1500,function(){
+				//Showing 8 images in the About Us gallery
+				if(g2>(gallery.length-1)){
+						if(gflip){
+							g2 = 1;
+							gflip = false;
+						}else{
+							g2 = 0;
+							gflip = true;
+						}
+				}
+
+				$('#gboxi').attr("src",gallery[g2]);
+
+				setTimeout("gflipIn()",2500);
+			});
+		}
+	
+		var app =new Object();
+		var confirm_time = true;
+	
+		//This method submits the form that the user fills out when booking a tee time for the first time 
+		// User can currently fill out this form using phone number or email address
+		function submitform(ctime){
+			confirm_time = ctime;
+
+			if($('#first_name').val()){
+				app.first_name = $('#first_name').val();
+				app.last_name  = $('#last_name').val();
+				app.contact = $('#contact_value').val();
+				app.contact_via = $('#contact_method').val();
+				app.send_deals = $('#send_deals').val();
+			}
+		
+			//Store the customer's information into the Customer table in the database
+			$.post("/device_communication/customer_login",{
+				"f_name":app.first_name,
+				"l_name":app.last_name,
+				"contact_via":app.contact_via,
+				"contact":app.contact,
+				"device_name":"mobile_web/"+user_agent,
+				"redirect":"true",
+				"os_version":"NA",
+				"app_version":"mobile_web"},function(data){
+					if(data=='fail'){
+						var errors = [];
+						if(app.first_name==""){
+							$('#first_name').css("borderBottom","2px solid red");
+							$('#first_name').focus(function(){
+								$(this).css("color",ccolor);
+							})
+						}
+						if(app.last_name==""){
+							$('#last_name').css("borderBottom","2px solid red");
+						}
+						if(app.contact_via=="email"){
+							if(!validateEmail($('#contact_value').val())){
+								$('#contact_value').css("borderBottom","2px solid red");
+							}
+						}else{
+							if(!validatePhone($('#contact_value').val())){
+								$('#contact_value').css("borderBottom","2px solid red");
+							}
+						}
+					
+						alert("Sorry please check if the highlighted fields are not blank and are properly formatted.");
+					}else{
+						if(ctime){
+							confirmTime();
+						}else{
+							alert("Your Preferences have been Saved!")
+							ctime = true;
+						}	
+					}
+			})
+		}
+		function validateEmail(email) { 
+		    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		    return re.test(email);
+		}
+		function validatePhone(str) 
+		{
+			var phone2 = /^(\+\d)*\s*(\(\d{3}\)\s*)*\d{3}(-{0,1}|\s{0,1})\d{2}(-{0,1}|\s{0,1})\d{2}$/; 
+			if (str.match(phone2)) {
+		   		return true;
+		 	} else {
+		 		return false;
+		 	}
+		}
+	
+	
+		function confirmTime(){
+			if(app.golfers && app.contact && app.date && app.timer){
+				reserveTime()
+			}else{
+				var errors = [];
+				if(!app.golfers){
+					alert("Please select number of golfers before booking a tee time.");
+				}else if(!app.timer){
+					alert("Please select a tee time to book a reservation");
+				}
+			}	
+		}
+	
+		function update_contact_placeholder(){
+			if($('#contact_method').val()=='email'){
 				$('#contact_value').attr("placeholder","Email Address");
 			}else{
 				$('#contact_value').attr("placeholder","Phone Number");
-			}
-		})
-	});
-
-	function callUserSignIn(){
-		alert("Hello New User");
-	}
-	function changePage(where){
-		$.mobile.changePage(where, {transition: 'slide', showLoadMsg:false});
-	}
-	function callNoTeeTimeSelected(){
-		alert("Please select a Tee Time first!");
-	}
-	function gflipIn(){
-		g1 += 2;
-		g2 += 2;
-		$('#gboxi').fadeIn(1500,function(){
-			//showing 7
-			if(g1>(gallery.length-1)){
-				if(gflip){
-					g1 = 0;
-				}else{
-					g1 = 1;
-				}
-			}
-			$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
-			setTimeout("gflipOut()",2500);
-
-		});
-	}
-	function gflipOut(){
-		$('#gboxi').fadeOut(1500,function(){
-			//Showing 8 images in the About Us gallery
-			if(g2>(gallery.length-1)){
-					if(gflip){
-						g2 = 1;
-						gflip = false;
-					}else{
-						g2 = 0;
-						gflip = true;
-					}
-			}
-
-			$('#gboxi').attr("src",gallery[g2]);
-
-			setTimeout("gflipIn()",2500);
-		});
-	}
-	
-	var confirm_time = true;
-	
-	//This method submits the form that the user fills out when booking a tee time for the first time 
-	// User can currently fill out this form using phone number or email address
-	function submitform(ctime){
-		confirm_time = ctime;
-
-		if($('#first_name').val()){
-			app.first_name = $('#first_name').val();
-			app.last_name  = $('#last_name').val();
-			app.contact = $('#contact_value').val();
-			app.contact_via = $('#contact_method').val();
-			app.send_deals = $('#send_deals').val();
+			}	
 		}
+	
+		function cancelRes(){
+			$.get("/device_communication/cancel_reservation",{"course_id":app.course_id,"confirmation_code":$('span#confirm_waiting').html()},function(data){
+				alert("Reservation Cancelled");
+				$.mobile.changePage("http://m.playdeepcliff.com/booking");
+			})
+		}
+	
+		//This method makes the reservation in the database and books agianst the Course API
+		//Once the reservation has been made, the user is routed to the /reservations page
+		function reserveTime(){
+			$.mobile.showPageLoadingMsg();     		
 		
-		//Store the customer's information into the Customer table in the database
-		$.post("/device_communication/customer_login",{
-			"f_name":app.first_name,
-			"l_name":app.last_name,
-			"contact_via":app.contact_via,
-			"contact":app.contact,
-			"device_name":"mobile_web/"+user_agent,
-			"redirect":"true",
-			"os_version":"NA",
-			"app_version":"mobile_web"},function(data){
-				if(data=='fail'){
-					var errors = [];
-					if(app.first_name==""){
-						$('#first_name').css("borderBottom","2px solid red");
-						$('#first_name').focus(function(){
-							$(this).css("color",ccolor);
-						})
-					}
-					if(app.last_name==""){
-						$('#last_name').css("borderBottom","2px solid red");
-					}
-					if(app.contact_via=="email"){
-						if(!validateEmail($('#contact_value').val())){
-							$('#contact_value').css("borderBottom","2px solid red");
-						}
-					}else{
-						if(!validatePhone($('#contact_value').val())){
-							$('#contact_value').css("borderBottom","2px solid red");
-						}
-					}
-					
-					alert("Sorry please check if the highlighted fields are not blank and are properly formatted.");
-				}else{
-					if(ctime){
-						confirmTime();
-					}else{
-						alert("Your Preferences have been Saved!")
-						ctime = true;
-					}	
-				}
-		})
-	}
-	function validateEmail(email) { 
-	    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	    return re.test(email);
-	}
-	function validatePhone(str) 
-	{
-		var phone2 = /^(\+\d)*\s*(\(\d{3}\)\s*)*\d{3}(-{0,1}|\s{0,1})\d{2}(-{0,1}|\s{0,1})\d{2}$/; 
-		if (str.match(phone2)) {
-	   		return true;
-	 	} else {
-	 		return false;
-	 	}
-	}
-	
-	var app =new Object();
-	
-	function confirmTime(){
-		if(app.golfers && app.contact && app.date && app.timer){
-			reserveTime()
-		}else{
-			var errors = [];
-			if(!app.golfers){
-				alert("Please select number of golfers before booking a tee time.");
-			}else if(!app.timer){
-				alert("Please select a tee time to book a reservation");
-			}
-		}	
-	}
-	
-	function update_contact_placeholder(){
-		if($('#contact_method').val()=='email'){
-			$('#contact_value').attr("placeholder","Email Address");
-		}else{
-			$('#contact_value').attr("placeholder","Phone Number");
-		}	
-	}
-	
-	function cancelRes(){
-		$.get("/device_communication/cancel_reservation",{"course_id":app.course_id,"confirmation_code":$('span#confirm_waiting').html()},function(data){
-			alert("Reservation Cancelled");
-			$.mobile.changePage("http://m.playdeepcliff.com/booking");
-		})
-	}
-	
-	//This method makes the reservation in the database and books agianst the Course API
-	//Once the reservation has been made, the user is routed to the /reservations page
-	function reserveTime(){
-		$.mobile.showPageLoadingMsg();     		
-		
-		var did_it = $.post("/device_communication/book_reservation",{
-			"course_id":app.course_id,
-			"golfers":app.golfers,
-			"contact_via":app.contact_via,
-			"contact":app.contact,
-			"date":app.date,
-			"time":app.timer,
-			"total":app.total
-			},function(data){
-				if(data.status == 'success'){
-					$.mobile.hidePageLoadingMsg();     		
-					alert("Success! Your tee time at Deep Cliff Golf Course has been booked.");					
-					$.mobile.changePage("/reservations");
-				}else{
-					alert("We were unable to book this tee time. Please try again later or call Deep Cliff Golf Course at (408)-253-5357");
-					$.mobile.hidePageLoadingMsg();     		 
-				}
-				
-			}
-		).error(function() { 
-			alert("Sorry we were unable to book this tee time, please try again later.");
-			$.mobile.hidePageLoadingMsg();     		 
-			});
-	}
-	
-	//This method cancels a tee time reservation
-	//After canceling the reservation takes the user to the reservations page
-	function cancelTime(confirmation_code){
-		
-		var cxtime = confirm("Are you sure you would like to cancel this tee time reservation? Press OK to continue.");
-		//If the user clicks ok, then the if condition is executed
-		if(cxtime==true){
-			$.mobile.changePage("/booking");			
-			var did_it = $.post("/device_communication/cancel_reservation",{
+			var did_it = $.post("/device_communication/book_reservation",{
 				"course_id":app.course_id,
-				"confirmation_code":confirmation_code
+				"golfers":app.golfers,
+				"contact_via":app.contact_via,
+				"contact":app.contact,
+				"date":app.date,
+				"time":app.timer,
+				"total":app.total
 				},function(data){
 					if(data.status == 'success'){
 						$.mobile.hidePageLoadingMsg();     		
-						alert("Your tee time have been successfully canceled. We hope to see you again soon!");					
-						$.mobile.changePage("/booking");
-					}else{
-						alert("We were unable to cancel this tee time. Please try again later or call Deep Cliff Golf Course at (408)-253-5357");
+						alert("Success! Your tee time at Deep Cliff Golf Course has been booked.");					
 						$.mobile.changePage("/reservations");
+					}else{
+						alert("We were unable to book this tee time. Please try again later or call Deep Cliff Golf Course at (408)-253-5357");
+						$.mobile.hidePageLoadingMsg();     		 
 					}
+				
 				}
-			).error(function() { alert("Sorry we were unable to cancel this tee time, please try again later."); });	
-		}else{
-		
+			).error(function() { 
+				alert("Sorry we were unable to book this tee time, please try again later.");
+				$.mobile.hidePageLoadingMsg();     		 
+				});
 		}
-	}
 	
-	function check_deals(){
-
-		if($('#send_deals').is(':checked')){
-			$('#send_deals').attr('checked',false)
-			$('#sd_label').css("color","#444")
-		}else{
-			$('#send_deals').attr("checked",true);
-			$('#sd_label').css("color","green")
+		//This method cancels a tee time reservation
+		//After canceling the reservation takes the user to the reservations page
+		function cancelTime(confirmation_code){
+		
+			var cxtime = confirm("Are you sure you would like to cancel this tee time reservation? Press OK to continue.");
+			//If the user clicks ok, then the if condition is executed
+			if(cxtime==true){
+				$.mobile.changePage("/booking");			
+				var did_it = $.post("/device_communication/cancel_reservation",{
+					"course_id":app.course_id,
+					"confirmation_code":confirmation_code
+					},function(data){
+						if(data.status == 'success'){
+							$.mobile.hidePageLoadingMsg();     		
+							alert("Your tee time have been successfully canceled. We hope to see you again soon!");					
+							$.mobile.changePage("/booking");
+						}else{
+							alert("We were unable to cancel this tee time. Please try again later or call Deep Cliff Golf Course at (408)-253-5357");
+							$.mobile.changePage("/reservations");
+						}
+					}
+				).error(function() { alert("Sorry we were unable to cancel this tee time, please try again later."); });	
+			}else{
+		
+			}
 		}
-	}
+	
+		function check_deals(){
+
+			if($('#send_deals').is(':checked')){
+				$('#send_deals').attr('checked',false)
+				$('#sd_label').css("color","#444")
+			}else{
+				$('#send_deals').attr("checked",true);
+				$('#sd_label').css("color","green")
+			}
+		}
     </script>
-
-	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
-	<%= stylesheet_link_tag "iphone" %>
-
-	<style type='text/css'>
-	    .ui-page {
-	        -webkit-backface-visibility: hidden;
-	    } 
-	.content{
-		text-shadow:0px 0px 0px !important;
-	}
-	.ui-page { outline: none; }
-	</style>
-	<style type='text/css'>
-
-	div.box{
-		background-color:#fff;
-		border-radius:12px;
-		border:1px solid #ddd;
-		-moz-border-radius: 12px;
-		-webkit-border-radius: 12px;
-		text-align:left;
-		margin:10px;
-		margin-bottom:0px;
-		text-shadow:0px 0px 0px !important;
-		color:#333 !important;
-	}
-	div.last{
-		margin-bottom:10px;
-	}
-	div.pad{
-		padding:12px;
-	}
-	div.container{
-		padding:0px;
-	}
-	.ui-content{
-		padding:0px !important;
-			text-shadow:0px 0px 0px !important;
-	}
-	div.content{
-			text-shadow:0px 0px 0px !important;
-	}
-	div.title{
-		margin-left:100px;
-		margin-top:18px;
-	}
-	div#gbox{
-		height:120px;
-		background-image:url('/imgages/holes/hole1.png') no-repeat center center fixed; 
-		        -webkit-background-size: cover;
-		        -moz-background-size: cover;
-		        -o-background-size: cover;
-		        background-size: cover;
-		top:0px;
-		width:100%;
-	}
-	img#gboxi{
-		width:100%;
-		height:100%;
-		display:none;
-	}
-	div.boxes{
-		left: 0px;
-		right: 0px;
-		width: 100%;
-		height: 100%;
-		top: -80px;
-		z-index: 99;
-	}
-	div#topbox{
-		background: rgb(255, 255, 255);
-		background: rgba(255, 255, 255, 0);
-		border:1px transparent;
-	}
-	span.confirm_waiting{
-		font-weight:bold;
-		color:orange;
-	}
-	div#popup .ui-content{
-		padding:15px !important;
-	}
-	</style>
-
-</head> 
+	
+	</head> 
 
 <body> 
 
-<div data-role="page" class='type-interior'>
-
+	<div data-role="page" class='type-interior'>
 	<%= render :partial => "header", :locals => { :app => @app } %>
 
 	<div class='main_booking'>
 	<div class="content">
-
 
 		<ul>
 
@@ -479,23 +397,23 @@
 		</div>
 
 	<%= render :partial => "footer", :locals => { :app => @app } %>
-</div><!-- /page -->
-<div data-role="page" id="popup">
-
-	<div data-role="header">
-		<h1>Tee Time Confirmation</h1>
-	</div><!-- /header -->
-
-	<div data-role="content" id='confirm_body' style='padding-left:20px;padding-right:20px' >	
-		<h2>Popup</h2>
-		<p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>		
-		<p><a href="#one" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to page "one"</a></p>	
-	</div><!-- /content -->
+	</div><!-- /page -->
 	
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-</div><!-- /page popup -->
+	<div data-role="page" id="popup">
+		<div data-role="header">
+			<h1>Tee Time Confirmation</h1>
+		</div><!-- /header -->
+
+		<div data-role="content" id='confirm_body' style='padding-left:20px;padding-right:20px' >	
+			<h2>Popup</h2>
+			<p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>		
+			<p><a href="#one" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to page "one"</a></p>	
+		</div><!-- /content -->
+
+		<div data-role="footer">
+			<h4>Page Footer</h4>
+		</div><!-- /footer -->
+	</div><!-- /page popup -->
 
 </body>
 </html>

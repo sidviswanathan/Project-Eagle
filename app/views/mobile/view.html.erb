@@ -27,8 +27,7 @@
 				For : <%=@app.reservation.golfers%> On: <%=@app.reservation.date%> At: <%=@app.reservation.time%>
 			</div>
 			
-			<%= @app.reservation.confirmation_code %>
-			<% @code = "12345678" %>
+			<% @code = @app.reservation.confirmation_code %>
 			
 			<a href="javascript:cancelTime('<%= @code %>');" data-role="button" data-icon="delete" >Cancel Reservation</a>
 		</div>

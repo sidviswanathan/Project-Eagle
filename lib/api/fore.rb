@@ -29,6 +29,10 @@ module Fore
   # Book a tee time for Deep CLiff Golf course, change date to a valid date 
   # https://www.forereservations.com/cgi-bin/bk.pl?CourseID=1095014&Date=2012-09-01&Time=06:52&Price=35.00&EMail=pressteex@gmail.com&FirstName=carl&LastName=w&ExpMnth=11&ExpYear=15&CreditCard=4217639662603493&Phone=5628884454&Quantity=1&AffiliateID=PressTee&Password=4PTee1nc
   
+  # Cancel a previously booked tee time
+  # https://www.forereservations.com/cgi-bin/cancel.pl?cn=XXXXXXXXX&a=PressTee&p=4PTee1nc
+  
+  
   API_AFFILIATE_ID                     = 'PressTee'
   API_PASSWORD                         = '4PTee1nc'
   API_HOST                             = 'https://www.forereservations.com'
@@ -92,6 +96,8 @@ module Fore
   
   def self.cancel(reservation)    
     uri = "#{API_CANCEL_URI}?cn=#{reservation.confirmation_code}&a=#{API_AFFILIATE_ID}&p=#{API_PASSWORD}"
+    puts '------------------------- Cancellation URL:'
+    puts uri
     response = self.http_get(uri)
     if XmlSimple.xml_in(response.body).has_key?("confirmation")
       return true
