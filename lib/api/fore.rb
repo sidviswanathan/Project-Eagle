@@ -78,7 +78,8 @@ module Fore
     begin
       if XmlSimple.xml_in(response.body).has_key?("confirmation")
         ccode = XmlSimple.xml_in(response.body)["confirmation"][0]
-        ServerCommunicationController.schedule_cancel(ccode,course.id.to_s,TESTING_AUTO_CANCEL)
+        #Auto-cancel tee times that have been booked, every 10 minutes [for testing purposes]   
+        #ServerCommunicationController.schedule_cancel(ccode,course.id.to_s,TESTING_AUTO_CANCEL)
         return ccode
       else
         return XmlSimple.xml_in(response.body)
