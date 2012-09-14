@@ -32,7 +32,6 @@ module Fore
   # Cancel a previously booked tee time
   # https://www.forereservations.com/cgi-bin/cancel.pl?cn=XXXXXXXXX&a=PressTee&p=4PTee1nc
   
-  
   API_AFFILIATE_ID                     = 'PressTee'
   API_PASSWORD                         = '4PTee1nc'
   API_HOST                             = 'https://www.forereservations.com'
@@ -234,7 +233,7 @@ module Fore
           # This call becomes very expensive over time as the number of Reservation records increases
           # existing = Reservation.find_by_course_id_and_date_and_time_and_created_at(course_id,k,r['t'],((Time.now+7.hours)-5.minute)..(Time.now+7.hours))
           # if existing.nil?
-          #   r = Reservation.create(reservation_info)
+          # r = Reservation.create(reservation_info)
           # end
         end
       end

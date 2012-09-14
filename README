@@ -15,9 +15,6 @@
 
 MOBILE WEB:
 
-1.     
-
-
 SMS BOOKING:
 
 =======================================================
@@ -29,6 +26,7 @@ SMS BOOKING:
 # The cron hits the following URL -> http://www.presstee.com/server_communication/update_courses (passes in course id)
 # Code running on App Engine is in Python, main files are main.py, dc.py, and cron.yaml 
 # class Pinger(IHandler): is the class method that pings the URL every minute
+# For more details, visit Google App Engine Wiki
 
 =======================================================
 = MOBILE URL REDIRECTS ================================

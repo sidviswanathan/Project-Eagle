@@ -58,15 +58,13 @@ class Reservation < ActiveRecord::Base
   # If successfully created Reservation record, makes the book tee time call to the API for the course            
   
   def self.book_tee_time(user, course_id, golfers, time, date, total)
-    reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total}
+    reservation_info = {:course_id=>course_id, :golfers=>golfers, :time=>time, :date=>date, :total=>total, :booking_type=>"PressTee"}
     puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
     pp reservation_info
     puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
     course = Course.find(course_id.to_i)
     if user
       r = Reservation.new(reservation_info)      
-      #user_data = JSON.parse(user.data)
-      #r.booking_type = user_data[:device_name]
       r.customer = user
 
       if r.valid?
@@ -135,7 +133,6 @@ class Reservation < ActiveRecord::Base
   def self.cancel(confirmation_code,course_id)
     puts "--------888888888888888888888888888888888888888"
     pp confirmation_code
-    puts "-------888888888888888888888888888888888888888"
     puts course_id
     puts "-------888888888888888888888888888888888888888"
     reservation = Reservation.find_by_confirmation_code_and_course_id(confirmation_code,course_id)
