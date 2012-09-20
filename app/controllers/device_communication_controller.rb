@@ -220,7 +220,6 @@ class DeviceCommunicationController < ApplicationController
     date        = params[:date]
     total       = params[:total]
     
-    logger.info params
     response_object = intitiate_response_object
     
     if date.class() == Date
