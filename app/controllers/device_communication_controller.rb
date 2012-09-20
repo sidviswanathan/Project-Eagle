@@ -101,9 +101,6 @@ class DeviceCommunicationController < ApplicationController
     os_version   = params[:os_version]
     app_version  = params[:app_version]
     redirect     = params[:redirect]
-    puts '000000000000000000000000000000000000000'
-    puts redirect
-    puts '000000000000000000000000000000000000000'
     send_deals   = params[:send_deals]
     password     = params[:password]
     
@@ -120,13 +117,13 @@ class DeviceCommunicationController < ApplicationController
       puts "55555555555555555555555555555555555"
 
       if !customer.nil?
-        puts "inside the customer if conditional"
-        # Set a permanenet signed cookie and sesson cookie
-        cookies.permanent.signed[:current_user_id] = customer.id 
-        session[:current_user_id]                  = customer.id
-        response_object[:status]                   = "success"
-        response_object[:statusCode]               = 200
-        response_object[:message]                  = "The server successfully created a Customer record"
+        # Set a long expiry cookie and sesson cookie
+        # Need to upgrade to Rails 3 to take advantage of permanenet singed cookies
+        cookies[:current_user_id]      = { :value => customer.id, :expires => 5.years.from_now } 
+        session[:current_user_id]     = customer.id
+        response_object[:status]      = "success"
+        response_object[:statusCode]  = 200
+        response_object[:message]     = "The server successfully created a Customer record"
         if !redirect.nil?
           puts customer.id
           render :text => customer.id.to_s
