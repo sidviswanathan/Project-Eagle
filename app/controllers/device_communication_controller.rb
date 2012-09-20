@@ -121,11 +121,12 @@ class DeviceCommunicationController < ApplicationController
 
       if !customer.nil?
         puts "inside the customer if conditional"
-        # Set the session cookie
-        session[:current_user_id] = customer.id
-        response_object[:status]     = "success"
-        response_object[:statusCode] = 200
-        response_object[:message]    = "The server successfully created a Customer record"
+        # Set a permanenet signed cookie and sesson cookie
+        cookies.permanent.signed[:current_user_id] = customer.id 
+        session[:current_user_id]                  = customer.id
+        response_object[:status]                   = "success"
+        response_object[:statusCode]               = 200
+        response_object[:message]                  = "The server successfully created a Customer record"
         if !redirect.nil?
           puts customer.id
           render :text => customer.id.to_s

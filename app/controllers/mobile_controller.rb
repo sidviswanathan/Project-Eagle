@@ -62,6 +62,11 @@ class MobileController < ApplicationController
   # http://localhost:3000/booking?course_id=1
   # http://m.playdeepcliff.com/booking
   def booking
+    puts "-------------------------Here are the cookie / session details:"
+    pp cookies[:current_user_id]
+    pp session[:current_user_id] 
+    pp @app.user
+    puts "---------------------------------------------------------------"
   end
   
   # This is the landing page experience for all courses
