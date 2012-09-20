@@ -9,7 +9,7 @@ class MobileApp
   
   attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation, :time12, :timenow, :date_tomorrow
   
-  def initialize(params,request,session)
+  def initialize(params,request,session,cookies)
     @course = Course.find(params[:course_id].to_i)
     
     if params[:time].nil?
@@ -42,11 +42,13 @@ class MobileApp
       @reservation = Reservation.find(params[:view].to_i)
     end
     
-    @user ||= Customer.find(session[:current_user_id]) || Customer.find(cookies[:current_user_id].to_i) if cookies
-    @user ||= Customer.find(session[:current_user_id]) if @user.nil?
-  
+    @user ||= Customer.find(session[:current_user_id]) || Customer.find(cookies[:current_user_id].to_i) if !cookies[:current_user_id].nil?
+    @user = Customer.find(session[:current_user_id]) if @user.nil? && session[:current_user_id] 
+    
     puts "000000000000000000000000000000000000 This is the user id we found:"
-    puts @user.id
+    puts session[:current_user_id]
+    puts @user.id if !@user.nil?
+    puts cookies[:current_user_id]
     puts "000000000000000000000000000000000000"
     
     if !@user.nil?

@@ -51,7 +51,7 @@ class MobileController < ApplicationController
       params[:course_id] = course.id.to_s if !course.nil?  
       params[:course_id] = 1 if Rails.env.to_s =="development"
   
-      @app = MobileApp.new(params,request,session)    
+      @app = MobileApp.new(params,request,session,cookies)    
     end
   end
   
