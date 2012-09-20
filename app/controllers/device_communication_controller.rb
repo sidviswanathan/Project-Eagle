@@ -119,7 +119,7 @@ class DeviceCommunicationController < ApplicationController
       if !customer.nil?
         # Set a long expiry cookie and sesson cookie
         # Need to upgrade to Rails 3 to take advantage of permanenet singed cookies
-        cookies[:current_user_id]      = { :value => customer.id, :expires => 5.years.from_now } 
+        cookies[:current_user_id]     = { :value => customer.id, :expires => 5.years.from_now } 
         session[:current_user_id]     = customer.id
         response_object[:status]      = "success"
         response_object[:statusCode]  = 200
