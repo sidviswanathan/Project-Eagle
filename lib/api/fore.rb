@@ -21,10 +21,10 @@ module Fore
   # ==========================================
   
   # Get available tee times for Deep Cliff Golf course, change date to valid date 
-  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-08-31&t=06:00&et=19:00  
+  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-09-22&t=06:00&et=19:00  
   
   # Get available tee times for Fore Reservation test facility, change date to valid date 
-  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=987654&q=0&p=4PTee1nc&d=2012-08-21&t=06:00&et=19:00  
+  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=987654&q=0&p=4PTee1nc&d=2012-09-22&t=06:00&et=19:00  
   
   # Book a tee time for Deep CLiff Golf course, change date to a valid date 
   # https://www.forereservations.com/cgi-bin/bk.pl?CourseID=1095014&Date=2012-09-20&Time=06:52&Price=35.00&EMail=pressteex@gmail.com&FirstName=carl&LastName=w&ExpMnth=11&ExpYear=15&CreditCard=4217639662603493&Phone=5628884454&Quantity=1&AffiliateID=PressTee&Password=4PTee1nc
@@ -71,9 +71,9 @@ module Fore
   # ==========================================
 
   def self.book(reservation_info,course,user)
-    puts "+++++++++++++++++++++++++PRINTING OUT THE RESERVATION INFO"
+    puts "-----------------------PRINTING OUT THE RESERVATION INFO"
     pp reservation_info
-    pp reservation_info[:golfers]
+
     
     uri = "#{API_BOOK_URI}?CourseID=#{course.api_course_id}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{DEFAULT_EMAIL}&FirstName=#{user[:f_name]}&LastName=#{user[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
     pp uri

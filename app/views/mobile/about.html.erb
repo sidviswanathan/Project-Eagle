@@ -50,8 +50,10 @@
 						<table border="0" cellpadding="1" cellspacing="1" >
 							<tbody>
 								<tr>
-									<th colspan="2">
-										<strong>Weekday Green Fees</strong></th>
+									<th valign="bottom" width="75%">
+										<strong>Weekday</strong></th>
+									<th align="left" valign="bottom">
+										Fees</th>
 								</tr>
 								<tr>
 									<td valign="top" width="75%">
@@ -75,11 +77,12 @@
 									<td valign="top" width="75%">
 										Sr.&nbsp;Rate Special after 9:00 AM - Lunch Included (age 62 +)</td>
 									<td align="left" valign="top">
-										$22.00</td>
+										$23.00</td>
 								</tr>
 							</tbody>
 						</table>
-						<table border="0" cellpadding="1" cellspacing="1" style='margin-top:14px'>
+						
+						<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
 							<tbody>
 								<tr>
 									<th valign="bottom" width="75%">
@@ -107,12 +110,36 @@
 								</tr>
 								<tr>
 									<td valign="top" width="75%">
-										Nine-hole (Restrictions apply)</td>
+										9-hole (Restrictions apply)</td>
 									<td align="left" valign="top">
 										$22.00</td>
 								</tr>
 							</tbody>
 						</table>
+						
+						<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
+							<tbody>
+								<tr>
+									<td valign="top" width="75%">
+										Pull Carts - 9 Holes</td>
+									<td align="left" valign="top">
+										$3.00</td>
+								</tr>
+								<tr>
+									<td valign="top" width="75%">
+										Pull Carts - 18 Holes</td>
+									<td align="left" valign="top">
+										$6.00</td>
+								</tr>
+								<tr>
+									<td valign="top" width="75%" style="padding-top:10px;">
+										We offer lessons with our teaching professionals and tournament bookings.  For more information please contact the Pro Shop at (408) 253-5357</td>
+									<td align="left" valign="top">
+										</td>
+								</tr>
+							</tbody>
+						</table>
+						
 						</div>
 					</div>
 				</div>
@@ -136,7 +163,7 @@
 							<tbody>
 								<tr>
 									<td style='color:gray;text-align:right' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></td>
-									<td><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %>, <%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></a></td>
+									<td><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %>, <%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %> 95014</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -150,11 +177,7 @@
 					<a href='http://www.yelp.com/biz/deep-cliff-golf-course-cupertino?rho_open_target=_blank' style='color:#336699;text-decoration:none'>Read & Write Reviews</a>
 					</div>
 				</div>
-				<div class='box' style='text-align:center'>
-					<div class='pad'>
-						<a target=_blank href='<%= @app.course_info['url'] %>?rho_open_target=_blank' style='color:#336699;text-decoration:none'><%= @app.course_info['url'] %></a>
-					</div>
-				</div>
+
 				<div class='box'>
 					<div class='pad'>
 						<table style='padding-left:6%'>
