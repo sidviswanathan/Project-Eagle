@@ -28,7 +28,7 @@ module Fore
   
   # Book a tee time for Deep CLiff Golf course, change date to a valid date 
   # https://www.forereservations.com/cgi-bin/bk.pl?CourseID=1095014&Date=2012-09-20&Time=06:52&Price=35.00&EMail=pressteex@gmail.com&FirstName=carl&LastName=w&ExpMnth=11&ExpYear=15&CreditCard=4217639662603493&Phone=5628884454&Quantity=1&AffiliateID=PressTee&Password=4PTee1nc
-  
+        
   # Cancel a previously booked tee time
   # https://www.forereservations.com/cgi-bin/cancel.pl?cn=XXXXXXXXX&a=PressTee&p=4PTee1nc
   
@@ -78,6 +78,7 @@ module Fore
     uri = "#{API_BOOK_URI}?CourseID=#{course.api_course_id}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{DEFAULT_EMAIL}&FirstName=#{user[:f_name]}&LastName=#{user[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
     pp uri
     response = self.http_get(uri)
+    pp response.body
     
     begin
       if XmlSimple.xml_in(response.body).has_key?("confirmation")

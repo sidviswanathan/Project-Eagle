@@ -4,21 +4,21 @@
 
   <div class="content">
 	<% if @app.user.nil? %>
-	<a href='' style='color:#333' >Login</a> or <a href=''>Register</a>
-	<div id='account_settings'>
-		<%= render :partial => "login", :locals => { :app => @app } %>
-	</div>
-	
-	<% else %>
-	<div data-role="collapsible" data-theme='c'>
-		<h3>Account Settings</h3>
 		<div id='account_settings'>
 			<%= render :partial => "login", :locals => { :app => @app } %>
 		</div>
-	</div>
-	<div data-role="collapsible" id='tee_time_reservations' data-collapsed="false" data-theme="c">
-	   <h3>Tee Time Bookings</h3>
-	   <% if !@app.reservations.nil? %>
+	<% else %>
+		<div data-role="collapsible" data-theme='c'>
+			<h3>Account Settings</h3>
+			<div id='account_settings'>
+				<%= render :partial => "login", :locals => { :app => @app } %>
+			</div>
+		</div>
+		
+		<div data-role="collapsible" id='tee_time_reservations' data-collapsed="false" data-theme="c">
+	   	<h3>Tee Time Bookings</h3>
+	   	
+		<% if !@app.reservations.nil? %>
 
 		<div class= "postheader">
 			<h1><b>UPCOMING TEE TIMES</b></h1> 
@@ -27,22 +27,22 @@
 		<ul>	
 			<% @app.reservations.reverse.each do |r| %>
 				<% if (r.date - Date.today) > 0 %>
-				<li id='r_<%= r.confirmation_code %>'><a href="/mobile/view?view=<%= r.id.to_s %>&course_id=<%= @app.course.id.to_s %>">
-					<span class="title4">&nbsp;
-						<div id="wrapper1">
-							<div id="wrapper3">
-								<div id="day"><%= r.date.strftime('%a').upcase %></div>
-								<div id="clear"></div>
-								<div id="month"><%= r.date.strftime('%b').upcase %></div>
+					<li id='r_<%= r.confirmation_code %>'><a href="/mobile/view?view=<%= r.id.to_s %>&course_id=<%= @app.course.id.to_s %>">
+						<span class="title4">&nbsp;
+							<div id="wrapper1">
+								<div id="wrapper3">
+									<div id="day"><%= r.date.strftime('%a').upcase %></div>
+									<div id="clear"></div>
+									<div id="month"><%= r.date.strftime('%b').upcase %></div>
+								</div>
+								<div id="date"><%= r.date.strftime('%d') %></div>
 							</div>
-							<div id="date"><%= r.date.strftime('%d') %></div>
-						</div>
 
-						<div id ="wrapper4" style='margin-right:32px'><%=Time.parse(r.time).strftime('%I:%M') %>
-							<span class="title5"><%= r.golfers %> Golfers</span>
-						</div>
-					</span></a><span class="disclosure_indicator" style='margin-top:-57px'/>
-				</li>
+							<div id ="wrapper4" style='margin-right:32px'><%=Time.parse(r.time).strftime('%I:%M') %>
+								<span class="title5"><%= r.golfers %> Golfers</span>
+							</div>
+						</span></a><span class="disclosure_indicator" style='margin-top:-57px'/>
+					</li>
 				<% end %>
 			<% end %>
 

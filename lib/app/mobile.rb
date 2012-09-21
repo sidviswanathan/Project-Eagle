@@ -42,7 +42,7 @@ class MobileApp
       @reservation = Reservation.find(params[:view].to_i)
     end
     
-    @user ||= Customer.find_by_id(session[:current_user_id]) || Customer.find_by_id(cookies[:current_user_id].to_i) if !cookies[:current_user_id].nil?
+    @user ||= Customer.find_by_id(session[:current_user_id]) || Customer.find_by_id(cookies[:current_user_id].to_i) if cookies[:current_user_id]
     @user = Customer.find_by_id(session[:current_user_id]) if @user.nil? && session[:current_user_id] 
     
     puts "000000000000000000000000000000000000 This is the user id we found:"
