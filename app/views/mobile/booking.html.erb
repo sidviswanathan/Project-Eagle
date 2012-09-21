@@ -167,6 +167,7 @@
 				"os_version":"NA",
 				"app_version":"mobile_web"},function(data){
 					if(data=='fail'){
+						alert(app.contact_via);
 						var errors = [];
 						if(app.first_name==""){
 							$('#first_name').css("borderBottom","2px solid red");

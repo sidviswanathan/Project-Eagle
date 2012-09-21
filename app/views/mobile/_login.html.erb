@@ -1,5 +1,9 @@
 <form method="POST" id="signInForm" action="/device_communication/login">
 	<div style="height:15px;"></div>
+	
+	<select id='contact_method'  data-role="none" style='display:none;' onchange="update_contact_placeholder" name='contact_method'>
+		<option value='email' SELECTED>Contact via Email</option>
+	</select>
 			
 	<ul style='border-radius:6px'>
 		<li><input placeholder="First Name" style='font-size:20px' data-role="none" id="first_name" value="<%= @app.get_user_fname %>" type="text" name="fname1" onfocus="$('#token').attr('value', '')"/></li>
