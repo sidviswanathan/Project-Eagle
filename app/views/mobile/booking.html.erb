@@ -93,15 +93,6 @@
 				setTimeout("gflipIn()",4000);
 				gallery_not_started = false;
 			}
-			$('#contact_method').val(app.contact_via);
-		
-			$('#contact_method').change(function(){
-				if($(this).val()=='email'){
-					$('#contact_value').attr("placeholder","Email Address");
-				}else{
-					$('#contact_value').attr("placeholder","Phone Number");
-				}
-			})
 		});
 
 		function callUserSignIn(){
