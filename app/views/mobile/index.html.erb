@@ -173,7 +173,43 @@
 	</style>
 	
 	<style type='text/css'>
+	
+	.content ul {
+		background-color:#fff;
+	    border-radius:12px;
+		border:1px solid #ddd;
+		-moz-border-radius: 12px;
+		-webkit-border-radius: 12px;
+		margin:10px;
+		text-shadow:0px 0px 0px !important;
+		color:#333 !important;
+	}
+	
+	.content ul li {
+	    display: block;
+		border-bottom:1px solid #ddd;
+		text-align:center;
+	}
+	
+	.content ul li.address {
+	    display: block;
+		border-bottom:1px solid #ddd;
+		text-align:left;
+		padding-left:60px;
+	}
 
+	.content ul li:last-child {
+	    border-bottom: none;
+	}
+			
+	.content ul li a {
+	    display: block;
+		min-height:1px;
+		display:inline-block;
+		vertical-align:top;
+		padding:12px;
+	}
+	
 	div.box{
 		background-color:#fff;
 		border-radius:12px;
@@ -182,11 +218,22 @@
 		-webkit-border-radius: 12px;
 		text-align:left;
 		margin:10px;
-		margin-bottom:0px;
 		text-shadow:0px 0px 0px !important;
 		color:#333 !important;
 	}
-
+	
+	div.box{
+		background-color:#fff;
+		border-radius:12px;
+		border:1px solid #ddd;
+		-moz-border-radius: 12px;
+		-webkit-border-radius: 12px;
+		text-align:left;
+		margin:10px;
+		text-shadow:0px 0px 0px !important;
+		color:#333 !important;
+	}
+	
 	div.last{
 		margin-bottom:10px;
 	}
@@ -298,19 +345,17 @@
 	    <div data-role="page" data-theme="a" style='background:#e8e8e8'>
 			<%= render :partial => "header", :locals => { :app => @app } %>
 			<div class="content" id='content' style='background:#e8e8e8 important;position:relative' data-role="content">
-
+					
 				<div class='container' >
-					<div  id='gbox' style='position:relative ;'>
-						
+					<div id='gbox' style='position:relative ;'>
 						 <% @app.course_info['gallery'].each do |i| %>
 						<img class='gboxi' src='<%= i %>' />
 						<% end %>
-
 					</div>
+					
 					<div class='boxes' >
 
 					<div class='box' id='topbox'>
-
 						<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;z-index:101;float:left;margin:8px;margin-left:2px" /></a>
 						<div class='title' style='padding-top:66px;font-size:18px'>
 						<b><%= @app.course_info['title'] %></b>
@@ -321,7 +366,9 @@
 							<b style='color:green'>OPEN</b>: 6:00 AM to 8:00 PM
 						</div>
 					</div>
-						<div style='clear:both;height:4px'></div>
+					
+					<div style='clear:both;height:4px'></div>
+					
 					</div>
 					
 					<a href='http://www.playdeepcliff.com/page.php?page_id=705' rel='external' class='book_button'>Book Tee Time</a>
@@ -337,7 +384,7 @@
 
 						<div class='pad'>
 							<img style='float:right;padding-top:3px' src='http://pushspot.appspot.com/assets/img/ud.png' />
-							<table style='padding-left:25%;'>
+							<table style='padding-left:28%;'>
 								<tbody>
 									<tr>
 										<td style='color:gray;text-align:right'><a  rel=external style='color:#336699;text-decoration:none;font-weight:bold'>Rates</a></td>
@@ -414,11 +461,12 @@
 										<td align="left" valign="top">
 											$22.00</td>
 									</tr>
-								</tbody>
-							</table>
-							
-							<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
-								<tbody>
+									<tr>
+										<td valign="top" width="75%">
+											&nbsp;</td>
+										<td align="left" valign="top">
+											&nbsp;</td>
+									</tr>
 									<tr>
 										<td valign="top" width="75%">
 											Pull Carts - 9 Holes</td>
@@ -448,28 +496,19 @@
 						</div>
 					</div>
 					
-					<div class='box'>
-						<div class='pad' id="map_link">
-							<table style='padding-left:6%'>
-								<tbody>
-									<tr>
-										<td style='color:gray;text-align:right' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></td>
-										<td><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %>, <%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %> 95014</a></td>
-									</tr>
-								</tbody>
-							</table>
-							<div style='border-top:1px solid #888;margin-top:6px;padding-top:12px;text-align:center'><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['sttree'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a>
-							</div>
-
-						</div>
-					</div>
+					<ul>
+				      <li class="address">
+						<span style='color:gray;' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></span>
+						<span><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %><br><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %> 95014</a></span>
+					  </li>
+				      <li><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['sttree'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a></li>
+				    </ul>
 					
 					<div class='box' style='text-align:center'>
 						<div class='pad'>
 						<a href='http://www.yelp.com/biz/deep-cliff-golf-course-cupertino?rho_open_target=_blank' style='color:#336699;text-decoration:none'>Read & Write Reviews</a>
 						</div>
 					</div>
-
 
 					<div class='box last'>
 						<table style='padding-left:20%;padding-top:10px;padding-bottom:10px;'>
