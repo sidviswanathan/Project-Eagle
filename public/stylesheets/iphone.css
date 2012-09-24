@@ -128,6 +128,17 @@ div#popup .ui-content{
 	margin:28px 0 0 10px;
 }
 
+.content ul li span.price {
+    font-size: 14px;
+	font-weight:bold;
+	display: inline;
+	float:right;
+	color:black;
+	border: 0px dotted;
+	padding:5px 30px 0 0;
+	margin:28px 0 0 12px;
+}
+
 .content ul li a {
     display: block;
     color: black;
