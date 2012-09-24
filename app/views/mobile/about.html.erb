@@ -30,152 +30,137 @@
 
 				</div>
 
-				<div class='box' style='margin-top:0px' onclick='slideDown();'>
-					
-					<div class='pad'>
-						<img style='float:right;padding-top:3px' src='http://pushspot.appspot.com/assets/img/ud.png' />
-						<table style='padding-left:6%;'>
-							<tbody>
-								<tr>
-									<td style='color:gray;text-align:right'><a  rel=external style='color:#336699;text-decoration:none;font-weight:bold'>Rates</a></td>
-									<td><a style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'>$18 - $38</a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-					<div class='more_details'  style='text-align:left;display:none' id='pricing_details'>
-						<div class='pad'>
-						<table border="0" cellpadding="1" cellspacing="1" >
-							<tbody>
-								<tr>
-									<th valign="bottom" width="75%">
-										<strong>Weekday</strong></th>
-									<th align="left" valign="bottom">
-										Fees</th>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										Monday - Friday</td>
-									<td align="left" valign="top">
-										$28.00</td>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										Twilight - 2:00 PM</td>
-									<td align="left" valign="top">
-										$21.00</td>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										Super Twilight - 4:00 PM</td>
-									<td align="left" valign="top">
-										$18.00</td>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										Sr.&nbsp;Rate Special after 9:00 AM - Lunch Included (age 62 +)</td>
-									<td align="left" valign="top">
-										$23.00</td>
-								</tr>
-							</tbody>
-						</table>
-						
-						<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
-							<tbody>
-								<tr>
-									<th valign="bottom" width="75%">
-										<strong>Weekends and Holidays </strong></th>
-									<th align="left" valign="bottom">
-										Fees</th>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										Regular</td>
-									<td align="left" valign="top">
-										$38.00</td>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										Twilight - 2:00 PM</td>
-									<td align="left" valign="top">
-										$28.00</td>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										Super-twilight - 4:00 PM</td>
-									<td align="left" valign="top">
-										$22.00</td>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										9-hole (Restrictions apply)</td>
-									<td align="left" valign="top">
-										$22.00</td>
-								</tr>
-							</tbody>
-						</table>
-						
-						<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
-							<tbody>
-								<tr>
-									<td valign="top" width="75%">
-										Pull Carts - 9 Holes</td>
-									<td align="left" valign="top">
-										$3.00</td>
-								</tr>
-								<tr>
-									<td valign="top" width="75%">
-										Pull Carts - 18 Holes</td>
-									<td align="left" valign="top">
-										$6.00</td>
-								</tr>
-							</tbody>
-						</table>
-						
-						<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
-							<tbody>
-								<tr>
-									<td valign="top" width="100%">
-										We offer lessons with our teaching professionals and tournament bookings.  For more information please contact the Pro Shop at (408) 253-5357</td>
-									<td align="left" valign="top">
-										</td>
-								</tr>
-							</tbody>
-						</table>
-						
-						</div>
-					</div>
-				</div>
-				<div class='box'>
-					<div class='pad'>
-						<table>
-							<tbody>
-								<tr>
-									<td style='color:gray;text-align:right'><a href="tel:212-555-1212" rel=external style='color:#336699;text-decoration:none'>Call</a></td>
-									<td><a href="tel:408-253-5357" rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['phone'] %></a></td>
-								</tr>
-							</tbody>
-						</table>
-						
-						 
-					</div>
-				</div>
-				<div class='box'>
-					<div class='pad' id="map_link">
-						<table style='padding-left:6%'>
-							<tbody>
-								<tr>
-									<td style='color:gray;text-align:right' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></td>
-									<td><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %>, <%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %> 95014</a></td>
-								</tr>
-							</tbody>
-						</table>
-						<div style='border-top:1px solid #888;margin-top:6px;padding-top:6px;text-align:center'><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['sttree'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a>
-						</div>
+						<div class='box'  onclick='slideDown();'>
 
+							<div class='pad'>
+								<img style='float:right;padding-top:3px' src='http://pushspot.appspot.com/assets/img/ud.png' />
+								<table style='padding-left:28%;'>
+									<tbody>
+										<tr>
+											<td style='color:gray;text-align:right'><a  rel=external style='color:#336699;text-decoration:none;font-weight:bold'>Rates</a></td>
+											<td><a style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'>$18 - $38</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class='more_details'  style='text-align:left;display:none' id='pricing_details'>
+								<div class='pad'>
+								<table border="0" cellpadding="1" cellspacing="1" >
+									<tbody>
+										<tr>
+											<th valign="bottom" width="75%">
+												<strong>Weekday</strong></th>
+											<th align="left" valign="bottom">
+												Fees</th>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Monday - Friday</td>
+											<td align="left" valign="top">
+												$28.00</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Twilight - 2:00 PM</td>
+											<td align="left" valign="top">
+												$21.00</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Super Twilight - 4:00 PM</td>
+											<td align="left" valign="top">
+												$18.00</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Sr.&nbsp;Rate Special after 9:00 AM - Lunch Included (age 62 +)</td>
+											<td align="left" valign="top">
+												$23.00</td>
+										</tr>
+									</tbody>
+								</table>
+								<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
+									<tbody>
+										<tr>
+											<th valign="bottom" width="75%">
+												<strong>Weekends and Holidays </strong></th>
+											<th align="left" valign="bottom">
+												Fees</th>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Regular</td>
+											<td align="left" valign="top">
+												$38.00</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Twilight - 2:00 PM</td>
+											<td align="left" valign="top">
+												$28.00</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Super-twilight - 4:00 PM</td>
+											<td align="left" valign="top">
+												$22.00</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Nine-hole (Restrictions apply)</td>
+											<td align="left" valign="top">
+												$22.00</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												&nbsp;</td>
+											<td align="left" valign="top">
+												&nbsp;</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Pull Carts - 9 Holes</td>
+											<td align="left" valign="top">
+												$3.00</td>
+										</tr>
+										<tr>
+											<td valign="top" width="75%">
+												Pull Carts - 18 Holes</td>
+											<td align="left" valign="top">
+												$6.00</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
+									<tbody>
+										<tr>
+											<td valign="top" width="100%">
+												We offer lessons with our teaching professionals and tournament bookings.  For more information please contact the Pro Shop.</td>
+											<td align="left" valign="top">
+												</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+						</div>
+			
+				<div class='box' style='text-align:center'>
+					<div class='pad'>
+						<span><a href="tel:212-555-1212" rel=external style='color:#336699;text-decoration:none'>Call</a></span>
+						<span><a href="tel:408-253-5357" rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['phone'] %></a></span>
 					</div>
 				</div>
+				
+				<ul class='address_block'>
+			      <li class="address">
+					<span style='color:gray;padding-right:6px;' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></span>
+					<span><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %><br><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %> 95014</a></span>
+				  </li>
+			      <li class='directions'><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['sttree'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a></li>
+			    </ul>
+				
 				<div class='box' style='text-align:center'>
 					<div class='pad'>
 					<a href='http://www.yelp.com/biz/deep-cliff-golf-course-cupertino?rho_open_target=_blank' style='color:#336699;text-decoration:none'>Read & Write Reviews</a>
@@ -195,26 +180,30 @@
 					</div>
 				</div>
 				<div class='box last'>
-					<table style='padding-left:20%'>
+					<table style='padding-left:20%;padding-top:10px;padding-bottom:10px;'>
 						<tbody>
 							<tr>
-								<td style='color:gray;text-align:right'>All Ages</td>
+								<td style='color:gray;text-align:right;padding-right:5px;'>All Ages</td>
 								<td>Yes</td>
 							</tr>
 							<tr>
-								<td style='color:gray;text-align:right'>18 holes</td>
+								<td style='color:gray;text-align:right;padding-right:5px;'>18 holes</td>
 								<td>Yes</td>
 							</tr>
 							<tr>
-								<td style='color:gray;text-align:right'>Pro Shop</td>
+								<td style='color:gray;text-align:right;padding-right:5px;'>Pro Shop</td>
 								<td>Yes</td>
 							</tr>
 							<tr>
-								<td style='color:gray;text-align:right'>Restaurant</td>
+								<td style='color:gray;text-align:right;padding-right:5px;'>Restaurant</td>
 								<td>Yes</td>
 							</tr>
 							<tr>
-								<td style='color:gray;text-align:right'>Practice Area</td>
+								<td style='color:gray;text-align:right;padding-right:5px;'>Lessons</td>
+								<td>Yes</td>
+							</tr>
+							<tr>
+								<td style='color:gray;text-align:right;padding-right:5px;'>Practice Area</td>
 								<td>Yes</td>
 							</tr>
 						</tbody>
