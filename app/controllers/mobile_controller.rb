@@ -85,6 +85,9 @@ class MobileController < ApplicationController
   def mobile_agent?
     request.user_agent =~ /Mobile|webOS/
   end
+  def ipad?
+    request.user_agent =~ /iPad/
+  end
   def android?
     request.user_agent =~ /Android/
   end
@@ -99,6 +102,7 @@ class MobileController < ApplicationController
   end
   def iframe
     @is_mobile = mobile_agent?
+    @is_ipad = ipad?
     @request = request
     puts '///////////////////////////////////////'
     puts request.user_agent

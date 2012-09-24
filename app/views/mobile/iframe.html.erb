@@ -1,4 +1,4 @@
-<% if @is_mobile %>
+<% if @is_ipad == false %>
 	<script type="text/javascript">
 	    if (top != self) {
 	        try { top.location = 'http://<%= @app.course.web_domain %>'; }
