@@ -100,7 +100,10 @@ class MobileController < ApplicationController
   def iframe
     @is_mobile = mobile_agent?
     @request = request
-    #puts request.user_agent
+    puts '///////////////////////////////////////'
+    puts request.user_agent
+    mobile_agent?
+    puts '///////////////////////////////////////'
   end
   def iframe_test
   end
