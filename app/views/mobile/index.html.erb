@@ -194,7 +194,7 @@
 	    display: block;
 		border-bottom:1px solid #ddd;
 		text-align:left;
-		padding-left:25px;
+		padding-left:23px;
 	}
 
 	.content ul li:last-child {
@@ -497,7 +497,7 @@
 					
 					<ul>
 				      <li class="address">
-						<span style='color:gray;padding-right:8px;' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></span>
+						<span style='color:gray;padding-right:6px;' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></span>
 						<span><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %><br><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %> 95014</a></span>
 					  </li>
 				      <li><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['sttree'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a></li>
