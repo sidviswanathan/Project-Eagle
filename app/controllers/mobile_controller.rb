@@ -82,6 +82,8 @@ class MobileController < ApplicationController
     @app.more_days(params[:last])
   end 
  
+  # If the user_agent contains any part of this regex, it will valifdate to true
+  # For example, if the user_agent has the word 'Mobile' it will validate to true
   def mobile_agent?
     request.user_agent =~ /Mobile|webOS/
   end
@@ -102,14 +104,8 @@ class MobileController < ApplicationController
   end
   def iframe
     @is_mobile = mobile_agent?
-    @is_ipad = ipad?
-    @request = request
-    puts '///////////////////////////////////////'
-    puts request.user_agent
-    mobile_agent?
-    puts '///////////////////////////////////////'
-  end
-  def iframe_test
+    @is_ipad   = ipad?
+    @request   = request
   end
   
 end
