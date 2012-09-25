@@ -19,6 +19,11 @@ class ListenerController < ApplicationController
   end
   
   def index
+    
+    puts '9999999999999999999999999999999999999999999999'
+    params["subject"]
+    puts '9999999999999999999999999999999999999999999999'
+    
     if params["subject"] == 'Reservation Confirmation - Deep Cliff Golf Course'
       
       date        = Date.parse(Chronic.parse(params["text"].split("Tee Date:")[1].split("Tee Time:")[0].split(", ")[1]).strftime('%Y-%m-%d'))
