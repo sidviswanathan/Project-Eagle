@@ -4,7 +4,7 @@
 
 1. Launch local server > script/server 
 2. In your browser, go to http://localhost:3000?course_id=1 (landing page for given course id)
-3. In your browser go to http://localhost:3000/booking?course_id=1 (booking page)  
+3. In your browser go to http://localhost:3000/booking?course_id=2 (booking page)  
 3. Open mobile_controller.rb (Controller and views associated with booking tee time experience)
 4. Open mobile.rb module (Important initialization code is here)
 4. Visit m.playdeepcliff.com/booking to access production environment 

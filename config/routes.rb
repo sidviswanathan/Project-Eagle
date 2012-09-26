@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "/listener", :controller => "listener", :action => "index"
   map.connect "/cancel", :controller => "device_communication", :action => "cancel_reservation"
   
-  map.connect '/', :controller => 'mobile'
+  #map.connect '/', :controller => 'mobile'
   map.connect '/:action', :controller => 'mobile'
   
   map.connect ':controller/:action/:id'
