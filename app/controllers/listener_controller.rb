@@ -21,7 +21,7 @@ class ListenerController < ApplicationController
   def index
     
     puts '9999999999999999999999999999999999999999999999'
-    params["subject"]
+    puts params["subject"]
     puts '9999999999999999999999999999999999999999999999'
     
     if params["subject"] == 'Reservation Confirmation - Deep Cliff Golf Course'
