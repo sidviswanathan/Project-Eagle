@@ -16,4 +16,4 @@ var isMobile = {
     }
 };
 
-if( isMobile.any() ) window.location = "http://www.google.com/";
+if( isMobile.any() ) window.location = "http://m.playdeepcliff.com/";
