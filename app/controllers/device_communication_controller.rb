@@ -162,7 +162,6 @@ class DeviceCommunicationController < ApplicationController
       if date
          dates = JSON.parse(updated_course.available_times)
          if dates.has_key?(date)
-           
            response_object[:status]     = "success"
            response_object[:statusCode] = 200
            response_object[:message]    = "The server successfully made the Course.get_available_tee_times() request"
