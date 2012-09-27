@@ -241,11 +241,8 @@ module Fore
           # if existing.nil?
           existing_reservation = Reservation.find_all_by_date_and_time_and_course_id(k,r['t'],course_id)
           puts 'DID I FIND AND EXISTING RESERVATION OR NOT????'
-          if existing_reservation
-          puts "Inside the if existing reservation record"  
-            pp existing_reservation
-            r = Reservation.create(reservation_info) 
-          end
+          pp existing_reservation
+          r = Reservation.create(reservation_info) unless existing_reservation
           # end
         end
       end
