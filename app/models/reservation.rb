@@ -100,10 +100,17 @@ class Reservation < ActiveRecord::Base
               "teetime"    => date_date.strftime("%A, %B %e") +" at "+Time.parse(time).strftime("%I:%M %p"),
               "golfers"    => golfers,
               "coursename" => course.name,
-              "course_id"  => course.id.to_s
-            }
+              "course_id"  => course.id.to_s,
+              "total"      => total,
+              "date"       => date,
+              "time"       => time
+            } 
           
-            # # Schedule Tee Time Reminder
+            # Move this confirmation to a background process via DJ
+            Mailer.deliver_confirmation_email(subs)
+            Mailer.deliver_test_email("something")
+            
+            # Schedule Tee Time Reminder
             # ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
             # if day_before_tt > Date.today
             #   ServerCommunicationController.schedule_contact(user,REMINDER_SUBJECT,mail_sub(subs,REMINDER_BODY),day_before_tt,time,mail_sub(subs,REMINDER_SMS),mail_sub(subs,REMINDER_VOICE),false)

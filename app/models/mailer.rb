@@ -10,6 +10,24 @@ class Mailer < ActionMailer::Base
       Cupertino, California 95014
       Phone # 408.253.5357 / FAX # 408.253.4521
     eos
+    
+  def confirmation_email(reservation_info)
+    recipients        "sid.viswanathan@gmail.com"
+    from              "Deep Cliff Golf Course<info@prestee.com>"
+    subject           "Tee Time Confirmation: #{reservation_info["teetime"]}"
+    body              :reservation => reservation_info
+    content_type      "text/html"
+    sendgrid_category "Tee Time Confrimation"
+  end  
+  
+  def cancelation_email(c)
+    recipients        c.email
+    from              "Deep Cliff Golf Course<donotreply@prestee.com>"
+    subject           "Tee Time Cancelation"
+    body              :customer => c
+    content_type      "text/html"
+    sendgrid_category "Tee Time Cancelation"    
+  end
   
   def reminder(data)
     recipients "#{data['f_name']} #{data['l_name']} <#{data['email']}>"
@@ -34,5 +52,5 @@ class Mailer < ActionMailer::Base
     body              :customer => c
     content_type      "text/html"
   end
-  
+    
 end
