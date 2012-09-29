@@ -1,14 +1,12 @@
 <html>
 	<body>
-		
-		<p><%= @reservation %></p>
-		
+				
 		<p>Hi <%= @reservation.first %>,</p>
 
 		<p>Thanks for booking a tee time at Deep Cliff Golf Course using our new mobile booking experience. Please be sure to arrive at least 10 minutes before your tee time. Enjoy your round of golf!</p>
 		
 		<p>
-			<span><strong>Name: </strong><%= @reservation.first %> <%= @reservation.last %></span><br>
+			<span><strong>Name: </strong><%= @reservation.first %></span><br>
 			<span><strong>Date: </strong><%= @reservation.teetime.split[" at "][0] %></span>
 			<span><strong>Time: </strong></strong><%= @reservation.teetime.split[" at "][1] %></span>
 			<span><strong>Number of Golfers: </strong><%= @reservation.golfers %></span>
@@ -17,7 +15,6 @@
 				
 		<p>Cheers,
 		<br>Deep Cliff Golf Course</p>
-		<p>&nbsp;</p>
 		
 		<p>P.S. Please send us feedback on how we can improve your mobile booking experience, you can respond directly to this email or send to feedback@presstee.com</p>
 				
