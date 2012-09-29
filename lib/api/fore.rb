@@ -11,6 +11,7 @@ module Fore
   require 'time'
   require 'parallel'
   require 'logger'
+  require 'uri'
   
   # self.book(reservation_info,course,user)   =>  Makes a booking via https and returns a confirmation_code (string) or nil
   # self.cancel(reservation)                  =>  Sends a cancel request returns true or false
@@ -73,9 +74,8 @@ module Fore
   def self.book(reservation_info,course,user)
     puts "-----------------------PRINTING OUT THE RESERVATION INFO"
     pp reservation_info
-
     
-    uri = "#{API_BOOK_URI}?CourseID=#{course.api_course_id}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{DEFAULT_EMAIL}&FirstName=#{user[:f_name]}&LastName=#{user[:l_name]}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
+    uri = "#{API_BOOK_URI}?CourseID=#{course.api_course_id}&Date=#{reservation_info[:date]}&Time=#{reservation_info[:time]}&Price=#{reservation_info[:total]}.00&EMail=#{DEFAULT_EMAIL}&FirstName=#{URI.escape(user[:f_name])}&LastName=#{URI.escape(user[:l_name])}&ExpMnth=#{DEFAULT_CC_MONTH}&ExpYear=#{DEFAULT_CC_YEAR}&CreditCard=#{DEFAULT_CC_NUM}&Phone=#{DEFAULT_PHONE}&Quantity=#{reservation_info[:golfers]}&AffiliateID=#{API_AFFILIATE_ID}&Password=#{API_PASSWORD}"
     pp uri
     response = self.http_get(uri)
     pp response.body
