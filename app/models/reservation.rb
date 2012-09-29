@@ -108,7 +108,6 @@ class Reservation < ActiveRecord::Base
           
             # Move this confirmation to a background process via DJ
             Mailer.deliver_confirmation_email(subs)
-            Mailer.deliver_test_email("something")
             
             # Schedule Tee Time Reminder
             # ServerCommunicationController.schedule_contact(user,CONFIRMATION_SUBJECT,mail_sub(subs,CONFIRMATION_BODY),today,now,mail_sub(subs,CONFIRMATION_SMS),mail_sub(subs,CONFIRMATION_VOICE),true)
