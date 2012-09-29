@@ -11,9 +11,7 @@ class Mailer < ActionMailer::Base
       Phone # 408.253.5357 / FAX # 408.253.4521
     eos
     
-  def confirmation_email(reservation_info)
-    pp reservation_info
-    
+  def confirmation_email(reservation_info)    
     recipients        "sid.viswanathan@gmail.com"
     from              "Deep Cliff Golf Course<info@prestee.com>"
     subject           "Tee Time Confirmation: #{reservation_info["teetime"]}"
