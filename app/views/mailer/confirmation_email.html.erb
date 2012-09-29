@@ -7,8 +7,8 @@
 		
 		<p>
 			<span><strong>Name: </strong><%= @reservation["first"] %> <%= @reservation["last"] %></span><br>
-			<span><strong>Date: </strong><%= @reservation["teetime"].split[" at "][0].to_s %></span>
-			<span><strong>Time: </strong></strong><%= @reservation["teetime"].split[" at "][1].to_s %></span>
+			<span><strong>Date: </strong><%= @reservation["teetime"] %></span>
+			<span><strong>Time: </strong></strong><%= @reservation["teetime"].class %></span>
 			<span><strong>Number of Golfers: </strong><%= @reservation["golfers"].to_s %></span>
 			<span><strong>Total Due at Course:</strong>$<%= @reservation["total"].to_s %>.00</span>
 		</p>
