@@ -1,4 +1,9 @@
 class Mailer < ActionMailer::Base
+  
+  include SendGrid
+  sendgrid_enable :ganalytics, :opentrack, :clicktrack
+  helper :application
+  
   SIGNATURE = <<-eos
       Deep Cliff Golf Course <deepcliff@presstee.com>
       10700 Clubhouse Lane 

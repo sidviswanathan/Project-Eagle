@@ -20,3 +20,14 @@ config.cache_store = :dalli_store
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
+# set delivery method to :smtp, :sendmail or :test
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  :address => "smtp.sendgrid.net",
+  :port => '25',
+  :domain => "presstee.com",
+  :authentication => :plain,
+  :user_name => "app571214@heroku.com",
+  :password => "8fbab36d20c1946924"
+}
+
