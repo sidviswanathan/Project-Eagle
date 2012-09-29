@@ -12,8 +12,8 @@ class Mailer < ActionMailer::Base
     eos
     
   def confirmation_email(reservation_info)    
-    recipients        "sid.viswanathan@gmail.com"
-    from              "Deep Cliff Golf Course<info@prestee.com>"
+    recipients        reservation_info["email"]
+    from              "Deep Cliff Golf Course<feedback@prestee.com>"
     subject           "Tee Time Confirmation: #{reservation_info["teetime"]}"
     body              :reservation => reservation_info
     content_type      "text/html"
