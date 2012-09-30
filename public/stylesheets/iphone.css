@@ -1028,6 +1028,7 @@ ul.edit li.login_token{
 	margin: 0px;
 	padding: 0px;
 	}
+	
 	.book_button {
 		background-color: #7FBF4D;
 		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7FBF4D), color-stop(100%, #63A62F));
@@ -1054,7 +1055,6 @@ ul.edit li.login_token{
 		text-align: center;
 		text-shadow: 0 -1px 0 #4C9021;
 		margin-top:6px;
-
 		margin-left:4%;
 		width:92%;
 		display:inline-block;
@@ -1073,6 +1073,7 @@ ul.edit li.login_token{
 	    -moz-box-shadow: inset 0 1px 0 0 #8dbf67;
 	    box-shadow: inset 0 1px 0 0 #8dbf67;
 	    cursor: pointer; }
+	
 	 .book_button:active {
 	    border: 1px solid #5b992b;
 	    border-bottom: 1px solid #538c27;
@@ -1080,7 +1081,60 @@ ul.edit li.login_token{
 	    -moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
 	    box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; }
 	
-		div.temp_booking{
-			display:none;
-		}
+
+	.cancel_button {
+		background-color: #ac2b31;
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ac2b31), color-stop(100%, #922227));
+		background-image: -webkit-linear-gradient(top, #ac2b31, #922227);
+		background-image: -moz-linear-gradient(top, #ac2b31, #922227);
+		background-image: -ms-linear-gradient(top, #ac2b31, #922227);
+		background-image: -o-linear-gradient(top, #ac2b31, #922227);
+		background-image: linear-gradient(top, #ac2b31, #922227);
+		border: 1px solid #ac2b31;
+		border-bottom: 1px solid #9b262b;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		-ms-border-radius: 3px;
+		-o-border-radius: 3px;
+		border-radius: 3px;
+		-webkit-box-shadow: inset 0 1px 0 0 #c22b32;
+		-moz-box-shadow: inset 0 1px 0 0 #c22b32;
+		box-shadow: inset 0 1px 0 0 #c22b32;
+		color: white;
+		font-size:  28px ;
+		line-height: 1.5;
+		padding: 12px;
+		padding-bottom:13px;
+		text-align: center;
+		text-shadow: 0 -1px 0 #6c191d;
+		margin-top:6px;
+		margin-left:4%;
+		width:92%;
+		display:inline-block;
+		color:white !important;
+	}
+
+	.cancel_button:hover {
+	    background-color: #791b1f;
+	    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #791b1f), color-stop(100%, #9b262b));
+	    background-image: -webkit-linear-gradient(top, #791b1f, #9b262b);
+	    background-image: -moz-linear-gradient(top, #791b1f, #9b262b);
+	    background-image: -ms-linear-gradient(top, #791b1f, #9b262b);
+	    background-image: -o-linear-gradient(top, #791b1f, #9b262b);
+	    background-image: linear-gradient(top, #791b1f, #9b262b);
+	    -webkit-box-shadow: inset 0 1px 0 0 #c22b32;
+	    -moz-box-shadow: inset 0 1px 0 0 #c22b32;
+	    box-shadow: inset 0 1px 0 0 #c22b32;
+	    cursor: pointer; }
+
+	 .cancel_button:active {
+	    border: 1px solid #6c191d;
+	    border-bottom: 1px solid #6c191d;
+	    -webkit-box-shadow: inset 0 0 8px 4px #6c191d, 0 1px 0 0 #eeeeee;
+	    -moz-box-shadow: inset 0 0 8px 4px #6c191d, 0 1px 0 0 #eeeeee;
+	    box-shadow: inset 0 0 8px 4px #6c191d, 0 1px 0 0 #eeeeee; }
+
+	div.temp_booking{
+		display:none;
+	}
 

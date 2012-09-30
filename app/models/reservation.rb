@@ -78,7 +78,7 @@ class Reservation < ActiveRecord::Base
         if !confirmation_code.nil? 
           # When API suceeds returns a confirmation code (String)
           # When API fails returns a hash {"errors" => "Description of error"}
-          if confirmation_code.class == String 
+          if confirmation_code.class == String || Rails.env.to_s =="development"
             r.confirmation_code = confirmation_code
             g = r.save
             if date.class() == Date
