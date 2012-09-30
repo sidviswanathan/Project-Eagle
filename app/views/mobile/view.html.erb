@@ -5,7 +5,7 @@
   <div class="content">
   		<div class='box' id='topbox'>
 			<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
-			<div class='title' style='padding-top:66px;font-size:18px'>
+			<div class='title' style='margin-top:-10px;padding-top:60px;font-size:18px'>
 				<b><%= @app.course_info['title'] %></b>
 				<div style='margin-top:-2px'>
 					<span style='font-size:14px;color:#555'><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></span>
@@ -16,9 +16,9 @@
 				</div>
 			</div>
 			
-			<div style='clear:both;height:4px'></div>
+			<div style='clear:both;height:0px'></div>
 			
-			<div style='margin-top:12px'>
+			<div style='margin-top:5px'>
 				<strong>Name: </strong> <%=@app.user.f_name%> <%=@app.user.l_name%> <br>
 				<strong>Date: </strong><%=@app.reservation.date.to_date.strftime("%A, %B %e")%><br>
 				<strong>Tee Time: </strong><%=Time.parse(@app.reservation.time).strftime("%I:%M %p")%><br>  
@@ -27,8 +27,7 @@
 			</div>
 			
 			<% @code = @app.reservation.confirmation_code %>
-			
-			<a href="javascript:cancelTime('<%= @code %>');" class='cancel_button' style='margin:8px;margin-top:12px;border-radius:6px;'>Cancel Reservation</a>			
+			<center><a href="javascript:cancelTime('<%= @code %>');" class='cancel_button' style='margin-top:10px;border-radius:6px;'>Cancel Reservation</a></center>
 		</div>
  </div>	
 
