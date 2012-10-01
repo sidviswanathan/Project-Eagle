@@ -12,7 +12,7 @@
 				</div>
 
 				<div style='margin-top:3px;border-top:1px solid gray;font-weight:normal;font-size:14px;padding-top:4px'>
-					<b style='color:green'>Booking #</b>: <%=@app.reservation.confirmation_code%>
+					<b style='color:green'>Booking #</b>: <%=@app.reservation.confirmation_code[0..20]%>
 				</div>
 			</div>
 			
