@@ -97,6 +97,8 @@ class MobileApp
   
   def get_user_email
     if !@user.nil? 
+      puts "I am returning @user.email"
+      puts @user.email
       return @user.email
     else
       return ""
@@ -125,8 +127,11 @@ class MobileApp
   
   def get_user_fname
     if !@user.nil? 
+      puts "I am returning @user.f_name"
+      puts @user.f_name
       return @user.f_name
     else
+      puts "i found nothing am retunring empty string"
       return ""
     end
   end
