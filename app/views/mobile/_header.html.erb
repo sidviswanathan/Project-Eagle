@@ -31,12 +31,13 @@ function more_days_scroller(){
 
 <div data-role="header" class='topheader' data-id="persistent" data-position="fixed">
 	<% if @app.params[:action] == 'time' %>
+		
 		<% if @app.date == Date.today.to_s %>
-			<!-- Ideally you would show nothing for the pointer here, but it's causing some arrow alignment issues, disabling button for now -->
-			<a href="#" style="pointer-events:none;cursor:default;" data-transition="reverse slide" data-icon="arrow-l" data-iconpos="notext"></a>
-		<% else %>
+			<a href="#" style="display:none;" data-transition="reverse slide" data-icon="arrow-l" data-iconpos="notext"></a>
+		<% else %>	
 			<a href="<%= @app.get_url('time',{:date=>@app.prev_date}) %>" data-transition="reverse slide" data-icon="arrow-l" data-iconpos="notext"></a>
-		<% end %>	
+		<% end %>
+	
 		<h1 ><%= @app.date %></h1>
 		<a href="<%= @app.get_url('time',{:date=>@app.next_date}) %>" data-icon="arrow-r" data-iconpos="notext" data-theme="b"></a>
 	<% else %>
