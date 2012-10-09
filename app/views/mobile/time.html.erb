@@ -10,7 +10,9 @@
 					<!-- If it's the current day, only show times that have not passed yet -->
 					<!-- Only show times that have a quantity greater than 1 golfer -->
 					<!-- Don't show current day if it is past 6:00 pm (last tee time) for that day -->
-					<% if @app.params[:today] == "true" %>			
+					<!-- When user clicks next date arrow, must show all tee times for that dat -->
+					<% if @app.params[:today] == "true" && Date.today.to_s == @app.date %>			
+						
 						<% if i['q'].to_i > 1 && @app.timenow.strftime("%H") <= @time12hr.strftime("%H") && @app.timenow.strftime("%M") <= @time12hr.strftime("%M")  %>		
 						<li>
 							<a  href="<%= @app.get_url('booking',{:time=>@time24hr,:price=> i['p'].to_s,:date=>@app.date}) %>">
