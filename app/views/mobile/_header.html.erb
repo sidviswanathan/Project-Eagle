@@ -38,12 +38,14 @@ function more_days_scroller(){
 			<a href="<%= @app.get_url('time',{:date=>@app.prev_date}) %>" data-transition="reverse slide" data-icon="arrow-l" data-iconpos="notext"></a>
 		<% end %>
 	
-		<h1 ><%= @app.date %></h1>
+		<% @day = @app.date.to_date.strftime('%-d').to_i.ordinalize %>
+		<h1 ><%= @app.date.to_date.strftime("%A, %b #{@day}") %></h1>
+		
 		<a href="<%= @app.get_url('time',{:date=>@app.next_date}) %>" data-icon="arrow-r" data-iconpos="notext" data-theme="b"></a>
 	<% else %>
 		<h1><%= @app.course_info['title_short'] %> Mobile</h1>
 	<% end %>
-</div>
+</div> 
 
 <div class='temp_booking' style='background:#ffffff'>
 	<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;float:left;margin:8px;margin-left:2px" /></a>
