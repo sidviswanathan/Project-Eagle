@@ -39,7 +39,7 @@ function more_days_scroller(){
 		<% end %>
 	
 		<% @day = @app.date.to_date.strftime('%-d').to_i.ordinalize %>
-		<h1 ><%= @app.date.to_date.strftime("%A, %b #{@day}") %></h1>
+		<h1 id="header_date"><%= @app.date.to_date.strftime("%A, %b #{@day}") %></h1>
 		
 		<a href="<%= @app.get_url('time',{:date=>@app.next_date}) %>" data-icon="arrow-r" data-iconpos="notext" data-theme="b"></a>
 	<% else %>
