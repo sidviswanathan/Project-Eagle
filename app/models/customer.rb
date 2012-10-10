@@ -38,19 +38,17 @@ class Customer < ActiveRecord::Base
       conditions = "phone = '#{contact}'"
     end
 
-    c = Customer.find(:all, :conditions => conditions)
-    if c.length == 0
-      c = Customer.create(login_info)
-      if !c.valid?
-        c = nil
-      end
+    # FInd customer by email, if exists then update attributes
+    # If customer does not exist by email, create a new customer record
+    c = Customer.find_by_email(login_info[:email])
+    if c
+      c.update_attributes(login_info)
+      return c
     else
-      c = c[0]
-    end
-      
-    return c
+      customer = Customer.create(login_info)
+      return customer
+    end    
   end
-  
   
 end
 
