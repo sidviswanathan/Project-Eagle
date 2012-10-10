@@ -147,8 +147,13 @@ div#popup .ui-content{
 	border:0px dotted;
 }
 
+
+.content ul li a:hover {
+    background: green;
+}
+
 .content ul li a:active {
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(5, 140, 245)), to(rgb(1, 95, 230)));
+    background: yellow;
 }
 
 .content ul li a span.title {
