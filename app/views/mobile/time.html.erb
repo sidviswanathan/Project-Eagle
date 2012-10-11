@@ -2,11 +2,7 @@
 	<%= render :partial => "header", :locals => { :app => @app } %>
 	<div class="content" style='padding-top:0em'>
 		<ul>
-			
-			<script type="text/javascript">
-				alert('<%= @app.times %>');
-		    </script>
-			
+						
 			<% @app.times.each do |i| %>
 				<% @time12hr = Time.parse(i['t']) %>
 				<% @timeview = @time12hr.strftime("%I:%M") %>
