@@ -112,10 +112,6 @@ class DeviceCommunicationController < ApplicationController
     else
       customer = Customer.login(f_name, l_name, contact_via, params[:contact], password, device_name, os_version, app_version, send_deals)
       
-      puts "55555555555555555555555555555555555"
-      puts customer
-      puts "55555555555555555555555555555555555"
-
       if !customer.nil?
         # Set a long expiry cookie and sesson cookie
         # Need to upgrade to Rails 3 to take advantage of permanenet singed cookies
