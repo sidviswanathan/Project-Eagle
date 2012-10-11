@@ -64,6 +64,8 @@ class MobileApp
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
     @d = (0..6).map {|x| (today+x).strftime("%Y-%m-%d")}
     
+    
+    puts "++++++++++++++++++++++++++++++++++++++++++++++"
     # Get list of available tee times from the DB
     dates = JSON.parse(@course.available_times)
     if !dates.has_key?(date)
@@ -77,6 +79,7 @@ class MobileApp
     else
       @times = dates[params[:date]]["day"]
     end
+    puts "++++++++++++++++++++++++++++++++++++++++++++++"
   end
   
   def more_days(last)
