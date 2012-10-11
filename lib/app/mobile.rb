@@ -106,14 +106,12 @@ class MobileApp
   def get_user_contact
     if !@user.nil?
       if @user.contact_via == 'email'
-        puts "I am returning @user.email"
         puts @user.email
         return @user.email
       else
         return @user.phone
       end
     else
-      puts 'i am returnign nothing for email'
       return ""
     end
   end
@@ -128,11 +126,9 @@ class MobileApp
   
   def get_user_fname
     if !@user.nil? 
-      puts "I am returning @user.f_name"
       puts @user.f_name
       return @user.f_name
     else
-      puts "i found nothing am retunring empty string"
       return ""
     end
   end
