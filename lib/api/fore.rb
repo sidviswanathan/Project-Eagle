@@ -22,7 +22,7 @@ module Fore
   # ==========================================
   
   # Get available tee times for Deep Cliff Golf course, change date to valid date 
-  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-09-22&t=06:00&et=19:00  
+  # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=1095014&q=0&p=4PTee1nc&d=2012-10-10&t=06:00&et=19:00  
   
   # Get available tee times for Fore Reservation test facility, change date to valid date 
   # https://www.forereservations.com/cgi-bin/avail2.pl?a=PressTee&c=987654&q=0&p=4PTee1nc&d=2012-09-22&t=06:00&et=19:00  

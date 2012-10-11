@@ -63,11 +63,21 @@ class MobileApp
     today = Date.today
     @d2 = (0..6).map {|x| (today+x).strftime("%A, %B %e")}
     @d = (0..6).map {|x| (today+x).strftime("%Y-%m-%d")}
-    
-    
-    puts "++++++++++++++++++++++++++++++++++++++++++++++"
-    # Get list of available tee times from the DB
+        
+    # Get list of available tee times from the DB for a given day
+    # Need to fetch this data from cache if it is available
+    a = Time.now
     dates = JSON.parse(@course.available_times)
+    b = Time.now
+    cache = JSON.parse(Rails.cache.fetch("Updated_Course_"+params[:course_id].to_s))
+    c = Time.now
+    
+    puts "AM I FETCHING FROM THE CACHE OR WHAT???"
+    puts (b-a).to_s
+    puts (c-b).to_s
+    
+    pp cache
+    
     if !dates.has_key?(date)
       dates = JSON.parse(@course.future_dates)
       if !dates.has_key?(date)
@@ -79,7 +89,6 @@ class MobileApp
     else
       @times = dates[params[:date]]["day"]
     end
-    puts "++++++++++++++++++++++++++++++++++++++++++++++"
   end
   
   def more_days(last)

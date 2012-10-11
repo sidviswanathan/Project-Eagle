@@ -1,8 +1,7 @@
 <div data-role="page" data-theme="a" data-cache="never">
 	<%= render :partial => "header", :locals => { :app => @app } %>
 	<div class="content" style='padding-top:0em'>
-		<ul>
-						
+		<ul>			
 			<% @app.times.each do |i| %>
 				<% @time12hr = Time.parse(i['t']) %>
 				<% @timeview = @time12hr.strftime("%I:%M") %>
@@ -12,8 +11,8 @@
 					<!-- Only show times that have a quantity greater than 1 golfer -->
 					<!-- Don't show current day if it is past 6:00 pm (last tee time) for that day -->
 					<!-- When user clicks next date arrow, must show all tee times for that dat -->
-					<% if @app.params[:today] == "true" && Date.today.to_s == @app.date %>			
-						
+					
+					<% if @app.params[:today] == "true" && Date.today.to_s == @app.date %>					
 						<% if i['q'].to_i > 1 && @app.timenow.strftime("%H") <= @time12hr.strftime("%H") && @app.timenow.strftime("%M") <= @time12hr.strftime("%M")  %>		
 						<li>
 							<a  href="<%= @app.get_url('booking',{:time=>@time24hr,:price=> i['p'].to_s,:date=>@app.date}) %>">
