@@ -69,7 +69,7 @@ class MobileApp
     a = Time.now
     dates = JSON.parse(@course.available_times)
     b = Time.now
-    cache = JSON.parse(Rails.cache.fetch("Updated_Course_"+params[:course_id].to_s))
+    cache = JSON.parse(Rails.cache.fetch("Updated_Course_"+"2"))
     c = Time.now
     
     puts "AM I FETCHING FROM THE CACHE OR WHAT???"
