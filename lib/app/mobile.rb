@@ -143,7 +143,6 @@ class MobileApp
   def get_query
     kvs = []
     @params.each do |k,v|
-      #kvs.push(k+"="+v)
       kvs.push(k.to_s+"="+v.to_s)
     end
     return "?#{kvs.join('&')}"
