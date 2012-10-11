@@ -68,7 +68,6 @@ class MobileApp
     dates = JSON.parse(@course.available_times)
     if !dates.has_key?(date)
       dates = JSON.parse(@course.future_dates)
-      
       if !dates.has_key?(date)
         dates[date] = dates["template"]
         @course.future_dates = dates.to_json
@@ -78,7 +77,8 @@ class MobileApp
     else
       @times = dates[params[:date]]["day"]
     end
-    
+    puts 'TIME I HAVE NOW ARE:'
+    pp @times
   end
   
   def more_days(last)
