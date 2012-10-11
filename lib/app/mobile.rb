@@ -77,8 +77,6 @@ class MobileApp
     else
       @times = dates[params[:date]]["day"]
     end
-    puts 'TIME I HAVE NOW ARE:'
-    pp @times
   end
   
   def more_days(last)
