@@ -76,8 +76,6 @@ class MobileApp
     puts (b-a).to_s
     puts (c-b).to_s
     
-    pp cache.api_course_id if cache
-    
     if !dates.has_key?(date)
       dates = JSON.parse(@course.future_dates)
       if !dates.has_key?(date)
