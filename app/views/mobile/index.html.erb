@@ -2,551 +2,422 @@
 <html> 
 	<head> 
 	<title>Deep Cliff Golf Course</title> 
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"> 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="apple-touch-icon" href="/images/aboutus.png"/>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
 	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-		
-    <script type="text/javascript">    
-	
-	var details_open = false;
-	function slideDown(){
-		if(!details_open){
-			$('#pricing_details').slideDown();
-			details_open = true;
-		}else{
-			$('#pricing_details').slideUp();
-			details_open = false;
-		}
-
-	}
-	
-	var is_xui = false;
-	var gallery = [];
-	var i_counter = 0;
-	var g1 = 0;
-	var g2 = 1;
-	var gflip = true;
-	<% if !@app.course_info['gallery'].nil? %>
-	 <% @app.course_info['gallery'].each do |i| %>
-	gallery.push("<%= i %>");
-	<% end %>
-	<% else %>
-	/*
-	<%= @app.course_info.to_s %>
-	*/
-	<% end %>
-
-	$(document).bind("mobileinit", function(){
-
-		$.extend($.mobile, {
-		metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
-		});
-		
-		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
-		
-		if(navigator.userAgent.match(/webOS/i) ||
-		 navigator.userAgent.match(/BlackBerry/)
-		 ){
-		 $.mobile.defaultPageTransition = "none";
-		}else if( navigator.userAgent.match(/Android/i) ){
-			$.mobile.defaultPageTransition = "fade";
-		}else{
-			$.mobile.defaultPageTransition = "slide";
-		}
-			
-	});
-	var date_scroll = false;
-	
-	function window_scroll_bottom(){
-
-	}
-
-	var gallery_not_started = true;
-	var next_gallery_image = "";
-	$( document ).bind( "pagechange", function( event, data ){
-		if (($("#gbox").length > 0) && gallery_not_started){
-			next_gallery_image = $('.gboxi').first();
-		  	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
-			setTimeout("gflipIn()",4000);
-			gallery_not_started = false;
-		}
-	});
-
-	function callUserSignIn(){
-		alert("Hello New User");
-	}
-	function changePage(where){
-		$.mobile.changePage(where, {transition: 'slide', showLoadMsg:false});
-	}
-	function callNoTeeTimeSelected(){
-		alert("Please select a Tee Time first!");
-	}
-	var current_gallery_image = false;
-	function gflipIn(){
-		//$('.gboxi').css("zIndex","0");
-		next_gallery_image.fadeIn(1500,function(){
-			next_gallery_image.prev().hide();
-			next_gallery_image = next_gallery_image.next();
-			if(!next_gallery_image.attr("src")){
-				next_gallery_image = $('.gboxi').first();
-				$('.gboxi').last().fadeOut(1500,function(){
-					gflipIn();
-				})
-				
-			}else{
-					setTimeout("gflipIn()",2500);
-			}
-		
-		});
-	}
-	function gflipOut(){
-		current_gallery_image.fadeOut(1500,function(){
-			current_gallery_image.hide();
-		});
-		/*
-		setTimeout("gflipIn()",1500);
-		next_gallery_image.fadeOut(1480,function(){
-			next_gallery_image = next_gallery_image.next();
-		});
-		*/
-	}
-	
-	function submitform(){
-	    var first_name = $('#first_name').val();
-		var last_name  = $('#last_name').val();
-		var email_address = $('#email_address').val();
-		app.first_name=$('#first_name').val();
-		app.last_name=$('#last_name').val();
-		app.email = $('#email_address').val();
-		$.post("/device_communication/login",{
-			"f_name":first_name,
-			"l_name":last_name,
-			"email":email_address,
-			"device_name":"iphone",
-			"redirect":"true",
-			"os_version":"4.0",
-			"app_version":"web"},function(data){
-				confirmTime();
-			
-		})
-	}
-	
-	var app =new Object();
-	
-	function confirmTime(){
-		var confirm_time = confirm(app.first_name+" "+app.last_name+" ("+app.email+") \nFor "+app.golfers+" golfers on "+app.date+" at "+app.timer+"\n------------\n$"+app.total+" (due at course)");
-		if(confirm_time==true){
-			reserveTime()
-		}else{
-			
-		}
-	}
-	function reserveTime(){
-		$.post("/device_communication/book_reservation",{
-			"course_id":app.course_id,
-			"golfers":app.golfers,
-			"email":app.email,
-			"date":app.date,
-			"time":app.timer,
-			"total":app.total},function(data){
-				$.mobile.changePage("/mobile/reservations?course_id=1");
-			
-		});
-	}
-
-    </script>
-
 	<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 	<%= stylesheet_link_tag "iphone" %>
 	
-	<style type='text/css'>
-		.ui-page {
-	        -webkit-backface-visibility: hidden;
-	    } 
-		.content{
-		text-shadow:0px 0px 0px !important;
+	<script type="text/javascript">
+			  
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-33884130-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+	
+    <script type="text/javascript">
+	
+		var is_main_page = true;
+		var details_open = false;
+		function slideDown(){
+			if(!details_open){
+				$('#pricing_details').slideDown();
+				details_open = true;
+			}else{
+				$('#pricing_details').slideUp();
+				details_open = false;
+			}
 		}
-		.ui-page { outline: none; }
-	</style>
+		var is_xui = false;
+		var gallery = [];
+		var i_counter = 0;
+		var g1 = 0;
+		var g2 = 1;
+		var gflip = true;
+		<% if !@app.course_info['gallery'].nil? %>
+		 <% @app.course_info['gallery'].each do |i| %>
+		gallery.push("<%= i %>");
+		<% end %>
+		<% else %>	
+		<% end %>
 	
-	<style type='text/css'>
-	
-	.content ul {
-		background-color:#fff;
-	    border-radius:12px;
-		border:1px solid #ddd;
-		-moz-border-radius: 12px;
-		-webkit-border-radius: 12px;
-		margin:10px;
-		text-shadow:0px 0px 0px !important;
-		color:#333 !important;
-	}
-	
-	.content ul li {
-	    display: block;
-		border-bottom:1px solid #ddd;
-		text-align:center;
-	}
-	
-	.content ul li.address {
-	    display: block;
-		border-bottom:1px solid #ddd;
-		text-align:left;
-		padding-left:23px;
-	}
+		var user_agent = navigator.userAgent;
+		if(user_agent.match('/webOS/i')){
+			user_agent = 'webOS'
+		}else if(user_agent.match('/BlackBerry/i')){
+			user_agent = 'BlackBerry'
+		}else if(user_agent.match('/Android/i')){
+			user_agent = 'Android'
+		}else if(user_agent.match('/Windows/i')){
+			user_agent = 'Windows'
+		}else if(user_agent.match('/iPhone/i')){
+			user_agent = 'iPhone'
+		}else if(user_agent.match('/iPod/i')){
+			user_agent = 'iPod'
+		}else if(user_agent.match('/iPad/i')){
+			user_agent = 'iPad'
+		}
 
-	.content ul li:last-child {
-	    border-bottom: none;
-	}
-			
-	.content ul li a {
-	    display: block;
-		min-height:1px;
-		display:inline-block;
-		vertical-align:top;
-		padding:12px 0 12px 0;
-	}
-	
-	div.box{
-		background-color:#fff;
-		border-radius:12px;
-		border:1px solid #ddd;
-		-moz-border-radius: 12px;
-		-webkit-border-radius: 12px;
-		text-align:left;
-		margin:10px;
-		text-shadow:0px 0px 0px !important;
-		color:#333 !important;
-	}
-	
-	div.box{
-		background-color:#fff;
-		border-radius:12px;
-		border:1px solid #ddd;
-		-moz-border-radius: 12px;
-		-webkit-border-radius: 12px;
-		text-align:left;
-		margin:10px;
-		text-shadow:0px 0px 0px !important;
-		color:#333 !important;
-	}
-	
-	div.last{
-		margin-bottom:10px;
-	}
-	div.pad{
-		padding:12px;
-	}
-	div.container{
-		padding:0px;
-	}
-	.ui-content{
-		padding:0px !important;
-			text-shadow:0px 0px 0px !important;
-	}
-	div.content{
-			text-shadow:0px 0px 0px !important;
-	}
-	div.title{
-		margin-left:100px;
-		margin-top:18px;
-	}
-	div#gbox{
-		height:120px;
-		background-image:url('/imgages/holes/hole1.png') no-repeat center center fixed; 
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-		top:0px;
-		width:100%;
-	}
-	img.gboxi{
-		position:absolute;
-		top:0px;
-		width:100%;
-		height:100%;
-		display:none;
-	}
-	div.boxes{
-		position: relative;
-		left: 0px;
-		right: 0px;
-		width: 100%;
-		height: 100%;
-		top: -80px;
-		z-index: 99;
-	}
-	div#topbox{
+		$(document).bind("mobileinit", function(){
+		  
+			$.extend($.mobile, {
+			metaViewportContent: "width=device-width, height=device-height, minimum-scale=1, maximum-scale=1"
+			});
+		
+			$.mobile.fixedToolbars.setTouchToggleEnabled(false);
+		
+			if(navigator.userAgent.match(/webOS/i) ||
+			 navigator.userAgent.match(/BlackBerry/)
+			 ){
+			 $.mobile.defaultPageTransition = "none";
+			}else if( navigator.userAgent.match(/Android/i) ){
+				$.mobile.defaultPageTransition = "fade";
+			}else{
+				$.mobile.defaultPageTransition = "slide";
+			}
+		});
 
-		background: rgb(255, 255, 255);
-		background: rgba(255, 255, 255, 0);
-		border:1px transparent;
-	}
-	.book_button {
-		background-color: #7FBF4D;
-		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7FBF4D), color-stop(100%, #63A62F));
-		background-image: -webkit-linear-gradient(top, #7FBF4D, #63A62F);
-		background-image: -moz-linear-gradient(top, #7FBF4D, #63A62F);
-		background-image: -ms-linear-gradient(top, #7FBF4D, #63A62F);
-		background-image: -o-linear-gradient(top, #7FBF4D, #63A62F);
-		background-image: linear-gradient(top, #7FBF4D, #63A62F);
-		border: 1px solid #63A62F;
-		border-bottom: 1px solid #5B992B;
-		-webkit-border-radius: 3px;
-		-moz-border-radius: 3px;
-		-ms-border-radius: 3px;
-		-o-border-radius: 3px;
-		border-radius: 3px;
-		-webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
-		-moz-box-shadow: inset 0 1px 0 0 #96ca6d;
-		box-shadow: inset 0 1px 0 0 #96ca6d;
-		color: white;
-		font-size:  28px ;
-		line-height: 1.5;
-		padding: 12px;
-		padding-bottom:13px;
-		text-align: center;
-		text-shadow: 0 -1px 0 #4C9021;
-		margin-top:6px;
-		margin-left:4%;
-		width:84.5%;
-		display:inline-block;
-		color:white !important;
-	}
+		var gallery_not_started = true;
+		$( document ).bind( "pagechange", function( event, data ){
+			if (($("#gbox").length > 0) && gallery_not_started){
+			  	$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
+				setTimeout("gflipIn()",4000);
+				gallery_not_started = false;
+			}
+		});
+
+		function callUserSignIn(){
+			alert("Hello New User");
+		}
+		function changePage(where){
+			$.mobile.changePage(where, {transition: 'slide', showLoadMsg:false});
+		}
+		function callNoTeeTimeSelected(){
+			alert("Please select a Tee Time first!");
+		}
+		function gflipIn(){
+			g1 += 2;
+			g2 += 2;
+			$('#gboxi').fadeIn(1500,function(){
+				//showing 7
+				if(g1>(gallery.length-1)){
+					if(gflip){
+						g1 = 0;
+					}else{
+						g1 = 1;
+					}
+				}
+				$('#gbox').css("backgroundImage","url("+gallery[g1]+")");
+				setTimeout("gflipOut()",2500);
+
+			});
+		}
+		function gflipOut(){
+			$('#gboxi').fadeOut(1500,function(){
+				//Showing 8 images in the About Us gallery
+				if(g2>(gallery.length-1)){
+						if(gflip){
+							g2 = 1;
+							gflip = false;
+						}else{
+							g2 = 0;
+							gflip = true;
+						}
+				}
+
+				$('#gboxi').attr("src",gallery[g2]);
+
+				setTimeout("gflipIn()",2500);
+			});
+		}
 	
-	.book_button:hover {
-	    background-color: #76b347;
-	    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #76b347), color-stop(100%, #5e9e2e));
-	    background-image: -webkit-linear-gradient(top, #76b347, #5e9e2e);
-	    background-image: -moz-linear-gradient(top, #76b347, #5e9e2e);
-	    background-image: -ms-linear-gradient(top, #76b347, #5e9e2e);
-	    background-image: -o-linear-gradient(top, #76b347, #5e9e2e);
-	    background-image: linear-gradient(top, #76b347, #5e9e2e);
-	    -webkit-box-shadow: inset 0 1px 0 0 #8dbf67;
-	    -moz-box-shadow: inset 0 1px 0 0 #8dbf67;
-	    box-shadow: inset 0 1px 0 0 #8dbf67;
-	    cursor: pointer; }
-	 .book_button:active {
-	    border: 1px solid #5b992b;
-	    border-bottom: 1px solid #538c27;
-	    -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
-	    -moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
-	    box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee; }
+		var app =new Object();
+		var confirm_time = true;
 	
-	</style>
-</head> 
+		// This method submits the form that the user fills out when booking a tee time for the first time 
+		// User can currently fill out this form using phone number or email address
+		function submitform(ctime){
+			confirm_time = ctime;
+
+			if($('#first_name').val()){
+				app.first_name = $('#first_name').val();
+				app.last_name  = $('#last_name').val();
+				app.contact = $('#contact_value').val();
+				app.contact_via = $('#contact_method').val();
+				app.send_deals = $('#send_deals').val();
+			}
+		
+			//Store the customer's information into the Customer table in the database
+			$.post("/device_communication/customer_login",{
+				"f_name":app.first_name,
+				"l_name":app.last_name,
+				"contact_via":app.contact_via,
+				"contact":app.contact,
+				"device_name":"mobile_web/"+user_agent,
+				"redirect":"true",
+				"os_version":"NA",
+				"app_version":"mobile_web"},function(data){
+					if(data=='fail'){
+						alert(app.contact_via);
+						var errors = [];
+						if(app.first_name==""){
+							$('#first_name').css("borderBottom","2px solid red");
+							$('#first_name').focus(function(){
+								$(this).css("color",ccolor);
+							})
+						}
+						if(app.last_name==""){
+							$('#last_name').css("borderBottom","2px solid red");
+						}
+						if(app.contact_via=="email"){
+							if(!validateEmail($('#contact_value').val())){
+								$('#contact_value').css("borderBottom","2px solid red");
+							}
+						}else{
+							if(!validatePhone($('#contact_value').val())){
+								$('#contact_value').css("borderBottom","2px solid red");
+							}
+						}
+					
+						alert("Sorry please check if the highlighted fields are not blank and are properly formatted.");
+					}else{
+						if(ctime){
+							confirmTime();
+						}else{
+							alert("Your Preferences have been Saved!")
+							ctime = true;
+						}	
+					}
+			})
+		}
+		function validateEmail(email) { 
+		    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		    return re.test(email);
+		}
+		function validatePhone(str) 
+		{
+			var phone2 = /^(\+\d)*\s*(\(\d{3}\)\s*)*\d{3}(-{0,1}|\s{0,1})\d{2}(-{0,1}|\s{0,1})\d{2}$/; 
+			if (str.match(phone2)) {
+		   		return true;
+		 	} else {
+		 		return false;
+		 	}
+		}
+	
+	
+		function confirmTime(){
+			if(app.golfers && app.contact && app.date && app.timer){
+				reserveTime()
+			}else{
+				var errors = [];
+				if(!app.golfers){
+					alert("Please select number of golfers before booking a tee time.");
+				}else if(!app.timer){
+					alert("Please select a tee time to book a reservation");
+				}
+			}	
+		}
+	
+		function update_contact_placeholder(){
+			if($('#contact_method').val()=='email'){
+				$('#contact_value').attr("placeholder","Email Address");
+			}else{
+				$('#contact_value').attr("placeholder","Phone Number");
+			}	
+		}
+	
+		function cancelRes(){
+			$.get("/device_communication/cancel_reservation",{"course_id":app.course_id,"confirmation_code":$('span#confirm_waiting').html()},function(data){
+				alert("Reservation Cancelled");
+				$.mobile.changePage("http://m.playdeepcliff.com/booking");
+			})
+		}
+	
+		//This method makes the reservation in the database and books agianst the Course API
+		//Once the reservation has been made, the user is routed to the /reservations page
+		function reserveTime(){
+			$.mobile.showPageLoadingMsg();     		
+		
+			var did_it = $.post("/device_communication/book_reservation",{
+				"course_id":app.course_id,
+				"golfers":app.golfers,
+				"contact_via":app.contact_via,
+				"contact":app.contact,
+				"date":app.date,
+				"time":app.timer,
+				"total":app.total
+				},function(data){
+					if(data.status == 'success'){
+						$.mobile.hidePageLoadingMsg();     		
+						alert("Success! Your tee time at Deep Cliff Golf Course has been booked.");					
+						$.mobile.changePage("/reservations");
+					}else{
+						alert("We were unable to book this tee time. Please try again later or call Deep Cliff Golf Course at (408)-253-5357");
+						$.mobile.hidePageLoadingMsg();     		 
+					}
+				
+				}
+			).error(function() { 
+				alert("Sorry we were unable to book this tee time, please try again later.");
+				$.mobile.hidePageLoadingMsg();     		 
+				});
+		}
+	
+		//This method cancels a tee time reservation
+		//After canceling the reservation takes the user to the reservations page
+		function cancelTime(confirmation_code){
+		
+			var cxtime = confirm("Are you sure you would like to cancel this tee time reservation? Press OK to continue.");
+			//If the user clicks ok, then the if condition is executed
+			if(cxtime==true){
+				$.mobile.changePage("/booking");			
+				var did_it = $.post("/device_communication/cancel_reservation",{
+					"course_id":app.course_id,
+					"confirmation_code":confirmation_code
+					},function(data){
+						if(data.status == 'success'){
+							$.mobile.hidePageLoadingMsg();     		
+							alert("Your tee time has been successfully canceled. We hope to see you again soon!");					
+							$.mobile.changePage("/booking");
+						}else{
+							alert("We were unable to cancel this tee time. Please try again later or call Deep Cliff Golf Course at (408)-253-5357");
+							$.mobile.changePage("/reservations");
+						}
+					}
+				).error(function() { alert("Sorry we were unable to cancel this tee time, please try again later."); });	
+			}else{
+		
+			}
+		}
+	
+		function check_deals(){
+
+			if($('#send_deals').is(':checked')){
+				$('#send_deals').attr('checked',false)
+				$('#sd_label').css("color","#444")
+			}else{
+				$('#send_deals').attr("checked",true);
+				$('#sd_label').css("color","green")
+			}
+		}
+    </script>
+	
+	</head> 
 
 <body> 
-	
-	    <div data-role="page" data-theme="a" style='background:#e8e8e8'>
-			<%= render :partial => "header", :locals => { :app => @app } %>
-			<div class="content" id='content' style='background:#e8e8e8 important;position:relative' data-role="content">
-					
-				<div class='container' >
-					<div id='gbox' style='position:relative ;'>
-						 <% @app.course_info['gallery'].each do |i| %>
-						<img class='gboxi' src='<%= i %>' />
+
+	<div data-role="page" class='type-interior'>
+	<%= render :partial => "header", :locals => { :app => @app } %>
+
+	<div class='main_booking'>
+	<div class="content">
+
+		<ul>
+
+			<!--##########################################-->
+			<!--Number of Golfers-->
+			<!--##########################################-->
+
+			<li>				
+		  		<a href="<%= @app.get_url('num',{}) %>" ><%= image_tag "iphone/icons/Icon_3.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @app.golfers %> Golfers</span><span class="disclosure_indicator"/></a>
+		  	</li>
+
+			<!--##########################################-->
+			<!--Date Picker-->
+			<!--##########################################-->
+
+			<li>
+				<a href="<%= @app.get_url('date',{}) %>" id="datePicker" ><%= image_tag "iphone/icons/Icon_2.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %>
+		    		<span class="title">&nbsp;
+					    <% if @app.timenow.strftime("%H").to_i <= 19 %>
+							<div id="wrapper2">
+							  <div id="wrapper3">
+						        <div id="day"><%= Time.parse(@app.date).strftime('%a').upcase %></div>
+						        <div id="clear"></div>
+						        <div id="month"><%= Time.parse(@app.date).strftime('%b').upcase %></div>
+						      </div>
+						      <div id="date"><%= Time.parse(@app.date).strftime('%d') %></div>
+						    </div>
+						<% else %>
+							<div id="wrapper2">
+							  <div id="wrapper3">
+						        <div id="day"><%= Time.parse(@app.date_tomorrow).strftime('%a').upcase %></div>
+						        <div id="clear"></div>
+						        <div id="month"><%= Time.parse(@app.date_tomorrow).strftime('%b').upcase %></div>
+						      </div>
+						      <div id="date"><%= Time.parse(@app.date_tomorrow).strftime('%d') %></div>
+						    </div>
 						<% end %>
-					</div>
-					
-					<div class='boxes' >
+		    		</span>
+		    		<span class="disclosure_indicator"/>
+				</a>
+		  	</li>
 
-					<div class='box' id='topbox'>
-						<a href=""><img src="<%= @app.course_info['logo'] %>" style="width:90px;height:130px;z-index:101;float:left;margin:8px;margin-left:2px" /></a>
-						<div class='title' style='padding-top:66px;font-size:18px'>
-						<b><%= @app.course_info['title'] %></b>
-						<div style='margin-top:-2px'>
-							<span style='font-size:14px;color:#555'><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %></span>
-						</div>
-						<div style='margin-top:3px;border-top:1px solid gray;font-weight:normal;font-size:14px;padding-top:4px'>
-							<b style='color:green'>OPEN</b>: 6:00 AM to 8:00 PM
-						</div>
-					</div>
-					
-					<div style='clear:both;height:4px'></div>
-					
-					</div>
-					
-					<!-- <a href='http://www.playdeepcliff.com/request-a-tee-time' rel='external' class='book_button'>Book Tee Time</a> -->
-					<a href='/booking' rel='external' class='book_button'>Book Tee Time</a>
-					
-					<div class='box' style='text-align:center'>
-						<div class='pad'>
-							<span><a href="tel:212-555-1212" rel=external style='color:#336699;text-decoration:none'>Call</a></span>
-							<span><a href="tel:408-253-5357" rel=external style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['phone'] %></a></span>
-						</div>
-					</div>
-					
-					<div class='box'  onclick='slideDown();'>
+			<!--##########################################-->
+			<!--Tee Time-->
+			<!--##########################################-->
 
-						<div class='pad'>
-							<img style='float:right;padding-top:3px' src='http://pushspot.appspot.com/assets/img/ud.png' />
-							<table style='padding-left:28%;'>
-								<tbody>
-									<tr>
-										<td style='color:gray;text-align:right'><a  rel=external style='color:#336699;text-decoration:none;font-weight:bold'>Rates</a></td>
-										<td><a style='padding-left:4px;color:black;font-weight:bold;text-decoration:none'>$18 - $38</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class='more_details'  style='text-align:left;display:none' id='pricing_details'>
-							<div class='pad'>
-							<table border="0" cellpadding="1" cellspacing="1" >
-								<tbody>
-									<tr>
-										<th valign="bottom" width="75%">
-											<strong>Weekday</strong></th>
-										<th align="left" valign="bottom">
-											Fees</th>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Monday - Friday</td>
-										<td align="left" valign="top">
-											$28.00</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Twilight - 2:00 PM</td>
-										<td align="left" valign="top">
-											$21.00</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Super Twilight - 4:00 PM</td>
-										<td align="left" valign="top">
-											$18.00</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Sr.&nbsp;Rate Special after 9:00 AM - Lunch Included (age 62 +)</td>
-										<td align="left" valign="top">
-											$23.00</td>
-									</tr>
-								</tbody>
-							</table>
-							<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
-								<tbody>
-									<tr>
-										<th valign="bottom" width="75%">
-											<strong>Weekends and Holidays </strong></th>
-										<th align="left" valign="bottom">
-											Fees</th>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Regular</td>
-										<td align="left" valign="top">
-											$38.00</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Twilight - 2:00 PM</td>
-										<td align="left" valign="top">
-											$28.00</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Super-twilight - 4:00 PM</td>
-										<td align="left" valign="top">
-											$22.00</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Nine-hole (Restrictions apply)</td>
-										<td align="left" valign="top">
-											$22.00</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											&nbsp;</td>
-										<td align="left" valign="top">
-											&nbsp;</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Pull Carts - 9 Holes</td>
-										<td align="left" valign="top">
-											$3.00</td>
-									</tr>
-									<tr>
-										<td valign="top" width="75%">
-											Pull Carts - 18 Holes</td>
-										<td align="left" valign="top">
-											$6.00</td>
-									</tr>
-								</tbody>
-							</table>
-							
-							<table border="0" cellpadding="1" cellspacing="1" style='margin-top:10px'>
-								<tbody>
-									<tr>
-										<td valign="top" width="100%">
-											We offer lessons with our teaching professionals and tournament bookings.  For more information please contact the Pro Shop.</td>
-										<td align="left" valign="top">
-											</td>
-									</tr>
-								</tbody>
-							</table>
-							</div>
-						</div>
-					</div>
-					
-					<ul>
-				      <li class="address">
-						<span style='color:gray;padding-right:6px;' valign="top"><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;text-decoration:none'>Map</a></span>
-						<span><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['street'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:black;font-weight:bold;text-decoration:none'><%= @app.course_info['address']['street'] %><br><%= @app.course_info['address']['city'] %>, <%= @app.course_info['address']['state'] %> 95014</a></span>
-					  </li>
-				      <li><a href="http://maps.google.com/maps?rho_open_target=_blank&q=<%= @app.course_info['address']['sttree'] %> <%= @app.course_info['address']['city'] %> <%= @app.course_info['address']['state'] %>" target=_blank rel=external style='color:#336699;font-weight:bold;text-decoration:none'>Directions to Business</a></li>
-				    </ul>
-					
-					<div class='box' style='text-align:center'>
-						<div class='pad'>
-						<a href='http://www.yelp.com/biz/deep-cliff-golf-course-cupertino?rho_open_target=_blank' style='color:#336699;text-decoration:none'>Read & Write Reviews</a>
-						</div>
-					</div>
+			<% if @app.time == nil or @app.time == ""  %>
+		    	<li>
+		    		<a href="<%= @app.get_url('time',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title">Tee Time</span><span class="disclosure_indicator"/></a>
+		    	</li>
+		  	<% else %>
+		    	<li>
+					<a href="<%= @app.get_url('time',{}) %>" ><%= image_tag "iphone/icons/Icon_1.png", :style=>"float:left;padding-top:10px;width:60px;height:60px" %><span class="title"><%= @app.time12 %> <%= @app.ampm %></span><span class="disclosure_indicator"/></a>
+		    	</li>
+		  	<%end%>
 
-					<div class='box last'>
-						<table style='padding-left:20%;padding-top:10px;padding-bottom:10px;'>
-							<tbody>
-								<tr>
-									<td style='color:gray;text-align:right;padding-right:5px;'>All Ages</td>
-									<td>Yes</td>
-								</tr>
-								<tr>
-									<td style='color:gray;text-align:right;padding-right:5px;'>18 holes</td>
-									<td>Yes</td>
-								</tr>
-								<tr>
-									<td style='color:gray;text-align:right;padding-right:5px;'>Pro Shop</td>
-									<td>Yes</td>
-								</tr>
-								<tr>
-									<td style='color:gray;text-align:right;padding-right:5px;'>Restaurant</td>
-									<td>Yes</td>
-								</tr>
-								<tr>
-									<td style='color:gray;text-align:right;padding-right:5px;'>Lessons</td>
-									<td>Yes</td>
-								</tr>
-								<tr>
-									<td style='color:gray;text-align:right;padding-right:5px;'>Practice Area</td>
-									<td>Yes</td>
-								</tr>
-							</tbody>
-						</table>
+			<!--##########################################-->
+			<!--Reserve Button-->
+			<!--##########################################-->
 
-					</div>
-					</div>
-				</div>
-		    </div>
+		  	<% if @app.time == nil or @app.time == "" %>
+		    	<center>
+					<a href='javascript:callNoTeeTimeSelected()'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%; ' class='book_button'>Book Tee Time</a>
+		    	</center>
+		  	<% else%>
+		    	<% if @app.user == nil or !@app.user %>
+		      		<center>
+						<a href='<%= @app.get_url('login',{}) %>'  style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;;' class='book_button'>Book Tee Time</a>
+		      		</center>
+		    	<% else %>
+		      		<center>
+					<a href='javascript:confirmTime();' data-rel="dialog" data-transition="pop" style='margin:8px;margin-top:12px;border-radius:6px;width: 86%;' class='book_button'>Book Tee Time</a>
+		    		</center>
+					<% end %>
+		  	<% end %>
+		</ul>
 
-		</div>
+	  </div>			
+	</div>
 
+	<%= render :partial => "footer", :locals => { :app => @app } %>
+	</div><!-- /page -->
+	
+	<div data-role="page" id="popup">
+		<div data-role="header">
+			<h1>Tee Time Confirmation</h1>
+		</div><!-- /header -->
+
+		<div data-role="content" id='confirm_body' style='padding-left:20px;padding-right:20px' >	
+			<h2>Popup</h2>
+			<p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>		
+			<p><a href="#one" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to page "one"</a></p>	
+		</div><!-- /content -->
+
+		<div data-role="footer">
+			<h4>Page Footer</h4>
+		</div><!-- /footer -->
+	</div><!-- /page popup -->
 
 </body>
 </html>

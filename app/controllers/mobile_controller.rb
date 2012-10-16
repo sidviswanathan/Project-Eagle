@@ -25,7 +25,7 @@ require 'lib/app/mobile.rb'
 # =========== Controller Actions ===========
 # ==========================================
 
-# booking             => '/mobile/'               (This is the main page of the booking expereince, wihich contains the Golfers, Date, Tee Time, ANd Book Reservation button)
+# booking             => '/mobile/booking'        (This is the main page of the booking expereince, wihich contains the Golfers, Date, Tee Time, ANd Book Reservation button)
 # golfer_select       => '/mobile/num'            (Select between 2,3,4 golfers)
 # date_select         => '/mobile/date'           (Select the date)
 # time_select         => '/mobile/time'           (Select the tee time you want to play)
@@ -103,6 +103,9 @@ class MobileController < ApplicationController
     request.user_agent =~ /Symbian/
   end
   def iframe
+    # Example iframe snippet that's pasted on 3rd party site
+    # Since get_mobile_app is run before this method, the course_id param is pulled from the iframe request
+    # <iframe style="width: 0px; height: 0px; border: 0px; display: none;" src="http://www.presstee.com/mobile/iframe?course_id=2" width="0px" height="0px"></iframe>
     @is_mobile = mobile_agent?
     @is_ipad   = ipad?
     @request   = request

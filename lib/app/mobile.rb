@@ -66,15 +66,15 @@ class MobileApp
         
     # Get list of available tee times from the DB for a given day
     # Need to fetch this data from cache if it is available
-    a = Time.now
+    #a = Time.now
     dates = JSON.parse(@course.available_times)
-    b = Time.now
-    cache = JSON.parse(Rails.cache.fetch("Updated_Course_"+"2").available_times)    
-    c = Time.now
+    #b = Time.now
+    #cache = JSON.parse(Rails.cache.fetch("Updated_Course_"+"2").available_times)    
+    #c = Time.now
     
-    puts "AM I FETCHING FROM THE CACHE OR WHAT???"
-    puts (b-a).to_s
-    puts (c-b).to_s
+    # puts "AM I FETCHING FROM THE CACHE OR WHAT???"
+    # puts (b-a).to_s
+    # puts (c-b).to_s
     
     if !dates.has_key?(date)
       dates = JSON.parse(@course.future_dates)
