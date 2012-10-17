@@ -17,6 +17,7 @@ class MobileApp
     end
     if params[:date].nil?
       params[:date] = Date.today.strftime("%Y-%m-%d")
+      params[:date_selected] = false
     end
     
     @timenow        = Time.now 
