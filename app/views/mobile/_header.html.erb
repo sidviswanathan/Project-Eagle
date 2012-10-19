@@ -9,6 +9,7 @@ try{
 	app.last_name 	= "<%= @app.get_user_lname %>";
 	app.contact_via = "<%= @app.get_user_contact_via %>";
 	app.contact 	= "<%= @app.get_user_contact %>";
+	app.returning	= "<%= @app.returning %>";
 }catch(err){
 	window.location = "<%= @app.get_url('booking',{}) %>";
 }

@@ -7,7 +7,7 @@ require 'lib/api/fore.rb'
 
 class MobileApp
   
-  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation, :time12, :timenow, :date_tomorrow
+  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation, :time12, :timenow, :date_tomorrow, :returning
   
   def initialize(params,request,session,cookies)
     @course = Course.find(params[:course_id].to_i)
@@ -30,7 +30,14 @@ class MobileApp
     @params         = params
     @request        = request
     @reservations   = []
-      
+    
+    if cookies[:returning_visitor].blank? 
+       cookies[:returning_visitor] = { :value => "set_retunirng_visitor_cookie", :expires => 30.days.from_now } 
+       @returning = "false"
+    elsif cookies[:returning_visitor] == "set_retunirng_visitor_cookie"
+       @returning = "true"
+    end
+    
     begin
       @total = (params[:golfers].to_i * params[:price].to_i).to_s
     rescue

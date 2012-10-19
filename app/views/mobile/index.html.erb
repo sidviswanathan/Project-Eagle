@@ -314,6 +314,19 @@
 	</head> 
 
 <body> 
+	
+	<!--##########################################-->
+	<!--Hero Slot Alert Message-->
+	<!--##########################################-->
+
+	<script ltype="text/javascript">
+		function is_returning_user(){
+			if(app.returning == "true"){
+			}else{
+				alert("SPECIAL OFFER: Book a tee time now and enter to win a free 30-minute lesson with a teaching professional! No credit card required.");
+			}
+		}
+	</script>
 
 	<div data-role="page" class='type-interior'>
 	<%= render :partial => "header", :locals => { :app => @app } %>
@@ -429,6 +442,11 @@
 			<h4>Page Footer</h4>
 		</div><!-- /footer -->
 	</div><!-- /page popup -->
+	
+	<script>
+	//call after page loaded
+	window.onload=is_returning_user; 
+	</script>
 
 </body>
 </html>
