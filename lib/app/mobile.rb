@@ -31,12 +31,13 @@ class MobileApp
     @request        = request
     @reservations   = []
     
-    if cookies[:returning_visitor].blank? 
-       cookies[:returning_visitor] = { :value => "set_retunirng_visitor_cookie", :expires => 30.days.from_now } 
-       @returning = "false"
-    elsif cookies[:returning_visitor] == "set_retunirng_visitor_cookie"
-       @returning = "true"
-    end
+    # One time Pop-up message
+    # if cookies[:returning_visitor].blank? 
+    #    cookies[:returning_visitor] = { :value => "set_retunirng_visitor_cookie", :expires => 30.days.from_now } 
+    #    @returning = "false"
+    # elsif cookies[:returning_visitor] == "set_retunirng_visitor_cookie"
+    #    @returning = "true"
+    # end
     
     begin
       @total = (params[:golfers].to_i * params[:price].to_i).to_s

@@ -23,8 +23,6 @@ gem "apn_on_rails", "~> 0.4.2"
 gem "apns", "~> 0.9.0"
 gem 'sendgrid'
 
-
-
 # Use unicorn as the web server
 # gem 'unicorn'
 
