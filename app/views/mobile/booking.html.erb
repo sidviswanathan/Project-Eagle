@@ -147,9 +147,7 @@
 		// User can currently fill out this form using phone number or email address
 		function submitform(ctime){
 			confirm_time = ctime;
-			
-			alert("test");
-			
+						
 			if($('#first_name').val()){
 				app.first_name = $('#first_name').val();
 				app.last_name  = $('#last_name').val();
@@ -157,9 +155,7 @@
 				app.contact_via = $('#contact_method').val();
 				app.send_deals = $('#send_deals').val();
 			}
-			
-						alert("test2");
-		
+					
 			//Store the customer's information into the Customer table in the database
 			$.post("/device_communication/customer_login",{
 				"f_name":app.first_name,
