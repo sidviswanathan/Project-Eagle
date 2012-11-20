@@ -4,7 +4,7 @@ class AddDiscountedPricing < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :courses, :discounted_pricing
+    remove_column :courses, :discounted_pricing
   end
 end
 
