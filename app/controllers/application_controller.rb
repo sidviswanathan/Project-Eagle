@@ -8,7 +8,32 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   $tee_slots = TEE_TIME_SLOTS_DEEP_CLIFF
-
+  
+  # This method checks to see if there is any discounted pricing available for that day
+  # Otherwise, returns standard pricing for that day
+  def self.display_pricing(date,time,app)    
+    discounted_pricing = JSON.parse(app.course.discounted_pricing)
+    if discounted_pricing.has_key?(date)
+      discounted_pricing[date].each do |d|
+        if d['t'] == time['t']
+          return d['p'].to_s
+        end    
+      end
+      return time['p'].to_s         
+    else
+      return time['p'].to_s
+    end  
+    
+    # CHanging pricing for 1 Day
+    #p = {"2012-11-22"=>[{"p"=>88, "q"=>"4", "t"=>"07:00"},{"p"=>88, "q"=>"4", "t"=>"07:07"}]}
+    
+    # CHanging pricing for 2 days
+    #p = {"2012-11-22"=>[{"p"=>88, "q"=>"4", "t"=>"07:00"},{"p"=>88, "q"=>"4", "t"=>"07:07"}],"2012-11-23"=>[{"p"=>88, "q"=>"4", "t"=>"07:00"},{"p"=>88, "q"=>"4", "t"=>"07:07"}]}
+  end  
+    
+  
+  ####################################
+  
 
   # Post send_object
   def post_response(post_data)

@@ -2,6 +2,9 @@ class Course < ActiveRecord::Base
   has_many :users
   has_many :reservations
   
+  Course::DISCOUNTED_PRICING = true
+  #Course::DISCOUNTED_PRICING = false
+  
   def self.default
     c = Course.new
     c.name = "Default Hills"

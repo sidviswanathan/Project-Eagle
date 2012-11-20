@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306234347) do
+ActiveRecord::Schema.define(:version => 20121119062707) do
 
   create_table "apn_apps", :force => true do |t|
     t.text     "apn_dev_cert"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20120306234347) do
     t.text     "future_dates"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "discounted_pricing"
   end
 
   create_table "customers", :force => true do |t|

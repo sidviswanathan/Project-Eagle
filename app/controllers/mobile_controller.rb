@@ -75,6 +75,10 @@ class MobileController < ApplicationController
   def index
   end
   
+  def time
+    @discount = Course::DISCOUNTED_PRICING
+  end  
+  
   def book
   end
   

@@ -7,7 +7,7 @@ require 'lib/api/fore.rb'
 
 class MobileApp
   
-  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation, :time12, :timenow, :date_tomorrow, :returning
+  attr_accessor :course, :time, :golfers, :date, :params, :d2, :d, :times, :ampm, :request, :user, :total, :reservations, :reservation, :time12, :timenow, :date_tomorrow, :returning, :discounted_pricing
   
   def initialize(params,request,session,cookies)
     @course = Course.find(params[:course_id].to_i)
@@ -20,16 +20,17 @@ class MobileApp
       params[:date_selected] = false
     end
     
-    @timenow        = Time.now 
-    @time           = params[:time]
-    @time12         = Time.parse(@time).strftime("%I:%M")
-    @ampm           = Time.parse(@time).strftime("%p")
-    @golfers        = params[:golfers]
-    @date           = params[:date]
-    @date_tomorrow  = (Date.today + 1.day).strftime("%Y-%m-%d")
-    @params         = params
-    @request        = request
-    @reservations   = []
+    @timenow            = Time.now 
+    @time               = params[:time]
+    @time12             = Time.parse(@time).strftime("%I:%M")
+    @ampm               = Time.parse(@time).strftime("%p")
+    @golfers            = params[:golfers]
+    @date               = params[:date]
+    @date_tomorrow      = (Date.today + 1.day).strftime("%Y-%m-%d")
+    @params             = params
+    @request            = request
+    @reservations       = []
+    @discounted_pricing = true
     
     # One time Pop-up message
     # if cookies[:returning_visitor].blank? 
@@ -77,6 +78,7 @@ class MobileApp
     # Need to fetch this data from cache if it is available
     #a = Time.now
     dates = JSON.parse(@course.available_times)
+    
     #b = Time.now
     #cache = JSON.parse(Rails.cache.fetch("Updated_Course_"+"2").available_times)    
     #c = Time.now
@@ -86,6 +88,7 @@ class MobileApp
     # puts (c-b).to_s
     
     if !dates.has_key?(date)
+      # In localhost, looks at data from Course.future_dates, this field does not exists on prod
       dates = JSON.parse(@course.future_dates)
       if !dates.has_key?(date)
         dates[date] = dates["template"]
