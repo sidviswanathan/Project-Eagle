@@ -20,7 +20,7 @@
 								<a  href="<%= @app.get_url('booking',{:time=>@time24hr,:price=>@display_price,:date=>@app.date}) %>">
 									<span class="title"><%=@timeview%></span>
 									<span class ="disclosure_indicator"></span>
-									<span class="price">$<%= @display_price %></span>
+									<span class="price"><%= @display_price %></span>
 								</a>
 								<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-58px;padding:10px 40px 0 0;" src="/images/iphone/icons/<%= i['q'] %>_bubble.png"/>
 							</li>
@@ -31,7 +31,7 @@
 									<a  href="<%= @app.get_url('booking',{:time=>@time24hr,:price=>@display_price,:date=>@app.date}) %>">
 										<span class="title"><%=@timeview%></span>
 										<span class ="disclosure_indicator"></span>
-										<span class="price">$<%= @display_price %></span>
+										<span class="price"><%= @display_price %></span>
 									</a>
 									<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-60px;padding:10px 40px 0 0;" src="/images/iphone/icons/<%= i['q'] %>_bubble.png"/>
 								</li>
@@ -55,7 +55,7 @@
 								<a  href="<%= @app.get_url('booking',{:time=>@time24hr,:price=> i['p'].to_s,:date=>@app.date}) %>">
 									<span class="title"><%=@timeview%></span>
 									<span class ="disclosure_indicator"></span>
-									<span class="price">$<%= ApplicationController.display_pricing(@app.date,i,@app) %></span>
+									<span class="price"><%= @display_price %></span>
 								</a>
 								<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-58px;padding:10px 40px 0 0;" src="/images/iphone/icons/<%= i['q'] %>_bubble.png"/>
 							</li>
@@ -66,7 +66,7 @@
 									<a  href="<%= @app.get_url('booking',{:time=>@time24hr,:price=> i['p'].to_s,:date=>@app.date}) %>">
 										<span class="title"><%=@timeview%></span>
 										<span class ="disclosure_indicator"></span>
-										<span class="price">$<%= ApplicationController.display_pricing(@app.date,i,@app) %></span>
+										<span class="price"><%= @display_price %></span>
 									</a>
 									<img border="0" width="26px;" height="18px;" style="float:right;margin-top:-60px;padding:10px 40px 0 0;" src="/images/iphone/icons/<%= i['q'] %>_bubble.png"/>
 								</li>
