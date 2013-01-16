@@ -19,9 +19,9 @@ class ApplicationController < ActionController::Base
           return "<font color='#2bcb07'>#{d['s']}&nbsp;&nbsp;&nbsp;</font>$#{d['p'].to_s}"
         end    
       end
-      return '$'+time['p'].to_s         
+      return time['p'].to_s         
     else
-      return '$'+time['p'].to_s
+      return time['p'].to_s
     end  
     
     # CHanging pricing for 1 Day
