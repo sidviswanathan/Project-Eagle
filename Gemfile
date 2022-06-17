@@ -5,8 +5,8 @@ source :gemcutter
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem "rails", "~> 2.3.5"
-gem "rack", "~> 1.0.0"
+gem "rails", "~> 7.0.3"
+gem "rack", "~> 2.2.3"
 gem "json", "~> 1.6.3"
 gem "dalli",  "~> 1.0.4"
 gem "bj"
