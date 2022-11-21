@@ -8,7 +8,7 @@ source :gemcutter
 gem "rails", "~> 2.3.5"
 gem "rack", "~> 1.0.0"
 gem "json", "~> 1.6.3"
-gem "dalli",  "~> 1.0.4"
+gem "dalli",  "~> 3.2.3"
 gem "bj"
 gem "sqlite3-ruby"
 gem "aws-s3"
